@@ -1,0 +1,97 @@
+workflow:
+  rules:
+    - if: $CI_PROJECT_NAMESPACE != "ADLR"
+      when: never
+    - if: $CI_COMMIT_BRANCH =~ /ci-/ && $CI_PIPELINE_SOURCE != "schedule"
+      when: never
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+      auto_cancel:
+        on_new_commit: none
+    - if: $CI_PIPELINE_SOURCE == "web"
+    - if: $CI_COMMIT_REF_PROTECTED == "true"
+      variables:
+        FUNCTIONAL_TEST: "no"
+    - if: $CI_MERGE_REQUEST_LABELS =~ /Run tests/ && $CI_MERGE_REQUEST_TARGET_BRANCH_SHA != ""
+      variables:
+        FUNCTIONAL_TEST: "yes"
+        FUNCTIONAL_TEST_SCOPE: mr
+    - if: $CI_MERGE_REQUEST_LABELS =~ /Run nightly/ && $CI_MERGE_REQUEST_TARGET_BRANCH_SHA != ""
+      variables:
+        FUNCTIONAL_TEST: "yes"
+        FUNCTIONAL_TEST_SCOPE: nightly
+    - if: $CI_MERGE_REQUEST_LABELS =~ /Run weekly/ && $CI_MERGE_REQUEST_TARGET_BRANCH_SHA != ""
+      variables:
+        FUNCTIONAL_TEST: "yes"
+        FUNCTIONAL_TEST_SCOPE: weekly
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event" && $CI_MERGE_REQUEST_TARGET_BRANCH_SHA != ""
+      variables:
+        FUNCTIONAL_TEST: "no"
+    - when: never
+  auto_cancel:
+    on_new_commit: interruptible
+
+stages:
+  - test 
+  - functional_tests
+  - convergence_tests
+  - publish
+
+default:
+  interruptible: true
+
+variables:
+  FUNCTIONAL_TEST: 
+    value: "yes"
+    options:
+      - "yes"
+      - "no"
+    description: To run the funtional test suite
+  FUNCTIONAL_TEST_SCOPE:
+    value: "mr"
+    options:
+      - "mr"
+      - "nightly"
+      - "weekly"
+    description: "Testsuite to run (only for FUNCTIONAL_TEST=yes)"
+  FUNCTIONAL_TEST_CLUSTER:
+    value: "dgxa100_dracooci"
+    options:
+      - "dgxa100_dracooci"
+      - "dgxa100_dracooci-ord"
+      - "dgxh100_eos"
+    description: '"dgxa100_dracooci" for OCI-IAD, "dgxh100_eos" for EOS'
+  CONVERGENCE_TEST:
+    value: "no"
+    options:
+      - "yes"
+      - "no"
+    description: To run a convergence test
+  CONVERGENCE_TEST_SCOPE:
+    value: "release"
+    options:
+      - "release"
+      - "pre-release"
+    description: "Test suite to run (only for CONVERGENCE_TEST=yes)"
+  CONVERGENCE_TEST_RUN_NAME:
+    value: "pre-release-$$CI_PIPELINE_ID"
+    description: "Run directory of convergence test"
+  PUBLISH: 
+    value: "no"
+    options: 
+      - "yes"
+      - "no"
+    description: Build and publish a wheel to PyPi
+
+  # CI wide variables
+  CI_MCORE_IMAGE: ${GITLAB_ENDPOINT}:5005/adlr/megatron-lm/mcore_ci
+  CI_NEMO_IMAGE: ${GITLAB_ENDPOINT}:5005/adlr/megatron-lm/nemo_ci
+  LINTING_IMAGE: ${GITLAB_ENDPOINT}:5005/adlr/megatron-lm/mcore_linting
+  UNIT_TEST_TIMEOUT: 15
+  UNIT_TEST_REPEAT: 1
+
+include:
+  - .gitlab/stages/00.pre.yml
+  - .gitlab/stages/01.tests.yml
+  - .gitlab/stages/02.functional-tests.yml
+  - .gitlab/stages/03.convergence-tests.yml
+  - .gitlab/stages/04.publish.yml
