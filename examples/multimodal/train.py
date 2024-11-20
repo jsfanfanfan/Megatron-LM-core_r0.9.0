@@ -23,17 +23,20 @@ from megatron.training import pretrain
 from dataloader_provider import train_valid_test_dataloaders_provider
 
 def model_provider(
-    pre_process=True, post_process=True, add_encoder=True, add_decoder=True,
+    add_encoder=True, encoder_pre_process=True, add_projector=True, 
+    add_decoder=True, pre_process=True, post_process=True,
     parallel_output=True) -> LLaVAModel:
     """Builds the model.
 
     Args:
-        pre_process (bool): Include the embedding layer in the gpt decoder (used with pipeline parallelism). Defaults to True.
-        post_process (bool): Include an output layer and a layernorm in the gpt decoder (used with pipeline parallelism). Defaults to True.
         add_encoder (bool): Construct the encoder module (used with pipeline parallelism). Defaults to True. When we use pipelining, the encoder
-            will live on only a subset of the pipeline stages (specifically, only the first stage).
+            will live on only a subset of the pipeline stages (specifically, only the first few stages). 
+        encoder_pre_process(bool): If the stage is the first encoder stage, Conv.2D and pre_LayerNorm will be added.
+        add_projector(bool): If the projector is in this stage.(Note that projector can not be partitioned). 
         add_decoder (bool): Construct the decoder module (used with pipeline parallelism). Defaults to True. When we use pipelining, the decoder
             will live on only a subset of the pipeline stages (specifically, every stage after the first one).
+        pre_process (bool): Include the embedding layer in the gpt decoder (used with pipeline parallelism). Defaults to True.
+        post_process (bool): Include an output layer and a layernorm in the gpt decoder (used with pipeline parallelism). Defaults to True.
         parallel_output (bool): Enable parallel model output.
 
     Returns:
@@ -56,21 +59,21 @@ def model_provider(
     if args.decoder_seq_length > args.max_position_embeddings:
         args.max_position_embeddings = args.decoder_seq_length
         warnings.warn("Expanded max_position_embeddings to {args.max_position_embeddings} to accommodate the full sequence of vit output + llm output.")
-
-    base_config = core_transformer_config_from_args(get_args())
+    # base_config 包含基本的 transformer 参数，是一个 TransformerConfig 类
+    base_config = core_transformer_config_from_args(get_args()) # arguments.py 656 行
     base_config.language_model_type = args.language_model_type
     base_config.vision_model_type = args.vision_model_type
     base_config.calculate_per_token_loss = True
 
-    language_config = deepcopy(base_config)
-    language_config = get_language_model_config(language_config)
+    language_config = deepcopy(base_config) # 更新 mistral-7b 的参数
+    language_config = get_language_model_config(language_config) # config.py 7 行
 
     if use_te:
         language_transformer_layer_spec = get_layer_spec_te(is_vit=False)   # TENorm detects LayerNorm/RMS automatically.
     else: # examples.multimodel/layer_specs.py 43 行 说明 language model 的 transformer 结构
         language_transformer_layer_spec = get_layer_spec(is_vit=False, normalization=language_config.normalization)
 
-    vision_config = deepcopy(base_config)
+    vision_config = deepcopy(base_config) # 更新 clip-vit 的参数，config.py 65行
     vision_config = get_vision_model_config(vision_config, apply_query_key_layer_scaling=args.apply_query_key_layer_scaling)
 
     vision_model_type = args.vision_model_type
@@ -82,9 +85,10 @@ def model_provider(
     else:
         raise RuntimeError("unsupported vision model type", vision_model_type)
 
-    vision_projection_config = deepcopy(base_config)
+    vision_projection_config = deepcopy(base_config) # config.py 91 行
     vision_projection_config = get_vision_projection_config(vision_projection_config, language_config.hidden_size)
-
+    
+    """
     if args.encoder_pipeline_model_parallel_size > 0:
         assert args.encoder_pipeline_model_parallel_size == 1, "ViT can only live on 1 pipeline stage."
         vision_config.pipeline_model_parallel_size = args.encoder_pipeline_model_parallel_size
@@ -92,6 +96,15 @@ def model_provider(
         if args.encoder_tensor_model_parallel_size > 0:
             vision_config.tensor_model_parallel_size = args.encoder_tensor_model_parallel_size
             vision_projection_config.tensor_model_parallel_size = args.encoder_tensor_model_parallel_size
+    """
+    # 上述操作使得大部分参数在 args=get_args(), 不同模块各自的参数在 module.config 中
+    # 修改使得 encoder 可以有多个流水级
+    assert args.pipeline_model_parallel_size > 0
+    assert args.encoder_tensor_model_parallel_size == args.tensor_model_parallel_size, \
+        "encoder tensor model parallel size must equal tensor model parallel size"
+    vision_config.tensor_model_parallel_size = args.encoder_tensor_model_parallel_size
+    vision_projection_config.tensor_model_parallel_size = args.encoder_tensor_model_parallel_size
+
     # examples/multimodal/layer_specs.py 103 行
     vision_projection_layer_spec = get_mlp_module_spec(use_te=use_te).submodules
 
@@ -110,10 +123,12 @@ def model_provider(
         parallel_output=parallel_output,
         language_position_embedding_type=args.position_embedding_type,
         language_rotary_percent=args.rotary_percent,
+        add_encoder=add_encoder,
+        encoder_pre_process=encoder_pre_process,
+        add_projector=add_projector,
+        add_decoder=add_decoder,
         pre_process=pre_process,
         post_process=post_process,
-        add_encoder=add_encoder,
-        add_decoder=add_decoder,
         img_h=args.img_h,
         img_w=args.img_w,
         patch_dim=args.patch_dim,

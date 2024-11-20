@@ -40,12 +40,15 @@ class LLaVAModel(MegatronModule):
             This is typically True for training and False for inference.
         language_position_embedding_type (str): Language model position embedding type.
         language_rotary_percent (float): RoPE percent. Defaults to 1.0.
+        add_encoder (bool): Construct the encoder stage(used with pipeline parallel).
+            After modification, the encoder can live on only the first few stages.
+        encoder_pre_process: If the stage is the first encoder stages, 
+            Conv.2D and pre_LayerNorm should be added.(used with pipeline parallel)
+        add_projector: If the projector is on this stage.(used with pipeline parallel)
+        add_decoder (bool): Construct the decoder (used with pipeline parallel).
+            After modification, the decoder can live on last few stages even the first one.
         pre_process (bool): Include embedding layer in the decoder (used with pipeline parallel).
         post_process (bool): Include output layer in the decoder (used with pipeline parallel).
-        add_encoder (bool): Construct the encoder (used with pipeline parallel).
-            When we use pipelining, the encoder will live on only the first stage
-        add_decoder (bool): Construct the decoder (used with pipeline parallel).
-            When we use pipelining, the decoder will live on every stage after the first one.
         img_h (int): Input image height.
         img_w (int): Input image width.
         patch_dim (int): The size of each image patch side.
@@ -68,10 +71,12 @@ class LLaVAModel(MegatronModule):
         parallel_output: bool = True,
         language_position_embedding_type: str = 'learned_absolute',
         language_rotary_percent: float = 1.0,
+        add_encoder: bool = True,
+        encoder_pre_process: bool = True,
+        add_projector: bool = True,
+        add_decoder: bool = True,
         pre_process: bool = True,
         post_process: bool = True,
-        add_encoder: bool = True,
-        add_decoder: bool = True,
         img_h: int = 336,
         img_w: int = 336,
         patch_dim: int = 14,
@@ -86,11 +91,13 @@ class LLaVAModel(MegatronModule):
             "LLaVA model is under active development. "
             "It may be missing features and its methods may change."
         )
-
+        self.add_encoder = add_encoder
+        self.encoder_pre_process = encoder_pre_process
+        self.add_projector = add_projector
+        self.add_decoder = add_decoder
         self.pre_process = pre_process
         self.post_process = post_process
-        self.add_encoder = add_encoder
-        self.add_decoder = add_decoder
+        
 
         self.encoder_hidden_state = None
         self.vision_model = None
@@ -130,6 +137,8 @@ class LLaVAModel(MegatronModule):
             )
             self._drop_vision_class_token = drop_vision_class_token
             # Map (intermediate) vision model outputs to the language model input dimension.
+        
+        if self.add_projector:
             self.vision_projection = MultimodalProjector(
                 vision_projection_config,
                 vision_projection_layer_spec,

@@ -656,11 +656,11 @@ def _check_arg_is_not_none(args, arg):
 def core_transformer_config_from_args(args, config_class=None):
 
     # Config class.
-    config_class = config_class or TransformerConfig
+    config_class = config_class or TransformerConfig # megatron/core/transformer/transformer_config.py 13 行
 
     # Translate args to core transformer configuration
     kw_args = {}
-    for f in dataclasses.fields(config_class):
+    for f in dataclasses.fields(config_class): # 用 args 参数更新TransformerConfig 的参数
         if hasattr(args, f.name):
             kw_args[f.name] = getattr(args, f.name)
     kw_args['persist_layer_norm'] = not args.no_persist_layer_norm
@@ -1502,6 +1502,9 @@ def _add_mixed_precision_args(parser):
 def _add_distributed_args(parser):
     group = parser.add_argument_group(title='distributed')
 
+    # 添加模型层划分的参数--split-spec，默认为 encoder+projector 一个流水级，llm 等分
+    group.add_argument('--split-spec', type=str, default="26,8,8,8,8",
+                       help='Specification for layer partition')
     group.add_argument('--tensor-model-parallel-size', type=int, default=1,
                        help='Degree of tensor model parallelism.')
     group.add_argument('--encoder-tensor-model-parallel-size', type=int, default=0,

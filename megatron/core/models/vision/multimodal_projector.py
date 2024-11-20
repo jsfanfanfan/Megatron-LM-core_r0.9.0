@@ -32,10 +32,10 @@ class MultimodalProjector(MegatronModule):
 
         assert submodules is not None, "MLPSubmodules must be provided"
 
-        if self.projector_type == "mlp":
+        if self.projector_type == "mlp": # 2 个 Linear 层
             self.encoder = MLP(config=config, submodules=submodules, input_size=input_size)
         elif self.projector_type == "affine":
-            self.encoder = build_module(
+            self.encoder = build_module( # 1 个 Linear 层
                 submodules.linear_fc1,
                 input_size,
                 config.hidden_size,

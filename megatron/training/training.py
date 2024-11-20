@@ -426,11 +426,19 @@ def update_train_iters(args):
     print_rank_0('setting training iterations to {}'.format(args.train_iters))
 
 
-def get_model(model_provider_func, model_type=ModelType.encoder_or_decoder, wrap_with_ddp=True):
-    """Build the model."""
+def  get_model(model_provider_func, model_type=ModelType.encoder_or_decoder, wrap_with_ddp=True):
+    """Build the model. 被 617 行调用"""
     args = get_args()
     args.model_type = model_type
-
+    # 获取模型划分方式
+    split_spec = list(map(int,args.split_spec.split(",")))
+    # 如何在获取模型之前就知道各个模块的层数？只有 llm 的层数可以从参数得到
+    # Note：此处代码扩展性极差
+    encoder_layer_num = 24
+    projector_layer_num = 2
+    llm_layer_num = args.num_layers
+    layer_sum = encoder_layer_num + projector_layer_num + layer_sum
+    assert sum(split_spec) == layer_sum, "split specification is not appropriate"
     # Build model.
     if mpu.get_pipeline_model_parallel_world_size() > 1 and \
        args.virtual_pipeline_model_parallel_size is not None:
@@ -456,17 +464,45 @@ def get_model(model_provider_func, model_type=ModelType.encoder_or_decoder, wrap
         if model_type == ModelType.encoder_and_decoder:
             if mpu.get_pipeline_model_parallel_world_size() > 1:
                 rank = mpu.get_pipeline_model_parallel_rank()
-                first_decoder_rank = args.encoder_pipeline_model_parallel_size
                 world_size = mpu.get_pipeline_model_parallel_world_size()
-                pre_process = rank == 0 or rank == first_decoder_rank # encoder 和 decoder 的第一个 rank 需要 pre_process 
-                post_process = (rank == (first_decoder_rank - 1)) or (rank == (world_size - 1)) # encoder 和 decoder 的最后一个 rank 需要 post_process
-                add_encoder = mpu.is_inside_encoder(rank) # 流水级执行的是 encoder 块
-                add_decoder = mpu.is_inside_decoder(rank) # 流水级执行的是 decoder 块
+                # first_decoder_rank = args.encoder_pipeline_model_parallel_size
+                # pre_process = rank == 0 or rank == first_decoder_rank # encoder 和 decoder 的第一个 rank 需要 pre_process 
+                # post_process = (rank == (first_decoder_rank - 1)) or (rank == (world_size - 1)) # encoder 和 decoder 的最后一个 rank 需要 post_process
+                # add_encoder = mpu.is_inside_encoder(rank) # 流水级执行的是 encoder 块
+                # add_decoder = mpu.is_inside_decoder(rank) # 流水级执行的是 decoder 块
+                # 首先获得该流水级需要构建的模型层的首尾 [start, end], 都是闭区间
+                # eg: split_spec = [20,10,10,10,8]
+                start_layer = sum(split_spec[:rank]) + 1
+                end_layer = sum(split_spec[:rank + 1])
+                # 修改后的 add_encoder 逻辑
+                add_encoder = (start_layer <= encoder_layer_num)
+                # 修改后的 encoder_pre_process 逻辑
+                encoder_pre_process = (start_layer == 1)
+                # 修改后的 add_projector 逻辑：
+                add_projector = (start_layer <= encoder_layer_num + 1) and (end_layer >= encoder_layer_num + projector_layer_num) 
+                # 修改后的 add_decoder 逻辑：
+                add_decoder = (start_layer <= encoder_layer_num + 1) and (end_layer >= encoder_layer_num + projector_layer_num)
+                # 修改后的 pre_process 逻辑：
+                llm_pre_process = (start_layer <= encoder_layer_num + projector_layer_num + 1) and (end_layer >= encoder_layer_num + projector_layer_num + 1)
+                # 修改后的 post_process 逻辑：
+                llm_post_process = (rank == (world_size - 1))
+
+                # 接下来的问题：怎么知道构造几层 transformer 呢？
+            '''
             model = model_provider_func(
                 pre_process=pre_process,
                 post_process=post_process,
                 add_encoder=add_encoder,
                 add_decoder=add_decoder)
+            '''
+            model = model_provider_func(
+                add_encoder=add_encoder,
+                encoder_pre_process=encoder_pre_process,
+                add_projector=add_projector,
+                add_decoder=add_decoder,
+                pre_process=llm_pre_process,
+                post_process=llm_post_process
+            )
         else:
             model = model_provider_func(
                 pre_process=pre_process,
@@ -609,7 +645,7 @@ def setup_model_and_optimizer(model_provider_func,
                               scale_lr_cond=None,
                               lr_mult=1.0,
                               checkpointing_context=None):
-    """Setup model and optimizer."""
+    """Setup model and optimizer. 被 289 行调用"""
     args = get_args()
     timers = get_timers()
     one_logger = get_one_logger()
