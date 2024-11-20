@@ -7,15 +7,14 @@ from typing import Tuple, Union
 
 @dataclass
 class ModuleSpec:
-    """This is a Module Specification dataclass.
+    """这是一个模块要求说明(Module Specification) 的 dataclass.
 
-    Specification defines the location of the module (to import dynamically)
-    or the imported module itself. It also defines the params that need to be
-    passed to initialize the module.
+    要求说明 Specification 定义了 module 的位置(to import dynamically)
+    or 或者是被导入的 module 自身. 它也定义了初始化 module 需要传递的参数.
 
     Args:
-        module (Union[Tuple, type]): A tuple describing the location of the
-            module class e.g. `(module.location, ModuleClass)` or the imported
+        module (Union[Tuple, type]): 一个描述 module class 位置的元组
+            e.g. `(module.location, ModuleClass)` or the imported
             module class itself e.g. `ModuleClass` (which is already imported
             using `from module.location import ModuleClass`).
         params (dict): A dictionary of params that need to be passed while init.

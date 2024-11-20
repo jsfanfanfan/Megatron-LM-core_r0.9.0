@@ -101,7 +101,7 @@ class LLaVAModel(MegatronModule):
         # on the word embeddings inside `finalize_model_grads._allreduce_word_embedding_grads`.
         self.share_embeddings_and_output_weights = False
         if self.add_decoder:
-            self.language_model = GPTModel(
+            self.language_model = GPTModel( # megatron/core/models/gpt/gpt_model.py
                 config=language_transformer_config,
                 transformer_layer_spec=language_transformer_layer_spec,
                 vocab_size=language_vocab_size,

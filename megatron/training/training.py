@@ -458,10 +458,10 @@ def get_model(model_provider_func, model_type=ModelType.encoder_or_decoder, wrap
                 rank = mpu.get_pipeline_model_parallel_rank()
                 first_decoder_rank = args.encoder_pipeline_model_parallel_size
                 world_size = mpu.get_pipeline_model_parallel_world_size()
-                pre_process = rank == 0 or rank == first_decoder_rank
-                post_process = (rank == (first_decoder_rank - 1)) or (rank == (world_size - 1))
-                add_encoder = mpu.is_inside_encoder(rank)
-                add_decoder = mpu.is_inside_decoder(rank)
+                pre_process = rank == 0 or rank == first_decoder_rank # encoder 和 decoder 的第一个 rank 需要 pre_process 
+                post_process = (rank == (first_decoder_rank - 1)) or (rank == (world_size - 1)) # encoder 和 decoder 的最后一个 rank 需要 post_process
+                add_encoder = mpu.is_inside_encoder(rank) # 流水级执行的是 encoder 块
+                add_decoder = mpu.is_inside_decoder(rank) # 流水级执行的是 decoder 块
             model = model_provider_func(
                 pre_process=pre_process,
                 post_process=post_process,

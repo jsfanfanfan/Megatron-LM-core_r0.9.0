@@ -44,9 +44,9 @@ except ImportError:
         LayerNormImpl = WrappedTorchLayerNorm
 
 
-def get_num_layers_to_build(config: TransformerConfig) -> int:
+def get_num_layers_to_build(config: TransformerConfig) -> int: # 被 161 行调用
     """
-    Determine the number of transformer layers to build for the current pipeline stage.
+    决定当前流水级需要建立的 transformer 层的数量.
     Args:
         config (TransformerConfig): Configuration object containing transformer model parameters.
 
@@ -81,7 +81,7 @@ def get_num_layers_to_build(config: TransformerConfig) -> int:
         num_layers_per_pipeline_rank = layers_to_distribute // pipeline_stages_left
     else:
         pipeline_ranks = config.pipeline_model_parallel_size
-        num_layers_per_pipeline_rank = config.num_layers // pipeline_ranks
+        num_layers_per_pipeline_rank = config.num_layers // pipeline_ranks # 每一层平均分配了
 
     if parallel_state.get_virtual_pipeline_model_parallel_world_size() is not None:
         # Interleaved pipeline parallelism:
@@ -131,20 +131,20 @@ class TransformerBlockSubmodules:
     layer_norm: Optional[Union[ModuleSpec, torch.nn.Module]] = None
 
 
-def _get_block_submodules(
+def _get_block_submodules( # 被 184 行调用
     config: TransformerConfig, spec: Union[TransformerBlockSubmodules, ModuleSpec]
 ) -> TransformerBlockSubmodules:
     """
-    Retrieve or construct TransformerBlockSubmodules based on the provided specification.
+    取出或者构建 TransformerBlockSubmodules 基于提供的 specification.
 
-    Args:
+    参数:
         config (TransformerConfig): Configuration object for the transformer model.
         spec (Union[TransformerBlockSubmodules, ModuleSpec]): Specification for the
-            transformer block submodules. Can be either a TransformerBlockSubmodules
-            instance or a ModuleSpec.
+            transformer block submodules. 可以是一个 TransformerBlockSubmodules
+            实例 or a ModuleSpec.
 
     Returns:
-        TransformerBlockSubmodules: The submodules for the transformer block.
+        TransformerBlockSubmodules: transformer block 的子模块.
     """
 
     # Transformer block submodules.
@@ -158,7 +158,7 @@ def _get_block_submodules(
         if issubclass(spec.module, TransformerBlock):
             return spec.submodules
         elif issubclass(spec.module, BaseTransformerLayer):
-            num_layers = get_num_layers_to_build(config)
+            num_layers = get_num_layers_to_build(config) # 跳转到 47 行
             return TransformerBlockSubmodules(
                 layer_specs=[spec] * num_layers, layer_norm=LayerNormImpl
             )
@@ -181,11 +181,11 @@ class TransformerBlock(MegatronModule):
     ):
         super().__init__(config=config)
 
-        self.submodules = _get_block_submodules(config, spec)
+        self.submodules = _get_block_submodules(config, spec) # 跳转 134 行
         self.post_layer_norm = post_layer_norm
         self.pre_process = pre_process
         self.post_process = post_process
-        # Dictionary to store CUDA graphs. Number of items in the dictionary = len(self.layers).
+        # 存储 CUDA graphs 的字典. Number of items in the dictionary = len(self.layers).
         # Item `i` in the dictionary is a list of `N` CUDA graphs for layer 'i' where N is the
         # number of microbatches. Multiple CUDA graphs per layer is required to support
         # pipelining which requires running FWD graph of multiple microbatches before BWD graph.
@@ -230,7 +230,7 @@ class TransformerBlock(MegatronModule):
         #     coeff = self.layer_number
         #     self.norm_factor *= coeff
         def build_layer(layer_spec, layer_number):
-            return build_module(layer_spec, config=self.config, layer_number=layer_number)
+            return build_module(layer_spec, config=self.config, layer_number=layer_number) # megatron/core/transformer/spec_utils.py
 
         # offset is implicit in TransformerLayer
         self.layers = torch.nn.ModuleList(

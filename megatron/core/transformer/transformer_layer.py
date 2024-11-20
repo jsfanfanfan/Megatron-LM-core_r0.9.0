@@ -20,11 +20,10 @@ from megatron.core.utils import make_viewless_tensor
 @dataclass
 class TransformerLayerSubmodules:
     """
-    Configuration class for specifying the submodules of a transformer layer.
+    指定一个 transformer 层子模块的配置类.
 
-    This class defines the structure and default implementations for various
-    components of a transformer layer, allowing for flexible customization
-    of the layer's architecture.
+    这个类定义了 transformer 层各种组件的结构和默认实现, 
+    可以实现对于层结构的灵活自定义.
 
     Args:
         input_layernorm (Union[ModuleSpec, type]): Specification for the input layer normalization.

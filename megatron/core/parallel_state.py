@@ -117,48 +117,48 @@ def get_nccl_options(pg_name, nccl_comm_cfgs):
         return None
 
 
-def generate_masked_orthogonal_rank_groups(
+def generate_masked_orthogonal_rank_groups( # 被 320 行调用
     world_size: int, parallel_size: List[int], mask: List[bool]
 ) -> List[List[int]]:
-    """Generate orthogonal parallel groups based on the parallel size and mask.
+    """基于并行大小和 mask 生成正交的并行组.
 
     Arguments:
         world_size (int): world size
 
         parallel_size (List[int]):
-            The parallel size of each orthogonal parallel type. For example, if
+            每个正交并行类型的并行大小. For example, if
             tensor_parallel_size = 2, pipeline_model_parallel_group = 3, data_parallel_size = 4,
             and the parallel mapping order is tp-pp-dp, then the parallel_size = [2, 3, 4].
 
         mask (List[bool]):
-            The mask controls which parallel methods the generated groups represent. If mask[i] is
+            控制生成的并行组代表的 parallel methods 的掩码. If mask[i] is
             True, it means the generated group contains the i-th parallelism method. For example,
             if parallel_size = [tp_size, pp_size, dp_size], and mask = [True, False , True], then
             the generated group is the `tp-dp` group, if the mask = [False, True, False], then the
             generated group is the `pp` group.
 
-    Algorithm:
-        For orthogonal parallelism, such as tp/dp/pp/cp, the global_rank and
-        local_rank satisfy the following equation:
+    算法:
+        对于正交的并行, 比如 tp/dp/pp/cp, global_rank 和
+        local_rank 满足如下等式:
             global_rank = tp_rank + dp_rank * tp_size + pp_rank * tp_size * dp_size (1)
                 tp_rank \in [0, tp_size)
                 dp_rank \in [0, dp_size)
                 pp_rank \in [0, pp_size)
 
-        If we want to get the `dp_group` (tp_size * pp_size groups of dp_size ranks each.
-        For example,  if the gpu size is 8 and order is 'tp-pp-dp', size is '2-2-2', and the
-        dp_group here is [[0, 4], [1, 5], [2, 6], [3, 7]].)
-        The tp_rank and pp_rank will be combined to form the `dp_group_index`.
+        如果想获得 `dp_group` (tp_size * pp_size groups of dp_size ranks each.
+        比如,  如果 gpu 数量是 8 并且顺序是 'tp-pp-dp', size is '2-2-2',
+        这样 dp_group 就是 [[0, 4], [1, 5], [2, 6], [3, 7]].)
+        tp_rank 和 pp_rank 将联合生成 `dp_group_index`.
             dp_group_index = tp_rank + pp_rank * tp_size (2)
 
-        So, Given that tp_rank and pp_rank satisfy equation (2), and dp_rank in
-        range(0, dp_size), the ranks in dp_group[dp_group_index] satisfies the
+        所以, 假设 tp_rank 和 pp_rank 满足 (2) 式, 并且 dp_rank 在
+        (0, dp_size) 内, dp_group[dp_group_index] 里面的 ranks 就满足
         equation (1).
 
-        This function solve this math problem.
+        这个函数解决了这个数学问题.
 
-    For example, if the parallel_size = [tp_size, dp_size, pp_size] = [2, 3, 4],
-    and the mask = [False, True, False]. Then,
+    比如, 如果并行大小是 = [tp_size, dp_size, pp_size] = [2, 3, 4],
+    掩码是 = [False, True, False]. Then,
         dp_group_index(0) = tp_rank(0) + pp_rank(0) * 2
         dp_group_index(1) = tp_rank(1) + pp_rank(0) * 2
         ...
@@ -226,7 +226,7 @@ def generate_masked_orthogonal_rank_groups(
     return ranks
 
 
-class RankGenerator(object):
+class RankGenerator(object): # 被 579，591 行调用
     """A class for generating rank groups for different modes of parallelism."""
 
     def __init__(
@@ -294,17 +294,17 @@ class RankGenerator(object):
         return mask
 
     def get_ranks(self, token, independent_ep=False):
-        """Get rank group by input token.
+        """根据输入 token 获取 rank 组.
 
         Args:
             token (str):
-                Specify the ranks type that want to get. If we want
-                to obtain multiple parallel types, we can use a hyphen
-                '-' to separate them. For example, if we want to obtain
-                the TP_DP group, the token should be 'tp-dp'.
+                指定想获得的 ranks type. 如果我们想
+                获得多种并行类型, 我们可以使用连字符
+                '-' 分割它们. 比如, 如果我们想获得
+                TP_DP 并行组, token 应该是 'tp-dp'.
 
             independent_ep (bool: True):
-                This flag controls whether we treat EP and DP independently.
+                标识位用来控制是否单独处理 EP 和 DP.
                 EP shares ranks with DP, if we want to get ranks related to
                 EP, we should set the flag. For example, get_ranks('dp', True)
                 will get DP modulo EP group, and get_ranks('dp', False) will
@@ -317,7 +317,7 @@ class RankGenerator(object):
             parallel_size = self.ordered_size_wo_ep
             order = self.order_wo_ep
         mask = self.get_mask(order, token)
-        ranks = generate_masked_orthogonal_rank_groups(self.world_size, parallel_size, mask)
+        ranks = generate_masked_orthogonal_rank_groups(self.world_size, parallel_size, mask) # 跳转 120 行
         if self.rank_offset > 0:
             for rank_group in ranks:
                 for i in range(len(rank_group)):
@@ -576,7 +576,7 @@ def initialize_model_parallel(
             nccl_comm_cfgs = yaml.safe_load(stream)
 
     if encoder_world_size > 0:
-        encoder_rank_generator = RankGenerator(
+        encoder_rank_generator = RankGenerator( # 跳转 229 行
             tp=encoder_tensor_model_parallel_size,
             ep=1,
             dp=data_parallel_size,
@@ -588,22 +588,22 @@ def initialize_model_parallel(
     else:
         encoder_rank_generator = None
 
-    decoder_rank_generator = RankGenerator(
+    decoder_rank_generator = RankGenerator( # 跳转 229 行
         tp=tensor_model_parallel_size,
         ep=expert_model_parallel_size,
         dp=data_parallel_size,
         pp=pipeline_model_parallel_size,
         cp=context_parallel_size,
         order=order,
-        rank_offset=encoder_world_size,
+        rank_offset=encoder_world_size, # 用 encoder_world_size 作为偏移量
     )
 
     def generator_wrapper(group_type, **kwargs):
-        """The `RankGenerator` class produces a hyper-rectangle for a given set of
-        tensor, pipeline, data, expert, and context parallelism. If we have an encoder,
-        in addition to the default decoder, we essentially instantiate two `RankGenerator`
-        classes to construct the parallelism for each module separately, and we then have
-        to stitch them together for the right groups. For now, this means pp and tp-pp."""
+        """`RankGenerator` 类对一个给定的 tp, pp, dp, ep, cp 生成了一个多维矩阵
+        . 如果我们有一个 encoder,
+        此外还有默认的 decoder, 我们举例说明两个 `RankGenerator` 类
+        分别为两个模块构建并行, 然后我们必须把它们缝合为正确的并行组。
+        这里, 意味着 pp 和 tp-pp."""
         d_ranks = decoder_rank_generator.get_ranks(group_type, **kwargs)
         if encoder_rank_generator is None:
             for x in d_ranks:
@@ -611,8 +611,8 @@ def initialize_model_parallel(
             return
         e_ranks = encoder_rank_generator.get_ranks(group_type, **kwargs)
         if group_type == 'pp':
-            # Map 1 encoder tp rank to several decoder tp ranks, because
-            # these won't be the same size.
+            # 把 1 个 encoder 的 tp rank 映射到多个 decoder tp ranks, 因为
+            # 可能不是相同大小.
             for x, y in zip(cycle(e_ranks), d_ranks):
                 yield x + y
         elif group_type == 'tp-pp':
@@ -629,7 +629,7 @@ def initialize_model_parallel(
 
     timeout = timedelta(minutes=distributed_timeout_minutes)
 
-    # Build the data-parallel groups.
+    # 建立数据并行组.
     global _DATA_PARALLEL_GROUP
     global _DATA_PARALLEL_GROUP_GLOO
     global _DATA_PARALLEL_GLOBAL_RANKS
@@ -680,7 +680,7 @@ def initialize_model_parallel(
         # Set `NCCL_COLLNET_ENABLE=0` to restrict SHARP application to DP process groups
         os.environ["NCCL_COLLNET_ENABLE"] = "0"
 
-    # Build the context-parallel groups.
+    # 建立 context 并行组.
     global _CONTEXT_PARALLEL_GROUP
     global _CONTEXT_PARALLEL_GLOBAL_RANKS
     assert _CONTEXT_PARALLEL_GROUP is None, 'context parallel group is already initialized'
@@ -692,7 +692,7 @@ def initialize_model_parallel(
             _CONTEXT_PARALLEL_GROUP = group
             _CONTEXT_PARALLEL_GLOBAL_RANKS = ranks
 
-    # Build the model-parallel groups.
+    # 建立模型并行组.
     global _MODEL_PARALLEL_GROUP
     assert _MODEL_PARALLEL_GROUP is None, 'model parallel group is already initialized'
     for ranks in generator_wrapper('tp-pp'):
@@ -702,7 +702,7 @@ def initialize_model_parallel(
         if rank in ranks:
             _MODEL_PARALLEL_GROUP = group
 
-    # Build the model-parallel groups with expert parallel
+    # 建立带专家并行的模型并行组
     global _MODEL_AND_EXPERT_PARALLEL_GROUP
     assert (
         _MODEL_AND_EXPERT_PARALLEL_GROUP is None
@@ -714,7 +714,7 @@ def initialize_model_parallel(
         if rank in ranks:
             _MODEL_AND_EXPERT_PARALLEL_GROUP = group
 
-    # Build the tensor model-parallel groups.
+    # 建立张量模型并行组.
     global _TENSOR_MODEL_PARALLEL_GROUP
     global _TENSOR_MODEL_PARALLEL_GLOBAL_RANKS
     assert (
@@ -728,7 +728,7 @@ def initialize_model_parallel(
             _TENSOR_MODEL_PARALLEL_GROUP = group
             _TENSOR_MODEL_PARALLEL_GLOBAL_RANKS = ranks
 
-    # Build the pipeline model-parallel groups and embedding groups
+    # 建立流水线模型并行组和 embedding 组
     # (first and last rank in each pipeline model-parallel group).
     global _PIPELINE_MODEL_PARALLEL_GROUP
     global _PIPELINE_GLOBAL_RANKS
@@ -774,7 +774,7 @@ def initialize_model_parallel(
             _POSITION_EMBEDDING_GROUP = group
             _POSITION_EMBEDDING_GLOBAL_RANKS = position_embedding_ranks
 
-    # Build the tensor + data parallel groups.
+    # 建立张量+数据并行组.
     global _TENSOR_AND_DATA_PARALLEL_GROUP
     global _TENSOR_AND_DATA_PARALLEL_GROUP_WITH_CP
     assert (
@@ -804,7 +804,7 @@ def initialize_model_parallel(
         if rank in ranks:
             _TENSOR_AND_CONTEXT_PARALLEL_GROUP = group
 
-    # Build the tensor + expert parallel groups
+    # 建立张量 + 专家并行组
     global _EXPERT_MODEL_PARALLEL_GROUP
     assert _EXPERT_MODEL_PARALLEL_GROUP is None, 'Expert parallel group is already initialized'
     global _TENSOR_AND_EXPERT_PARALLEL_GROUP
@@ -861,7 +861,7 @@ def initialize_model_parallel(
             _DATA_MODULO_EXPERT_PARALLEL_GROUP_WITH_CP = group
             _DATA_MODULO_EXPERT_PARALLEL_GROUP_WITH_CP_GLOO = group_gloo
 
-    # Initialize global memory buffer
+    # 初始化全局 memory buffer
     # This isn't really "parallel state" but there isn't another good place to
     # put this. If we end up with a more generic initialization of megatron-core
     # we could stick it there

@@ -67,7 +67,7 @@ def model_provider(
 
     if use_te:
         language_transformer_layer_spec = get_layer_spec_te(is_vit=False)   # TENorm detects LayerNorm/RMS automatically.
-    else:
+    else: # examples.multimodel/layer_specs.py 43 行 说明 language model 的 transformer 结构
         language_transformer_layer_spec = get_layer_spec(is_vit=False, normalization=language_config.normalization)
 
     vision_config = deepcopy(base_config)
@@ -77,7 +77,7 @@ def model_provider(
     if vision_model_type == "clip":
         if use_te:
             vision_transformer_layer_spec = get_layer_spec_te(is_vit=True)  # TENorm detects LayerNorm/RMS automatically.
-        else:
+        else: # examples.multimodel/layer_specs.py 43 行 说明 vision model 的 transformer 结构
             vision_transformer_layer_spec = get_layer_spec(is_vit=True, normalization=vision_config.normalization)
     else:
         raise RuntimeError("unsupported vision model type", vision_model_type)
@@ -92,10 +92,10 @@ def model_provider(
         if args.encoder_tensor_model_parallel_size > 0:
             vision_config.tensor_model_parallel_size = args.encoder_tensor_model_parallel_size
             vision_projection_config.tensor_model_parallel_size = args.encoder_tensor_model_parallel_size
-
+    # examples/multimodal/layer_specs.py 103 行
     vision_projection_layer_spec = get_mlp_module_spec(use_te=use_te).submodules
 
-    model = LLaVAModel(
+    model = LLaVAModel( # megatron/core/models/multimodal/llava_model.py
         language_transformer_config=language_config,
         language_transformer_layer_spec=language_transformer_layer_spec,
         language_vocab_size=args.padded_vocab_size,

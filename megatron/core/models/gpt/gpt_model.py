@@ -94,8 +94,8 @@ class GPTModel(LanguageModule):
         self.max_position_embeddings = max_sequence_length
         self.rotary_percent = rotary_percent
 
-        if self.pre_process:
-            self.embedding = LanguageModelEmbedding(
+        if self.pre_process: # language model 的 pre_process 需要加 embedding 层
+            self.embedding = LanguageModelEmbedding( # megatron/core/models/common/embeddings/language_model_embedding.py 13 行
                 config=self.config,
                 vocab_size=self.vocab_size,
                 max_sequence_length=self.max_sequence_length,
@@ -103,7 +103,7 @@ class GPTModel(LanguageModule):
             )
 
         if self.position_embedding_type == 'rope':
-            self.rotary_pos_emb = RotaryEmbedding(
+            self.rotary_pos_emb = RotaryEmbedding( # megatron/core/models/common/embeddings/rotary_pos_embedding.py 48 行
                 kv_channels=self.config.kv_channels,
                 rotary_percent=rotary_percent,
                 rotary_interleaved=self.config.rotary_interleaved,
@@ -113,7 +113,7 @@ class GPTModel(LanguageModule):
             )
 
         # Transformer.
-        self.decoder = TransformerBlock(
+        self.decoder = TransformerBlock( # megatron/core/transformer/transformer_block.py 171 行
             config=self.config,
             spec=transformer_layer_spec,
             pre_process=self.pre_process,

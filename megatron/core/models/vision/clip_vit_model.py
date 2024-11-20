@@ -61,7 +61,7 @@ class CLIPViTModel(VisionModule):
 
         self.seq_length = self.num_patches + (self.class_token_len if self.add_class_token else 0)
 
-        self.conv1 = torch.nn.Conv2d(
+        self.conv1 = torch.nn.Conv2d( # 一层卷积
             in_channels=3,
             out_channels=self.visual_hidden_size,
             kernel_size=self.patch_dim,
@@ -79,7 +79,7 @@ class CLIPViTModel(VisionModule):
                 torch.randn(1, self.class_token_len, self.visual_hidden_size)
             )
 
-        self.ln_pre = build_module(
+        self.ln_pre = build_module( # 一层 normalization
             ln_pre_impl,
             config=transformer_config,
             hidden_size=self.visual_hidden_size,
