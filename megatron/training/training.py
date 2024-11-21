@@ -433,12 +433,32 @@ def  get_model(model_provider_func, model_type=ModelType.encoder_or_decoder, wra
     # 获取模型划分方式
     split_spec = list(map(int,args.split_spec.split(",")))
     # 如何在获取模型之前就知道各个模块的层数？只有 llm 的层数可以从参数得到
-    # Note：此处代码扩展性极差
-    encoder_layer_num = 24
-    projector_layer_num = 2
+    if args.vision_model_type == "clip":
+        encoder_layer_num = 24
+    projector_layer_num = 2 # # Note：此处代码扩展性极差
     llm_layer_num = args.num_layers
-    layer_sum = encoder_layer_num + projector_layer_num + layer_sum
+    layer_sum = encoder_layer_num + projector_layer_num + llm_layer_num
     assert sum(split_spec) == layer_sum, "split specification is not appropriate"
+    
+    # 计算流水级应该创建多少层 encoder transformer
+    def _get_encoder_transformer_layer_num(start_layer, end_layer):
+        if start_layer > encoder_layer_num:
+            return 0
+        else:
+            if end_layer <= encoder_layer_num:
+                return end_layer - start_layer + 1
+            else:
+                return encoder_layer_num - start_layer + 1
+
+    # 计算流水级应该创建多少层 llm transformer
+    def _get_llm_transformer_layer_num(start_layer, end_layer):
+        if end_layer <= encoder_layer_num + projector_layer_num:
+            return 0
+        else:
+            if start_layer > encoder_layer_num + projector_layer_num:
+                return end_layer - start_layer + 1
+            else:
+                return end_layer - (encoder_layer_num + projector_layer_num) 
     # Build model.
     if mpu.get_pipeline_model_parallel_world_size() > 1 and \
        args.virtual_pipeline_model_parallel_size is not None:
@@ -474,6 +494,9 @@ def  get_model(model_provider_func, model_type=ModelType.encoder_or_decoder, wra
                 # eg: split_spec = [20,10,10,10,8]
                 start_layer = sum(split_spec[:rank]) + 1
                 end_layer = sum(split_spec[:rank + 1])
+                assert start_layer <= end_layer
+                assert start_layer != encoder_layer_num + 1 or end_layer != encoder_layer_num + 1, \
+                    "projecor can not be patitioned into two stages!"
                 # 修改后的 add_encoder 逻辑
                 add_encoder = (start_layer <= encoder_layer_num)
                 # 修改后的 encoder_pre_process 逻辑
@@ -481,13 +504,15 @@ def  get_model(model_provider_func, model_type=ModelType.encoder_or_decoder, wra
                 # 修改后的 add_projector 逻辑：
                 add_projector = (start_layer <= encoder_layer_num + 1) and (end_layer >= encoder_layer_num + projector_layer_num) 
                 # 修改后的 add_decoder 逻辑：
-                add_decoder = (start_layer <= encoder_layer_num + 1) and (end_layer >= encoder_layer_num + projector_layer_num)
+                add_decoder = (end_layer >= encoder_layer_num + projector_layer_num + 1)
                 # 修改后的 pre_process 逻辑：
                 llm_pre_process = (start_layer <= encoder_layer_num + projector_layer_num + 1) and (end_layer >= encoder_layer_num + projector_layer_num + 1)
                 # 修改后的 post_process 逻辑：
                 llm_post_process = (rank == (world_size - 1))
 
-                # 接下来的问题：怎么知道构造几层 transformer 呢？
+                # 下面的参数先备用, _build_layer 需要的时候再传递
+                stage_encoder_transformer_layer_num = _get_encoder_transformer_layer_num(start_layer, end_layer)
+                stage_llm_transformer_layer_num = _get_llm_transformer_layer_num(start_layer, end_layer)
             '''
             model = model_provider_func(
                 pre_process=pre_process,

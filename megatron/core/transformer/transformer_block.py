@@ -135,7 +135,7 @@ def _get_block_submodules( # 被 184 行调用
     config: TransformerConfig, spec: Union[TransformerBlockSubmodules, ModuleSpec]
 ) -> TransformerBlockSubmodules:
     """
-    取出或者构建 TransformerBlockSubmodules 基于提供的 specification.
+    基于提供的 specification 取出或者构建 TransformerBlockSubmodules.
 
     参数:
         config (TransformerConfig): Configuration object for the transformer model.
@@ -167,6 +167,10 @@ def _get_block_submodules( # 被 184 行调用
     else:
         raise Exception(f"specialize for {type(spec).__name__}.")
 
+# 在 TransformerBlock 中实现 transformer 层的不均衡划分
+# 1. rank 怎么知道自己拿的是第几层？
+# 2. rank 怎么知道自己需要创建多少层？
+# 3. 这个逻辑怎么迁移到 encoder？
 
 class TransformerBlock(MegatronModule):
     """Transformer class."""
@@ -180,7 +184,7 @@ class TransformerBlock(MegatronModule):
         post_process: bool = True,
     ):
         super().__init__(config=config)
-
+        # 通过 TransforemrConfig 和 spec 得到 submodules
         self.submodules = _get_block_submodules(config, spec) # 跳转 134 行
         self.post_layer_norm = post_layer_norm
         self.pre_process = pre_process
@@ -226,6 +230,7 @@ class TransformerBlock(MegatronModule):
         # Transformer layers.
         # @jcasper can we improve how we deal with layer_number?
         # currently it's only used in CoreAttention?
+        # 确实，现在只能划分 transformer 层不适应多种多样的模型结构
         # if self.apply_query_key_layer_scaling:
         #     coeff = self.layer_number
         #     self.norm_factor *= coeff
