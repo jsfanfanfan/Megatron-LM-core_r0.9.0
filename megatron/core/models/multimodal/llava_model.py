@@ -459,16 +459,10 @@ class LLaVAModel(MegatronModule):
         # if they were computed already earlier for this sample.
         if use_inference_kv_cache:
             image_embeddings = None
-        # elif self.add_encoder and not has_images: # 有 encoder 无图像
-        elif self.encoder_pre_process and self.add_encoder and not has_images:
+        elif self.add_encoder and not has_images: # 输入不是图片
             # If no images provided, use an empty image embeddings tensor.
             image_embeddings = torch.tensor([], dtype=images.dtype, device=images.device)
-        elif not self.encoder_pre_process and self.add_encoder and not has_images:
-            image_embeddings = torch.tensor([], dtype=images.dtype, device=images.device)
-        # elif self.add_encoder and has_images: # 有 encoder 有图像
-        elif self.encoder_pre_process and self.add_encoder and has_images:
-            # 修改之后，vision_model 的输入不一定是 image，而是某个 transformer layer 算出的 hidden state
-            # 此处由于有 conv+pre_ln 头，所以 encoder 的输入依然是图像
+        elif self.add_encoder and has_images: # 最原始的情况
             image_embeddings = self.vision_model(images)  # [num_tiles, img_seq_len, h_vision]
             if self._drop_vision_class_token:
                 image_embeddings = image_embeddings[:, self.vision_model.class_token_len :, :]
@@ -484,27 +478,7 @@ class LLaVAModel(MegatronModule):
                 inference_params.key_value_memory_dict["image_tokens_count"] = (
                     image_embeddings.shape[0] * image_embeddings.shape[1]
                 )
-        # 处理没有头，只有 transformer 层的 encoder 流水级
-        elif not self.encoder_pre_process and self.add_encoder and has_images:
-            # 对输入向量 image 进行处理，原来的 image 是 [num_tiles, img_seq_len, h_vision]
-            # 处理后需要是上一层 encoder transforemr 的输出作为输入  
-            images = 
-            image_embeddings = self.vision_model(images)
-            if self._drop_vision_class_token:
-                image_embeddings = image_embeddings[:, self.vision_model.class_token_len :, :]
-            # contiguous() required as `permute` can sparsify the tensor and this breaks pipelining
-            image_embeddings = image_embeddings.permute(
-                1, 0, 2
-            ).contiguous()  # [img_seq_len, num_tiles, h_vision]
-
-            # TODO: Support batched inference.
-            # In inference, the language model KV cache will be updated for image token positions.
-            # Store the image tokens sequence length to be used as an offset to the KV cache later.
-            if inference_params is not None:
-                inference_params.key_value_memory_dict["image_tokens_count"] = (
-                    image_embeddings.shape[0] * image_embeddings.shape[1]
-                )
-        else: # 没有 encoder
+        else:
             image_embeddings = self.encoder_hidden_state
 
         if not self.add_projector:
@@ -548,7 +522,8 @@ class LLaVAModel(MegatronModule):
             image_token_index,
             num_image_tiles,
         )  # [combined_seq_len, b, h_language], [b, combined_seq_len], [b, combined_seq_len]
-
+        # 如果 language model 的输入不是来自 projector，二十来自上一个 transformer 层
+        # language model 的输入怎么处理？
         output = self.language_model(
             input_ids=None,
             position_ids=None,

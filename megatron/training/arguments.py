@@ -164,6 +164,8 @@ def validate_args(args, defaults={}):
     # Set args.use_dist_ckpt from args.ckpt_format.
     update_use_dist_ckpt(args)
 
+    # 修改 valid 过程，修正废弃参数
+    """
     if args.encoder_tensor_model_parallel_size > 0:
         assert args.encoder_pipeline_model_parallel_size > 0, "encoder_pipeline_model_parallel_size must be defined."
         assert args.num_attention_heads % args.encoder_tensor_model_parallel_size == 0
@@ -175,13 +177,15 @@ def validate_args(args, defaults={}):
     encoder_model_size = args.encoder_tensor_model_parallel_size * args.encoder_pipeline_model_parallel_size * args.context_parallel_size
     decoder_model_size = args.tensor_model_parallel_size * args.pipeline_model_parallel_size * args.context_parallel_size
     total_model_size = encoder_model_size + decoder_model_size
-
+    """
+    assert args.num_attention_heads % args.tensor_model_parallel_size == 0,"incorrect attention_head_num or tensor parallel size"
+    total_model_size = args.tensor_model_parallel_size * args.pipeline_model_parallel_size * args.context_parallel_size
     # Total model size.
     assert args.world_size % total_model_size == 0, (
-        f"world size ({args.world_size}) is not divisible by total_model_size ({encoder_model_size=} + {decoder_model_size=})"
+        f"world size ({args.world_size}) is not divisible by total_model_size ({total_model_size})"
     )
 
-    # Pipeline model parallel size.
+    # Pipeline model parallel size.(embedding 单独放一层)
     args.transformer_pipeline_model_parallel_size = (
         args.pipeline_model_parallel_size - 1
         if args.standalone_embedding_stage else
@@ -195,21 +199,17 @@ def validate_args(args, defaults={}):
         print('using world size: {}, data-parallel size: {}, '
               'context-parallel size: {}, '
               'tensor-model-parallel size: {}, '
-              'encoder-tensor-model-parallel size: {}, '
-              'pipeline-model-parallel size: {}, '
-              'encoder-pipeline-model-parallel size: {}'.format(
+              'pipeline-model-parallel size: {}, '.format(
                   args.world_size, args.data_parallel_size,
                   args.context_parallel_size,
                   args.tensor_model_parallel_size,
-                  args.encoder_tensor_model_parallel_size,
-                  args.pipeline_model_parallel_size,
-                  args.encoder_pipeline_model_parallel_size), flush=True)
+                  args.pipeline_model_parallel_size), flush=True)
 
     # backwards compatibility.
-    if args.pipeline_model_parallel_split_rank is not None:
-        args.encoder_pipeline_model_parallel_size = args.pipeline_model_parallel_split_rank
-        args.pipeline_model_parallel_size -= args.encoder_pipeline_model_parallel_size
-        assert args.pipeline_model_parallel_size > 0
+    # if args.pipeline_model_parallel_split_rank is not None:
+    #    args.encoder_pipeline_model_parallel_size = args.pipeline_model_parallel_split_rank
+    #    args.pipeline_model_parallel_size -= args.encoder_pipeline_model_parallel_size
+    assert args.pipeline_model_parallel_size > 0
 
     if args.tp_comm_overlap:
         assert args.sequence_parallel == True, 'Tensor parallel communication/GEMM overlap can happen only when sequence parallelism is enabled'
@@ -1507,17 +1507,20 @@ def _add_distributed_args(parser):
                        help='Specification for layer partition')
     group.add_argument('--tensor-model-parallel-size', type=int, default=1,
                        help='Degree of tensor model parallelism.')
-    group.add_argument('--encoder-tensor-model-parallel-size', type=int, default=0,
-                       help='Degree of tensor model parallelism for the encoder.')
+    # 所有模块共享相同的张量并行策略，所有模块统一进行流水线划分
+    # 这个参数直接干掉
+    # group.add_argument('--encoder-tensor-model-parallel-size', type=int, default=0,
+    #                    help='Degree of tensor model parallelism for the encoder.')
     group.add_argument('--pipeline-model-parallel-size', type=int, default=1,
                        help='Degree of pipeline model parallelism.')
-    group.add_argument('--encoder-pipeline-model-parallel-size', type=int, default=0,
-                       help=('Degree of pipeline model parallelism in the encoder. This is '
-                             'independent of the amount of pipeline in the decoder.'))
-    group.add_argument('--pipeline-model-parallel-split-rank',
-                       type=int, default=None,
-                       help=('Rank where encoder and decoder should be split. '
-                             'Deprecated; use --encoder-pipeline-model-parallel-size instead.'))
+    # 这个参数直接干掉
+    # group.add_argument('--encoder-pipeline-model-parallel-size', type=int, default=0,
+    #                    help=('Degree of pipeline model parallelism in the encoder. This is '
+    #                          'independent of the amount of pipeline in the decoder.'))
+    # group.add_argument('--pipeline-model-parallel-split-rank',
+    #                   type=int, default=None,
+    #                   help=('Rank where encoder and decoder should be split. '
+    #                         'Deprecated; use --encoder-pipeline-model-parallel-size instead.'))
     group.add_argument('--decoder-first-pipeline-num-layers',
                        type=int, default=None,
                        help=('The number of transformer layers on the first pipeline stage of the decoder. '

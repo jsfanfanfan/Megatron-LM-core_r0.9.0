@@ -124,24 +124,26 @@ class CLIPViTModel(VisionModule):
         Returns:
             x (torch.Tensor): output after final transformer block of shape [b, s, h].
         """
-        x = self.conv1(x)  # shape = [batch, hidden_size, grid, grid]
-        x = x.reshape(x.shape[0], x.shape[1], -1)  # [batch, hidden_size, grid ** 2]
-        x = x.permute(0, 2, 1)  # [batch, grid ** 2, hidden_size]
+        # x 有可能是图像向量，有可能是 hidden states
+        if self.encoder_pre_process:
+            x = self.conv1(x)  # shape = [batch, hidden_size, grid, grid]
+            x = x.reshape(x.shape[0], x.shape[1], -1)  # [batch, hidden_size, grid ** 2]
+            x = x.permute(0, 2, 1)  # [batch, grid ** 2, hidden_size]
 
-        if self.add_class_token:
-            class_token = self.class_token.expand(
-                x.shape[0], -1, -1
-            )  # [batch, class_token_len, hidden_size]
-            x = torch.cat(
-                [class_token, x], dim=1
-            )  # [batch, grid ** 2 + class_token_len, hidden_size]
+            if self.add_class_token:
+                class_token = self.class_token.expand(
+                    x.shape[0], -1, -1
+                )  # [batch, class_token_len, hidden_size]
+                x = torch.cat(
+                    [class_token, x], dim=1
+                )  # [batch, grid ** 2 + class_token_len, hidden_size]
 
-        assert x.shape[1] == self.seq_length, f"{x.shape[1]} != {self.seq_length}"
-        x = x + self.position_embeddings(self.position_ids)
-        x = self.ln_pre(x)
-        x = x.permute(1, 0, 2)  # [b, s, h] -> [s, b, h]
-        x = x.contiguous()
-        # contiguous() call required as `permute` can sparsify the tensor and this breaks pipelining
+            assert x.shape[1] == self.seq_length, f"{x.shape[1]} != {self.seq_length}"
+            x = x + self.position_embeddings(self.position_ids)
+            x = self.ln_pre(x)
+            x = x.permute(1, 0, 2)  # [b, s, h] -> [s, b, h]
+            x = x.contiguous()
+            # contiguous() call required as `permute` can sparsify the tensor and this breaks pipelining
 
         x = self.decoder(x, attention_mask)
         x = x.permute(1, 0, 2)  # [s, b, h] -> [b, s, h]

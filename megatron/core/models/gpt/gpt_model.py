@@ -192,8 +192,8 @@ class GPTModel(LanguageModule):
 
         It either returns the Loss values if labels are given  or the final hidden units
         """
-        # If decoder_input is provided (not None), then input_ids and position_ids are ignored.
-        # Otherwise, apply embedding layer on input_ids and position_ids to get decoder_input.
+        # 如果提供了 decoder_input (not None), 那么 input_ids and position_ids 就被忽略.
+        # 否则, 把 embedding layer 作用在 input_ids 和 position_ids 来获得 decoder_input.
 
         # Decoder embedding.
         if decoder_input is not None:

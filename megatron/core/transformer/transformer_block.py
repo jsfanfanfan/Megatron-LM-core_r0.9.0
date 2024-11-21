@@ -170,9 +170,10 @@ def _get_block_submodules( # 被 184 行调用
         raise Exception(f"specialize for {type(spec).__name__}.")
 
 # 在 TransformerBlock 中实现 transformer 层的不均衡划分
-# 1. rank 怎么知道自己拿的是第几层？
-# 2. rank 怎么知道自己需要创建多少层？
-# 3. 这个逻辑怎么迁移到 encoder？
+# 1. rank 怎么知道自己拿的是第几层？√
+# 2. rank 怎么知道自己需要创建多少层？√
+# 3. 这个逻辑怎么迁移到 encoder？√
+# 4. Transformer Block 的输入问题怎么解决？Megatron 只有一种 transformer 块，如果 transformer 块有好几种怎么实现？
 
 class TransformerBlock(MegatronModule):
     """Transformer class."""
@@ -355,13 +356,13 @@ class TransformerBlock(MegatronModule):
         return hidden_states
 
     def set_input_tensor(self, input_tensor: Tensor):
-        """Set input tensor to be used instead of forward()'s input.
+        """设置使用的输入张量而不是 forward() 的输出.
 
-        When doing pipeline parallelism the input from the previous
-        stage comes from communication, not from the input, so the
-        model's forward_step_func won't have it. This function is thus
-        used by internal code to bypass the input provided by the
-        forward_step_func"""
+        当做流水线并行时 ，从上一个流水级来的输入是通过同通信, 
+        而不是来自输入, 所以模型的 forward_step_func() 没有输入. 
+        This function is thus
+        used by internal code to 绕过
+        forward_step_func() 提供的输入 """
         self.input_tensor = input_tensor
 
     def forward(

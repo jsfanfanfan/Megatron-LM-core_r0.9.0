@@ -381,16 +381,28 @@ def add_multimodal_extra_args(parser):
 
     return parser
 
-
+# embedding_rank 的判定需要改变
 def llava_embedding_ranks(pp_ranks):
-    """LLava's embedding ranks consist of the decoder's first and last ranks (ie, the ViT has no embeddings).
+    """LLava's embedding ranks consist of the llm 的第一个和最后一个 rank (ie, the ViT has no embeddings).
     Args:
         pp_ranks: A list of global ranks that constitute a pipeline group.
     """
     args = get_args()
-
+    split_spec = list(map(int,args.split_spec.split(",")))
+    assert len(split_spec) == len(pp_ranks), "incorrect layer partition"
+    if args.vision_model_type == "clip":
+        encoder_layer_num = 24
+    projector_layer_num = 2 # # Note：此处代码扩展性极差
+    llm_layer_num = args.num_layers
     # encoder size is also the index to the first rank of the decoder.
-    epp = args.encoder_pipeline_model_parallel_size
+    # epp = args.encoder_pipeline_model_parallel_size
+    # epp 的逻辑需要重新定义
+    epp, start = 0, 0
+    for i in range(len(pp_ranks)):
+        start += split_spec[i]
+        if start >= encoder_layer_num + projector_layer_num:
+            break;
+        else: epp += 1
 
     last_rank = pp_ranks[-1]
     if len(pp_ranks) == 1 or pp_ranks[epp] == last_rank:
@@ -398,17 +410,27 @@ def llava_embedding_ranks(pp_ranks):
     else:
         return [pp_ranks[epp], last_rank]
 
-
+# position_embedding_ranks 的判定需要改变
 def llava_position_embedding_ranks(pp_ranks):
-    """LLava's embedding ranks consist of the singular rank of the model or the decoder's first rank.
+    """LLava's embedding ranks consist of the 模型唯一的 rank 或者 llm 的第一个 rank.
     Args:
         pp_ranks: A list of global ranks that constitute a pipeline group.
     """
     args = get_args()
-
+    split_spec = list(map(int,args.split_spec.split(",")))
+    assert len(split_spec) == len(pp_ranks), "incorrect layer partition"
+    if args.vision_model_type == "clip":
+        encoder_layer_num = 24
+    projector_layer_num = 2 # # Note：此处代码扩展性极差
+    llm_layer_num = args.num_layers
     # encoder size is also the index to the first rank of the decoder.
-    epp = args.encoder_pipeline_model_parallel_size
-
+    # epp = args.encoder_pipeline_model_parallel_size
+    epp, start = 0, 0
+    for i in range(len(pp_ranks)):
+        start += split_spec[i]
+        if start >= encoder_layer_num + projector_layer_num:
+            break;
+        else: epp += 1
     last_rank = pp_ranks[-1]
     if len(pp_ranks) == 1:
         return [last_rank]
