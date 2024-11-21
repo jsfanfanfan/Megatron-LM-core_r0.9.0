@@ -23,8 +23,11 @@ from megatron.training import pretrain
 from dataloader_provider import train_valid_test_dataloaders_provider
 
 def model_provider(
-    add_encoder=True, encoder_pre_process=True, add_projector=True, 
+    add_encoder=True, encoder_pre_process=True, 
+    stage_encoder_transformer_layer_num=24,
+    add_projector=True, 
     add_decoder=True, pre_process=True, post_process=True,
+    stage_llm_transformer_layer_num=8,
     parallel_output=True) -> LLaVAModel:
     """Builds the model.
 
@@ -67,7 +70,8 @@ def model_provider(
 
     language_config = deepcopy(base_config) # 更新 mistral-7b 的参数
     language_config = get_language_model_config(language_config) # config.py 7 行
-
+    # 给 language_config 添加成员变量
+    language_config.transformer_layer_num = stage_llm_transformer_layer_num
     if use_te:
         language_transformer_layer_spec = get_layer_spec_te(is_vit=False)   # TENorm detects LayerNorm/RMS automatically.
     else: # examples.multimodel/layer_specs.py 43 行 说明 language model 的 transformer 结构
@@ -75,6 +79,8 @@ def model_provider(
 
     vision_config = deepcopy(base_config) # 更新 clip-vit 的参数，config.py 65行
     vision_config = get_vision_model_config(vision_config, apply_query_key_layer_scaling=args.apply_query_key_layer_scaling)
+    # 给 vision_config 添加成员变量
+    vision_config.transformer_layer_num = stage_encoder_transformer_layer_num
 
     vision_model_type = args.vision_model_type
     if vision_model_type == "clip":

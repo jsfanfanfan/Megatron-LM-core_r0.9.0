@@ -32,6 +32,7 @@ class CLIPViTModel(VisionModule):
         self,
         transformer_config: TransformerConfig,
         transformer_layer_spec: ModuleSpec,
+        encoder_pre_process: bool = True,
         ln_pre_impl: Union[ModuleSpec, type] = TENorm,
         add_class_token: bool = True,
         class_token_len: int = 1,
@@ -44,6 +45,7 @@ class CLIPViTModel(VisionModule):
         if has_config_logger_enabled(transformer_config):
             log_config_to_disk(transformer_config, locals(), prefix=type(self).__name__)
 
+        self.encoder_pre_process = encoder_pre_process
         self.class_token_len = class_token_len
         self.visual_hidden_size = transformer_config.hidden_size
         self.patch_dim = patch_dim
@@ -60,31 +62,32 @@ class CLIPViTModel(VisionModule):
         self.class_token_len = class_token_len
 
         self.seq_length = self.num_patches + (self.class_token_len if self.add_class_token else 0)
-
-        self.conv1 = torch.nn.Conv2d( # 一层卷积
-            in_channels=3,
-            out_channels=self.visual_hidden_size,
-            kernel_size=self.patch_dim,
-            stride=self.patch_dim,
-            bias=False,
-        )
-
-        self.position_ids = torch.arange(self.seq_length).expand(1, -1).cuda()
-
-        self.position_embeddings = torch.nn.Embedding(self.seq_length, self.visual_hidden_size)
-
-        self.add_class_token = add_class_token
-        if self.add_class_token:
-            self.class_token = torch.nn.Parameter(
-                torch.randn(1, self.class_token_len, self.visual_hidden_size)
+        # 修改为只有 encoder 的第一个流水级才有 conv1 和 ln_pre
+        if self.encoder_pre_process:
+            self.conv1 = torch.nn.Conv2d( # 一层卷积
+                in_channels=3,
+                out_channels=self.visual_hidden_size,
+                kernel_size=self.patch_dim,
+                stride=self.patch_dim,
+                bias=False,
             )
 
-        self.ln_pre = build_module( # 一层 normalization
-            ln_pre_impl,
-            config=transformer_config,
-            hidden_size=self.visual_hidden_size,
-            eps=transformer_config.layernorm_epsilon,
-        )
+            self.position_ids = torch.arange(self.seq_length).expand(1, -1).cuda()
+
+            self.position_embeddings = torch.nn.Embedding(self.seq_length, self.visual_hidden_size)
+
+            self.add_class_token = add_class_token
+            if self.add_class_token:
+                self.class_token = torch.nn.Parameter(
+                    torch.randn(1, self.class_token_len, self.visual_hidden_size)
+                )
+
+            self.ln_pre = build_module( # 一层 normalization
+                ln_pre_impl,
+                config=transformer_config,
+                hidden_size=self.visual_hidden_size,
+                eps=transformer_config.layernorm_epsilon,
+            )
 
         self.model_type = ModelType.encoder_or_decoder
 

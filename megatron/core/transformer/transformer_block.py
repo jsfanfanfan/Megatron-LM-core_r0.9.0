@@ -80,8 +80,10 @@ def get_num_layers_to_build(config: TransformerConfig) -> int: # 被 161 行调�
         ), "With uneven pipelineing the left over layers must be divisible by left over stages"
         num_layers_per_pipeline_rank = layers_to_distribute // pipeline_stages_left
     else:
-        pipeline_ranks = config.pipeline_model_parallel_size
-        num_layers_per_pipeline_rank = config.num_layers // pipeline_ranks # 每一层平均分配了
+        # 每个模块的流水级不独立，config.pipeline_model_parallel_size 被取代
+        # pipeline_ranks = config.pipeline_model_parallel_size
+        # num_layers_per_pipeline_rank = config.num_layers // pipeline_ranks # 每一层平均分配了
+        num_layers_per_pipeline_rank = config.transformer_layer_num
 
     if parallel_state.get_virtual_pipeline_model_parallel_world_size() is not None:
         # Interleaved pipeline parallelism:
@@ -184,7 +186,7 @@ class TransformerBlock(MegatronModule):
         post_process: bool = True,
     ):
         super().__init__(config=config)
-        # 通过 TransforemrConfig 和 spec 得到 submodules
+        # 通过 TransforemrConfig 和 spec 得到 submodules，这里 get_num_layers_to_build 计算构建多少层
         self.submodules = _get_block_submodules(config, spec) # 跳转 134 行
         self.post_layer_norm = post_layer_norm
         self.pre_process = pre_process

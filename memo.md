@@ -44,14 +44,18 @@
                 pre_process=llm_pre_process,
                 post_process=llm_post_process)
     
-        流水级只有 CLIP-vit 的部分 transformer 层(带不带头)：
-        
-        流水级有 CLIP-vit 部分 transformer 层（带不带头） Projector 的 Linear 层：
+        流水级只有 CLIP-vit 的部分 transformer 层(带不带头);
+        流水级有 CLIP-vit 部分 transformer 层（带不带头） Projector 的 Linear 层;
+        流水级有 CLIP-vit 部分 transformer 层（带不带头）和所有 Projector 的 Linear 层和部分 llm 的transformer 层（pre_process, 或许 post_precess）;
+        流水级只有全部 Projector 层;
+        流水级有全部 Projector Linear 层 和部分 llm 的 transformer 层(pre_process, 或许 post_process);
+        流水级有部分 llm 的 transformer 层（有头？有尾？二者都有？）;
 
-        流水级有 CLIP-vit 部分 transformer 层（带不带头）和所有 Projector 的 Linear 层和部分 llm 的transformer 层（pre_process, 或许 post_precess）
+    用 start_layer 和 end_layer 判断各个标识位；
+    层数问题使用在config中添加参数一起传过去；
 
-        流水级只有全部 Projector 层
+    每个 GPU 获取到的模型块的输入可能是不一样的，解决 forward 的传播问题:
 
-        流水级有全部 Projector Linear 层 和部分 llm 的 transformer 层(pre_process, 或许 post_process) ：[]
 
-        流水级有部分 llm 的 transformer 层（有头？有尾？二者都有？）
+
+

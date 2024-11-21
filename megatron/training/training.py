@@ -523,10 +523,12 @@ def  get_model(model_provider_func, model_type=ModelType.encoder_or_decoder, wra
             model = model_provider_func(
                 add_encoder=add_encoder,
                 encoder_pre_process=encoder_pre_process,
+                stage_encoder_transformer_layer_num=stage_encoder_transformer_layer_num,
                 add_projector=add_projector,
                 add_decoder=add_decoder,
                 pre_process=llm_pre_process,
-                post_process=llm_post_process
+                post_process=llm_post_process,
+                stage_llm_transformer_layer_num=stage_llm_transformer_layer_num
             )
         else:
             model = model_provider_func(

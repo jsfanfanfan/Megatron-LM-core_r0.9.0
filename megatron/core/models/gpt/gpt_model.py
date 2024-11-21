@@ -151,8 +151,8 @@ class GPTModel(LanguageModule):
                 grad_output_buffer=self.grad_output_buffer,
             )
 
-        if self.pre_process or self.post_process:
-            self.setup_embeddings_and_output_layer()
+        if self.pre_process or self.post_process: # 这个是在干嘛？估计对于 Conv.2D 和 pre_LayerNorm 有用 
+            self.setup_embeddings_and_output_layer() # megatron/core/models/common/language_module/language_module.py 47 行
 
         if has_config_logger_enabled(self.config):
             log_config_to_disk(
