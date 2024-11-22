@@ -56,8 +56,6 @@ OPTIONS=" \
     --attention-softmax-in-fp32 \
     --use-checkpoint-args \
     --use-distributed-optimizer \
-    --transformer-impl transformer_engine \
-    --use-te \
     --normalization RMSNorm \
     --group-query-attention \
     --num-query-groups 8 \
@@ -126,6 +124,8 @@ OPTIONS=" \
     --allow-missing-vision-projection-checkpoint \
     --use-tp-pp-dp-mapping \
 "
+# --use-te \
+# --transformer-impl transformer_engine \
 
 export NVTE_APPLY_QK_LAYER_SCALING=0
 export NVTE_ALLOW_NONDETERMINISTIC_ALGO=${NONDETERMINISTIC_ATTN}

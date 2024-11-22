@@ -70,7 +70,7 @@ def model_provider(
 
     language_config = deepcopy(base_config) # 更新 mistral-7b 的参数
     language_config = get_language_model_config(language_config) # config.py 7 行
-    # 给 language_config 添加成员变量
+    # 给 language_config 添加成员变量, 后面 _build_layer 使用
     language_config.transformer_layer_num = stage_llm_transformer_layer_num
     if use_te:
         language_transformer_layer_spec = get_layer_spec_te(is_vit=False)   # TENorm detects LayerNorm/RMS automatically.
@@ -79,7 +79,7 @@ def model_provider(
 
     vision_config = deepcopy(base_config) # 更新 clip-vit 的参数，config.py 65行
     vision_config = get_vision_model_config(vision_config, apply_query_key_layer_scaling=args.apply_query_key_layer_scaling)
-    # 给 vision_config 添加成员变量
+    # 给 vision_config 添加成员变量, 后面 _build_layer 使用
     vision_config.transformer_layer_num = stage_encoder_transformer_layer_num
 
     vision_model_type = args.vision_model_type
@@ -103,13 +103,14 @@ def model_provider(
             vision_config.tensor_model_parallel_size = args.encoder_tensor_model_parallel_size
             vision_projection_config.tensor_model_parallel_size = args.encoder_tensor_model_parallel_size
     """
-    # 上述操作使得大部分参数在 args=get_args(), 不同模块各自的参数在 module.config 中
+    # 上述操作使得大部分参数在 args=get_args(), 不同模块各自的参数在 module_config(一个 TransformerConfig 类) 中
     # 修改使得 encoder 可以有多个流水级
     assert args.pipeline_model_parallel_size > 0
-    assert args.encoder_tensor_model_parallel_size == args.tensor_model_parallel_size, \
-        "encoder tensor model parallel size must equal tensor model parallel size"
-    vision_config.tensor_model_parallel_size = args.encoder_tensor_model_parallel_size
-    vision_projection_config.tensor_model_parallel_size = args.encoder_tensor_model_parallel_size
+    assert args.tensor_model_pipeline_size > 0
+    # assert args.encoder_tensor_model_parallel_size == args.tensor_model_parallel_size, \
+    #    "encoder tensor model parallel size must equal tensor model parallel size"
+    vision_config.tensor_model_parallel_size = args.tensor_model_parallel_size
+    vision_projection_config.tensor_model_parallel_size = args.tensor_model_parallel_size
 
     # examples/multimodal/layer_specs.py 103 行
     vision_projection_layer_spec = get_mlp_module_spec(use_te=use_te).submodules

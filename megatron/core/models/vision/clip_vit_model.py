@@ -97,14 +97,14 @@ class CLIPViTModel(VisionModule):
         # Note: a final layer norm and/or linear layer present in some implementations
         # are omitted here. They can be added separately where needed.
         self.decoder = TransformerBlock(
-            config=transformer_config,
+            config=transformer_config, # 这里 config 蕴含层数信息 transformer_layer_num
             spec=transformer_layer_spec,
             pre_process=True,
             post_process=False,
         )
 
     def set_input_tensor(self, input_tensor: torch.Tensor) -> None:
-        """Sets input tensor to the model.
+        """给 clip-vit 的 self.decoder(transformer层, 一个 transformer_block 类) 设置输入
 
         Args:
             input_tensor (Tensor): Sets the input tensor for the model.
@@ -115,7 +115,7 @@ class CLIPViTModel(VisionModule):
         self, x: torch.Tensor, attention_mask: Optional[torch.Tensor] = None
     ) -> torch.Tensor:
         """Forward function of the CLIP ViT Model. This function passes the input tensors
-        through the embedding layer and then the transformer.
+        through the embedding layer(if has) and then the transformer.
 
         Args:
             x (torch.Tensor): input data of shape [batch, img_h, img_w]
@@ -144,7 +144,8 @@ class CLIPViTModel(VisionModule):
             x = x.permute(1, 0, 2)  # [b, s, h] -> [s, b, h]
             x = x.contiguous()
             # contiguous() call required as `permute` can sparsify the tensor and this breaks pipelining
-
+        # 现在不管是 图像 tensor 还是 hidden state 都会作为 forward 的输入
+        # 但是这里 self.decoder 的输入 x 必须是 hidden states
         x = self.decoder(x, attention_mask)
         x = x.permute(1, 0, 2)  # [s, b, h] -> [b, s, h]
         x = x.contiguous()

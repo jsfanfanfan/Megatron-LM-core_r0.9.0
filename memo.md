@@ -12,7 +12,7 @@
     affine类型: self.linear_fc1
 
 ### Mistral-7B(self.llm)：
-    一个 embedding: self.embedding
+    一个 embedding: self.embedding（再看看，可能没有）
     32 层 transformer: self.decoder
     一层输出 Linear + LayerNorm: self.output_layer
 
@@ -57,6 +57,9 @@
     每个 GPU 获取到的模型块的输入可能是不一样的，解决 forward 的传播问题
 
     初始化问题：抛弃 megatron 的分模块初始化，直接进行初始化。不使用 generator-wrapper，直接进行 tp，pp，dp 并行组的初始化
+
+    问题出现在 encoder 的 stage 如果输入不是图片而是 hidden state，怎么传递输入？
+    看看 llm 的 stage 如果不是从 encoder 获取输入的话，它怎么获取输入？
     
 
 

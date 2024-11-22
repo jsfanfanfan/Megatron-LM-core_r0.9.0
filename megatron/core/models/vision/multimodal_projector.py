@@ -52,6 +52,7 @@ class MultimodalProjector(MegatronModule):
 
     def forward(self, hidden_states):
         # Run encoder.
+        """接收 encoder 最后一层 transformer 的 hidden states, 生成 encoder_output"""
         encoder_output, encoder_output_bias = self.encoder(hidden_states)
 
         if encoder_output_bias is not None:

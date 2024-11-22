@@ -239,6 +239,7 @@ def pretrain(
     )
 
     # 打印初始化后的并行组看看
+    # ——————————————————————————————
 
     # 获取初始化得到的 args 和 timers
     args = get_args()
@@ -297,6 +298,8 @@ def pretrain(
     print_datetime('after model, optimizer, and learning rate '
                    'scheduler are built')
     app_metrics['app_build_optimizer_finish_time'] = one_logger_utils.get_timestamp_in_ms()
+    # 打印每个 rank 的获取的模型结构看看
+    # ————————————————————————————————
     config = get_model_config(model[0])
 
     # Data stuff.
@@ -350,7 +353,7 @@ def pretrain(
 
         iteration = 0
         if args.do_train and args.train_iters > 0:
-            iteration, num_floating_point_operations_so_far = train(
+            iteration, num_floating_point_operations_so_far = train( # 调用 1172 行进行训练
                 forward_step_func,
                 model, optimizer, opt_param_scheduler,
                 train_data_iterator, valid_data_iterator,

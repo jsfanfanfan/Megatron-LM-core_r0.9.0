@@ -160,7 +160,7 @@ class GPTModel(LanguageModule):
             )
 
     def set_input_tensor(self, input_tensor: Tensor) -> None:
-        """Sets input tensor to the model.
+        """给 llm 的 self.decoder(transformer层, 一个 transformer_block 类) 设置输入
 
         See megatron.model.transformer.set_input_tensor()
 
@@ -192,11 +192,11 @@ class GPTModel(LanguageModule):
 
         It either returns the Loss values if labels are given  or the final hidden units
         """
-        # 如果提供了 decoder_input (not None), 那么 input_ids and position_ids 就被忽略.
+        # 如果提供了 decoder_input (not None), 那么 input_ids 和 position_ids 就被忽略.
         # 否则, 把 embedding layer 作用在 input_ids 和 position_ids 来获得 decoder_input.
 
         # Decoder embedding.
-        if decoder_input is not None:
+        if decoder_input is not None: # 实际走这条路
             pass
         elif self.pre_process:
             decoder_input = self.embedding(input_ids=input_ids, position_ids=position_ids)

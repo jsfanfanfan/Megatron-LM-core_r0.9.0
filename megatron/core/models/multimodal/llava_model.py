@@ -31,7 +31,7 @@ class LLaVAModel(MegatronModule):
         vision_transformer_config (TransformerConfig): Transformer config for the vision model.
         vision_transformer_layer_spec (ModuleSpec): Vision model spec.
         drop_vision_class_token (bool): Drop vision class token(s) before the language model.
-        vision_projection_config (TransformerConfig): Vision projection config.
+        vision_projection_config (TransformerConfig): Vision projection layer config.
         vision_projection_layer_spec (ModuleSpec): Vision projection spec.
         vision_projection_type (str): Type of the vision projection. Default: 2-layer MLP.
         allow_missing_vision_projection_checkpoint (bool): Allow vision projection weights to be
@@ -53,6 +53,7 @@ class LLaVAModel(MegatronModule):
         img_w (int): Input image width.
         patch_dim (int): The size of each image patch side.
         language_rotary_base (int): RoPE base.
+        层数信息都在 config 里面
     """
 
     def __init__(
@@ -91,6 +92,7 @@ class LLaVAModel(MegatronModule):
             "LLaVA model is under active development. "
             "It may be missing features and its methods may change."
         )
+
         self.add_encoder = add_encoder
         self.encoder_pre_process = encoder_pre_process
         self.add_projector = add_projector
@@ -99,7 +101,7 @@ class LLaVAModel(MegatronModule):
         self.post_process = post_process
         
 
-        self.encoder_hidden_state = None
+        self.encoder_hidden_state = None # encoder_hidden_state 的作用？
         self.vision_model = None
         self.vision_projection = None
         self.language_model = None
@@ -171,7 +173,7 @@ class LLaVAModel(MegatronModule):
         return None
 
     def set_input_tensor(self, input_tensor) -> None:
-        """设置 model chunk 的输入张量."""
+        """设置 model chunk 的输入张量, LLava 的 set_input_tensor 和 clip-vit-model 以及 gpt-model 中的 set_input_tensor 有啥用"""
         # This is usually handled in schedules.py but some inference code still
         # gives us non-lists or None
         if not isinstance(input_tensor, list):
@@ -459,10 +461,10 @@ class LLaVAModel(MegatronModule):
         # if they were computed already earlier for this sample.
         if use_inference_kv_cache:
             image_embeddings = None
-        elif self.add_encoder and not has_images: # 输入不是图片
+        elif self.encoder_pre_process and self.add_encoder and not has_images: # 输入不是图片
             # If no images provided, use an empty image embeddings tensor.
             image_embeddings = torch.tensor([], dtype=images.dtype, device=images.device)
-        elif self.add_encoder and has_images: # 最原始的情况
+        elif self.encoder_pre_process and self.add_encoder and has_images: # 最原始的情况
             image_embeddings = self.vision_model(images)  # [num_tiles, img_seq_len, h_vision]
             if self._drop_vision_class_token:
                 image_embeddings = image_embeddings[:, self.vision_model.class_token_len :, :]
@@ -478,6 +480,10 @@ class LLaVAModel(MegatronModule):
                 inference_params.key_value_memory_dict["image_tokens_count"] = (
                     image_embeddings.shape[0] * image_embeddings.shape[1]
                 )
+        elif not self.encoder_pre_process and self.add_encoder and not has_images:
+            image_embeddings = self.encoder_hidden_state # 没有头就输入 encoder_hidden_state(这里是 None 吧，llm 怎么处理输入的呢)
+        elif not self.encoder_pre_process and self.add_encoder and has_images:
+            image_embeddings = self.encoder_hidden_state # 没有头就输入 encoder_hidden_state(这里是 None 吧，llm 怎么处理输入的呢)
         else:
             image_embeddings = self.encoder_hidden_state
 
