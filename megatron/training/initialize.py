@@ -48,14 +48,14 @@ def initialize_megatron(
         assert torch.cuda.is_available(), "Megatron requires CUDA."
 
     # Parse arguments
-    args = parse_args(extra_args_provider, ignore_unknown_args)
+    args = parse_args(extra_args_provider, ignore_unknown_args) # arguments.py 25 行
 
     # Prep for checkpoint conversion.
     if args.ckpt_convert_format is not None:
         assert args.ckpt_convert_save is not None
         assert args.load is not None
         args.exit_on_missing_checkpoint = True
-
+    # args_defaults 可以使用 ckpt 的参数
     if args.use_checkpoint_args or args_defaults.get("use_checkpoint_args", False):
         assert args.load is not None, "--use-checkpoint-args requires --load argument"
         load_args_from_checkpoint(args)
@@ -68,9 +68,9 @@ def initialize_megatron(
 
     # set global args, build tokenizer, and set adlr-autoresume,
     # tensorboard-writer, and timers.
-    set_global_variables(args)
+    set_global_variables(args) # megatron/training/global_vars.py 76 行
 
-    # set logging level
+    # set logging level 418 行
     setup_logging()
 
     # torch.distributed initialization
@@ -270,6 +270,7 @@ def _initialize_distributed(get_embedding_ranks, get_position_embedding_ranks):
                 expert_model_parallel_size=args.expert_model_parallel_size,
                 distributed_timeout_minutes=args.distributed_timeout_minutes,
                 nccl_communicator_config_path=args.nccl_communicator_config_path,
+                # 通过参数控制使用 'tp-pp-dp'
                 order='tp-cp-ep-dp-pp' if not args.use_tp_pp_dp_mapping else 'tp-pp-dp',
                 # encoder_tensor_model_parallel_size=args.encoder_tensor_model_parallel_size,
                 # encoder_pipeline_model_parallel_size=args.encoder_pipeline_model_parallel_size,

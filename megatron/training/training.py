@@ -231,12 +231,16 @@ def pretrain(
 
     # Initalize and get arguments, timers, and Tensorboard writer.
     initialize_megatron(
-        extra_args_provider=extra_args_provider,
-        args_defaults=args_defaults,
+        extra_args_provider=extra_args_provider, # 接收多模态的部分参数
+        args_defaults=args_defaults, # 指定 tokenizer 参数
+        # 下面两个参数用来初始化 embedding 并行组
         get_embedding_ranks=get_embedding_ranks,
         get_position_embedding_ranks=get_position_embedding_ranks
     )
 
+    # 打印初始化后的并行组看看
+
+    # 获取初始化得到的 args 和 timers
     args = get_args()
     timers = get_timers()
 
@@ -440,8 +444,9 @@ def  get_model(model_provider_func, model_type=ModelType.encoder_or_decoder, wra
     layer_sum = encoder_layer_num + projector_layer_num + llm_layer_num
     assert sum(split_spec) == layer_sum, "split specification is not appropriate"
     
-    # 计算流水级应该创建多少层 encoder transformer
+    
     def _get_encoder_transformer_layer_num(start_layer, end_layer):
+        # 计算流水级应该创建多少层 encoder transformer
         if start_layer > encoder_layer_num:
             return 0
         else:
@@ -450,15 +455,16 @@ def  get_model(model_provider_func, model_type=ModelType.encoder_or_decoder, wra
             else:
                 return encoder_layer_num - start_layer + 1
 
-    # 计算流水级应该创建多少层 llm transformer
     def _get_llm_transformer_layer_num(start_layer, end_layer):
+        # 计算流水级应该创建多少层 llm transformer
         if end_layer <= encoder_layer_num + projector_layer_num:
             return 0
         else:
             if start_layer > encoder_layer_num + projector_layer_num:
                 return end_layer - start_layer + 1
             else:
-                return end_layer - (encoder_layer_num + projector_layer_num) 
+                return end_layer - (encoder_layer_num + projector_layer_num)
+ 
     # Build model.
     if mpu.get_pipeline_model_parallel_world_size() > 1 and \
        args.virtual_pipeline_model_parallel_size is not None:
@@ -476,7 +482,8 @@ def  get_model(model_provider_func, model_type=ModelType.encoder_or_decoder, wra
             )
             this_model.model_type = model_type
             model.append(this_model)
-    else:
+    else: # 实际走这个分支
+        # 以下四个变量已经重新判断
         pre_process = mpu.is_pipeline_first_stage()
         post_process = mpu.is_pipeline_last_stage()
         add_encoder = True
@@ -490,8 +497,13 @@ def  get_model(model_provider_func, model_type=ModelType.encoder_or_decoder, wra
                 # post_process = (rank == (first_decoder_rank - 1)) or (rank == (world_size - 1)) # encoder 和 decoder 的最后一个 rank 需要 post_process
                 # add_encoder = mpu.is_inside_encoder(rank) # 流水级执行的是 encoder 块
                 # add_decoder = mpu.is_inside_decoder(rank) # 流水级执行的是 decoder 块
-                # 首先获得该流水级需要构建的模型层的首尾 [start, end], 都是闭区间
+                # 首先获得该流水级需要构建的模型层的首尾 [start, end], 左右都是闭区间
                 # eg: split_spec = [20,10,10,10,8]
+                # rank0:---[1, 20]
+                # rank1:---[21, 30]
+                # rank2:---[31, 40]
+                # rank3:---[41, 50]
+                #rank4:---[51, 58]
                 start_layer = sum(split_spec[:rank]) + 1
                 end_layer = sum(split_spec[:rank + 1])
                 assert start_layer <= end_layer
@@ -510,7 +522,7 @@ def  get_model(model_provider_func, model_type=ModelType.encoder_or_decoder, wra
                 # 修改后的 post_process 逻辑：
                 llm_post_process = (rank == (world_size - 1))
 
-                # 下面的参数先备用, _build_layer 需要的时候再传递
+                # 下面的参数传递该流水级中 clip-vit transforemr 和 llm transformer 的层数
                 stage_encoder_transformer_layer_num = _get_encoder_transformer_layer_num(start_layer, end_layer)
                 stage_llm_transformer_layer_num = _get_llm_transformer_layer_num(start_layer, end_layer)
             '''

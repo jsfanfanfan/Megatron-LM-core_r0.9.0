@@ -365,7 +365,7 @@ def initialize_model_parallel(
     get_embedding_ranks: Optional[Callable[[List[int], Optional[int]], List[int]]] = None,
     get_position_embedding_ranks: Optional[Callable[[List[int], Optional[int]], List[int]]] = None,
 ) -> None:
-    # pylint: disable=line-too-long 最后两个参数有用？
+    # pylint: disable=line-too-long 最后两个参数构造 embedding 并行组有啥用？
     """Initialize model data parallel groups.
 
     Args:
@@ -725,6 +725,17 @@ def initialize_model_parallel(
         # Set `NCCL_COLLNET_ENABLE=0` to restrict SHARP application to DP process groups
         os.environ["NCCL_COLLNET_ENABLE"] = "0"
 
+    # 建立模型并行组.
+    global _MODEL_PARALLEL_GROUP
+    assert _MODEL_PARALLEL_GROUP is None, \
+        'model parallel group is already initialized'
+    for i in range(data_parallel_size):
+        ranks = [data_parallel_group_ranks[i]
+                 for data_parallel_group_ranks in all_data_parallel_group_ranks]
+        group = torch.distributed.new_group(ranks)
+        if rank in ranks:
+            _MODEL_PARALLEL_GROUP = group
+            
     # 建立 context 并行组.
     '''
     global _CONTEXT_PARALLEL_GROUP

@@ -56,7 +56,7 @@
 
     每个 GPU 获取到的模型块的输入可能是不一样的，解决 forward 的传播问题
 
-    初始化问题：抛弃 megatron 的分模块初始化，直接进行初始化
+    初始化问题：抛弃 megatron 的分模块初始化，直接进行初始化。不使用 generator-wrapper，直接进行 tp，pp，dp 并行组的初始化
     
 
 

@@ -78,8 +78,8 @@ def set_global_variables(args, build_tokenizer=True):
 
     assert args is not None
 
-    _ensure_var_is_not_initialized(_GLOBAL_ARGS, 'args')
-    set_args(args)
+    _ensure_var_is_not_initialized(_GLOBAL_ARGS, 'args') # 221 行
+    set_args(args) # 把 args 赋值给 _GLOBAL_ARGS
 
     init_num_microbatches_calculator(
         args.rank,
@@ -91,11 +91,11 @@ def set_global_variables(args, build_tokenizer=True):
     )
     if build_tokenizer:
         _ = _build_tokenizer(args)
-    _set_tensorboard_writer(args)
-    _set_wandb_writer(args)
-    _set_one_logger(args)
-    _set_adlr_autoresume(args)
-    _set_timers(args)
+    _set_tensorboard_writer(args) # 123 行 （可以使用）
+    _set_wandb_writer(args) # 143 行
+    _set_one_logger(args) # 167 行
+    _set_adlr_autoresume(args) # 191 行
+    _set_timers(args) # 209 行 （可以使用）
 
     if args.exit_signal_handler:
         _set_signal_handler()
@@ -163,7 +163,7 @@ def _set_wandb_writer(args):
         wandb.init(**wandb_kwargs)
         _GLOBAL_WANDB_WRITER = wandb
 
-
+# one_logger package 无法安装，直接不用
 def _set_one_logger(args):
     global _GLOBAL_ONE_LOGGER
     _ensure_var_is_not_initialized(_GLOBAL_ONE_LOGGER, 'one logger')
@@ -187,7 +187,7 @@ def _set_one_logger(args):
                   'tracking. please go to '
                   'https://confluence.nvidia.com/display/MLWFO/Package+Repositories'
                   ' for details to install it')
-
+# 直接不用
 def _set_adlr_autoresume(args):
     """Initialize ADLR autoresume."""
     global _GLOBAL_ADLR_AUTORESUME
@@ -210,6 +210,7 @@ def _set_timers(args):
     """Initialize timers."""
     global _GLOBAL_TIMERS
     _ensure_var_is_not_initialized(_GLOBAL_TIMERS, 'timers')
+    # 这俩参数是什么？ level 控制级别，option 选择是最大，最小最大区间还是所有
     _GLOBAL_TIMERS = Timers(args.timing_log_level, args.timing_log_option)
 
 

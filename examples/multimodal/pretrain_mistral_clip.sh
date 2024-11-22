@@ -74,7 +74,7 @@ OPTIONS=" \
     --attention-dropout 0.0 \
     --hidden-dropout ${HD} \
     --tensor-model-parallel-size 4 \
-    --pipeline-model-parallel-size 1 \
+    --pipeline-model-parallel-size 5 \
     --num-layers 32 \
     --hidden-size 4096 \
     --num-attention-heads 32 \
@@ -124,6 +124,7 @@ OPTIONS=" \
     ${EXTRA_ARGS} \
     --distributed-timeout-minutes 60 \
     --allow-missing-vision-projection-checkpoint \
+    --use-tp-pp-dp-mapping \
 "
 
 export NVTE_APPLY_QK_LAYER_SCALING=0

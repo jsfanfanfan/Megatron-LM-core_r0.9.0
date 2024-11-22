@@ -54,7 +54,7 @@ def parse_args(extra_args_provider=None, ignore_unknown_args=False):
 
     # Custom arguments.
     if extra_args_provider is not None:
-        parser = extra_args_provider(parser)
+        parser = extra_args_provider(parser) # 这里添加传入的部分 multimodal 参数
 
     # Parse.
     if ignore_unknown_args:
@@ -62,7 +62,7 @@ def parse_args(extra_args_provider=None, ignore_unknown_args=False):
     else:
         args = parser.parse_args()
 
-    # Experimental yaml
+    # Experimental yaml legacy 和 mcore 是不同的版本，mcore(Megatron Core 更新)
     if args.yaml_cfg is not None:
         from .yaml_arguments import load_yaml
         assert args.yaml_cfg and not args.use_legacy_models, \
@@ -70,7 +70,7 @@ def parse_args(extra_args_provider=None, ignore_unknown_args=False):
         args = load_yaml(args.yaml_cfg)
 
 
-    # Args from environment
+    # Args from environment RANK, WORLD_SIZE 都是获取环境变量而来，可以在脚本里面修改
     args.rank = int(os.getenv('RANK', '0'))
     args.world_size = int(os.getenv("WORLD_SIZE", '1'))
 

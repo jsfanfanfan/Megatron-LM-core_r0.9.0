@@ -401,7 +401,7 @@ def llava_embedding_ranks(pp_ranks):
     for i in range(len(pp_ranks)):
         start += split_spec[i]
         if start >= encoder_layer_num + projector_layer_num:
-            break;
+            break
         else: epp += 1
 
     last_rank = pp_ranks[-1]
@@ -429,7 +429,7 @@ def llava_position_embedding_ranks(pp_ranks):
     for i in range(len(pp_ranks)):
         start += split_spec[i]
         if start >= encoder_layer_num + projector_layer_num:
-            break;
+            break
         else: epp += 1
     last_rank = pp_ranks[-1]
     if len(pp_ranks) == 1:
@@ -447,7 +447,7 @@ if __name__ == "__main__":
         ModelType.encoder_and_decoder,
         forward_step,
         args_defaults={'tokenizer_type': 'GPT2BPETokenizer'},
-        extra_args_provider=add_multimodal_extra_args,
-        get_embedding_ranks=llava_embedding_ranks,
-        get_position_embedding_ranks=llava_position_embedding_ranks,
+        extra_args_provider=add_multimodal_extra_args, # 多模态的部分参数从这里传递
+        get_embedding_ranks=llava_embedding_ranks, # 385 行
+        get_position_embedding_ranks=llava_position_embedding_ranks, # 414 行
     )
