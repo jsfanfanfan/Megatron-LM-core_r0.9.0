@@ -110,9 +110,10 @@ class RotaryEmbedding(nn.Module):
             )
         # emb [seq_length, .., dim]
         emb = emb[:, None, None, :]
-        if parallel_state.get_context_parallel_world_size() > 1:
+        # context parallelism 影响旋转位置编码
+        # if parallel_state.get_context_parallel_world_size() > 1:
             # slice rotary_pos_emb along sequence dimension and select the parition of the current CP rank
-            emb = get_pos_emb_on_this_cp_rank(emb, 0)
+        #     emb = get_pos_emb_on_this_cp_rank(emb, 0)
         return emb
 
     def _load_from_state_dict(self, state_dict, prefix, *args, **kwargs):

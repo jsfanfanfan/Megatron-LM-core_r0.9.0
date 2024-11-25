@@ -224,11 +224,13 @@ class DistributedDataParallel(MegatronModule):
         # Allocate the param+grad buffers for dense params' grads.
         self.buffers, self.bucket_groups = _allocate_buffers_for_parameters(
             dense_params,
-            parallel_state.get_data_parallel_group(with_context_parallel=True),
+            # parallel_state.get_data_parallel_group(with_context_parallel=True),
+            parallel_state.get_data_parallel_group(),
             gradient_scaling_factor=gradient_scaling_factor,
         )
 
         # Allocate separate param+grad buffers for expert parallel params' grads.
+        """专家并行不需要
         self.expert_parallel_buffers, self.expert_parallel_bucket_groups = (
             _allocate_buffers_for_parameters(
                 expert_parallel_params,
@@ -236,6 +238,7 @@ class DistributedDataParallel(MegatronModule):
                 gradient_scaling_factor=expert_gradient_scaling_factor,
             )
         )
+        """
 
         # Delete references to weight_tensor if they exist since we don't want two parameter copies
         # if we re-mapped parameters (which happens when we use the distributed optimizer).
@@ -433,10 +436,12 @@ class DistributedDataParallel(MegatronModule):
         """
         for param in self.params_with_grad:
             param.grad_added_to_main_grad = False
+        '''
         for buffer in self.buffers + self.expert_parallel_buffers:
             buffer.reset()
         for bucket_group in self.bucket_groups + self.expert_parallel_bucket_groups:
             bucket_group.reset()
+        '''
 
     def broadcast_params(self):
         """

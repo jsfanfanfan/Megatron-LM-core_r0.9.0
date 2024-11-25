@@ -399,9 +399,14 @@ class TransformerBlock(MegatronModule):
             [s, b, h], and optionally the updated context tensor if cross-attention is used.
         """
 
+        if hidden_states is not None:
+            print(f"hidden state size:{hidden_states.size()}")
+        if self.input_tensor is not None:
+            print(f"self.input tensor size:{self.input_tensor.size()}")
         if not self.pre_process:
             # See set_input_tensor()
             hidden_states = self.input_tensor
+        print(f"TransformerBlock hidden states size:{hidden_states.size()}")
 
         # Viewless tensor.
         # - We only need to create a viewless tensor in the case of micro batch

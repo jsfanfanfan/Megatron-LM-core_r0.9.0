@@ -5,6 +5,7 @@ from functools import partial
 import os
 import sys
 import warnings
+warnings.filterwarnings("ignore")
 
 import torch
 
@@ -28,6 +29,8 @@ def model_provider(
     add_projector=True, 
     add_decoder=True, pre_process=True, post_process=True,
     stage_llm_transformer_layer_num=8,
+    start_layer=1,
+    end_layer=58,
     parallel_output=True) -> LLaVAModel:
     """Builds the model.
 
@@ -71,6 +74,9 @@ def model_provider(
     language_config = deepcopy(base_config) # 更新 mistral-7b 的参数
     language_config = get_language_model_config(language_config) # config.py 7 行
     # 给 language_config 添加成员变量, 后面 _build_layer 使用
+    # note: 这个 start 和 end 是 stage 上全部模型的开始层和结束层，不是仅仅包含 llm 或者 encoder
+    language_config.start_layer = start_layer
+    language_config.end_layer = end_layer
     language_config.transformer_layer_num = stage_llm_transformer_layer_num
     if use_te:
         language_transformer_layer_spec = get_layer_spec_te(is_vit=False)   # TENorm detects LayerNorm/RMS automatically.
@@ -80,6 +86,9 @@ def model_provider(
     vision_config = deepcopy(base_config) # 更新 clip-vit 的参数，config.py 65行
     vision_config = get_vision_model_config(vision_config, apply_query_key_layer_scaling=args.apply_query_key_layer_scaling)
     # 给 vision_config 添加成员变量, 后面 _build_layer 使用
+    # note: 这个 start 和 end 是 stage 上全部模型的开始层和结束层，不是仅仅包含 llm 或者 encoder
+    vision_config.start_layer = start_layer
+    vision_config.end_layer = end_layer
     vision_config.transformer_layer_num = stage_encoder_transformer_layer_num
 
     vision_model_type = args.vision_model_type
@@ -106,7 +115,7 @@ def model_provider(
     # 上述操作使得大部分参数在 args=get_args(), 不同模块各自的参数在 module_config(一个 TransformerConfig 类) 中
     # 修改使得 encoder 可以有多个流水级
     assert args.pipeline_model_parallel_size > 0
-    assert args.tensor_model_pipeline_size > 0
+    assert args.tensor_model_parallel_size > 0
     # assert args.encoder_tensor_model_parallel_size == args.tensor_model_parallel_size, \
     #    "encoder tensor model parallel size must equal tensor model parallel size"
     vision_config.tensor_model_parallel_size = args.tensor_model_parallel_size
@@ -321,7 +330,8 @@ def loss_func(loss_mask, output_tensor):
     loss_mask = loss_mask.contiguous().view(-1).float()
 
     total_tokens = loss_mask.sum()
-    total_loss = torch.sum(losses.view(-1) * loss_mask)
+    # 修改 total loss
+    total_loss = torch.sum(losses.view(-1) * loss_mask[:losses.view(-1).size(0)])
     loss = torch.cat([total_loss.view(1), total_tokens.view(1)])
 
     reporting_loss = loss.clone().detach()
@@ -352,6 +362,14 @@ def forward_step(data_iterator, model: LLaVAModel):
     # Get the batch.
     timers('batch-generator', log_level=2).start()
     tokens, labels, loss_mask, attention_mask, position_ids, images, num_image_tiles = get_batch(data_iterator)
+    print(f"get batch end! tokens size:{tokens.size()}")
+    print(f"get batch end! labels size:{labels.size()}")
+    print(f"get batch end! loss_mask size:{loss_mask.size()}")
+    print(f"get batch end! attention_mask:{attention_mask.size()}")
+    print(f"get batch end! position_ids:{position_ids.size()}")
+    print(f"get batch end! images size:{images.size()}")
+    print(f"get batch end! num_image_tiles:{num_image_tiles.size()}")
+
     timers('batch-generator').stop()
 
     output_tensor, loss_mask = model(images, tokens, position_ids, attention_mask, labels, loss_mask, num_image_tiles=num_image_tiles)

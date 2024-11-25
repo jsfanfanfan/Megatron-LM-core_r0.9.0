@@ -718,7 +718,8 @@ def _add_transformer_engine_args(parser):
     group.add_argument('--no-fp8-wgrad', action='store_false',
                        help='Execute wgrad in higher precision even for FP8 runs',
                        dest='fp8_wgrad')
-    group.add_argument('--transformer-impl', default='transformer_engine',
+    # 更改为默认使用 local
+    group.add_argument('--transformer-impl', default='local',
                        choices=['local', 'transformer_engine'],
                        help='Which Transformer implementation to use.')
     group.add_argument('--fp8-param-gather', action='store_true',

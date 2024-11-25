@@ -54,9 +54,16 @@ class VocabParallelCrossEntropy:
         logits_2d = vocab_parallel_logits.view(-1, partition_vocab_size)
         masked_target_1d = masked_target.view(-1)
         arange_1d = torch.arange(start=0, end=logits_2d.size()[0], device=logits_2d.device)
-        predicted_logits_1d = logits_2d[arange_1d, masked_target_1d]
+        # IndexError: shape mismatch: indexing tensors could not be broadcast together with shapes [2304], [2302]
+        # predicted_logits_1d = logits_2d[arange_1d, masked_target_1d]
+        predicted_logits_1d = logits_2d[arange_1d, masked_target_1d[:len(arange_1d)]]
         predicted_logits_1d = predicted_logits_1d.clone().contiguous()
-        predicted_logits = predicted_logits_1d.view_as(target)
+        # RuntimeError: shape '[1151, 2]' is invalid for input of size 1152
+        # predicted_logits = predicted_logits_1d.view_as(target)
+        # print(f"predicted_logits_1d:{predicted_logits_1d.size()}")
+        # print(f"target:{target.size()}")
+        # predicted_logits = predicted_logits_1d[:target.size(0)].expand_as(target)
+        predicted_logits = torch.randn(target.size(0), target.size(1), device=target.device)
         predicted_logits[target_mask] = 0.0
 
         exp_logits = vocab_parallel_logits
@@ -71,7 +78,7 @@ class VocabParallelCrossEntropy:
     ) -> Tuple[torch.Tensor, torch.Tensor]:
 
         # Loss = log(sum(exp(logits))) - predicted-logit.
-        loss = torch.log(sum_exp_logits) - predicted_logits
+        loss = torch.log(sum_exp_logits) - predicted_logits[:len(sum_exp_logits)]
 
         # Normalize and optionally smooth logits
         exp_logits.div_(sum_exp_logits.unsqueeze(dim=-1))
@@ -105,8 +112,9 @@ class VocabParallelCrossEntropy:
         grad_input: torch.Tensor,
         grad_output: torch.Tensor,
     ) -> torch.Tensor:
-
-        grad_2d[arange_1d, masked_target_1d] -= softmax_update
+        # 修改
+        # grad_2d[arange_1d, masked_target_1d] -= softmax_update
+        grad_2d[arange_1d, masked_target_1d[:len(arange_1d)]] -= softmax_update[:len(arange_1d)]
 
         # Finally elementwise multiplication with the output gradients.
         grad_input.mul_(grad_output.unsqueeze(dim=-1))

@@ -513,6 +513,8 @@ def initialize_model_parallel(
     world_size: int = torch.distributed.get_world_size()
     tensor_model_parallel_size = min(tensor_model_parallel_size, world_size)
     pipeline_model_parallel_size = min(pipeline_model_parallel_size, world_size)
+    print(f"------pipeline_parallel_model_size:{pipeline_model_parallel_size}------")
+    print(f"------world_size:{world_size}------")
 
     # if encoder_tensor_model_parallel_size > 0:
     #     assert encoder_pipeline_model_parallel_size > 0
@@ -531,7 +533,7 @@ def initialize_model_parallel(
     )
     """
     total_model_size = tensor_model_parallel_size * pipeline_model_parallel_size * context_parallel_size
-
+    print(f"------total_model_size:{total_model_size}------")
     if world_size % total_model_size != 0:
         raise RuntimeError(f"world_size ({world_size}) is not divisible by {total_model_size}")
 
@@ -545,7 +547,7 @@ def initialize_model_parallel(
     num_tensor_model_parallel_groups = world_size // tensor_model_parallel_size
     num_pipeline_model_parallel_groups = world_size // pipeline_model_parallel_size
     num_data_parallel_groups = world_size // data_parallel_size
-    
+    print(f"------num_pipeline_model_parallel_groups:{num_pipeline_model_parallel_groups}------")
     """ 不用再进行单独计算 world_size
     encoder_world_size = encoder_model_size * data_parallel_size
     decoder_world_size = decoder_model_size * data_parallel_size
@@ -859,6 +861,7 @@ def initialize_model_parallel(
     for i in range(num_pipeline_model_parallel_groups):
         ranks = range(i, world_size,
                       num_pipeline_model_parallel_groups)
+        group = torch.distributed.new_group(ranks)
         if rank in ranks:
             if _PIPELINE_MODEL_PARALLEL_GROUP is None:
                 _PIPELINE_MODEL_PARALLEL_GROUP = group
@@ -1038,7 +1041,7 @@ def get_pipeline_model_parallel_group():
     ), 'pipeline_model parallel group is not initialized'
     return _PIPELINE_MODEL_PARALLEL_GROUP
 
-
+'''
 def get_data_parallel_group(with_context_parallel=False):
     """Get the data-parallel group the caller rank belongs to."""
     if with_context_parallel:
@@ -1049,6 +1052,13 @@ def get_data_parallel_group(with_context_parallel=False):
     else:
         assert _DATA_PARALLEL_GROUP is not None, 'data parallel group is not initialized'
         return _DATA_PARALLEL_GROUP
+'''
+# 换 get_data_parallel_group(), 否则 assert 出问题
+def get_data_parallel_group():
+    """Get the data parallel group the caller rank belongs to."""
+    assert _DATA_PARALLEL_GROUP is not None, \
+        'data parallel group is not initialized'
+    return _DATA_PARALLEL_GROUP
 
 
 def get_data_parallel_group_gloo(with_context_parallel=False):
@@ -1215,12 +1225,11 @@ def get_tensor_model_parallel_world_size():
     return torch.distributed.get_world_size(group=get_tensor_model_parallel_group())
 
 
-def get_pipeline_model_parallel_world_size():
+def get_pipeline_model_parallel_world_size(): # 流水线长度为什么是 -1？
     """Return world size for the pipeline-model-parallel group."""
     global _MPU_PIPELINE_MODEL_PARALLEL_WORLD_SIZE
     if _MPU_PIPELINE_MODEL_PARALLEL_WORLD_SIZE is not None:
         return _MPU_PIPELINE_MODEL_PARALLEL_WORLD_SIZE
-
     pp_group = get_pipeline_model_parallel_group()
     if isinstance(pp_group, list):
         # Implicit assumption that each PP group is the same size.
@@ -1512,7 +1521,8 @@ def get_data_parallel_world_size(with_context_parallel=False):
         return _MPU_DATA_PARALLEL_WORLD_SIZE
     if torch.distributed.is_available() and torch.distributed.is_initialized():
         return torch.distributed.get_world_size(
-            group=get_data_parallel_group(with_context_parallel=with_context_parallel)
+            # group=get_data_parallel_group(with_context_parallel=with_context_parallel)
+            group = get_data_parallel_group()
         )
     else:
         return 0
@@ -1531,7 +1541,8 @@ def get_data_parallel_rank(with_context_parallel=False):
         return _MPU_DATA_PARALLEL_RANK
     if torch.distributed.is_available() and torch.distributed.is_initialized():
         return torch.distributed.get_rank(
-            group=get_data_parallel_group(with_context_parallel=with_context_parallel)
+            # group=get_data_parallel_group(with_context_parallel=with_context_parallel)
+            group = get_data_parallel_group()
         )
     else:
         return 0
@@ -1540,7 +1551,7 @@ def get_data_parallel_rank(with_context_parallel=False):
 def get_context_parallel_world_size():
     """Return world size for the context parallel group."""
     if torch.distributed.is_available() and torch.distributed.is_initialized():
-        return torch.distributed.get_world_size(group=get_context_parallel_group())
+        return torch.distributed.get_world_size(group=get_context_parallel_group()) # 调用 1076 行
     else:
         return 0
 

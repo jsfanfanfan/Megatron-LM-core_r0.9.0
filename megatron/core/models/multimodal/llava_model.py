@@ -11,6 +11,7 @@ from megatron.core.config_logger import has_config_logger_enabled, log_config_to
 from megatron.core.models.gpt import GPTModel
 from megatron.core.models.vision.clip_vit_model import CLIPViTModel, get_image_sequence_length
 from megatron.core.models.vision.multimodal_projector import MultimodalProjector
+from megatron.core.parallel_state import get_tensor_model_parallel_world_size
 from megatron.core.transformer import MegatronModule
 from megatron.core.transformer.spec_utils import ModuleSpec
 from megatron.core.transformer.transformer_config import TransformerConfig
@@ -106,6 +107,7 @@ class LLaVAModel(MegatronModule):
         self.vision_projection = None
         self.language_model = None
 
+        self.sequence_parallel_lm = language_transformer_config.sequence_parallel
         # This attribute is needed to check if an all-reduce is required
         # on the word embeddings inside `finalize_model_grads._allreduce_word_embedding_grads`.
         self.share_embeddings_and_output_weights = False
@@ -416,6 +418,9 @@ class LLaVAModel(MegatronModule):
             final_labels = final_labels[:, : self._language_max_sequence_length]
             final_loss_mask = final_loss_mask[:, : self._language_max_sequence_length]
 
+        # return final_embedding, final_labels, final_loss_mask
+        if final_embedding is not None:
+            return final_embedding[:1024,:,:], final_labels, final_loss_mask
         return final_embedding, final_labels, final_loss_mask
     # 前向传播的逻辑需要改变，因为 encoder 和 projector 不再绑定，而且一个流水级上可以同时存在 3 个模块
     def forward(
@@ -465,7 +470,9 @@ class LLaVAModel(MegatronModule):
             # If no images provided, use an empty image embeddings tensor.
             image_embeddings = torch.tensor([], dtype=images.dtype, device=images.device)
         elif self.encoder_pre_process and self.add_encoder and has_images: # 最原始的情况
+            print(f"vision model start! iamge size:{images.size()}")
             image_embeddings = self.vision_model(images)  # [num_tiles, img_seq_len, h_vision]
+            print(f"vision model end! image embeddings:{image_embeddings.size()}")
             if self._drop_vision_class_token:
                 image_embeddings = image_embeddings[:, self.vision_model.class_token_len :, :]
             # contiguous() required as `permute` can sparsify the tensor and this breaks pipelining
@@ -487,25 +494,46 @@ class LLaVAModel(MegatronModule):
         else:
             image_embeddings = self.encoder_hidden_state
 
-        if not self.add_projector:
+        if not self.add_projector and not self.pre_process and not self.add_decoder:
             return image_embeddings
         
+        if image_embeddings is not None:
+            print(f"vision projection start! iamge embeddings size:{image_embeddings.size()}")
         if self.add_projector:
                 # map vision model output size to language model input size.
                 image_embeddings = self.vision_projection(
                     image_embeddings
                 )  # [img_seq_len, num_tiles, h_language]
 
+        if image_embeddings is not None:
+            print(f"vision projection end! iamge embeddings size:{image_embeddings.size()}")
         if not self.add_decoder:
             return image_embeddings, loss_mask
 
         language_embeddings = None
         if self.pre_process:
             input_ids_text = input_ids.clone()
+            if input_ids_text is not None:
+                print(f"input_ids_size:{input_ids_text.size()}")
             input_ids_text[input_ids_text == image_token_index] = 0
             # Note: This adds absolute position embedding but not RoPE.
             # Each image is counted as one position.
             # RoPE is added in language_model forward. Each image embedding is one position.
+            if self.sequence_parallel_lm:
+                # Pad to nearest multiple of TP world size for embedding.
+                tp_world_size = get_tensor_model_parallel_world_size()
+                padded_seq_len = (
+                    int(
+                        (input_ids_text.shape[1] + tp_world_size - 1)
+                        // tp_world_size
+                        * tp_world_size
+                    )
+                    - input_ids_text.shape[1]
+                )
+                if padded_seq_len != 0:
+                    input_ids_text = torch.nn.functional.pad(input_ids_text, (0, padded_seq_len))
+                    if position_ids is not None:
+                        position_ids = torch.nn.functional.pad(position_ids, (0, padded_seq_len))
             language_embeddings = self.language_model.embedding(
                 input_ids=input_ids_text, position_ids=position_ids
             )  # [text_seq_len, b, h_language]
@@ -518,6 +546,10 @@ class LLaVAModel(MegatronModule):
             num_image_tiles = torch.ones(images.shape[0], dtype=torch.int, device=input_ids.device)
 
         # Preprocess input, labels and loss mask.
+        if image_embeddings is not None:
+            print(f"_preprocess_data begin! iamge embeddings size:{image_embeddings.size()}")
+        if language_embeddings is not None:
+            print(f"_preprocess_data begin! language_embeddings size:{language_embeddings.size()}")
         combined_embeddings, new_labels, new_loss_mask = self._preprocess_data(
             image_embeddings,
             language_embeddings,
@@ -528,6 +560,8 @@ class LLaVAModel(MegatronModule):
             image_token_index,
             num_image_tiles,
         )  # [combined_seq_len, b, h_language], [b, combined_seq_len], [b, combined_seq_len]
+        if combined_embeddings is not None:
+            print(f"_preprocess_data end! combined_embeddings size:{combined_embeddings.size()}")
         # 如果 language model 的输入不是来自 projector，二十来自上一个 transformer 层
         # language model 的输入怎么处理？
         output = self.language_model(
@@ -539,6 +573,9 @@ class LLaVAModel(MegatronModule):
             inference_params=inference_params,
         )
 
+        if output is not None:
+            print(f"language model end! output size:{output.size()}")
+            
         if labels is None or loss_mask is None:
             return output
 

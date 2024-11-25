@@ -1,0 +1,379 @@
+examples/multimodal/pretrain_freeze-llm.sh: line 4: activate: No such file or directory
+[2024-11-25 20:33:35,581] torch.distributed.run: [WARNING] 
+[2024-11-25 20:33:35,581] torch.distributed.run: [WARNING] *****************************************
+[2024-11-25 20:33:35,581] torch.distributed.run: [WARNING] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+[2024-11-25 20:33:35,581] torch.distributed.run: [WARNING] *****************************************
+You set `add_prefix_space`. The tokenizer needs to be converted from the slow tokenizers
+You set `add_prefix_space`. The tokenizer needs to be converted from the slow tokenizers
+You set `add_prefix_space`. The tokenizer needs to be converted from the slow tokenizers
+You set `add_prefix_space`. The tokenizer needs to be converted from the slow tokenizers
+------pipeline_parallel_model_size:5------
+------world_size:20------
+------total_model_size:20------
+------num_pipeline_model_parallel_groups:4------
+------pipeline_parallel_model_size:5------
+------world_size:20------
+------total_model_size:20------
+------num_pipeline_model_parallel_groups:4------
+------pipeline_parallel_model_size:5------
+------world_size:20------
+------total_model_size:20------
+------num_pipeline_model_parallel_groups:4------
+> setting tensorboard ...
+WARNING: one_logger package is required to enable e2e metrics tracking. please go to https://confluence.nvidia.com/display/MLWFO/Package+Repositories for details to install it
+------pipeline_parallel_model_size:5------
+------world_size:20------
+------total_model_size:20------
+------num_pipeline_model_parallel_groups:4------
+---Rank 19---Tensor Parallel Group GPUs: [3, 3, 3, 3]---Rank 18---Tensor Parallel Group GPUs: [2, 2, 2, 2]
+---Rank 16---Tensor Parallel Group GPUs: [0, 0, 0, 0]
+
+---Rank 19---Pipeline Parallel Group GPUs: [4, 4, 4, 4, 4]
+---Rank 18---Pipeline Parallel Group GPUs: [4, 4, 4, 4, 4]---Rank 16---Pipeline Parallel Group GPUs: [4, 4, 4, 4, 4]
+
+---Rank 17---Tensor Parallel Group GPUs: [1, 1, 1, 1]
+---Rank 17---Pipeline Parallel Group GPUs: [4, 4, 4, 4, 4]
+[rank16]:[W init.cpp:767] Warning: nvfuser is no longer supported in torch script, use _jit_set_nvfuser_enabled is deprecated and a no-op (function operator())
+[rank19]:[W init.cpp:767] Warning: nvfuser is no longer supported in torch script, use _jit_set_nvfuser_enabled is deprecated and a no-op (function operator())
+[rank18]:[W init.cpp:767] Warning: nvfuser is no longer supported in torch script, use _jit_set_nvfuser_enabled is deprecated and a no-op (function operator())
+[rank17]:[W init.cpp:767] Warning: nvfuser is no longer supported in torch script, use _jit_set_nvfuser_enabled is deprecated and a no-op (function operator())
+WARNING:megatron.core.models.multimodal.llava_model:LLaVA model is under active development. It may be missing features and its methods may change.
+WARNING:megatron.core.models.multimodal.llava_model:LLaVA model is under active development. It may be missing features and its methods may change.
+WARNING:megatron.core.models.multimodal.llava_model:LLaVA model is under active development. It may be missing features and its methods may change.
+WARNING:megatron.core.models.multimodal.llava_model:LLaVA model is under active development. It may be missing features and its methods may change.
+ > number of parameters on (tensor, pipeline) model parallel rank (1, 4): 469831680
+ > number of parameters on (tensor, pipeline) model parallel rank (0, 4): 469831680
+ > number of parameters on (tensor, pipeline) model parallel rank (3, 4): 469831680
+ > number of parameters on (tensor, pipeline) model parallel rank (2, 4): 469831680
+[DistributedDataParallel(
+  (module): LLaVAModel(
+    (language_model): GPTModel(
+      (rotary_pos_emb): RotaryEmbedding()
+      (decoder): TransformerBlock(
+        (layers): ModuleList(
+          (0-7): 8 x TransformerLayer(
+            (input_layernorm): IdentityOp()
+            (self_attention): SelfAttention(
+              (core_attention): TEDotProductAttention(
+                (flash_attention): FlashAttention()
+                (fused_attention): FusedAttention()
+                (unfused_attention): UnfusedDotProductAttention(
+                  (scale_mask_softmax): FusedScaleMaskSoftmax()
+                  (attention_dropout): Dropout(p=0.0, inplace=False)
+                )
+              )
+              (linear_proj): TERowParallelLinear()
+              (linear_qkv): TELayerNormColumnParallelLinear()
+              (q_layernorm): IdentityOp()
+              (k_layernorm): IdentityOp()
+            )
+            (pre_cross_attn_layernorm): IdentityOp()
+            (cross_attention): IdentityOp()
+            (cross_attn_bda): IdentityFuncOp()
+            (pre_mlp_layernorm): IdentityOp()
+            (mlp): MLP(
+              (linear_fc1): TELayerNormColumnParallelLinear()
+              (linear_fc2): TERowParallelLinear()
+            )
+          )
+        )
+        (final_layernorm): RMSNorm()
+      )
+      (output_layer): ColumnParallelLinear()
+    )
+  )
+)][DistributedDataParallel(
+  (module): LLaVAModel(
+    (language_model): GPTModel(
+      (rotary_pos_emb): RotaryEmbedding()
+      (decoder): TransformerBlock(
+        (layers): ModuleList(
+          (0-7): 8 x TransformerLayer(
+            (input_layernorm): IdentityOp()
+            (self_attention): SelfAttention(
+              (core_attention): TEDotProductAttention(
+                (flash_attention): FlashAttention()
+                (fused_attention): FusedAttention()
+                (unfused_attention): UnfusedDotProductAttention(
+                  (scale_mask_softmax): FusedScaleMaskSoftmax()
+                  (attention_dropout): Dropout(p=0.0, inplace=False)
+                )
+              )
+              (linear_proj): TERowParallelLinear()
+              (linear_qkv): TELayerNormColumnParallelLinear()
+              (q_layernorm): IdentityOp()
+              (k_layernorm): IdentityOp()
+            )
+            (pre_cross_attn_layernorm): IdentityOp()
+            (cross_attention): IdentityOp()
+            (cross_attn_bda): IdentityFuncOp()
+            (pre_mlp_layernorm): IdentityOp()
+            (mlp): MLP(
+              (linear_fc1): TELayerNormColumnParallelLinear()
+              (linear_fc2): TERowParallelLinear()
+            )
+          )
+        )
+        (final_layernorm): RMSNorm()
+      )
+      (output_layer): ColumnParallelLinear()
+    )
+  )
+)][DistributedDataParallel(
+  (module): LLaVAModel(
+    (language_model): GPTModel(
+      (rotary_pos_emb): RotaryEmbedding()
+      (decoder): TransformerBlock(
+        (layers): ModuleList(
+          (0-7): 8 x TransformerLayer(
+            (input_layernorm): IdentityOp()
+            (self_attention): SelfAttention(
+              (core_attention): TEDotProductAttention(
+                (flash_attention): FlashAttention()
+                (fused_attention): FusedAttention()
+                (unfused_attention): UnfusedDotProductAttention(
+                  (scale_mask_softmax): FusedScaleMaskSoftmax()
+                  (attention_dropout): Dropout(p=0.0, inplace=False)
+                )
+              )
+              (linear_proj): TERowParallelLinear()
+              (linear_qkv): TELayerNormColumnParallelLinear()
+              (q_layernorm): IdentityOp()
+              (k_layernorm): IdentityOp()
+            )
+            (pre_cross_attn_layernorm): IdentityOp()
+            (cross_attention): IdentityOp()
+            (cross_attn_bda): IdentityFuncOp()
+            (pre_mlp_layernorm): IdentityOp()
+            (mlp): MLP(
+              (linear_fc1): TELayerNormColumnParallelLinear()
+              (linear_fc2): TERowParallelLinear()
+            )
+          )
+        )
+        (final_layernorm): RMSNorm()
+      )
+      (output_layer): ColumnParallelLinear()
+    )
+  )
+)]
+
+
+[DistributedDataParallel(
+  (module): LLaVAModel(
+    (language_model): GPTModel(
+      (rotary_pos_emb): RotaryEmbedding()
+      (decoder): TransformerBlock(
+        (layers): ModuleList(
+          (0-7): 8 x TransformerLayer(
+            (input_layernorm): IdentityOp()
+            (self_attention): SelfAttention(
+              (core_attention): TEDotProductAttention(
+                (flash_attention): FlashAttention()
+                (fused_attention): FusedAttention()
+                (unfused_attention): UnfusedDotProductAttention(
+                  (scale_mask_softmax): FusedScaleMaskSoftmax()
+                  (attention_dropout): Dropout(p=0.0, inplace=False)
+                )
+              )
+              (linear_proj): TERowParallelLinear()
+              (linear_qkv): TELayerNormColumnParallelLinear()
+              (q_layernorm): IdentityOp()
+              (k_layernorm): IdentityOp()
+            )
+            (pre_cross_attn_layernorm): IdentityOp()
+            (cross_attention): IdentityOp()
+            (cross_attn_bda): IdentityFuncOp()
+            (pre_mlp_layernorm): IdentityOp()
+            (mlp): MLP(
+              (linear_fc1): TELayerNormColumnParallelLinear()
+              (linear_fc2): TERowParallelLinear()
+            )
+          )
+        )
+        (final_layernorm): RMSNorm()
+      )
+      (output_layer): ColumnParallelLinear()
+    )
+  )
+)]
+pretrain configTransformerConfig(tensor_model_parallel_size=4, pipeline_model_parallel_size=5, virtual_pipeline_model_parallel_size=None, sequence_parallel=False, context_parallel_size=1, expert_model_parallel_size=1, moe_extended_tp=False, perform_initialization=True, use_cpu_initialization=None, fp16=False, bf16=False, params_dtype=torch.float32, timers=None, finalize_model_grads_func=None, grad_scale_func=None, no_sync_func=None, grad_sync_func=None, param_sync_func=None, deterministic_mode=False, enable_autocast=False, autocast_dtype=torch.float32, num_microbatches_with_partial_activation_checkpoints=None, gradient_accumulation_fusion=True, async_tensor_model_parallel_allreduce=True, use_te_rng_tracker=False, tp_comm_overlap=False, tp_comm_bulk_wgrad=True, tp_comm_bulk_dgrad=True, tp_comm_overlap_ag=True, tp_comm_overlap_rs=True, tp_comm_overlap_rs_dgrad=False, tp_comm_split_ag=True, tp_comm_atomic_ag=False, tp_comm_split_rs=True, tp_comm_atomic_rs=False, cross_entropy_loss_fusion=False, tp_comm_overlap_disable_qkv=False, tp_comm_overlap_disable_fc1=False, pipeline_dtype=torch.float32, variable_seq_lengths=False, overlap_p2p_comm=False, batch_p2p_comm=True, batch_p2p_sync=True, use_ring_exchange_p2p=False, deallocate_pipeline_outputs=True, defer_embedding_wgrad_compute=False, wgrad_deferral_limit=0, pipeline_model_parallel_split_rank=None, cpu_offloading=False, cpu_offloading_num_layers=0, _cpu_offloading_context=None, cpu_offloading_activations=True, cpu_offloading_weights=True, barrier_with_L1_time=True, num_layers=32, first_pipeline_num_layers=None, last_pipeline_num_layers=None, hidden_size=4096, num_attention_heads=32, num_query_groups=8, ffn_hidden_size=14336, kv_channels=128, hidden_dropout=0.0, attention_dropout=0.0, fp32_residual_connection=False, apply_residual_connection_post_layernorm=False, layernorm_epsilon=1e-05, layernorm_zero_centered_gamma=False, add_bias_linear=False, add_qkv_bias=False, gated_linear_unit=True, activation_func=<function silu at 0x7f6bf817d5a0>, activation_func_fp8_input_store=False, num_moe_experts=None, rotary_interleaved=False, window_size=None, normalization='RMSNorm', qk_layernorm=False, test_mode=False, calculate_per_token_loss=True, init_method=<function init_method_normal.<locals>.init_ at 0x7f6b300bc550>, output_layer_init_method=<function scaled_init_method_normal.<locals>.init_ at 0x7f6b300bc3a0>, init_method_std=0.014, apply_query_key_layer_scaling=False, attention_softmax_in_fp32=True, bias_activation_fusion=False, masked_softmax_fusion=False, persist_layer_norm=True, memory_efficient_layer_norm=False, bias_dropout_fusion=False, apply_rope_fusion=False, recompute_granularity=None, recompute_method=None, recompute_num_layers=None, distribute_saved_activations=False, fp8=None, fp8_margin=0, fp8_interval=1, fp8_amax_history_len=1, fp8_amax_compute_algo='most_recent', fp8_wgrad=True, fp8_dot_product_attention=False, fp8_multi_head_attention=False, tp_only_amax_red=False, moe_router_load_balancing_type='aux_loss', moe_router_topk=2, moe_router_pre_softmax=False, moe_grouped_gemm=False, moe_aux_loss_coeff=0.0, moe_z_loss_coeff=None, moe_input_jitter_eps=None, moe_token_dropping=False, moe_token_dispatcher_type='allgather', moe_per_layer_logging=False, moe_expert_capacity_factor=None, moe_pad_expert_input_to_capacity=False, moe_token_drop_policy='probs', moe_layer_recompute=False, clone_scatter_output_in_embedding=True, disable_parameter_transpose_cache=False, enable_cuda_graph=False, external_cuda_graph=False, config_logger_dir='')pretrain configTransformerConfig(tensor_model_parallel_size=4, pipeline_model_parallel_size=5, virtual_pipeline_model_parallel_size=None, sequence_parallel=False, context_parallel_size=1, expert_model_parallel_size=1, moe_extended_tp=False, perform_initialization=True, use_cpu_initialization=None, fp16=False, bf16=False, params_dtype=torch.float32, timers=None, finalize_model_grads_func=None, grad_scale_func=None, no_sync_func=None, grad_sync_func=None, param_sync_func=None, deterministic_mode=False, enable_autocast=False, autocast_dtype=torch.float32, num_microbatches_with_partial_activation_checkpoints=None, gradient_accumulation_fusion=True, async_tensor_model_parallel_allreduce=True, use_te_rng_tracker=False, tp_comm_overlap=False, tp_comm_bulk_wgrad=True, tp_comm_bulk_dgrad=True, tp_comm_overlap_ag=True, tp_comm_overlap_rs=True, tp_comm_overlap_rs_dgrad=False, tp_comm_split_ag=True, tp_comm_atomic_ag=False, tp_comm_split_rs=True, tp_comm_atomic_rs=False, cross_entropy_loss_fusion=False, tp_comm_overlap_disable_qkv=False, tp_comm_overlap_disable_fc1=False, pipeline_dtype=torch.float32, variable_seq_lengths=False, overlap_p2p_comm=False, batch_p2p_comm=True, batch_p2p_sync=True, use_ring_exchange_p2p=False, deallocate_pipeline_outputs=True, defer_embedding_wgrad_compute=False, wgrad_deferral_limit=0, pipeline_model_parallel_split_rank=None, cpu_offloading=False, cpu_offloading_num_layers=0, _cpu_offloading_context=None, cpu_offloading_activations=True, cpu_offloading_weights=True, barrier_with_L1_time=True, num_layers=32, first_pipeline_num_layers=None, last_pipeline_num_layers=None, hidden_size=4096, num_attention_heads=32, num_query_groups=8, ffn_hidden_size=14336, kv_channels=128, hidden_dropout=0.0, attention_dropout=0.0, fp32_residual_connection=False, apply_residual_connection_post_layernorm=False, layernorm_epsilon=1e-05, layernorm_zero_centered_gamma=False, add_bias_linear=False, add_qkv_bias=False, gated_linear_unit=True, activation_func=<function silu at 0x7fc5fc3e55a0>, activation_func_fp8_input_store=False, num_moe_experts=None, rotary_interleaved=False, window_size=None, normalization='RMSNorm', qk_layernorm=False, test_mode=False, calculate_per_token_loss=True, init_method=<function init_method_normal.<locals>.init_ at 0x7fc57cee8550>, output_layer_init_method=<function scaled_init_method_normal.<locals>.init_ at 0x7fc57cee83a0>, init_method_std=0.014, apply_query_key_layer_scaling=False, attention_softmax_in_fp32=True, bias_activation_fusion=False, masked_softmax_fusion=False, persist_layer_norm=True, memory_efficient_layer_norm=False, bias_dropout_fusion=False, apply_rope_fusion=False, recompute_granularity=None, recompute_method=None, recompute_num_layers=None, distribute_saved_activations=False, fp8=None, fp8_margin=0, fp8_interval=1, fp8_amax_history_len=1, fp8_amax_compute_algo='most_recent', fp8_wgrad=True, fp8_dot_product_attention=False, fp8_multi_head_attention=False, tp_only_amax_red=False, moe_router_load_balancing_type='aux_loss', moe_router_topk=2, moe_router_pre_softmax=False, moe_grouped_gemm=False, moe_aux_loss_coeff=0.0, moe_z_loss_coeff=None, moe_input_jitter_eps=None, moe_token_dropping=False, moe_token_dispatcher_type='allgather', moe_per_layer_logging=False, moe_expert_capacity_factor=None, moe_pad_expert_input_to_capacity=False, moe_token_drop_policy='probs', moe_layer_recompute=False, clone_scatter_output_in_embedding=True, disable_parameter_transpose_cache=False, enable_cuda_graph=False, external_cuda_graph=False, config_logger_dir='')pretrain configTransformerConfig(tensor_model_parallel_size=4, pipeline_model_parallel_size=5, virtual_pipeline_model_parallel_size=None, sequence_parallel=False, context_parallel_size=1, expert_model_parallel_size=1, moe_extended_tp=False, perform_initialization=True, use_cpu_initialization=None, fp16=False, bf16=False, params_dtype=torch.float32, timers=None, finalize_model_grads_func=None, grad_scale_func=None, no_sync_func=None, grad_sync_func=None, param_sync_func=None, deterministic_mode=False, enable_autocast=False, autocast_dtype=torch.float32, num_microbatches_with_partial_activation_checkpoints=None, gradient_accumulation_fusion=True, async_tensor_model_parallel_allreduce=True, use_te_rng_tracker=False, tp_comm_overlap=False, tp_comm_bulk_wgrad=True, tp_comm_bulk_dgrad=True, tp_comm_overlap_ag=True, tp_comm_overlap_rs=True, tp_comm_overlap_rs_dgrad=False, tp_comm_split_ag=True, tp_comm_atomic_ag=False, tp_comm_split_rs=True, tp_comm_atomic_rs=False, cross_entropy_loss_fusion=False, tp_comm_overlap_disable_qkv=False, tp_comm_overlap_disable_fc1=False, pipeline_dtype=torch.float32, variable_seq_lengths=False, overlap_p2p_comm=False, batch_p2p_comm=True, batch_p2p_sync=True, use_ring_exchange_p2p=False, deallocate_pipeline_outputs=True, defer_embedding_wgrad_compute=False, wgrad_deferral_limit=0, pipeline_model_parallel_split_rank=None, cpu_offloading=False, cpu_offloading_num_layers=0, _cpu_offloading_context=None, cpu_offloading_activations=True, cpu_offloading_weights=True, barrier_with_L1_time=True, num_layers=32, first_pipeline_num_layers=None, last_pipeline_num_layers=None, hidden_size=4096, num_attention_heads=32, num_query_groups=8, ffn_hidden_size=14336, kv_channels=128, hidden_dropout=0.0, attention_dropout=0.0, fp32_residual_connection=False, apply_residual_connection_post_layernorm=False, layernorm_epsilon=1e-05, layernorm_zero_centered_gamma=False, add_bias_linear=False, add_qkv_bias=False, gated_linear_unit=True, activation_func=<function silu at 0x7f1d1fc455a0>, activation_func_fp8_input_store=False, num_moe_experts=None, rotary_interleaved=False, window_size=None, normalization='RMSNorm', qk_layernorm=False, test_mode=False, calculate_per_token_loss=True, init_method=<function init_method_normal.<locals>.init_ at 0x7f1c3e479090>, output_layer_init_method=<function scaled_init_method_normal.<locals>.init_ at 0x7f1c3e478b80>, init_method_std=0.014, apply_query_key_layer_scaling=False, attention_softmax_in_fp32=True, bias_activation_fusion=False, masked_softmax_fusion=False, persist_layer_norm=True, memory_efficient_layer_norm=False, bias_dropout_fusion=False, apply_rope_fusion=False, recompute_granularity=None, recompute_method=None, recompute_num_layers=None, distribute_saved_activations=False, fp8=None, fp8_margin=0, fp8_interval=1, fp8_amax_history_len=1, fp8_amax_compute_algo='most_recent', fp8_wgrad=True, fp8_dot_product_attention=False, fp8_multi_head_attention=False, tp_only_amax_red=False, moe_router_load_balancing_type='aux_loss', moe_router_topk=2, moe_router_pre_softmax=False, moe_grouped_gemm=False, moe_aux_loss_coeff=0.0, moe_z_loss_coeff=None, moe_input_jitter_eps=None, moe_token_dropping=False, moe_token_dispatcher_type='allgather', moe_per_layer_logging=False, moe_expert_capacity_factor=None, moe_pad_expert_input_to_capacity=False, moe_token_drop_policy='probs', moe_layer_recompute=False, clone_scatter_output_in_embedding=True, disable_parameter_transpose_cache=False, enable_cuda_graph=False, external_cuda_graph=False, config_logger_dir='')
+pretrain configTransformerConfig(tensor_model_parallel_size=4, pipeline_model_parallel_size=5, virtual_pipeline_model_parallel_size=None, sequence_parallel=False, context_parallel_size=1, expert_model_parallel_size=1, moe_extended_tp=False, perform_initialization=True, use_cpu_initialization=None, fp16=False, bf16=False, params_dtype=torch.float32, timers=None, finalize_model_grads_func=None, grad_scale_func=None, no_sync_func=None, grad_sync_func=None, param_sync_func=None, deterministic_mode=False, enable_autocast=False, autocast_dtype=torch.float32, num_microbatches_with_partial_activation_checkpoints=None, gradient_accumulation_fusion=True, async_tensor_model_parallel_allreduce=True, use_te_rng_tracker=False, tp_comm_overlap=False, tp_comm_bulk_wgrad=True, tp_comm_bulk_dgrad=True, tp_comm_overlap_ag=True, tp_comm_overlap_rs=True, tp_comm_overlap_rs_dgrad=False, tp_comm_split_ag=True, tp_comm_atomic_ag=False, tp_comm_split_rs=True, tp_comm_atomic_rs=False, cross_entropy_loss_fusion=False, tp_comm_overlap_disable_qkv=False, tp_comm_overlap_disable_fc1=False, pipeline_dtype=torch.float32, variable_seq_lengths=False, overlap_p2p_comm=False, batch_p2p_comm=True, batch_p2p_sync=True, use_ring_exchange_p2p=False, deallocate_pipeline_outputs=True, defer_embedding_wgrad_compute=False, wgrad_deferral_limit=0, pipeline_model_parallel_split_rank=None, cpu_offloading=False, cpu_offloading_num_layers=0, _cpu_offloading_context=None, cpu_offloading_activations=True, cpu_offloading_weights=True, barrier_with_L1_time=True, num_layers=32, first_pipeline_num_layers=None, last_pipeline_num_layers=None, hidden_size=4096, num_attention_heads=32, num_query_groups=8, ffn_hidden_size=14336, kv_channels=128, hidden_dropout=0.0, attention_dropout=0.0, fp32_residual_connection=False, apply_residual_connection_post_layernorm=False, layernorm_epsilon=1e-05, layernorm_zero_centered_gamma=False, add_bias_linear=False, add_qkv_bias=False, gated_linear_unit=True, activation_func=<function silu at 0x7f0e153055a0>, activation_func_fp8_input_store=False, num_moe_experts=None, rotary_interleaved=False, window_size=None, normalization='RMSNorm', qk_layernorm=False, test_mode=False, calculate_per_token_loss=True, init_method=<function init_method_normal.<locals>.init_ at 0x7f0d8c110550>, output_layer_init_method=<function scaled_init_method_normal.<locals>.init_ at 0x7f0d8c1103a0>, init_method_std=0.014, apply_query_key_layer_scaling=False, attention_softmax_in_fp32=True, bias_activation_fusion=False, masked_softmax_fusion=False, persist_layer_norm=True, memory_efficient_layer_norm=False, bias_dropout_fusion=False, apply_rope_fusion=False, recompute_granularity=None, recompute_method=None, recompute_num_layers=None, distribute_saved_activations=False, fp8=None, fp8_margin=0, fp8_interval=1, fp8_amax_history_len=1, fp8_amax_compute_algo='most_recent', fp8_wgrad=True, fp8_dot_product_attention=False, fp8_multi_head_attention=False, tp_only_amax_red=False, moe_router_load_balancing_type='aux_loss', moe_router_topk=2, moe_router_pre_softmax=False, moe_grouped_gemm=False, moe_aux_loss_coeff=0.0, moe_z_loss_coeff=None, moe_input_jitter_eps=None, moe_token_dropping=False, moe_token_dispatcher_type='allgather', moe_per_layer_logging=False, moe_expert_capacity_factor=None, moe_pad_expert_input_to_capacity=False, moe_token_drop_policy='probs', moe_layer_recompute=False, clone_scatter_output_in_embedding=True, disable_parameter_transpose_cache=False, enable_cuda_graph=False, external_cuda_graph=False, config_logger_dir='')
+
+
+rank=0, worker=0: shard_range=[pretrain-0.tar[0, 100), pretrain-0.tar[100, 200), pretrain-0.tar[200, 300), ...<2194>, pretrain-28.tar[9700, 9800), pretrain-28.tar[9800, 9900), pretrain-28.tar[9900, 10000)] sum(count)=220000
+rank=0, worker=1: shard_range=[pretrain-29.tar[0, 100), pretrain-29.tar[100, 200), pretrain-29.tar[200, 300), ...<2194>, pretrain-48.tar[9700, 9800), pretrain-48.tar[9800, 9900), pretrain-48.tar[9900, 10000)] sum(count)=220000
+rank=0, worker=0: shard_range=[pretrain-49.tar[0, 10000), pretrain-5.tar[0, 10000), pretrain-50.tar[0, 10000)] sum(count)=30000
+rank=0, worker=1: shard_range=[pretrain-51.tar[0, 10000), pretrain-52.tar[0, 10000), pretrain-53.tar[0, 10000)] sum(count)=30000
+(min, max) time across ranks (ms):
+    model-and-optimizer-setup ......................: (44.23, 119.20)
+    train/valid/test-data-iterators-setup ..........: (1124.39, 1261.37)
+schedules.py decoder_seq_length:1152schedules.py decoder_seq_length:1152
+
+schedules.py decoder_seq_length:1152
+schedules.py decoder_seq_length:1152
+get batch end! tokens size:torch.Size([2, 576])
+get batch end! labels size:torch.Size([2, 576])
+get batch end! loss_mask size:torch.Size([2, 576])
+get batch end! attention_mask:torch.Size([1, 1, 576, 576])
+get batch end! position_ids:torch.Size([2, 576])
+get batch end! images size:torch.Size([2, 3, 336, 336])
+get batch end! num_image_tiles:torch.Size([2])
+get batch end! tokens size:torch.Size([2, 576])
+get batch end! labels size:torch.Size([2, 576])
+get batch end! tokens size:torch.Size([2, 576])get batch end! loss_mask size:torch.Size([2, 576])
+
+get batch end! attention_mask:torch.Size([1, 1, 576, 576])get batch end! labels size:torch.Size([2, 576])
+
+get batch end! position_ids:torch.Size([2, 576])get batch end! loss_mask size:torch.Size([2, 576])
+
+get batch end! images size:torch.Size([2, 3, 336, 336])get batch end! attention_mask:torch.Size([1, 1, 576, 576])
+
+get batch end! num_image_tiles:torch.Size([2])get batch end! position_ids:torch.Size([2, 576])
+
+get batch end! images size:torch.Size([2, 3, 336, 336])
+get batch end! num_image_tiles:torch.Size([2])
+get batch end! tokens size:torch.Size([2, 576])
+get batch end! labels size:torch.Size([2, 576])
+get batch end! loss_mask size:torch.Size([2, 576])
+get batch end! attention_mask:torch.Size([1, 1, 576, 576])
+get batch end! position_ids:torch.Size([2, 576])
+get batch end! images size:torch.Size([2, 3, 336, 336])
+get batch end! num_image_tiles:torch.Size([2])
+self.input tensor size:torch.Size([576, 2, 4096])
+TransformerBlock hidden states size:torch.Size([576, 2, 4096])
+self.input tensor size:torch.Size([576, 2, 4096])
+TransformerBlock hidden states size:torch.Size([576, 2, 4096])
+self.input tensor size:torch.Size([576, 2, 4096])
+TransformerBlock hidden states size:torch.Size([576, 2, 4096])
+self.input tensor size:torch.Size([576, 2, 4096])
+TransformerBlock hidden states size:torch.Size([576, 2, 4096])
+hidden state size:torch.Size([576, 2, 4096])
+language model end! output size:torch.Size([2, 576])
+hidden state size:torch.Size([576, 2, 4096])
+language model end! output size:torch.Size([2, 576])
+hidden state size:torch.Size([576, 2, 4096])
+language model end! output size:torch.Size([2, 576])
+hidden state size:torch.Size([576, 2, 4096])
+language model end! output size:torch.Size([2, 576])
+Traceback (most recent call last):
+  File "/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/examples/multimodal/train.py", line 463, in <module>
+Traceback (most recent call last):
+  File "/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/examples/multimodal/train.py", line 463, in <module>
+    pretrain(
+  File "/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/megatron/training/training.py", line 371, in pretrain
+    pretrain(
+  File "/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/megatron/training/training.py", line 371, in pretrain
+Traceback (most recent call last):
+  File "/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/examples/multimodal/train.py", line 463, in <module>
+    iteration, num_floating_point_operations_so_far = train( # 调用 1172 行进行训练
+  File "/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/megatron/training/training.py", line 1334, in train
+    iteration, num_floating_point_operations_so_far = train( # 调用 1172 行进行训练
+  File "/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/megatron/training/training.py", line 1334, in train
+    train_step(forward_step_func, # 调用 805 行
+  File "/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/megatron/training/training.py", line 818, in train_step
+    pretrain(
+  File "/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/megatron/training/training.py", line 371, in pretrain
+    train_step(forward_step_func, # 调用 805 行
+  File "/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/megatron/training/training.py", line 818, in train_step
+    losses_reduced = forward_backward_func( # schedules.py 1278 行 forward_backward_pipelining_without_interleaving
+  File "/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/megatron/core/pipeline_parallel/schedules.py", line 1494, in forward_backward_pipelining_without_interleaving
+    iteration, num_floating_point_operations_so_far = train( # 调用 1172 行进行训练
+  File "/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/megatron/training/training.py", line 1334, in train
+    losses_reduced = forward_backward_func( # schedules.py 1278 行 forward_backward_pipelining_without_interleaving
+  File "/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/megatron/core/pipeline_parallel/schedules.py", line 1494, in forward_backward_pipelining_without_interleaving
+    input_tensor_grad = backward_step(
+  File "/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/megatron/core/pipeline_parallel/schedules.py", line 364, in backward_step
+    train_step(forward_step_func, # 调用 805 行
+    custom_backward(output_tensor[0], output_tensor_grad[0])  File "/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/megatron/training/training.py", line 818, in train_step
+
+  File "/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/megatron/core/pipeline_parallel/schedules.py", line 149, in custom_backward
+    input_tensor_grad = backward_step(
+  File "/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/megatron/core/pipeline_parallel/schedules.py", line 364, in backward_step
+Traceback (most recent call last):
+  File "/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/examples/multimodal/train.py", line 463, in <module>
+    Variable._execution_engine.run_backward(
+  File "/gf3/home/fjs/anaconda3/envs/megatron/lib/python3.10/site-packages/torch/autograd/function.py", line 289, in apply
+    custom_backward(output_tensor[0], output_tensor_grad[0])
+  File "/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/megatron/core/pipeline_parallel/schedules.py", line 149, in custom_backward
+    return user_fn(self, *args)
+  File "/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/megatron/core/tensor_parallel/cross_entropy.py", line 211, in backward
+    losses_reduced = forward_backward_func( # schedules.py 1278 行 forward_backward_pipelining_without_interleaving
+  File "/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/megatron/core/pipeline_parallel/schedules.py", line 1494, in forward_backward_pipelining_without_interleaving
+    Variable._execution_engine.run_backward(
+  File "/gf3/home/fjs/anaconda3/envs/megatron/lib/python3.10/site-packages/torch/autograd/function.py", line 289, in apply
+    pretrain(
+  File "/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/megatron/training/training.py", line 371, in pretrain
+    grad_input = VocabParallelCrossEntropy.calculate_gradients(
+  File "/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/megatron/core/tensor_parallel/cross_entropy.py", line 116, in calculate_gradients
+    return user_fn(self, *args)    
+input_tensor_grad = backward_step(
+  File "/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/megatron/core/pipeline_parallel/schedules.py", line 364, in backward_step
+  File "/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/megatron/core/tensor_parallel/cross_entropy.py", line 211, in backward
+    grad_2d[arange_1d, masked_target_1d[:arange_1d.size(0)]] -= softmax_update
+RuntimeError: The size of tensor a (1152) must match the size of tensor b (2302) at non-singleton dimension 0
+    iteration, num_floating_point_operations_so_far = train( # 调用 1172 行进行训练
+  File "/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/megatron/training/training.py", line 1334, in train
+    custom_backward(output_tensor[0], output_tensor_grad[0])
+  File "/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/megatron/core/pipeline_parallel/schedules.py", line 149, in custom_backward
+    grad_input = VocabParallelCrossEntropy.calculate_gradients(
+  File "/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/megatron/core/tensor_parallel/cross_entropy.py", line 116, in calculate_gradients
+    Variable._execution_engine.run_backward(
+  File "/gf3/home/fjs/anaconda3/envs/megatron/lib/python3.10/site-packages/torch/autograd/function.py", line 289, in apply
+    return user_fn(self, *args)
+  File "/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/megatron/core/tensor_parallel/cross_entropy.py", line 211, in backward
+    grad_2d[arange_1d, masked_target_1d[:arange_1d.size(0)]] -= softmax_update
+RuntimeError: The size of tensor a (1152) must match the size of tensor b (2302) at non-singleton dimension 0
+    grad_input = VocabParallelCrossEntropy.calculate_gradients(
+  File "/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/megatron/core/tensor_parallel/cross_entropy.py", line 116, in calculate_gradients
+    train_step(forward_step_func, # 调用 805 行
+  File "/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/megatron/training/training.py", line 818, in train_step
+    grad_2d[arange_1d, masked_target_1d[:arange_1d.size(0)]] -= softmax_update
+RuntimeError: The size of tensor a (1152) must match the size of tensor b (2302) at non-singleton dimension 0
+    losses_reduced = forward_backward_func( # schedules.py 1278 行 forward_backward_pipelining_without_interleaving
+  File "/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/megatron/core/pipeline_parallel/schedules.py", line 1494, in forward_backward_pipelining_without_interleaving
+    input_tensor_grad = backward_step(
+  File "/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/megatron/core/pipeline_parallel/schedules.py", line 364, in backward_step
+    custom_backward(output_tensor[0], output_tensor_grad[0])
+  File "/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/megatron/core/pipeline_parallel/schedules.py", line 149, in custom_backward
+    Variable._execution_engine.run_backward(
+  File "/gf3/home/fjs/anaconda3/envs/megatron/lib/python3.10/site-packages/torch/autograd/function.py", line 289, in apply
+    return user_fn(self, *args)
+  File "/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/megatron/core/tensor_parallel/cross_entropy.py", line 211, in backward
+    grad_input = VocabParallelCrossEntropy.calculate_gradients(
+  File "/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/megatron/core/tensor_parallel/cross_entropy.py", line 116, in calculate_gradients
+    grad_2d[arange_1d, masked_target_1d[:arange_1d.size(0)]] -= softmax_update
+RuntimeError: The size of tensor a (1152) must match the size of tensor b (2302) at non-singleton dimension 0
+[2024-11-25 20:34:23,651] torch.distributed.elastic.multiprocessing.api: [WARNING] Sending process 33934 closing signal SIGTERM
+[2024-11-25 20:34:23,651] torch.distributed.elastic.multiprocessing.api: [WARNING] Sending process 33936 closing signal SIGTERM
+[2024-11-25 20:34:23,651] torch.distributed.elastic.multiprocessing.api: [WARNING] Sending process 33937 closing signal SIGTERM
+[2024-11-25 20:34:24,217] torch.distributed.elastic.multiprocessing.api: [ERROR] failed (exitcode: 1) local_rank: 1 (pid: 33935) of binary: /gf3/home/fjs/anaconda3/envs/megatron/bin/python3.10
+Traceback (most recent call last):
+  File "/gf3/home/fjs/anaconda3/envs/megatron/bin/torchrun", line 8, in <module>
+    sys.exit(main())
+  File "/gf3/home/fjs/anaconda3/envs/megatron/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 347, in wrapper
+    return f(*args, **kwargs)
+  File "/gf3/home/fjs/anaconda3/envs/megatron/lib/python3.10/site-packages/torch/distributed/run.py", line 812, in main
+    run(args)
+  File "/gf3/home/fjs/anaconda3/envs/megatron/lib/python3.10/site-packages/torch/distributed/run.py", line 803, in run
+    elastic_launch(
+  File "/gf3/home/fjs/anaconda3/envs/megatron/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 135, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/gf3/home/fjs/anaconda3/envs/megatron/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 268, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+examples/multimodal/train.py FAILED
+------------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2024-11-25_20:34:23
+  host      : gn39
+  rank      : 17 (local_rank: 1)
+  exitcode  : 1 (pid: 33935)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================

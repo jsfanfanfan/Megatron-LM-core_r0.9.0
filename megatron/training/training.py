@@ -239,7 +239,18 @@ def pretrain(
     )
 
     # 打印初始化后的并行组看看
-    # ——————————————————————————————
+    # 获取当前进程的张量并行组和流水线并行组
+    tensor_parallel_group = mpu.get_tensor_model_parallel_group()
+    pipeline_parallel_group = mpu.get_pipeline_model_parallel_group()
+
+    # 获取当前进程的 rank
+    rank = torch.distributed.get_rank()
+    # 只能获取当前 rank 的进程在 Tensor/Pipeline Parallel Group 中的位置
+    # 打印张量并行组的所有 GPU
+    print(f"---Rank {rank}---Tensor Parallel Group GPUs: {[torch.distributed.get_rank(group=tensor_parallel_group) for i in range(torch.distributed.get_world_size(tensor_parallel_group))]}")
+
+    # 打印流水线并行组的所有 GPU
+    print(f"---Rank {rank}---Pipeline Parallel Group GPUs: {[torch.distributed.get_rank(group=pipeline_parallel_group) for i in range(torch.distributed.get_world_size(pipeline_parallel_group))]}")
 
     # 获取初始化得到的 args 和 timers
     args = get_args()
@@ -295,13 +306,18 @@ def pretrain(
         model_provider, model_type, checkpointing_context=checkpointing_context)
 
     timers('model-and-optimizer-setup').stop()
+    
     print_datetime('after model, optimizer, and learning rate '
                    'scheduler are built')
     app_metrics['app_build_optimizer_finish_time'] = one_logger_utils.get_timestamp_in_ms()
+
     # 打印每个 rank 的获取的模型结构看看
-    # ————————————————————————————————
+    print(model)
+    
     config = get_model_config(model[0])
 
+    print(f"pretrain config{config}")
+    
     # Data stuff.
     app_metrics['app_build_dataiters_start_time'] = one_logger_utils.get_timestamp_in_ms()
     timers('train/valid/test-data-iterators-setup', log_level=0).start(
@@ -339,7 +355,6 @@ def pretrain(
     print_rank_0('done with setup ...')
     timers.log(['model-and-optimizer-setup',
                 'train/valid/test-data-iterators-setup'], barrier=True)
-
     one_logger = get_one_logger()
     one_logger and one_logger.log_metrics(app_metrics)
 
@@ -376,7 +391,7 @@ def pretrain(
         print_rank_0('skipping training (--skip-train is on) ...')
 
         iteration = args.iteration
-
+    '''
     if args.do_valid:
         prefix = f'iteration {iteration} on validation set'
         evaluate_and_print_results(prefix, forward_step_func,
@@ -400,6 +415,7 @@ def pretrain(
         'app_finish_time': one_logger_utils.get_timestamp_in_ms()
     })
     one_logger_utils.finish()
+    '''
 
 
 def update_train_iters(args):
@@ -491,6 +507,12 @@ def  get_model(model_provider_func, model_type=ModelType.encoder_or_decoder, wra
         post_process = mpu.is_pipeline_last_stage()
         add_encoder = True
         add_decoder = True
+        add_projector = True
+        encoder_pre_process = True
+        llm_pre_process = True
+        llm_post_process = True
+        stage_encoder_transformer_layer_num = 24
+        stage_llm_transformer_layer_num = 8
         if model_type == ModelType.encoder_and_decoder:
             if mpu.get_pipeline_model_parallel_world_size() > 1:
                 rank = mpu.get_pipeline_model_parallel_rank()
@@ -543,7 +565,9 @@ def  get_model(model_provider_func, model_type=ModelType.encoder_or_decoder, wra
                 add_decoder=add_decoder,
                 pre_process=llm_pre_process,
                 post_process=llm_post_process,
-                stage_llm_transformer_layer_num=stage_llm_transformer_layer_num
+                stage_llm_transformer_layer_num=stage_llm_transformer_layer_num,
+                start_layer=start_layer,
+                end_layer=end_layer
             )
         else:
             model = model_provider_func(
@@ -778,7 +802,7 @@ def setup_model_and_optimizer(model_provider_func,
     return model, optimizer, opt_param_scheduler
 
 
-def train_step(forward_step_func, data_iterator,
+def train_step(forward_step_func, data_iterator, # 被 1334 行调用
                model, optimizer, opt_param_scheduler, config):
     """Single training step."""
     args = get_args()
@@ -791,7 +815,7 @@ def train_step(forward_step_func, data_iterator,
 
     # Forward pass.
     forward_backward_func = get_forward_backward_func()
-    losses_reduced = forward_backward_func(
+    losses_reduced = forward_backward_func( # schedules.py 1278 行 forward_backward_pipelining_without_interleaving
         forward_step_func=forward_step_func,
         data_iterator=data_iterator,
         model=model,
@@ -1172,7 +1196,7 @@ def save_checkpoint_and_time(iteration, model, optimizer, opt_param_scheduler,
 def train(forward_step_func, model, optimizer, opt_param_scheduler,
           train_data_iterator, valid_data_iterator,
           process_non_loss_data_func, config, checkpointing_context):
-    """Train the model function."""
+    """Train the model function. 371 行调用"""
     args = get_args()
     timers = get_timers()
     one_logger = get_one_logger()
@@ -1307,7 +1331,7 @@ def train(forward_step_func, model, optimizer, opt_param_scheduler,
 
         args.curr_iteration = iteration
         loss_dict, skipped_iter, grad_norm, num_zeros_in_grad = \
-            train_step(forward_step_func,
+            train_step(forward_step_func, # 调用 805 行
                        train_data_iterator,
                        model,
                        optimizer,

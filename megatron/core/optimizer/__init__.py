@@ -399,10 +399,11 @@ def get_megatron_optimizer(
                 param_groups=param_groups,
                 per_model_buffers=buffers,
                 model_parallel_group=mpu.get_model_parallel_group(),
-                data_parallel_group=mpu.get_data_parallel_group(with_context_parallel=True),
-                data_parallel_group_gloo=mpu.get_data_parallel_group_gloo(
-                    with_context_parallel=True
-                ),
+                # data_parallel_group=mpu.get_data_parallel_group(with_context_parallel=True),
+                data_parallel_group=mpu.get_data_parallel_group(),
+                # data_parallel_group_gloo=mpu.get_data_parallel_group_gloo(
+                #     with_context_parallel=True
+                # ),
                 data_parallel_group_idx=model_parallel_rank,
             )
         )

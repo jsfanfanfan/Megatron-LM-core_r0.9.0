@@ -1,0 +1,1237 @@
+examples/multimodal/pretrain_freeze-llm.sh: line 4: activate: No such file or directory
+[2024-11-25 23:08:22,003] torch.distributed.run: [WARNING] 
+[2024-11-25 23:08:22,003] torch.distributed.run: [WARNING] *****************************************
+[2024-11-25 23:08:22,003] torch.distributed.run: [WARNING] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+[2024-11-25 23:08:22,003] torch.distributed.run: [WARNING] *****************************************
+You set `add_prefix_space`. The tokenizer needs to be converted from the slow tokenizers
+You set `add_prefix_space`. The tokenizer needs to be converted from the slow tokenizers
+You set `add_prefix_space`. The tokenizer needs to be converted from the slow tokenizers
+------pipeline_parallel_model_size:5------
+------world_size:20------
+------total_model_size:20------
+------num_pipeline_model_parallel_groups:4------
+------pipeline_parallel_model_size:5------
+------world_size:20------
+------total_model_size:20------
+------num_pipeline_model_parallel_groups:4------
+------pipeline_parallel_model_size:5------
+------world_size:20------
+------total_model_size:20------
+------num_pipeline_model_parallel_groups:4------
+You set `add_prefix_space`. The tokenizer needs to be converted from the slow tokenizers
+------pipeline_parallel_model_size:5------
+------world_size:20------
+------total_model_size:20------
+------num_pipeline_model_parallel_groups:4------
+---Rank 5---Tensor Parallel Group GPUs: [1, 1, 1, 1]---Rank 4---Tensor Parallel Group GPUs: [0, 0, 0, 0]---Rank 7---Tensor Parallel Group GPUs: [3, 3, 3, 3]
+---Rank 6---Tensor Parallel Group GPUs: [2, 2, 2, 2]
+
+
+---Rank 5---Pipeline Parallel Group GPUs: [1, 1, 1, 1, 1]
+---Rank 7---Pipeline Parallel Group GPUs: [1, 1, 1, 1, 1]---Rank 4---Pipeline Parallel Group GPUs: [1, 1, 1, 1, 1]
+---Rank 6---Pipeline Parallel Group GPUs: [1, 1, 1, 1, 1]
+
+[rank5]:[W init.cpp:767] Warning: nvfuser is no longer supported in torch script, use _jit_set_nvfuser_enabled is deprecated and a no-op (function operator())
+[rank7]:[W init.cpp:767] Warning: nvfuser is no longer supported in torch script, use _jit_set_nvfuser_enabled is deprecated and a no-op (function operator())
+[rank4]:[W init.cpp:767] Warning: nvfuser is no longer supported in torch script, use _jit_set_nvfuser_enabled is deprecated and a no-op (function operator())
+[rank6]:[W init.cpp:767] Warning: nvfuser is no longer supported in torch script, use _jit_set_nvfuser_enabled is deprecated and a no-op (function operator())
+WARNING:megatron.core.models.multimodal.llava_model:LLaVA model is under active development. It may be missing features and its methods may change.
+WARNING:megatron.core.models.multimodal.llava_model:LLaVA model is under active development. It may be missing features and its methods may change.
+WARNING:megatron.core.models.multimodal.llava_model:LLaVA model is under active development. It may be missing features and its methods may change.
+WARNING:megatron.core.models.multimodal.llava_model:LLaVA model is under active development. It may be missing features and its methods may change.
+ > number of parameters on (tensor, pipeline) model parallel rank (1, 1): 469827584
+ > number of parameters on (tensor, pipeline) model parallel rank (0, 1): 469827584
+ > number of parameters on (tensor, pipeline) model parallel rank (3, 1): 469827584
+ > number of parameters on (tensor, pipeline) model parallel rank (2, 1): 469827584
+[DistributedDataParallel(
+  (module): LLaVAModel(
+    (language_model): GPTModel(
+      (embedding): LanguageModelEmbedding(
+        (word_embeddings): VocabParallelEmbedding()
+        (embedding_dropout): Dropout(p=0.0, inplace=False)
+      )
+      (rotary_pos_emb): RotaryEmbedding()
+      (decoder): TransformerBlock(
+        (layers): ModuleList(
+          (0-7): 8 x TransformerLayer(
+            (input_layernorm): IdentityOp()
+            (self_attention): SelfAttention(
+              (core_attention): TEDotProductAttention(
+                (flash_attention): FlashAttention()
+                (fused_attention): FusedAttention()
+                (unfused_attention): UnfusedDotProductAttention(
+                  (scale_mask_softmax): FusedScaleMaskSoftmax()
+                  (attention_dropout): Dropout(p=0.0, inplace=False)
+                )
+              )
+              (linear_proj): TERowParallelLinear()
+              (linear_qkv): TELayerNormColumnParallelLinear()
+              (q_layernorm): IdentityOp()
+              (k_layernorm): IdentityOp()
+            )
+            (pre_cross_attn_layernorm): IdentityOp()
+            (cross_attention): IdentityOp()
+            (cross_attn_bda): IdentityFuncOp()
+            (pre_mlp_layernorm): IdentityOp()
+            (mlp): MLP(
+              (linear_fc1): TELayerNormColumnParallelLinear()
+              (linear_fc2): TERowParallelLinear()
+            )
+          )
+        )
+      )
+    )
+  )
+)]
+pretrain configTransformerConfig(tensor_model_parallel_size=4, pipeline_model_parallel_size=5, virtual_pipeline_model_parallel_size=None, sequence_parallel=False, context_parallel_size=1, expert_model_parallel_size=1, moe_extended_tp=False, perform_initialization=True, use_cpu_initialization=None, fp16=False, bf16=False, params_dtype=torch.float32, timers=None, finalize_model_grads_func=None, grad_scale_func=None, no_sync_func=None, grad_sync_func=None, param_sync_func=None, deterministic_mode=False, enable_autocast=False, autocast_dtype=torch.float32, num_microbatches_with_partial_activation_checkpoints=None, gradient_accumulation_fusion=True, async_tensor_model_parallel_allreduce=True, use_te_rng_tracker=False, tp_comm_overlap=False, tp_comm_bulk_wgrad=True, tp_comm_bulk_dgrad=True, tp_comm_overlap_ag=True, tp_comm_overlap_rs=True, tp_comm_overlap_rs_dgrad=False, tp_comm_split_ag=True, tp_comm_atomic_ag=False, tp_comm_split_rs=True, tp_comm_atomic_rs=False, cross_entropy_loss_fusion=False, tp_comm_overlap_disable_qkv=False, tp_comm_overlap_disable_fc1=False, pipeline_dtype=torch.float32, variable_seq_lengths=False, overlap_p2p_comm=False, batch_p2p_comm=True, batch_p2p_sync=True, use_ring_exchange_p2p=False, deallocate_pipeline_outputs=True, defer_embedding_wgrad_compute=False, wgrad_deferral_limit=0, pipeline_model_parallel_split_rank=None, cpu_offloading=False, cpu_offloading_num_layers=0, _cpu_offloading_context=None, cpu_offloading_activations=True, cpu_offloading_weights=True, barrier_with_L1_time=True, num_layers=32, first_pipeline_num_layers=None, last_pipeline_num_layers=None, hidden_size=4096, num_attention_heads=32, num_query_groups=8, ffn_hidden_size=14336, kv_channels=128, hidden_dropout=0.0, attention_dropout=0.0, fp32_residual_connection=False, apply_residual_connection_post_layernorm=False, layernorm_epsilon=1e-05, layernorm_zero_centered_gamma=False, add_bias_linear=False, add_qkv_bias=False, gated_linear_unit=True, activation_func=<function silu at 0x7ff38e54d5a0>, activation_func_fp8_input_store=False, num_moe_experts=None, rotary_interleaved=False, window_size=None, normalization='RMSNorm', qk_layernorm=False, test_mode=False, calculate_per_token_loss=True, init_method=<function init_method_normal.<locals>.init_ at 0x7ff2b4460550>, output_layer_init_method=<function scaled_init_method_normal.<locals>.init_ at 0x7ff2b44603a0>, init_method_std=0.014, apply_query_key_layer_scaling=False, attention_softmax_in_fp32=True, bias_activation_fusion=False, masked_softmax_fusion=False, persist_layer_norm=True, memory_efficient_layer_norm=False, bias_dropout_fusion=False, apply_rope_fusion=False, recompute_granularity=None, recompute_method=None, recompute_num_layers=None, distribute_saved_activations=False, fp8=None, fp8_margin=0, fp8_interval=1, fp8_amax_history_len=1, fp8_amax_compute_algo='most_recent', fp8_wgrad=True, fp8_dot_product_attention=False, fp8_multi_head_attention=False, tp_only_amax_red=False, moe_router_load_balancing_type='aux_loss', moe_router_topk=2, moe_router_pre_softmax=False, moe_grouped_gemm=False, moe_aux_loss_coeff=0.0, moe_z_loss_coeff=None, moe_input_jitter_eps=None, moe_token_dropping=False, moe_token_dispatcher_type='allgather', moe_per_layer_logging=False, moe_expert_capacity_factor=None, moe_pad_expert_input_to_capacity=False, moe_token_drop_policy='probs', moe_layer_recompute=False, clone_scatter_output_in_embedding=True, disable_parameter_transpose_cache=False, enable_cuda_graph=False, external_cuda_graph=False, config_logger_dir='')
+[DistributedDataParallel(
+  (module): LLaVAModel(
+    (language_model): GPTModel(
+      (embedding): LanguageModelEmbedding(
+        (word_embeddings): VocabParallelEmbedding()
+        (embedding_dropout): Dropout(p=0.0, inplace=False)
+      )
+      (rotary_pos_emb): RotaryEmbedding()
+      (decoder): TransformerBlock(
+        (layers): ModuleList(
+          (0-7): 8 x TransformerLayer(
+            (input_layernorm): IdentityOp()
+            (self_attention): SelfAttention(
+              (core_attention): TEDotProductAttention(
+                (flash_attention): FlashAttention()
+                (fused_attention): FusedAttention()
+                (unfused_attention): UnfusedDotProductAttention(
+                  (scale_mask_softmax): FusedScaleMaskSoftmax()
+                  (attention_dropout): Dropout(p=0.0, inplace=False)
+                )
+              )
+              (linear_proj): TERowParallelLinear()
+              (linear_qkv): TELayerNormColumnParallelLinear()
+              (q_layernorm): IdentityOp()
+              (k_layernorm): IdentityOp()
+            )
+            (pre_cross_attn_layernorm): IdentityOp()
+            (cross_attention): IdentityOp()
+            (cross_attn_bda): IdentityFuncOp()
+            (pre_mlp_layernorm): IdentityOp()
+            (mlp): MLP(
+              (linear_fc1): TELayerNormColumnParallelLinear()
+              (linear_fc2): TERowParallelLinear()
+            )
+          )
+        )
+      )
+    )
+  )
+)]
+[DistributedDataParallel(
+  (module): LLaVAModel(
+    (language_model): GPTModel(
+      (embedding): LanguageModelEmbedding(
+        (word_embeddings): VocabParallelEmbedding()
+        (embedding_dropout): Dropout(p=0.0, inplace=False)
+      )
+      (rotary_pos_emb): RotaryEmbedding()
+      (decoder): TransformerBlock(
+        (layers): ModuleList(
+          (0-7): 8 x TransformerLayer(
+            (input_layernorm): IdentityOp()
+            (self_attention): SelfAttention(
+              (core_attention): TEDotProductAttention(
+                (flash_attention): FlashAttention()
+                (fused_attention): FusedAttention()
+                (unfused_attention): UnfusedDotProductAttention(
+                  (scale_mask_softmax): FusedScaleMaskSoftmax()
+                  (attention_dropout): Dropout(p=0.0, inplace=False)
+                )
+              )
+              (linear_proj): TERowParallelLinear()
+              (linear_qkv): TELayerNormColumnParallelLinear()
+              (q_layernorm): IdentityOp()
+              (k_layernorm): IdentityOp()
+            )
+            (pre_cross_attn_layernorm): IdentityOp()
+            (cross_attention): IdentityOp()
+            (cross_attn_bda): IdentityFuncOp()
+            (pre_mlp_layernorm): IdentityOp()
+            (mlp): MLP(
+              (linear_fc1): TELayerNormColumnParallelLinear()
+              (linear_fc2): TERowParallelLinear()
+            )
+          )
+        )
+      )
+    )
+  )
+)]
+pretrain configTransformerConfig(tensor_model_parallel_size=4, pipeline_model_parallel_size=5, virtual_pipeline_model_parallel_size=None, sequence_parallel=False, context_parallel_size=1, expert_model_parallel_size=1, moe_extended_tp=False, perform_initialization=True, use_cpu_initialization=None, fp16=False, bf16=False, params_dtype=torch.float32, timers=None, finalize_model_grads_func=None, grad_scale_func=None, no_sync_func=None, grad_sync_func=None, param_sync_func=None, deterministic_mode=False, enable_autocast=False, autocast_dtype=torch.float32, num_microbatches_with_partial_activation_checkpoints=None, gradient_accumulation_fusion=True, async_tensor_model_parallel_allreduce=True, use_te_rng_tracker=False, tp_comm_overlap=False, tp_comm_bulk_wgrad=True, tp_comm_bulk_dgrad=True, tp_comm_overlap_ag=True, tp_comm_overlap_rs=True, tp_comm_overlap_rs_dgrad=False, tp_comm_split_ag=True, tp_comm_atomic_ag=False, tp_comm_split_rs=True, tp_comm_atomic_rs=False, cross_entropy_loss_fusion=False, tp_comm_overlap_disable_qkv=False, tp_comm_overlap_disable_fc1=False, pipeline_dtype=torch.float32, variable_seq_lengths=False, overlap_p2p_comm=False, batch_p2p_comm=True, batch_p2p_sync=True, use_ring_exchange_p2p=False, deallocate_pipeline_outputs=True, defer_embedding_wgrad_compute=False, wgrad_deferral_limit=0, pipeline_model_parallel_split_rank=None, cpu_offloading=False, cpu_offloading_num_layers=0, _cpu_offloading_context=None, cpu_offloading_activations=True, cpu_offloading_weights=True, barrier_with_L1_time=True, num_layers=32, first_pipeline_num_layers=None, last_pipeline_num_layers=None, hidden_size=4096, num_attention_heads=32, num_query_groups=8, ffn_hidden_size=14336, kv_channels=128, hidden_dropout=0.0, attention_dropout=0.0, fp32_residual_connection=False, apply_residual_connection_post_layernorm=False, layernorm_epsilon=1e-05, layernorm_zero_centered_gamma=False, add_bias_linear=False, add_qkv_bias=False, gated_linear_unit=True, activation_func=<function silu at 0x7fbe0fe3d5a0>, activation_func_fp8_input_store=False, num_moe_experts=None, rotary_interleaved=False, window_size=None, normalization='RMSNorm', qk_layernorm=False, test_mode=False, calculate_per_token_loss=True, init_method=<function init_method_normal.<locals>.init_ at 0x7fbd4c5356c0>, output_layer_init_method=<function scaled_init_method_normal.<locals>.init_ at 0x7fbd4c5343a0>, init_method_std=0.014, apply_query_key_layer_scaling=False, attention_softmax_in_fp32=True, bias_activation_fusion=False, masked_softmax_fusion=False, persist_layer_norm=True, memory_efficient_layer_norm=False, bias_dropout_fusion=False, apply_rope_fusion=False, recompute_granularity=None, recompute_method=None, recompute_num_layers=None, distribute_saved_activations=False, fp8=None, fp8_margin=0, fp8_interval=1, fp8_amax_history_len=1, fp8_amax_compute_algo='most_recent', fp8_wgrad=True, fp8_dot_product_attention=False, fp8_multi_head_attention=False, tp_only_amax_red=False, moe_router_load_balancing_type='aux_loss', moe_router_topk=2, moe_router_pre_softmax=False, moe_grouped_gemm=False, moe_aux_loss_coeff=0.0, moe_z_loss_coeff=None, moe_input_jitter_eps=None, moe_token_dropping=False, moe_token_dispatcher_type='allgather', moe_per_layer_logging=False, moe_expert_capacity_factor=None, moe_pad_expert_input_to_capacity=False, moe_token_drop_policy='probs', moe_layer_recompute=False, clone_scatter_output_in_embedding=True, disable_parameter_transpose_cache=False, enable_cuda_graph=False, external_cuda_graph=False, config_logger_dir='')
+pretrain configTransformerConfig(tensor_model_parallel_size=4, pipeline_model_parallel_size=5, virtual_pipeline_model_parallel_size=None, sequence_parallel=False, context_parallel_size=1, expert_model_parallel_size=1, moe_extended_tp=False, perform_initialization=True, use_cpu_initialization=None, fp16=False, bf16=False, params_dtype=torch.float32, timers=None, finalize_model_grads_func=None, grad_scale_func=None, no_sync_func=None, grad_sync_func=None, param_sync_func=None, deterministic_mode=False, enable_autocast=False, autocast_dtype=torch.float32, num_microbatches_with_partial_activation_checkpoints=None, gradient_accumulation_fusion=True, async_tensor_model_parallel_allreduce=True, use_te_rng_tracker=False, tp_comm_overlap=False, tp_comm_bulk_wgrad=True, tp_comm_bulk_dgrad=True, tp_comm_overlap_ag=True, tp_comm_overlap_rs=True, tp_comm_overlap_rs_dgrad=False, tp_comm_split_ag=True, tp_comm_atomic_ag=False, tp_comm_split_rs=True, tp_comm_atomic_rs=False, cross_entropy_loss_fusion=False, tp_comm_overlap_disable_qkv=False, tp_comm_overlap_disable_fc1=False, pipeline_dtype=torch.float32, variable_seq_lengths=False, overlap_p2p_comm=False, batch_p2p_comm=True, batch_p2p_sync=True, use_ring_exchange_p2p=False, deallocate_pipeline_outputs=True, defer_embedding_wgrad_compute=False, wgrad_deferral_limit=0, pipeline_model_parallel_split_rank=None, cpu_offloading=False, cpu_offloading_num_layers=0, _cpu_offloading_context=None, cpu_offloading_activations=True, cpu_offloading_weights=True, barrier_with_L1_time=True, num_layers=32, first_pipeline_num_layers=None, last_pipeline_num_layers=None, hidden_size=4096, num_attention_heads=32, num_query_groups=8, ffn_hidden_size=14336, kv_channels=128, hidden_dropout=0.0, attention_dropout=0.0, fp32_residual_connection=False, apply_residual_connection_post_layernorm=False, layernorm_epsilon=1e-05, layernorm_zero_centered_gamma=False, add_bias_linear=False, add_qkv_bias=False, gated_linear_unit=True, activation_func=<function silu at 0x7fb79d2695a0>, activation_func_fp8_input_store=False, num_moe_experts=None, rotary_interleaved=False, window_size=None, normalization='RMSNorm', qk_layernorm=False, test_mode=False, calculate_per_token_loss=True, init_method=<function init_method_normal.<locals>.init_ at 0x7fb6ec0d0550>, output_layer_init_method=<function scaled_init_method_normal.<locals>.init_ at 0x7fb6ec0d03a0>, init_method_std=0.014, apply_query_key_layer_scaling=False, attention_softmax_in_fp32=True, bias_activation_fusion=False, masked_softmax_fusion=False, persist_layer_norm=True, memory_efficient_layer_norm=False, bias_dropout_fusion=False, apply_rope_fusion=False, recompute_granularity=None, recompute_method=None, recompute_num_layers=None, distribute_saved_activations=False, fp8=None, fp8_margin=0, fp8_interval=1, fp8_amax_history_len=1, fp8_amax_compute_algo='most_recent', fp8_wgrad=True, fp8_dot_product_attention=False, fp8_multi_head_attention=False, tp_only_amax_red=False, moe_router_load_balancing_type='aux_loss', moe_router_topk=2, moe_router_pre_softmax=False, moe_grouped_gemm=False, moe_aux_loss_coeff=0.0, moe_z_loss_coeff=None, moe_input_jitter_eps=None, moe_token_dropping=False, moe_token_dispatcher_type='allgather', moe_per_layer_logging=False, moe_expert_capacity_factor=None, moe_pad_expert_input_to_capacity=False, moe_token_drop_policy='probs', moe_layer_recompute=False, clone_scatter_output_in_embedding=True, disable_parameter_transpose_cache=False, enable_cuda_graph=False, external_cuda_graph=False, config_logger_dir='')
+[DistributedDataParallel(
+  (module): LLaVAModel(
+    (language_model): GPTModel(
+      (embedding): LanguageModelEmbedding(
+        (word_embeddings): VocabParallelEmbedding()
+        (embedding_dropout): Dropout(p=0.0, inplace=False)
+      )
+      (rotary_pos_emb): RotaryEmbedding()
+      (decoder): TransformerBlock(
+        (layers): ModuleList(
+          (0-7): 8 x TransformerLayer(
+            (input_layernorm): IdentityOp()
+            (self_attention): SelfAttention(
+              (core_attention): TEDotProductAttention(
+                (flash_attention): FlashAttention()
+                (fused_attention): FusedAttention()
+                (unfused_attention): UnfusedDotProductAttention(
+                  (scale_mask_softmax): FusedScaleMaskSoftmax()
+                  (attention_dropout): Dropout(p=0.0, inplace=False)
+                )
+              )
+              (linear_proj): TERowParallelLinear()
+              (linear_qkv): TELayerNormColumnParallelLinear()
+              (q_layernorm): IdentityOp()
+              (k_layernorm): IdentityOp()
+            )
+            (pre_cross_attn_layernorm): IdentityOp()
+            (cross_attention): IdentityOp()
+            (cross_attn_bda): IdentityFuncOp()
+            (pre_mlp_layernorm): IdentityOp()
+            (mlp): MLP(
+              (linear_fc1): TELayerNormColumnParallelLinear()
+              (linear_fc2): TERowParallelLinear()
+            )
+          )
+        )
+      )
+    )
+  )
+)]
+pretrain configTransformerConfig(tensor_model_parallel_size=4, pipeline_model_parallel_size=5, virtual_pipeline_model_parallel_size=None, sequence_parallel=False, context_parallel_size=1, expert_model_parallel_size=1, moe_extended_tp=False, perform_initialization=True, use_cpu_initialization=None, fp16=False, bf16=False, params_dtype=torch.float32, timers=None, finalize_model_grads_func=None, grad_scale_func=None, no_sync_func=None, grad_sync_func=None, param_sync_func=None, deterministic_mode=False, enable_autocast=False, autocast_dtype=torch.float32, num_microbatches_with_partial_activation_checkpoints=None, gradient_accumulation_fusion=True, async_tensor_model_parallel_allreduce=True, use_te_rng_tracker=False, tp_comm_overlap=False, tp_comm_bulk_wgrad=True, tp_comm_bulk_dgrad=True, tp_comm_overlap_ag=True, tp_comm_overlap_rs=True, tp_comm_overlap_rs_dgrad=False, tp_comm_split_ag=True, tp_comm_atomic_ag=False, tp_comm_split_rs=True, tp_comm_atomic_rs=False, cross_entropy_loss_fusion=False, tp_comm_overlap_disable_qkv=False, tp_comm_overlap_disable_fc1=False, pipeline_dtype=torch.float32, variable_seq_lengths=False, overlap_p2p_comm=False, batch_p2p_comm=True, batch_p2p_sync=True, use_ring_exchange_p2p=False, deallocate_pipeline_outputs=True, defer_embedding_wgrad_compute=False, wgrad_deferral_limit=0, pipeline_model_parallel_split_rank=None, cpu_offloading=False, cpu_offloading_num_layers=0, _cpu_offloading_context=None, cpu_offloading_activations=True, cpu_offloading_weights=True, barrier_with_L1_time=True, num_layers=32, first_pipeline_num_layers=None, last_pipeline_num_layers=None, hidden_size=4096, num_attention_heads=32, num_query_groups=8, ffn_hidden_size=14336, kv_channels=128, hidden_dropout=0.0, attention_dropout=0.0, fp32_residual_connection=False, apply_residual_connection_post_layernorm=False, layernorm_epsilon=1e-05, layernorm_zero_centered_gamma=False, add_bias_linear=False, add_qkv_bias=False, gated_linear_unit=True, activation_func=<function silu at 0x7f6264b695a0>, activation_func_fp8_input_store=False, num_moe_experts=None, rotary_interleaved=False, window_size=None, normalization='RMSNorm', qk_layernorm=False, test_mode=False, calculate_per_token_loss=True, init_method=<function init_method_normal.<locals>.init_ at 0x7f61dda585e0>, output_layer_init_method=<function scaled_init_method_normal.<locals>.init_ at 0x7f61dda58430>, init_method_std=0.014, apply_query_key_layer_scaling=False, attention_softmax_in_fp32=True, bias_activation_fusion=False, masked_softmax_fusion=False, persist_layer_norm=True, memory_efficient_layer_norm=False, bias_dropout_fusion=False, apply_rope_fusion=False, recompute_granularity=None, recompute_method=None, recompute_num_layers=None, distribute_saved_activations=False, fp8=None, fp8_margin=0, fp8_interval=1, fp8_amax_history_len=1, fp8_amax_compute_algo='most_recent', fp8_wgrad=True, fp8_dot_product_attention=False, fp8_multi_head_attention=False, tp_only_amax_red=False, moe_router_load_balancing_type='aux_loss', moe_router_topk=2, moe_router_pre_softmax=False, moe_grouped_gemm=False, moe_aux_loss_coeff=0.0, moe_z_loss_coeff=None, moe_input_jitter_eps=None, moe_token_dropping=False, moe_token_dispatcher_type='allgather', moe_per_layer_logging=False, moe_expert_capacity_factor=None, moe_pad_expert_input_to_capacity=False, moe_token_drop_policy='probs', moe_layer_recompute=False, clone_scatter_output_in_embedding=True, disable_parameter_transpose_cache=False, enable_cuda_graph=False, external_cuda_graph=False, config_logger_dir='')
+rank=0, worker=0: shard_range=[pretrain-0.tar[0, 100), pretrain-0.tar[100, 200), pretrain-0.tar[200, 300), ...<2194>, pretrain-28.tar[9700, 9800), pretrain-28.tar[9800, 9900), pretrain-28.tar[9900, 10000)] sum(count)=220000
+rank=0, worker=1: shard_range=[pretrain-29.tar[0, 100), pretrain-29.tar[100, 200), pretrain-29.tar[200, 300), ...<2194>, pretrain-48.tar[9700, 9800), pretrain-48.tar[9800, 9900), pretrain-48.tar[9900, 10000)] sum(count)=220000
+rank=0, worker=0: shard_range=[pretrain-49.tar[0, 10000), pretrain-5.tar[0, 10000), pretrain-50.tar[0, 10000)] sum(count)=30000
+rank=0, worker=1: shard_range=[pretrain-51.tar[0, 10000), pretrain-52.tar[0, 10000), pretrain-53.tar[0, 10000)] sum(count)=30000
+schedules.py decoder_seq_length:1152schedules.py decoder_seq_length:1152
+
+start layer:27
+start layer:27schedules.py decoder_seq_length:1152
+start layer:27
+
+start layer:27
+start layer:27
+start layer:27
+c:[(576, 2, 4096)]c:[(576, 2, 4096)]
+
+c:[(576, 2, 4096)]
+schedules.py decoder_seq_length:1152
+start layer:27
+start layer:27
+c:[(576, 2, 4096)]
+receive input_tensor shapes:[tensor([[[-0.0450, -0.0742,  0.0430,  ...,  0.0431, -0.1271, -0.0237],
+         [-0.0460, -0.0754,  0.0413,  ...,  0.0433, -0.1298, -0.0250]],
+
+        [[-0.0925, -0.0561,  0.0247,  ...,  0.0839, -0.0753,  0.0511],
+         [-0.0944, -0.0573,  0.0233,  ...,  0.0836, -0.0773,  0.0496]],
+
+        [[-0.0668, -0.0345, -0.0315,  ..., -0.0181, -0.1268,  0.0082],
+         [-0.0676, -0.0359, -0.0333,  ..., -0.0186, -0.1285,  0.0063]],
+
+        ...,
+
+        [[-0.0326,  0.0349,  0.0684,  ...,  0.0774, -0.0247, -0.0953],
+         [-0.0927, -0.0502,  0.0674,  ...,  0.0923, -0.0874, -0.0156]],
+
+        [[-0.0393,  0.0139,  0.0608,  ..., -0.0754, -0.0400,  0.0376],
+         [-0.0878, -0.0404,  0.0720,  ..., -0.0122, -0.0873,  0.0233]],
+
+        [[-0.0078,  0.0328,  0.0514,  ..., -0.0780, -0.0144,  0.0569],
+         [-0.0530, -0.0043,  0.0613,  ...,  0.0083, -0.0853,  0.0483]]],
+       device='cuda:3', requires_grad=True)]
+receive input_tensor shapes:[tensor([[[-0.0450, -0.0742,  0.0430,  ...,  0.0431, -0.1271, -0.0237],
+         [-0.0460, -0.0754,  0.0413,  ...,  0.0433, -0.1298, -0.0250]],
+
+        [[-0.0925, -0.0561,  0.0247,  ...,  0.0839, -0.0753,  0.0511],
+         [-0.0944, -0.0573,  0.0233,  ...,  0.0836, -0.0773,  0.0496]],
+
+        [[-0.0668, -0.0345, -0.0315,  ..., -0.0181, -0.1268,  0.0082],
+         [-0.0676, -0.0359, -0.0333,  ..., -0.0186, -0.1285,  0.0063]],
+
+        ...,
+
+        [[-0.0326,  0.0349,  0.0684,  ...,  0.0774, -0.0247, -0.0953],
+         [-0.0927, -0.0502,  0.0674,  ...,  0.0923, -0.0874, -0.0156]],
+
+        [[-0.0393,  0.0139,  0.0608,  ..., -0.0754, -0.0400,  0.0376],
+         [-0.0878, -0.0404,  0.0720,  ..., -0.0122, -0.0873,  0.0233]],
+
+        [[-0.0078,  0.0328,  0.0514,  ..., -0.0780, -0.0144,  0.0569],
+         [-0.0530, -0.0043,  0.0613,  ...,  0.0083, -0.0853,  0.0483]]],
+       device='cuda:1', requires_grad=True)]
+receive input_tensor shapes:[tensor([[[-0.0450, -0.0742,  0.0430,  ...,  0.0431, -0.1271, -0.0237],
+         [-0.0460, -0.0754,  0.0413,  ...,  0.0433, -0.1298, -0.0250]],
+
+        [[-0.0925, -0.0561,  0.0247,  ...,  0.0839, -0.0753,  0.0511],
+         [-0.0944, -0.0573,  0.0233,  ...,  0.0836, -0.0773,  0.0496]],
+
+        [[-0.0668, -0.0345, -0.0315,  ..., -0.0181, -0.1268,  0.0082],
+         [-0.0676, -0.0359, -0.0333,  ..., -0.0186, -0.1285,  0.0063]],
+
+        ...,
+
+        [[-0.0326,  0.0349,  0.0684,  ...,  0.0774, -0.0247, -0.0953],
+         [-0.0927, -0.0502,  0.0674,  ...,  0.0923, -0.0874, -0.0156]],
+
+        [[-0.0393,  0.0139,  0.0608,  ..., -0.0754, -0.0400,  0.0376],
+         [-0.0878, -0.0404,  0.0720,  ..., -0.0122, -0.0873,  0.0233]],
+
+        [[-0.0078,  0.0328,  0.0514,  ..., -0.0780, -0.0144,  0.0569],
+         [-0.0530, -0.0043,  0.0613,  ...,  0.0083, -0.0853,  0.0483]]],
+       device='cuda:2', requires_grad=True)]
+receive input_tensor shapes:[tensor([[[-0.0450, -0.0742,  0.0430,  ...,  0.0431, -0.1271, -0.0237],
+         [-0.0460, -0.0754,  0.0413,  ...,  0.0433, -0.1298, -0.0250]],
+
+        [[-0.0925, -0.0561,  0.0247,  ...,  0.0839, -0.0753,  0.0511],
+         [-0.0944, -0.0573,  0.0233,  ...,  0.0836, -0.0773,  0.0496]],
+
+        [[-0.0668, -0.0345, -0.0315,  ..., -0.0181, -0.1268,  0.0082],
+         [-0.0676, -0.0359, -0.0333,  ..., -0.0186, -0.1285,  0.0063]],
+
+        ...,
+
+        [[-0.0326,  0.0349,  0.0684,  ...,  0.0774, -0.0247, -0.0953],
+         [-0.0927, -0.0502,  0.0674,  ...,  0.0923, -0.0874, -0.0156]],
+
+        [[-0.0393,  0.0139,  0.0608,  ..., -0.0754, -0.0400,  0.0376],
+         [-0.0878, -0.0404,  0.0720,  ..., -0.0122, -0.0873,  0.0233]],
+
+        [[-0.0078,  0.0328,  0.0514,  ..., -0.0780, -0.0144,  0.0569],
+         [-0.0530, -0.0043,  0.0613,  ...,  0.0083, -0.0853,  0.0483]]],
+       device='cuda:0', requires_grad=True)]
+get batch end! tokens size:torch.Size([2, 576])
+get batch end! labels size:torch.Size([2, 576])
+get batch end! loss_mask size:torch.Size([2, 576])
+get batch end! attention_mask:torch.Size([1, 1, 576, 576])
+get batch end! position_ids:torch.Size([2, 576])
+get batch end! images size:torch.Size([2, 3, 336, 336])
+get batch end! num_image_tiles:torch.Size([2])
+vision projection start! iamge embeddings size:torch.Size([576, 2, 4096])
+vision projection end! iamge embeddings size:torch.Size([576, 2, 4096])
+get batch end! tokens size:torch.Size([2, 576])
+get batch end! labels size:torch.Size([2, 576])
+get batch end! loss_mask size:torch.Size([2, 576])input_ids_size:torch.Size([2, 576])
+
+get batch end! attention_mask:torch.Size([1, 1, 576, 576])
+get batch end! position_ids:torch.Size([2, 576])
+get batch end! images size:torch.Size([2, 3, 336, 336])
+get batch end! num_image_tiles:torch.Size([2])
+vision projection start! iamge embeddings size:torch.Size([576, 2, 4096])
+vision projection end! iamge embeddings size:torch.Size([576, 2, 4096])
+input_ids_size:torch.Size([2, 576])
+get batch end! tokens size:torch.Size([2, 576])
+get batch end! labels size:torch.Size([2, 576])
+get batch end! loss_mask size:torch.Size([2, 576])
+get batch end! attention_mask:torch.Size([1, 1, 576, 576])
+get batch end! position_ids:torch.Size([2, 576])
+get batch end! images size:torch.Size([2, 3, 336, 336])
+get batch end! num_image_tiles:torch.Size([2])
+vision projection start! iamge embeddings size:torch.Size([576, 2, 4096])
+vision projection end! iamge embeddings size:torch.Size([576, 2, 4096])
+input_ids_size:torch.Size([2, 576])
+get batch end! tokens size:torch.Size([2, 576])
+get batch end! labels size:torch.Size([2, 576])
+get batch end! loss_mask size:torch.Size([2, 576])
+get batch end! attention_mask:torch.Size([1, 1, 576, 576])
+get batch end! position_ids:torch.Size([2, 576])
+get batch end! images size:torch.Size([2, 3, 336, 336])
+get batch end! num_image_tiles:torch.Size([2])
+vision projection start! iamge embeddings size:torch.Size([576, 2, 4096])
+vision projection end! iamge embeddings size:torch.Size([576, 2, 4096])
+input_ids_size:torch.Size([2, 576])
+_preprocess_data begin! iamge embeddings size:torch.Size([576, 2, 4096])
+_preprocess_data begin! language_embeddings size:torch.Size([2, 576, 4096])
+_preprocess_data begin! iamge embeddings size:torch.Size([576, 2, 4096])
+_preprocess_data begin! iamge embeddings size:torch.Size([576, 2, 4096])
+_preprocess_data begin! language_embeddings size:torch.Size([2, 576, 4096])
+_preprocess_data begin! language_embeddings size:torch.Size([2, 576, 4096])
+_preprocess_data begin! iamge embeddings size:torch.Size([576, 2, 4096])
+_preprocess_data begin! language_embeddings size:torch.Size([2, 576, 4096])
+_preprocess_data end! combined_embeddings size:torch.Size([1024, 2, 4096])
+111111111111
+decoder begin! decoder input size:torch.Size([1024, 2, 4096])
+hidden state size:torch.Size([1024, 2, 4096])
+TransformerBlock hidden states size:torch.Size([1024, 2, 4096])
+_preprocess_data end! combined_embeddings size:torch.Size([1024, 2, 4096])
+_preprocess_data end! combined_embeddings size:torch.Size([1024, 2, 4096])
+111111111111
+111111111111
+_preprocess_data end! combined_embeddings size:torch.Size([1024, 2, 4096])
+111111111111
+decoder begin! decoder input size:torch.Size([1024, 2, 4096])
+decoder begin! decoder input size:torch.Size([1024, 2, 4096])hidden state size:torch.Size([1024, 2, 4096])
+
+TransformerBlock hidden states size:torch.Size([1024, 2, 4096])
+hidden state size:torch.Size([1024, 2, 4096])
+TransformerBlock hidden states size:torch.Size([1024, 2, 4096])
+decoder begin! decoder input size:torch.Size([1024, 2, 4096])
+hidden state size:torch.Size([1024, 2, 4096])
+TransformerBlock hidden states size:torch.Size([1024, 2, 4096])
+hidden state size:torch.Size([1024, 2, 4096])
+language model end! output size:torch.Size([1024, 2, 4096])
+hidden state size:torch.Size([1024, 2, 4096])
+language model end! output size:torch.Size([1024, 2, 4096])
+hidden state size:torch.Size([1024, 2, 4096])
+language model end! output size:torch.Size([1024, 2, 4096])
+hidden state size:torch.Size([1024, 2, 4096])
+language model end! output size:torch.Size([1024, 2, 4096])
+c:[(576, 2, 4096)]
+c:[(576, 2, 4096)]
+c:[(576, 2, 4096)]
+c:[(576, 2, 4096)]
+receive input_tensor shapes:[tensor([[[-0.0049,  0.0301,  0.0277,  ..., -0.0688, -0.0249,  0.0007],
+         [-0.0096,  0.0015,  0.0018,  ..., -0.0353, -0.0229, -0.0097]],
+
+        [[ 0.0026,  0.0575,  0.0621,  ...,  0.0389, -0.0137,  0.0153],
+         [ 0.0419,  0.0668,  0.0168,  ...,  0.0436,  0.0229, -0.0247]],
+
+        [[-0.0401,  0.0677, -0.0621,  ..., -0.1372, -0.0646, -0.0289],
+         [-0.0015,  0.0399, -0.0978,  ..., -0.1011, -0.0327, -0.0218]],
+
+        ...,
+
+        [[-0.0223,  0.0348,  0.0663,  ...,  0.0729, -0.0142, -0.1021],
+         [-0.0190,  0.0374,  0.0671,  ...,  0.0718, -0.0085, -0.0928]],
+
+        [[-0.0353,  0.0243,  0.0637,  ..., -0.0715, -0.0302,  0.0294],
+         [-0.0293,  0.0242,  0.0664,  ..., -0.0730, -0.0269,  0.0353]],
+
+        [[-0.0031,  0.0404,  0.0543,  ..., -0.0748, -0.0120,  0.0434],
+         [ 0.0006,  0.0404,  0.0555,  ..., -0.0779, -0.0099,  0.0512]]],
+       device='cuda:3', requires_grad=True)]
+receive input_tensor shapes:[tensor([[[-0.0049,  0.0301,  0.0277,  ..., -0.0688, -0.0249,  0.0007],
+         [-0.0096,  0.0015,  0.0018,  ..., -0.0353, -0.0229, -0.0097]],
+
+        [[ 0.0026,  0.0575,  0.0621,  ...,  0.0389, -0.0137,  0.0153],
+         [ 0.0419,  0.0668,  0.0168,  ...,  0.0436,  0.0229, -0.0247]],
+
+        [[-0.0401,  0.0677, -0.0621,  ..., -0.1372, -0.0646, -0.0289],
+         [-0.0015,  0.0399, -0.0978,  ..., -0.1011, -0.0327, -0.0218]],
+
+        ...,
+
+        [[-0.0223,  0.0348,  0.0663,  ...,  0.0729, -0.0142, -0.1021],
+         [-0.0190,  0.0374,  0.0671,  ...,  0.0718, -0.0085, -0.0928]],
+
+        [[-0.0353,  0.0243,  0.0637,  ..., -0.0715, -0.0302,  0.0294],
+         [-0.0293,  0.0242,  0.0664,  ..., -0.0730, -0.0269,  0.0353]],
+
+        [[-0.0031,  0.0404,  0.0543,  ..., -0.0748, -0.0120,  0.0434],
+         [ 0.0006,  0.0404,  0.0555,  ..., -0.0779, -0.0099,  0.0512]]],
+       device='cuda:0', requires_grad=True)]
+receive input_tensor shapes:[tensor([[[-0.0049,  0.0301,  0.0277,  ..., -0.0688, -0.0249,  0.0007],
+         [-0.0096,  0.0015,  0.0018,  ..., -0.0353, -0.0229, -0.0097]],
+
+        [[ 0.0026,  0.0575,  0.0621,  ...,  0.0389, -0.0137,  0.0153],
+         [ 0.0419,  0.0668,  0.0168,  ...,  0.0436,  0.0229, -0.0247]],
+
+        [[-0.0401,  0.0677, -0.0621,  ..., -0.1372, -0.0646, -0.0289],
+         [-0.0015,  0.0399, -0.0978,  ..., -0.1011, -0.0327, -0.0218]],
+
+        ...,
+
+        [[-0.0223,  0.0348,  0.0663,  ...,  0.0729, -0.0142, -0.1021],
+         [-0.0190,  0.0374,  0.0671,  ...,  0.0718, -0.0085, -0.0928]],
+
+        [[-0.0353,  0.0243,  0.0637,  ..., -0.0715, -0.0302,  0.0294],
+         [-0.0293,  0.0242,  0.0664,  ..., -0.0730, -0.0269,  0.0353]],
+
+        [[-0.0031,  0.0404,  0.0543,  ..., -0.0748, -0.0120,  0.0434],
+         [ 0.0006,  0.0404,  0.0555,  ..., -0.0779, -0.0099,  0.0512]]],
+       device='cuda:1', requires_grad=True)]receive input_tensor shapes:[tensor([[[-0.0049,  0.0301,  0.0277,  ..., -0.0688, -0.0249,  0.0007],
+         [-0.0096,  0.0015,  0.0018,  ..., -0.0353, -0.0229, -0.0097]],
+
+        [[ 0.0026,  0.0575,  0.0621,  ...,  0.0389, -0.0137,  0.0153],
+         [ 0.0419,  0.0668,  0.0168,  ...,  0.0436,  0.0229, -0.0247]],
+
+        [[-0.0401,  0.0677, -0.0621,  ..., -0.1372, -0.0646, -0.0289],
+         [-0.0015,  0.0399, -0.0978,  ..., -0.1011, -0.0327, -0.0218]],
+
+        ...,
+
+        [[-0.0223,  0.0348,  0.0663,  ...,  0.0729, -0.0142, -0.1021],
+         [-0.0190,  0.0374,  0.0671,  ...,  0.0718, -0.0085, -0.0928]],
+
+        [[-0.0353,  0.0243,  0.0637,  ..., -0.0715, -0.0302,  0.0294],
+         [-0.0293,  0.0242,  0.0664,  ..., -0.0730, -0.0269,  0.0353]],
+
+        [[-0.0031,  0.0404,  0.0543,  ..., -0.0748, -0.0120,  0.0434],
+         [ 0.0006,  0.0404,  0.0555,  ..., -0.0779, -0.0099,  0.0512]]],
+       device='cuda:2', requires_grad=True)]
+
+get batch end! tokens size:torch.Size([2, 576])
+get batch end! labels size:torch.Size([2, 576])
+get batch end! loss_mask size:torch.Size([2, 576])
+get batch end! attention_mask:torch.Size([1, 1, 576, 576])
+get batch end! position_ids:torch.Size([2, 576])
+get batch end! images size:torch.Size([2, 3, 336, 336])
+get batch end! num_image_tiles:torch.Size([2])
+get batch end! tokens size:torch.Size([2, 576])vision projection start! iamge embeddings size:torch.Size([576, 2, 4096])
+
+vision projection end! iamge embeddings size:torch.Size([576, 2, 4096])
+get batch end! labels size:torch.Size([2, 576])
+get batch end! loss_mask size:torch.Size([2, 576])
+get batch end! attention_mask:torch.Size([1, 1, 576, 576])
+get batch end! position_ids:torch.Size([2, 576])
+get batch end! images size:torch.Size([2, 3, 336, 336])
+input_ids_size:torch.Size([2, 576])
+get batch end! num_image_tiles:torch.Size([2])
+get batch end! tokens size:torch.Size([2, 576])
+get batch end! labels size:torch.Size([2, 576])
+get batch end! loss_mask size:torch.Size([2, 576])
+get batch end! attention_mask:torch.Size([1, 1, 576, 576])
+get batch end! position_ids:torch.Size([2, 576])
+vision projection start! iamge embeddings size:torch.Size([576, 2, 4096])
+get batch end! images size:torch.Size([2, 3, 336, 336])
+vision projection end! iamge embeddings size:torch.Size([576, 2, 4096])
+get batch end! num_image_tiles:torch.Size([2])
+get batch end! tokens size:torch.Size([2, 576])
+input_ids_size:torch.Size([2, 576])get batch end! labels size:torch.Size([2, 576])
+
+get batch end! loss_mask size:torch.Size([2, 576])vision projection start! iamge embeddings size:torch.Size([576, 2, 4096])
+
+get batch end! attention_mask:torch.Size([1, 1, 576, 576])vision projection end! iamge embeddings size:torch.Size([576, 2, 4096])
+
+get batch end! position_ids:torch.Size([2, 576])
+get batch end! images size:torch.Size([2, 3, 336, 336])
+get batch end! num_image_tiles:torch.Size([2])
+input_ids_size:torch.Size([2, 576])
+vision projection start! iamge embeddings size:torch.Size([576, 2, 4096])
+vision projection end! iamge embeddings size:torch.Size([576, 2, 4096])
+input_ids_size:torch.Size([2, 576])
+_preprocess_data begin! iamge embeddings size:torch.Size([576, 2, 4096])
+_preprocess_data begin! language_embeddings size:torch.Size([2, 576, 4096])
+_preprocess_data begin! iamge embeddings size:torch.Size([576, 2, 4096])
+_preprocess_data begin! language_embeddings size:torch.Size([2, 576, 4096])
+_preprocess_data begin! iamge embeddings size:torch.Size([576, 2, 4096])
+_preprocess_data begin! language_embeddings size:torch.Size([2, 576, 4096])
+_preprocess_data begin! iamge embeddings size:torch.Size([576, 2, 4096])
+_preprocess_data begin! language_embeddings size:torch.Size([2, 576, 4096])
+_preprocess_data end! combined_embeddings size:torch.Size([1024, 2, 4096])
+111111111111
+decoder begin! decoder input size:torch.Size([1024, 2, 4096])
+hidden state size:torch.Size([1024, 2, 4096])
+TransformerBlock hidden states size:torch.Size([1024, 2, 4096])
+_preprocess_data end! combined_embeddings size:torch.Size([1024, 2, 4096])
+_preprocess_data end! combined_embeddings size:torch.Size([1024, 2, 4096])
+111111111111
+111111111111
+decoder begin! decoder input size:torch.Size([1024, 2, 4096])
+hidden state size:torch.Size([1024, 2, 4096])
+_preprocess_data end! combined_embeddings size:torch.Size([1024, 2, 4096])TransformerBlock hidden states size:torch.Size([1024, 2, 4096])
+
+decoder begin! decoder input size:torch.Size([1024, 2, 4096])
+111111111111
+hidden state size:torch.Size([1024, 2, 4096])
+TransformerBlock hidden states size:torch.Size([1024, 2, 4096])
+decoder begin! decoder input size:torch.Size([1024, 2, 4096])
+hidden state size:torch.Size([1024, 2, 4096])
+TransformerBlock hidden states size:torch.Size([1024, 2, 4096])
+hidden state size:torch.Size([1024, 2, 4096])
+language model end! output size:torch.Size([1024, 2, 4096])
+hidden state size:torch.Size([1024, 2, 4096])
+language model end! output size:torch.Size([1024, 2, 4096])
+hidden state size:torch.Size([1024, 2, 4096])
+language model end! output size:torch.Size([1024, 2, 4096])
+hidden state size:torch.Size([1024, 2, 4096])
+language model end! output size:torch.Size([1024, 2, 4096])
+c:[(576, 2, 4096)]
+c:[(576, 2, 4096)]
+c:[(576, 2, 4096)]
+c:[(576, 2, 4096)]
+receive input_tensor shapes:[tensor([[[-0.0289, -0.0713,  0.0454,  ...,  0.0344, -0.1242, -0.0223],
+         [-0.0271, -0.0652,  0.0409,  ...,  0.0330, -0.1280, -0.0251]],
+
+        [[-0.0758, -0.0460,  0.0257,  ...,  0.0895, -0.0638,  0.0596],
+         [-0.0735, -0.0381,  0.0221,  ...,  0.0947, -0.0620,  0.0567]],
+
+        [[-0.0538, -0.0241, -0.0429,  ..., -0.0358, -0.1280,  0.0147],
+         [-0.0521, -0.0165, -0.0525,  ..., -0.0433, -0.1316,  0.0112]],
+
+        ...,
+
+        [[-0.0010,  0.0416,  0.0663,  ...,  0.0457,  0.0046, -0.1026],
+         [-0.0312,  0.0350,  0.0684,  ...,  0.0765, -0.0228, -0.0952]],
+
+        [[-0.0219,  0.0161,  0.0837,  ..., -0.0893, -0.0220,  0.0599],
+         [-0.0382,  0.0151,  0.0614,  ..., -0.0752, -0.0385,  0.0375]],
+
+        [[-0.0353,  0.0131,  0.0907,  ..., -0.0541, -0.0201,  0.0450],
+         [-0.0068,  0.0338,  0.0519,  ..., -0.0779, -0.0139,  0.0562]]],
+       device='cuda:3', requires_grad=True)]
+receive input_tensor shapes:[tensor([[[-0.0289, -0.0713,  0.0454,  ...,  0.0344, -0.1242, -0.0223],
+         [-0.0271, -0.0652,  0.0409,  ...,  0.0330, -0.1280, -0.0251]],
+
+        [[-0.0758, -0.0460,  0.0257,  ...,  0.0895, -0.0638,  0.0596],
+         [-0.0735, -0.0381,  0.0221,  ...,  0.0947, -0.0620,  0.0567]],
+
+        [[-0.0538, -0.0241, -0.0429,  ..., -0.0358, -0.1280,  0.0147],
+         [-0.0521, -0.0165, -0.0525,  ..., -0.0433, -0.1316,  0.0112]],
+
+        ...,
+
+        [[-0.0010,  0.0416,  0.0663,  ...,  0.0457,  0.0046, -0.1026],
+         [-0.0312,  0.0350,  0.0684,  ...,  0.0765, -0.0228, -0.0952]],
+
+        [[-0.0219,  0.0161,  0.0837,  ..., -0.0893, -0.0220,  0.0599],
+         [-0.0382,  0.0151,  0.0614,  ..., -0.0752, -0.0385,  0.0375]],
+
+        [[-0.0353,  0.0131,  0.0907,  ..., -0.0541, -0.0201,  0.0450],
+         [-0.0068,  0.0338,  0.0519,  ..., -0.0779, -0.0139,  0.0562]]],
+       device='cuda:0', requires_grad=True)]
+receive input_tensor shapes:[tensor([[[-0.0289, -0.0713,  0.0454,  ...,  0.0344, -0.1242, -0.0223],
+         [-0.0271, -0.0652,  0.0409,  ...,  0.0330, -0.1280, -0.0251]],
+
+        [[-0.0758, -0.0460,  0.0257,  ...,  0.0895, -0.0638,  0.0596],
+         [-0.0735, -0.0381,  0.0221,  ...,  0.0947, -0.0620,  0.0567]],
+
+        [[-0.0538, -0.0241, -0.0429,  ..., -0.0358, -0.1280,  0.0147],
+         [-0.0521, -0.0165, -0.0525,  ..., -0.0433, -0.1316,  0.0112]],
+
+        ...,
+
+        [[-0.0010,  0.0416,  0.0663,  ...,  0.0457,  0.0046, -0.1026],
+         [-0.0312,  0.0350,  0.0684,  ...,  0.0765, -0.0228, -0.0952]],
+
+        [[-0.0219,  0.0161,  0.0837,  ..., -0.0893, -0.0220,  0.0599],
+         [-0.0382,  0.0151,  0.0614,  ..., -0.0752, -0.0385,  0.0375]],
+
+        [[-0.0353,  0.0131,  0.0907,  ..., -0.0541, -0.0201,  0.0450],
+         [-0.0068,  0.0338,  0.0519,  ..., -0.0779, -0.0139,  0.0562]]],
+       device='cuda:1', requires_grad=True)]
+receive input_tensor shapes:[tensor([[[-0.0289, -0.0713,  0.0454,  ...,  0.0344, -0.1242, -0.0223],
+         [-0.0271, -0.0652,  0.0409,  ...,  0.0330, -0.1280, -0.0251]],
+
+        [[-0.0758, -0.0460,  0.0257,  ...,  0.0895, -0.0638,  0.0596],
+         [-0.0735, -0.0381,  0.0221,  ...,  0.0947, -0.0620,  0.0567]],
+
+        [[-0.0538, -0.0241, -0.0429,  ..., -0.0358, -0.1280,  0.0147],
+         [-0.0521, -0.0165, -0.0525,  ..., -0.0433, -0.1316,  0.0112]],
+
+        ...,
+
+        [[-0.0010,  0.0416,  0.0663,  ...,  0.0457,  0.0046, -0.1026],
+         [-0.0312,  0.0350,  0.0684,  ...,  0.0765, -0.0228, -0.0952]],
+
+        [[-0.0219,  0.0161,  0.0837,  ..., -0.0893, -0.0220,  0.0599],
+         [-0.0382,  0.0151,  0.0614,  ..., -0.0752, -0.0385,  0.0375]],
+
+        [[-0.0353,  0.0131,  0.0907,  ..., -0.0541, -0.0201,  0.0450],
+         [-0.0068,  0.0338,  0.0519,  ..., -0.0779, -0.0139,  0.0562]]],
+       device='cuda:2', requires_grad=True)]
+get batch end! tokens size:torch.Size([2, 576])
+get batch end! labels size:torch.Size([2, 576])
+get batch end! loss_mask size:torch.Size([2, 576])
+get batch end! attention_mask:torch.Size([1, 1, 576, 576])
+get batch end! position_ids:torch.Size([2, 576])
+get batch end! images size:torch.Size([2, 3, 336, 336])
+get batch end! num_image_tiles:torch.Size([2])
+vision projection start! iamge embeddings size:torch.Size([576, 2, 4096])
+vision projection end! iamge embeddings size:torch.Size([576, 2, 4096])
+input_ids_size:torch.Size([2, 576])
+get batch end! tokens size:torch.Size([2, 576])
+get batch end! labels size:torch.Size([2, 576])
+get batch end! loss_mask size:torch.Size([2, 576])
+get batch end! attention_mask:torch.Size([1, 1, 576, 576])
+get batch end! position_ids:torch.Size([2, 576])
+get batch end! images size:torch.Size([2, 3, 336, 336])
+get batch end! num_image_tiles:torch.Size([2])
+vision projection start! iamge embeddings size:torch.Size([576, 2, 4096])
+vision projection end! iamge embeddings size:torch.Size([576, 2, 4096])
+input_ids_size:torch.Size([2, 576])
+get batch end! tokens size:torch.Size([2, 576])
+get batch end! labels size:torch.Size([2, 576])
+get batch end! loss_mask size:torch.Size([2, 576])
+get batch end! attention_mask:torch.Size([1, 1, 576, 576])
+get batch end! position_ids:torch.Size([2, 576])
+get batch end! images size:torch.Size([2, 3, 336, 336])
+get batch end! num_image_tiles:torch.Size([2])
+get batch end! tokens size:torch.Size([2, 576])_preprocess_data begin! iamge embeddings size:torch.Size([576, 2, 4096])
+
+get batch end! labels size:torch.Size([2, 576])
+_preprocess_data begin! language_embeddings size:torch.Size([2, 576, 4096])
+get batch end! loss_mask size:torch.Size([2, 576])
+get batch end! attention_mask:torch.Size([1, 1, 576, 576])
+get batch end! position_ids:torch.Size([2, 576])
+get batch end! images size:torch.Size([2, 3, 336, 336])
+get batch end! num_image_tiles:torch.Size([2])
+vision projection start! iamge embeddings size:torch.Size([576, 2, 4096])
+vision projection end! iamge embeddings size:torch.Size([576, 2, 4096])
+vision projection start! iamge embeddings size:torch.Size([576, 2, 4096])
+vision projection end! iamge embeddings size:torch.Size([576, 2, 4096])
+input_ids_size:torch.Size([2, 576])
+input_ids_size:torch.Size([2, 576])
+_preprocess_data begin! iamge embeddings size:torch.Size([576, 2, 4096])
+_preprocess_data begin! language_embeddings size:torch.Size([2, 576, 4096])
+_preprocess_data begin! iamge embeddings size:torch.Size([576, 2, 4096])_preprocess_data begin! iamge embeddings size:torch.Size([576, 2, 4096])
+
+_preprocess_data begin! language_embeddings size:torch.Size([2, 576, 4096])_preprocess_data begin! language_embeddings size:torch.Size([2, 576, 4096])
+
+_preprocess_data end! combined_embeddings size:torch.Size([1024, 2, 4096])
+111111111111
+decoder begin! decoder input size:torch.Size([1024, 2, 4096])
+hidden state size:torch.Size([1024, 2, 4096])
+TransformerBlock hidden states size:torch.Size([1024, 2, 4096])
+_preprocess_data end! combined_embeddings size:torch.Size([1024, 2, 4096])
+_preprocess_data end! combined_embeddings size:torch.Size([1024, 2, 4096])
+111111111111
+111111111111
+_preprocess_data end! combined_embeddings size:torch.Size([1024, 2, 4096])
+111111111111
+decoder begin! decoder input size:torch.Size([1024, 2, 4096])
+decoder begin! decoder input size:torch.Size([1024, 2, 4096])hidden state size:torch.Size([1024, 2, 4096])
+
+TransformerBlock hidden states size:torch.Size([1024, 2, 4096])
+hidden state size:torch.Size([1024, 2, 4096])
+TransformerBlock hidden states size:torch.Size([1024, 2, 4096])
+decoder begin! decoder input size:torch.Size([1024, 2, 4096])
+hidden state size:torch.Size([1024, 2, 4096])
+TransformerBlock hidden states size:torch.Size([1024, 2, 4096])
+hidden state size:torch.Size([1024, 2, 4096])
+language model end! output size:torch.Size([1024, 2, 4096])
+hidden state size:torch.Size([1024, 2, 4096])
+language model end! output size:torch.Size([1024, 2, 4096])
+hidden state size:torch.Size([1024, 2, 4096])
+language model end! output size:torch.Size([1024, 2, 4096])
+hidden state size:torch.Size([1024, 2, 4096])
+language model end! output size:torch.Size([1024, 2, 4096])
+get batch end! tokens size:torch.Size([2, 576])
+get batch end! labels size:torch.Size([2, 576])
+get batch end! loss_mask size:torch.Size([2, 576])
+get batch end! attention_mask:torch.Size([1, 1, 576, 576])
+get batch end! position_ids:torch.Size([2, 576])
+get batch end! images size:torch.Size([2, 3, 336, 336])
+get batch end! num_image_tiles:torch.Size([2])
+vision projection start! iamge embeddings size:torch.Size([576, 2, 4096])
+vision projection end! iamge embeddings size:torch.Size([576, 2, 4096])
+input_ids_size:torch.Size([2, 576])
+get batch end! tokens size:torch.Size([2, 576])
+get batch end! labels size:torch.Size([2, 576])
+get batch end! loss_mask size:torch.Size([2, 576])
+get batch end! attention_mask:torch.Size([1, 1, 576, 576])
+get batch end! position_ids:torch.Size([2, 576])
+get batch end! images size:torch.Size([2, 3, 336, 336])
+get batch end! num_image_tiles:torch.Size([2])
+vision projection start! iamge embeddings size:torch.Size([576, 2, 4096])
+vision projection end! iamge embeddings size:torch.Size([576, 2, 4096])
+input_ids_size:torch.Size([2, 576])
+get batch end! tokens size:torch.Size([2, 576])
+get batch end! labels size:torch.Size([2, 576])
+get batch end! loss_mask size:torch.Size([2, 576])
+get batch end! attention_mask:torch.Size([1, 1, 576, 576])
+get batch end! position_ids:torch.Size([2, 576])
+get batch end! images size:torch.Size([2, 3, 336, 336])
+get batch end! num_image_tiles:torch.Size([2])
+get batch end! tokens size:torch.Size([2, 576])
+get batch end! labels size:torch.Size([2, 576])
+get batch end! loss_mask size:torch.Size([2, 576])
+get batch end! attention_mask:torch.Size([1, 1, 576, 576])
+get batch end! position_ids:torch.Size([2, 576])
+get batch end! images size:torch.Size([2, 3, 336, 336])
+get batch end! num_image_tiles:torch.Size([2])
+vision projection start! iamge embeddings size:torch.Size([576, 2, 4096])
+vision projection end! iamge embeddings size:torch.Size([576, 2, 4096])
+input_ids_size:torch.Size([2, 576])
+vision projection start! iamge embeddings size:torch.Size([576, 2, 4096])
+vision projection end! iamge embeddings size:torch.Size([576, 2, 4096])
+input_ids_size:torch.Size([2, 576])
+_preprocess_data begin! iamge embeddings size:torch.Size([576, 2, 4096])
+_preprocess_data begin! language_embeddings size:torch.Size([2, 576, 4096])
+_preprocess_data begin! iamge embeddings size:torch.Size([576, 2, 4096])
+_preprocess_data begin! language_embeddings size:torch.Size([2, 576, 4096])
+_preprocess_data begin! iamge embeddings size:torch.Size([576, 2, 4096])
+_preprocess_data begin! language_embeddings size:torch.Size([2, 576, 4096])
+_preprocess_data begin! iamge embeddings size:torch.Size([576, 2, 4096])
+_preprocess_data begin! language_embeddings size:torch.Size([2, 576, 4096])
+_preprocess_data end! combined_embeddings size:torch.Size([1024, 2, 4096])
+111111111111
+_preprocess_data end! combined_embeddings size:torch.Size([1024, 2, 4096])
+111111111111
+_preprocess_data end! combined_embeddings size:torch.Size([1024, 2, 4096])decoder begin! decoder input size:torch.Size([1024, 2, 4096])
+
+hidden state size:torch.Size([1024, 2, 4096])
+TransformerBlock hidden states size:torch.Size([1024, 2, 4096])
+111111111111
+decoder begin! decoder input size:torch.Size([1024, 2, 4096])
+hidden state size:torch.Size([1024, 2, 4096])
+TransformerBlock hidden states size:torch.Size([1024, 2, 4096])
+decoder begin! decoder input size:torch.Size([1024, 2, 4096])
+hidden state size:torch.Size([1024, 2, 4096])
+_preprocess_data end! combined_embeddings size:torch.Size([1024, 2, 4096])TransformerBlock hidden states size:torch.Size([1024, 2, 4096])
+
+111111111111
+decoder begin! decoder input size:torch.Size([1024, 2, 4096])
+hidden state size:torch.Size([1024, 2, 4096])
+TransformerBlock hidden states size:torch.Size([1024, 2, 4096])
+hidden state size:torch.Size([1024, 2, 4096])
+language model end! output size:torch.Size([1024, 2, 4096])
+1111 output_tensor:torch.Size([1024, 2, 4096])
+2222 output_tensor:torch.Size([1024, 2, 4096])
+hidden state size:torch.Size([1024, 2, 4096])hidden state size:torch.Size([1024, 2, 4096])
+
+language model end! output size:torch.Size([1024, 2, 4096])
+language model end! output size:torch.Size([1024, 2, 4096])
+1111 output_tensor:torch.Size([1024, 2, 4096])
+2222 output_tensor:torch.Size([1024, 2, 4096])
+1111 output_tensor:torch.Size([1024, 2, 4096])
+2222 output_tensor:torch.Size([1024, 2, 4096])
+hidden state size:torch.Size([1024, 2, 4096])
+language model end! output size:torch.Size([1024, 2, 4096])
+1111 output_tensor:torch.Size([1024, 2, 4096])
+2222 output_tensor:torch.Size([1024, 2, 4096])
+----------output_tensor_grad:torch.Size([576, 2, 4096])----------output_tensor_grad:torch.Size([576, 2, 4096])
+----------output_tensor_grad:torch.Size([576, 2, 4096])
+3333 output_tensor:torch.Size([1024, 2, 4096])
+----------output_tensor_grad:torch.Size([576, 2, 4096])
+3333 output_tensor:torch.Size([1024, 2, 4096])
+
+3333 output_tensor:torch.Size([1024, 2, 4096])
+3333 output_tensor:torch.Size([1024, 2, 4096])
+output tensors:[[tensor([[[ 0.1420, -0.6197, -0.4113,  ..., -0.2206, -0.5350,  0.2192],
+         [ 0.2914, -0.0496, -0.3360,  ..., -0.5003, -0.1515,  0.1772]],
+
+        [[ 0.1190, -0.6127, -0.4182,  ..., -0.2282, -0.5297,  0.2066],
+         [ 0.2883, -0.0516, -0.3457,  ..., -0.4982, -0.1413,  0.1744]],
+
+        [[ 0.0627, -0.3385, -0.0797,  ...,  0.0320, -0.4810,  0.5281],
+         [-0.0299, -0.1033, -0.1056,  ..., -0.6335, -0.6673,  0.3046]],
+
+        ...,
+
+        [[ 0.0507, -0.2223, -0.0218,  ..., -0.7094, -0.6116,  0.0537],
+         [ 0.0654, -0.1008, -0.0159,  ..., -0.6552, -0.3440,  0.3218]],
+
+        [[ 0.0547, -0.2202, -0.0284,  ..., -0.7118, -0.6061,  0.0569],
+         [ 0.0580, -0.1009, -0.0183,  ..., -0.6492, -0.3464,  0.3239]],
+
+        [[ 0.0566, -0.2180, -0.0354,  ..., -0.7113, -0.6016,  0.0585],
+         [ 0.0539, -0.1029, -0.0206,  ..., -0.6532, -0.3457,  0.3194]]],
+       device='cuda:3', grad_fn=<AddBackward0>)], [tensor([[[ 0.0251, -0.3193,  0.4237,  ..., -0.7499, -0.1235,  0.3479],
+         [-0.0706,  0.5050, -0.1071,  ..., -0.0668, -0.0660,  0.1995]],
+
+        [[ 0.1537, -0.4781,  0.4551,  ..., -0.5786,  0.1072,  0.3076],
+         [ 0.0688,  0.5374, -0.3685,  ..., -0.0079, -0.1400,  0.1798]],
+
+        [[ 0.0851,  0.1731,  0.3035,  ..., -0.4865,  0.0802,  0.1500],
+         [-0.2998,  0.8308, -0.3265,  ..., -0.1944, -0.4897,  0.2028]],
+
+        ...,
+
+        [[-0.6706,  0.4090, -0.3937,  ...,  0.1439,  0.3683,  0.6128],
+         [ 0.1093,  0.4858, -0.2933,  ...,  0.2701,  0.3026,  0.5390]],
+
+        [[-0.6729,  0.4061, -0.3859,  ...,  0.1487,  0.3726,  0.6195],
+         [ 0.1137,  0.4929, -0.3053,  ...,  0.2773,  0.3013,  0.5254]],
+
+        [[-0.6707,  0.4053, -0.3745,  ...,  0.1447,  0.3795,  0.6229],
+         [ 0.1153,  0.4992, -0.3089,  ...,  0.2828,  0.2953,  0.5155]]],
+       device='cuda:3', grad_fn=<AddBackward0>)], [tensor([[[ 0.3082, -0.5750, -0.3564,  ..., -0.1327, -0.4560,  0.3105],
+         [ 0.0479,  0.3000, -0.4594,  ..., -0.0728, -0.1697,  0.2054]],
+
+        [[ 0.3352, -0.5016, -0.3355,  ..., -0.1438, -0.3960,  0.2681],
+         [ 0.1076,  0.2008, -0.3779,  ..., -0.0375, -0.1267,  0.0129]],
+
+        [[ 0.2662, -0.1897,  0.1233,  ...,  0.2490, -0.3673,  0.8335],
+         [-0.1069,  0.1736,  0.2524,  ..., -0.8318, -0.4184,  0.4116]],
+
+        ...,
+
+        [[-0.0858, -0.1904, -0.0453,  ..., -0.6444, -0.5005,  0.0888],
+         [ 0.5359,  0.0309, -0.4234,  ..., -0.1177, -0.0283,  0.3678]],
+
+        [[-0.0758, -0.1910, -0.0499,  ..., -0.6460, -0.5054,  0.0972],
+         [ 0.5468,  0.0261, -0.4130,  ..., -0.1318, -0.0369,  0.3625]],
+
+        [[-0.0699, -0.1908, -0.0548,  ..., -0.6501, -0.5054,  0.1028],
+         [ 0.5455,  0.0404, -0.3986,  ..., -0.1426, -0.0500,  0.3566]]],
+       device='cuda:3', grad_fn=<AddBackward0>)], [tensor([[[ 0.1276, -0.6138, -0.4111,  ..., -0.2217, -0.5346,  0.2151],
+         [ 0.2895, -0.0405, -0.3314,  ..., -0.5012, -0.1589,  0.1755]],
+
+        [[ 0.1556, -0.6081, -0.3083,  ..., -0.2369, -0.5123,  0.1571],
+         [ 0.4231, -0.0518, -0.2887,  ..., -0.5034, -0.1824,  0.0850]],
+
+        [[ 0.0420, -0.2937, -0.0225,  ...,  0.0701, -0.4242,  0.5041],
+         [ 0.0345, -0.0161,  0.0298,  ..., -0.6094, -0.6743,  0.1588]],
+
+        ...,
+
+        [[-0.0732, -0.1952, -0.0566,  ..., -0.5958, -0.4323,  0.0644],
+         [ 0.0807, -0.0832, -0.0537,  ..., -0.5816, -0.2829,  0.2301]],
+
+        [[-0.0643, -0.1923, -0.0652,  ..., -0.5990, -0.4267,  0.0663],
+         [ 0.0858, -0.0891, -0.0461,  ..., -0.5811, -0.2857,  0.2356]],
+
+        [[-0.0569, -0.1915, -0.0788,  ..., -0.5978, -0.4189,  0.0643],
+         [ 0.0959, -0.0975, -0.0360,  ..., -0.5890, -0.2819,  0.2308]]],
+       device='cuda:3', grad_fn=<AddBackward0>)]]
+4444 output_tensor:torch.Size([1024, 2, 4096])
+torch.autograd.backward
+custom_backward output_tensor[0]:torch.Size([1024, 2, 4096])
+output_tensor_grad[0]:torch.Size([576, 2, 4096])
+Traceback (most recent call last):
+  File "/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/examples/multimodal/train.py", line 463, in <module>
+    pretrain(
+  File "/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/megatron/training/training.py", line 371, in pretrain
+    iteration, num_floating_point_operations_so_far = train( # 调用 1172 行进行训练
+  File "/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/megatron/training/training.py", line 1334, in train
+output tensors:[[tensor([[[ 0.1420, -0.6197, -0.4113,  ..., -0.2206, -0.5350,  0.2192],
+         [ 0.2914, -0.0496, -0.3360,  ..., -0.5003, -0.1515,  0.1772]],
+
+        [[ 0.1190, -0.6127, -0.4182,  ..., -0.2282, -0.5297,  0.2066],
+         [ 0.2883, -0.0516, -0.3457,  ..., -0.4982, -0.1413,  0.1744]],
+
+        [[ 0.0627, -0.3385, -0.0797,  ...,  0.0320, -0.4810,  0.5281],
+         [-0.0299, -0.1033, -0.1056,  ..., -0.6335, -0.6673,  0.3046]],
+
+        ...,
+
+        [[ 0.0507, -0.2223, -0.0218,  ..., -0.7094, -0.6116,  0.0537],
+         [ 0.0654, -0.1008, -0.0159,  ..., -0.6552, -0.3440,  0.3218]],
+
+        [[ 0.0547, -0.2202, -0.0284,  ..., -0.7118, -0.6061,  0.0569],
+         [ 0.0580, -0.1009, -0.0183,  ..., -0.6492, -0.3464,  0.3239]],
+
+        [[ 0.0566, -0.2180, -0.0354,  ..., -0.7113, -0.6016,  0.0585],
+         [ 0.0539, -0.1029, -0.0206,  ..., -0.6532, -0.3457,  0.3194]]],
+       device='cuda:0', grad_fn=<AddBackward0>)], [tensor([[[ 0.0251, -0.3193,  0.4237,  ..., -0.7499, -0.1235,  0.3479],
+         [-0.0706,  0.5050, -0.1071,  ..., -0.0668, -0.0660,  0.1995]],
+
+        [[ 0.1537, -0.4781,  0.4551,  ..., -0.5786,  0.1072,  0.3076],
+         [ 0.0688,  0.5374, -0.3685,  ..., -0.0079, -0.1400,  0.1798]],
+
+        [[ 0.0851,  0.1731,  0.3035,  ..., -0.4865,  0.0802,  0.1500],
+         [-0.2998,  0.8308, -0.3265,  ..., -0.1944, -0.4897,  0.2028]],
+
+        ...,
+
+        [[-0.6706,  0.4090, -0.3937,  ...,  0.1439,  0.3683,  0.6128],
+         [ 0.1093,  0.4858, -0.2933,  ...,  0.2701,  0.3026,  0.5390]],
+
+        [[-0.6729,  0.4061, -0.3859,  ...,  0.1487,  0.3726,  0.6195],
+         [ 0.1137,  0.4929, -0.3053,  ...,  0.2773,  0.3013,  0.5254]],
+
+        [[-0.6707,  0.4053, -0.3745,  ...,  0.1447,  0.3795,  0.6229],
+         [ 0.1153,  0.4992, -0.3089,  ...,  0.2828,  0.2953,  0.5155]]],
+       device='cuda:0', grad_fn=<AddBackward0>)], [tensor([[[ 0.3082, -0.5750, -0.3564,  ..., -0.1327, -0.4560,  0.3105],
+         [ 0.0479,  0.3000, -0.4594,  ..., -0.0728, -0.1697,  0.2054]],
+
+        [[ 0.3352, -0.5016, -0.3355,  ..., -0.1438, -0.3960,  0.2681],
+         [ 0.1076,  0.2008, -0.3779,  ..., -0.0375, -0.1267,  0.0129]],
+
+        [[ 0.2662, -0.1897,  0.1233,  ...,  0.2490, -0.3673,  0.8335],
+         [-0.1069,  0.1736,  0.2524,  ..., -0.8318, -0.4184,  0.4116]],
+
+        ...,
+
+        [[-0.0858, -0.1904, -0.0453,  ..., -0.6444, -0.5005,  0.0888],
+         [ 0.5359,  0.0309, -0.4234,  ..., -0.1177, -0.0283,  0.3678]],
+
+        [[-0.0758, -0.1910, -0.0499,  ..., -0.6460, -0.5054,  0.0972],
+         [ 0.5468,  0.0261, -0.4130,  ..., -0.1318, -0.0369,  0.3625]],
+
+        [[-0.0699, -0.1908, -0.0548,  ..., -0.6501, -0.5054,  0.1028],
+         [ 0.5455,  0.0404, -0.3986,  ..., -0.1426, -0.0500,  0.3566]]],
+       device='cuda:0', grad_fn=<AddBackward0>)], [tensor([[[ 0.1276, -0.6138, -0.4111,  ..., -0.2217, -0.5346,  0.2151],
+         [ 0.2895, -0.0405, -0.3314,  ..., -0.5012, -0.1589,  0.1755]],
+
+        [[ 0.1556, -0.6081, -0.3083,  ..., -0.2369, -0.5123,  0.1571],
+         [ 0.4231, -0.0518, -0.2887,  ..., -0.5034, -0.1824,  0.0850]],
+
+        [[ 0.0420, -0.2937, -0.0225,  ...,  0.0701, -0.4242,  0.5041],
+         [ 0.0345, -0.0161,  0.0298,  ..., -0.6094, -0.6743,  0.1588]],
+
+        ...,
+
+        [[-0.0732, -0.1952, -0.0566,  ..., -0.5958, -0.4323,  0.0644],
+         [ 0.0807, -0.0832, -0.0537,  ..., -0.5816, -0.2829,  0.2301]],
+
+        [[-0.0643, -0.1923, -0.0652,  ..., -0.5990, -0.4267,  0.0663],
+         [ 0.0858, -0.0891, -0.0461,  ..., -0.5811, -0.2857,  0.2356]],
+
+        [[-0.0569, -0.1915, -0.0788,  ..., -0.5978, -0.4189,  0.0643],
+         [ 0.0959, -0.0975, -0.0360,  ..., -0.5890, -0.2819,  0.2308]]],
+       device='cuda:0', grad_fn=<AddBackward0>)]]
+4444 output_tensor:torch.Size([1024, 2, 4096])
+torch.autograd.backward
+custom_backward output_tensor[0]:torch.Size([1024, 2, 4096])
+output_tensor_grad[0]:torch.Size([576, 2, 4096])
+output tensors:[[tensor([[[ 0.1420, -0.6197, -0.4113,  ..., -0.2206, -0.5350,  0.2192],
+         [ 0.2914, -0.0496, -0.3360,  ..., -0.5003, -0.1515,  0.1772]],
+
+        [[ 0.1190, -0.6127, -0.4182,  ..., -0.2282, -0.5297,  0.2066],
+         [ 0.2883, -0.0516, -0.3457,  ..., -0.4982, -0.1413,  0.1744]],
+
+        [[ 0.0627, -0.3385, -0.0797,  ...,  0.0320, -0.4810,  0.5281],
+         [-0.0299, -0.1033, -0.1056,  ..., -0.6335, -0.6673,  0.3046]],
+
+        ...,
+
+        [[ 0.0507, -0.2223, -0.0218,  ..., -0.7094, -0.6116,  0.0537],
+         [ 0.0654, -0.1008, -0.0159,  ..., -0.6552, -0.3440,  0.3218]],
+
+        [[ 0.0547, -0.2202, -0.0284,  ..., -0.7118, -0.6061,  0.0569],
+         [ 0.0580, -0.1009, -0.0183,  ..., -0.6492, -0.3464,  0.3239]],
+
+        [[ 0.0566, -0.2180, -0.0354,  ..., -0.7113, -0.6016,  0.0585],
+         [ 0.0539, -0.1029, -0.0206,  ..., -0.6532, -0.3457,  0.3194]]],
+       device='cuda:1', grad_fn=<AddBackward0>)], [tensor([[[ 0.0251, -0.3193,  0.4237,  ..., -0.7499, -0.1235,  0.3479],
+         [-0.0706,  0.5050, -0.1071,  ..., -0.0668, -0.0660,  0.1995]],
+
+        [[ 0.1537, -0.4781,  0.4551,  ..., -0.5786,  0.1072,  0.3076],
+         [ 0.0688,  0.5374, -0.3685,  ..., -0.0079, -0.1400,  0.1798]],
+
+        [[ 0.0851,  0.1731,  0.3035,  ..., -0.4865,  0.0802,  0.1500],
+         [-0.2998,  0.8308, -0.3265,  ..., -0.1944, -0.4897,  0.2028]],
+
+        ...,
+
+        [[-0.6706,  0.4090, -0.3937,  ...,  0.1439,  0.3683,  0.6128],
+         [ 0.1093,  0.4858, -0.2933,  ...,  0.2701,  0.3026,  0.5390]],
+
+        [[-0.6729,  0.4061, -0.3859,  ...,  0.1487,  0.3726,  0.6195],
+         [ 0.1137,  0.4929, -0.3053,  ...,  0.2773,  0.3013,  0.5254]],
+
+        [[-0.6707,  0.4053, -0.3745,  ...,  0.1447,  0.3795,  0.6229],
+         [ 0.1153,  0.4992, -0.3089,  ...,  0.2828,  0.2953,  0.5155]]],
+       device='cuda:1', grad_fn=<AddBackward0>)], [tensor([[[ 0.3082, -0.5750, -0.3564,  ..., -0.1327, -0.4560,  0.3105],
+         [ 0.0479,  0.3000, -0.4594,  ..., -0.0728, -0.1697,  0.2054]],
+
+        [[ 0.3352, -0.5016, -0.3355,  ..., -0.1438, -0.3960,  0.2681],
+         [ 0.1076,  0.2008, -0.3779,  ..., -0.0375, -0.1267,  0.0129]],
+
+        [[ 0.2662, -0.1897,  0.1233,  ...,  0.2490, -0.3673,  0.8335],
+         [-0.1069,  0.1736,  0.2524,  ..., -0.8318, -0.4184,  0.4116]],
+
+        ...,
+
+        [[-0.0858, -0.1904, -0.0453,  ..., -0.6444, -0.5005,  0.0888],
+         [ 0.5359,  0.0309, -0.4234,  ..., -0.1177, -0.0283,  0.3678]],
+
+        [[-0.0758, -0.1910, -0.0499,  ..., -0.6460, -0.5054,  0.0972],
+         [ 0.5468,  0.0261, -0.4130,  ..., -0.1318, -0.0369,  0.3625]],
+
+        [[-0.0699, -0.1908, -0.0548,  ..., -0.6501, -0.5054,  0.1028],
+         [ 0.5455,  0.0404, -0.3986,  ..., -0.1426, -0.0500,  0.3566]]],
+       device='cuda:1', grad_fn=<AddBackward0>)], [tensor([[[ 0.1276, -0.6138, -0.4111,  ..., -0.2217, -0.5346,  0.2151],
+         [ 0.2895, -0.0405, -0.3314,  ..., -0.5012, -0.1589,  0.1755]],
+
+        [[ 0.1556, -0.6081, -0.3083,  ..., -0.2369, -0.5123,  0.1571],
+         [ 0.4231, -0.0518, -0.2887,  ..., -0.5034, -0.1824,  0.0850]],
+
+        [[ 0.0420, -0.2937, -0.0225,  ...,  0.0701, -0.4242,  0.5041],
+         [ 0.0345, -0.0161,  0.0298,  ..., -0.6094, -0.6743,  0.1588]],
+
+        ...,
+
+        [[-0.0732, -0.1952, -0.0566,  ..., -0.5958, -0.4323,  0.0644],
+         [ 0.0807, -0.0832, -0.0537,  ..., -0.5816, -0.2829,  0.2301]],
+
+        [[-0.0643, -0.1923, -0.0652,  ..., -0.5990, -0.4267,  0.0663],
+         [ 0.0858, -0.0891, -0.0461,  ..., -0.5811, -0.2857,  0.2356]],
+
+        [[-0.0569, -0.1915, -0.0788,  ..., -0.5978, -0.4189,  0.0643],
+         [ 0.0959, -0.0975, -0.0360,  ..., -0.5890, -0.2819,  0.2308]]],
+       device='cuda:1', grad_fn=<AddBackward0>)]]
+4444 output_tensor:torch.Size([1024, 2, 4096])
+torch.autograd.backward
+custom_backward output_tensor[0]:torch.Size([1024, 2, 4096])
+output_tensor_grad[0]:torch.Size([576, 2, 4096])
+    train_step(forward_step_func, # 调用 805 行
+  File "/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/megatron/training/training.py", line 818, in train_step
+Traceback (most recent call last):
+  File "/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/examples/multimodal/train.py", line 463, in <module>
+output tensors:[[tensor([[[ 0.1420, -0.6197, -0.4113,  ..., -0.2206, -0.5350,  0.2192],
+         [ 0.2914, -0.0496, -0.3360,  ..., -0.5003, -0.1515,  0.1772]],
+
+        [[ 0.1190, -0.6127, -0.4182,  ..., -0.2282, -0.5297,  0.2066],
+         [ 0.2883, -0.0516, -0.3457,  ..., -0.4982, -0.1413,  0.1744]],
+
+        [[ 0.0627, -0.3385, -0.0797,  ...,  0.0320, -0.4810,  0.5281],
+         [-0.0299, -0.1033, -0.1056,  ..., -0.6335, -0.6673,  0.3046]],
+
+        ...,
+
+        [[ 0.0507, -0.2223, -0.0218,  ..., -0.7094, -0.6116,  0.0537],
+         [ 0.0654, -0.1008, -0.0159,  ..., -0.6552, -0.3440,  0.3218]],
+
+        [[ 0.0547, -0.2202, -0.0284,  ..., -0.7118, -0.6061,  0.0569],
+         [ 0.0580, -0.1009, -0.0183,  ..., -0.6492, -0.3464,  0.3239]],
+
+        [[ 0.0566, -0.2180, -0.0354,  ..., -0.7113, -0.6016,  0.0585],
+         [ 0.0539, -0.1029, -0.0206,  ..., -0.6532, -0.3457,  0.3194]]],
+       device='cuda:2', grad_fn=<AddBackward0>)], [tensor([[[ 0.0251, -0.3193,  0.4237,  ..., -0.7499, -0.1235,  0.3479],
+         [-0.0706,  0.5050, -0.1071,  ..., -0.0668, -0.0660,  0.1995]],
+
+        [[ 0.1537, -0.4781,  0.4551,  ..., -0.5786,  0.1072,  0.3076],
+         [ 0.0688,  0.5374, -0.3685,  ..., -0.0079, -0.1400,  0.1798]],
+
+        [[ 0.0851,  0.1731,  0.3035,  ..., -0.4865,  0.0802,  0.1500],
+         [-0.2998,  0.8308, -0.3265,  ..., -0.1944, -0.4897,  0.2028]],
+
+        ...,
+
+        [[-0.6706,  0.4090, -0.3937,  ...,  0.1439,  0.3683,  0.6128],
+         [ 0.1093,  0.4858, -0.2933,  ...,  0.2701,  0.3026,  0.5390]],
+
+        [[-0.6729,  0.4061, -0.3859,  ...,  0.1487,  0.3726,  0.6195],
+         [ 0.1137,  0.4929, -0.3053,  ...,  0.2773,  0.3013,  0.5254]],
+
+        [[-0.6707,  0.4053, -0.3745,  ...,  0.1447,  0.3795,  0.6229],
+         [ 0.1153,  0.4992, -0.3089,  ...,  0.2828,  0.2953,  0.5155]]],
+       device='cuda:2', grad_fn=<AddBackward0>)], [tensor([[[ 0.3082, -0.5750, -0.3564,  ..., -0.1327, -0.4560,  0.3105],
+         [ 0.0479,  0.3000, -0.4594,  ..., -0.0728, -0.1697,  0.2054]],
+
+        [[ 0.3352, -0.5016, -0.3355,  ..., -0.1438, -0.3960,  0.2681],
+         [ 0.1076,  0.2008, -0.3779,  ..., -0.0375, -0.1267,  0.0129]],
+
+        [[ 0.2662, -0.1897,  0.1233,  ...,  0.2490, -0.3673,  0.8335],
+         [-0.1069,  0.1736,  0.2524,  ..., -0.8318, -0.4184,  0.4116]],
+
+        ...,
+
+        [[-0.0858, -0.1904, -0.0453,  ..., -0.6444, -0.5005,  0.0888],
+         [ 0.5359,  0.0309, -0.4234,  ..., -0.1177, -0.0283,  0.3678]],
+
+        [[-0.0758, -0.1910, -0.0499,  ..., -0.6460, -0.5054,  0.0972],
+         [ 0.5468,  0.0261, -0.4130,  ..., -0.1318, -0.0369,  0.3625]],
+
+        [[-0.0699, -0.1908, -0.0548,  ..., -0.6501, -0.5054,  0.1028],
+         [ 0.5455,  0.0404, -0.3986,  ..., -0.1426, -0.0500,  0.3566]]],
+       device='cuda:2', grad_fn=<AddBackward0>)], [tensor([[[ 0.1276, -0.6138, -0.4111,  ..., -0.2217, -0.5346,  0.2151],
+         [ 0.2895, -0.0405, -0.3314,  ..., -0.5012, -0.1589,  0.1755]],
+
+        [[ 0.1556, -0.6081, -0.3083,  ..., -0.2369, -0.5123,  0.1571],
+         [ 0.4231, -0.0518, -0.2887,  ..., -0.5034, -0.1824,  0.0850]],
+
+        [[ 0.0420, -0.2937, -0.0225,  ...,  0.0701, -0.4242,  0.5041],
+         [ 0.0345, -0.0161,  0.0298,  ..., -0.6094, -0.6743,  0.1588]],
+
+        ...,
+
+        [[-0.0732, -0.1952, -0.0566,  ..., -0.5958, -0.4323,  0.0644],
+         [ 0.0807, -0.0832, -0.0537,  ..., -0.5816, -0.2829,  0.2301]],
+
+        [[-0.0643, -0.1923, -0.0652,  ..., -0.5990, -0.4267,  0.0663],
+         [ 0.0858, -0.0891, -0.0461,  ..., -0.5811, -0.2857,  0.2356]],
+
+        [[-0.0569, -0.1915, -0.0788,  ..., -0.5978, -0.4189,  0.0643],
+         [ 0.0959, -0.0975, -0.0360,  ..., -0.5890, -0.2819,  0.2308]]],
+       device='cuda:2', grad_fn=<AddBackward0>)]]
+4444 output_tensor:torch.Size([1024, 2, 4096])
+torch.autograd.backward
+custom_backward output_tensor[0]:torch.Size([1024, 2, 4096])
+output_tensor_grad[0]:torch.Size([576, 2, 4096])
+    losses_reduced = forward_backward_func( # schedules.py 1278 行 forward_backward_pipelining_without_interleaving
+  File "/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/megatron/core/pipeline_parallel/schedules.py", line 1510, in forward_backward_pipelining_without_interleaving
+    pretrain(
+  File "/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/megatron/training/training.py", line 371, in pretrain
+Traceback (most recent call last):
+  File "/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/examples/multimodal/train.py", line 463, in <module>
+Traceback (most recent call last):
+  File "/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/examples/multimodal/train.py", line 463, in <module>
+    iteration, num_floating_point_operations_so_far = train( # 调用 1172 行进行训练
+  File "/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/megatron/training/training.py", line 1334, in train
+    pretrain(
+  File "/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/megatron/training/training.py", line 371, in pretrain
+    pretrain(
+  File "/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/megatron/training/training.py", line 371, in pretrain
+    train_step(forward_step_func, # 调用 805 行
+  File "/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/megatron/training/training.py", line 818, in train_step
+        iteration, num_floating_point_operations_so_far = train( # 调用 1172 行进行训练iteration, num_floating_point_operations_so_far = train( # 调用 1172 行进行训练
+
+  File "/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/megatron/training/training.py", line 1334, in train
+  File "/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/megatron/training/training.py", line 1334, in train
+    losses_reduced = forward_backward_func( # schedules.py 1278 行 forward_backward_pipelining_without_interleaving
+  File "/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/megatron/core/pipeline_parallel/schedules.py", line 1510, in forward_backward_pipelining_without_interleaving
+    train_step(forward_step_func, # 调用 805 行
+  File "/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/megatron/training/training.py", line 818, in train_step
+    train_step(forward_step_func, # 调用 805 行
+  File "/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/megatron/training/training.py", line 818, in train_step
+    losses_reduced = forward_backward_func( # schedules.py 1278 行 forward_backward_pipelining_without_interleaving
+  File "/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/megatron/core/pipeline_parallel/schedules.py", line 1510, in forward_backward_pipelining_without_interleaving
+    losses_reduced = forward_backward_func( # schedules.py 1278 行 forward_backward_pipelining_without_interleaving
+  File "/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/megatron/core/pipeline_parallel/schedules.py", line 1510, in forward_backward_pipelining_without_interleaving
+    input_tensor_grad = backward_step( # 调用 329 行
+  File "/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/megatron/core/pipeline_parallel/schedules.py", line 376, in backward_step
+    input_tensor_grad = backward_step( # 调用 329 行
+  File "/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/megatron/core/pipeline_parallel/schedules.py", line 376, in backward_step
+    input_tensor_grad = backward_step( # 调用 329 行
+  File "/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/megatron/core/pipeline_parallel/schedules.py", line 376, in backward_step
+    input_tensor_grad = backward_step( # 调用 329 行
+  File "/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/megatron/core/pipeline_parallel/schedules.py", line 376, in backward_step
+    torch.autograd.backward(output_tensor[0], grad_tensors=output_tensor_grad[0])
+  File "/gf3/home/fjs/anaconda3/envs/megatron/lib/python3.10/site-packages/torch/autograd/__init__.py", line 259, in backward
+        torch.autograd.backward(output_tensor[0], grad_tensors=output_tensor_grad[0])    torch.autograd.backward(output_tensor[0], grad_tensors=output_tensor_grad[0])
+torch.autograd.backward(output_tensor[0], grad_tensors=output_tensor_grad[0])
+
+  File "/gf3/home/fjs/anaconda3/envs/megatron/lib/python3.10/site-packages/torch/autograd/__init__.py", line 259, in backward
+  File "/gf3/home/fjs/anaconda3/envs/megatron/lib/python3.10/site-packages/torch/autograd/__init__.py", line 259, in backward
+  File "/gf3/home/fjs/anaconda3/envs/megatron/lib/python3.10/site-packages/torch/autograd/__init__.py", line 259, in backward
+    grad_tensors_ = _make_grads(tensors, grad_tensors_, is_grads_batched=False)
+  File "/gf3/home/fjs/anaconda3/envs/megatron/lib/python3.10/site-packages/torch/autograd/__init__.py", line 103, in _make_grads
+    grad_tensors_ = _make_grads(tensors, grad_tensors_, is_grads_batched=False)
+      File "/gf3/home/fjs/anaconda3/envs/megatron/lib/python3.10/site-packages/torch/autograd/__init__.py", line 103, in _make_grads
+grad_tensors_ = _make_grads(tensors, grad_tensors_, is_grads_batched=False)
+  File "/gf3/home/fjs/anaconda3/envs/megatron/lib/python3.10/site-packages/torch/autograd/__init__.py", line 103, in _make_grads
+    grad_tensors_ = _make_grads(tensors, grad_tensors_, is_grads_batched=False)
+  File "/gf3/home/fjs/anaconda3/envs/megatron/lib/python3.10/site-packages/torch/autograd/__init__.py", line 103, in _make_grads
+    raise RuntimeError(
+RuntimeError: Mismatch in shape: grad_output[0] has a shape of torch.Size([576, 2, 4096]) and output[0] has a shape of torch.Size([1024, 2, 4096]).
+    raise RuntimeError(
+RuntimeError    : raise RuntimeError(Mismatch in shape: grad_output[0] has a shape of torch.Size([576, 2, 4096]) and output[0] has a shape of torch.Size([1024, 2, 4096]).
+
+    raise RuntimeError(
+RuntimeError: Mismatch in shape: grad_output[0] has a shape of torch.Size([576, 2, 4096]) and output[0] has a shape of torch.Size([1024, 2, 4096]).
+RuntimeError: Mismatch in shape: grad_output[0] has a shape of torch.Size([576, 2, 4096]) and output[0] has a shape of torch.Size([1024, 2, 4096]).
+[2024-11-25 23:09:03,105] torch.distributed.elastic.multiprocessing.api: [WARNING] Sending process 8223 closing signal SIGTERM
+[2024-11-25 23:09:03,625] torch.distributed.elastic.multiprocessing.api: [ERROR] failed (exitcode: 1) local_rank: 1 (pid: 8224) of binary: /gf3/home/fjs/anaconda3/envs/megatron/bin/python3.10
+Traceback (most recent call last):
+  File "/gf3/home/fjs/anaconda3/envs/megatron/bin/torchrun", line 8, in <module>
+    sys.exit(main())
+  File "/gf3/home/fjs/anaconda3/envs/megatron/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 347, in wrapper
+    return f(*args, **kwargs)
+  File "/gf3/home/fjs/anaconda3/envs/megatron/lib/python3.10/site-packages/torch/distributed/run.py", line 812, in main
+    run(args)
+  File "/gf3/home/fjs/anaconda3/envs/megatron/lib/python3.10/site-packages/torch/distributed/run.py", line 803, in run
+    elastic_launch(
+  File "/gf3/home/fjs/anaconda3/envs/megatron/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 135, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/gf3/home/fjs/anaconda3/envs/megatron/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 268, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+examples/multimodal/train.py FAILED
+------------------------------------------------------------
+Failures:
+[1]:
+  time      : 2024-11-25_23:09:03
+  host      : gn44
+  rank      : 6 (local_rank: 2)
+  exitcode  : 1 (pid: 8225)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+[2]:
+  time      : 2024-11-25_23:09:03
+  host      : gn44
+  rank      : 7 (local_rank: 3)
+  exitcode  : 1 (pid: 8226)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2024-11-25_23:09:03
+  host      : gn44
+  rank      : 5 (local_rank: 1)
+  exitcode  : 1 (pid: 8224)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================
