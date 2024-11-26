@@ -408,7 +408,7 @@ def _communicate(
 
 
 def recv_forward(tensor_shape: Shape, config: ModelParallelConfig) -> torch.Tensor:
-    """Receive tensor from previous rank in pipeline (forward receive).
+    """从流水级的前一个 rank 接收 tensor 作为输入张量 (forward receive).
 
     See _communicate for argument details.
     """
@@ -432,7 +432,7 @@ def recv_forward(tensor_shape: Shape, config: ModelParallelConfig) -> torch.Tens
 
 
 def recv_backward(tensor_shape: Shape, config: ModelParallelConfig) -> torch.Tensor:
-    """Receive tensor from next rank in pipeline (backward receive).
+    """从流水级的下一个 rank 接收 tensor 作为该 rank 输出张量的梯度 (backward receive).
 
     See _communicate for argument details.
     """
@@ -455,7 +455,7 @@ def recv_backward(tensor_shape: Shape, config: ModelParallelConfig) -> torch.Ten
 
 
 def send_forward(output_tensor: torch.Tensor, config: ModelParallelConfig) -> None:
-    """Send tensor to next rank in pipeline (forward send).
+    """给下一个 rank 发送自己的 output tensor (forward send).
 
     See _communicate for argument details.
     """
@@ -476,7 +476,7 @@ def send_forward(output_tensor: torch.Tensor, config: ModelParallelConfig) -> No
 
 
 def send_backward(input_tensor_grad: torch.Tensor, config: ModelParallelConfig) -> None:
-    """Send tensor to previous rank in pipeline (backward send).
+    """给上一个 rank 发送本 rank 对于输入的梯度 tensor (backward send).
 
     See _communicate for argument details.
     """
@@ -498,7 +498,7 @@ def send_backward(input_tensor_grad: torch.Tensor, config: ModelParallelConfig) 
 def send_forward_recv_backward(
     output_tensor: torch.Tensor, tensor_shape: Shape, config: ModelParallelConfig
 ) -> torch.Tensor:
-    """Batched send and recv with next rank in pipeline.
+    """把 output tensor 发给下一个 rank, 并且从下一个 rank 接收 output_tensor_grad.
 
     See _communicate for argument details.
     """
@@ -523,7 +523,8 @@ def send_forward_recv_backward(
 def send_backward_recv_forward(
     input_tensor_grad: torch.Tensor, tensor_shape: Shape, config: ModelParallelConfig
 ) -> torch.Tensor:
-    """Batched send and recv with previous rank in pipeline.
+    """把本 rank 的 input_tensor_grad 发送给上一个 rank,
+    并且从上一个 rank 接收 input tensor.
 
     See _communicate for argument details.
     """

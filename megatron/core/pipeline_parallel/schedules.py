@@ -359,7 +359,7 @@ def backward_step(input_tensor, output_tensor, output_tensor_grad, model_type, c
     # Backward pass.
     if output_tensor_grad[0] is None and config.grad_scale_func is not None:
         output_tensor[0] = config.grad_scale_func(output_tensor[0])
-
+    # 添加一行使用 torch.autograd.backward
     config.deallocate_pipeline_outputs = False
     if config.deallocate_pipeline_outputs:
         if output_tensor[0] is not None:
@@ -384,6 +384,8 @@ def backward_step(input_tensor, output_tensor, output_tensor_grad, model_type, c
                 input_tensor_grad.append(None)
             else:
                 input_tensor_grad.append(x.grad)
+
+    print(f"backward step:{input_tensor_grad}")
 
     # Handle single skip connection if it exists (encoder_hidden_state in
     # model with encoder and decoder).
@@ -1168,7 +1170,7 @@ def forward_backward_pipelining_with_interleaving(
     return forward_data_store
 
 
-def get_tensor_shapes(
+def get_receive_tensor_shapes( # 1387 行调用
     *,
     rank: int,
     model_type: ModelType,
@@ -1220,12 +1222,65 @@ def get_tensor_shapes(
     return tensor_shapes
 
 
+def get_send_tensor_shapes( # 1396 行调用
+    *,
+    rank: int,
+    model_type: ModelType,
+    seq_length: int,
+    micro_batch_size: int,
+    decoder_seq_length: int,
+    config,
+    encoder_decoder_xattn: bool,
+):
+    # Determine right tensor sizes (based on position of rank with
+    # respect to split rank) and model size.
+    # Send two tensors if model decoder requires the encoder's output
+    # (via cross-attention) and rank is in decoder stage.
+    #     first tensor is decoder.
+    #     second tensor is encoder.
+    # If model has an encoder & decoder and rank is at the boundary:
+    #     send one tensor.
+    # Otherwise, send one tensor.
+    tensor_shapes = []
+    # context parallelism 没有初始化
+    # seq_length = seq_length // parallel_state.get_context_parallel_world_size()
+    # if model_type == ModelType.encoder_and_decoder:
+    #     decoder_seq_length = decoder_seq_length // parallel_state.get_context_parallel_world_size()
+    """
+    if config.sequence_parallel:
+        seq_length = seq_length // parallel_state.get_tensor_model_parallel_world_size()
+        if model_type == ModelType.encoder_and_decoder:
+            decoder_seq_length = (
+                decoder_seq_length // parallel_state.get_tensor_model_parallel_world_size()
+            )
+    """
+    end_layer = config.end_layer
+    print(f"start layer:{end_layer}")
+    if model_type == ModelType.encoder_and_decoder:
+        # 这里需要修改 tensor_shapes 的逻辑
+        # 如果划分在 encoder 的 transformer 层，tensor_shape 是 [encoder_seq_length, micro_batch_size, encoder_hidden_size]
+        # 如果划分在 llm 的 transformer 层，tensor_shape 是 [decoderseq_length, micro_batch_size, decoder_hidden_size]
+        # if parallel_state.is_inside_encoder(rank):
+        if end_layer >= 28:
+            tensor_shapes.append((1024, micro_batch_size, config.hidden_size))
+        elif encoder_decoder_xattn:
+            tensor_shapes.append((1024, micro_batch_size, config.hidden_size))
+            tensor_shapes.append((seq_length, micro_batch_size, config.hidden_size))
+        else:
+            # tensor_shapes.append((decoder_seq_length, micro_batch_size, config.hidden_size))
+            tensor_shapes.append((seq_length, micro_batch_size, config.hidden_size))
+    else:  # model_type == ModelType.encoder_or_decoder
+        tensor_shapes.append((seq_length, micro_batch_size, config.hidden_size))
+    return tensor_shapes
+
+
 def recv_forward(tensor_shapes, config):
     input_tensors = []
     for tensor_shape in tensor_shapes:
         if tensor_shape is None:
             input_tensors.append(None)
         else:
+            # megatron/core/pipeline_parallel/p2p_communication.py 410 行
             input_tensors.append(p2p_communication.recv_forward(tensor_shape, config))
     return input_tensors
 
@@ -1236,6 +1291,7 @@ def recv_backward(tensor_shapes, config):
         if tensor_shape is None:
             output_tensor_grads.append(None)
         else:
+            # megatron/core/pipeline_parallel/p2p_communication.py 434 行
             output_tensor_grads.append(p2p_communication.recv_backward(tensor_shape, config))
     return output_tensor_grads
 
@@ -1246,6 +1302,7 @@ def send_forward(output_tensors, tensor_shapes, config):
     for output_tensor, tensor_shape in zip(output_tensors, tensor_shapes):
         if tensor_shape is None:
             continue
+        # megatron/core/pipeline_parallel/p2p_communication.py 457 行
         p2p_communication.send_forward(output_tensor, config)
 
 
@@ -1255,6 +1312,7 @@ def send_backward(input_tensor_grads, tensor_shapes, config):
     for input_tensor_grad, tensor_shape in zip(input_tensor_grads, tensor_shapes):
         if tensor_shape is None:
             continue
+        # megatron/core/pipeline_parallel/p2p_communication.py 478 行
         p2p_communication.send_backward(input_tensor_grad, config)
 
 
@@ -1266,6 +1324,7 @@ def send_forward_recv_backward(output_tensors, tensor_shapes, config):
         if tensor_shape is None:
             output_tensor_grads.append(None)
             continue
+        # megatron/core/pipeline_parallel/p2p_communication.py 498 行
         output_tensor_grad = p2p_communication.send_forward_recv_backward(
             output_tensor, tensor_shape, config
         )
@@ -1281,6 +1340,7 @@ def send_backward_recv_forward(input_tensor_grads, tensor_shapes, config):
         if tensor_shape is None:
             input_tensors.append(None)
             continue
+        # megatron/core/pipeline_parallel/p2p_communication.py 523 行
         input_tensor = p2p_communication.send_backward_recv_forward(
             input_tensor_grad, tensor_shape, config
         )
@@ -1376,7 +1436,7 @@ def forward_backward_pipelining_without_interleaving(
 
     rank = parallel_state.get_pipeline_model_parallel_rank()
     print(f"schedules.py decoder_seq_length:{decoder_seq_length}")
-    recv_tensor_shapes = get_tensor_shapes( # 这里 get_tensor_shapes 出问题
+    recv_tensor_shapes = get_receive_tensor_shapes( # 这里 get_tensor_shapes 出问题
         rank=rank - 1,
         model_type=model_type,
         seq_length=seq_length,
@@ -1385,7 +1445,7 @@ def forward_backward_pipelining_without_interleaving(
         config=config,
         encoder_decoder_xattn=encoder_decoder_xattn,
     )
-    send_tensor_shapes = get_tensor_shapes( # 有的 rank 发送和接收 tensor 的形状不一样，需要处理
+    send_tensor_shapes = get_send_tensor_shapes( # 有的 rank 发送和接收 tensor 的形状不一样，需要处理
         rank=rank,
         model_type=model_type,
         seq_length=seq_length,
