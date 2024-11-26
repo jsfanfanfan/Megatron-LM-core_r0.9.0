@@ -1,8 +1,8 @@
 examples/multimodal/pretrain_freeze-llm.sh: line 4: activate: No such file or directory
-[2024-11-25 23:07:37,698] torch.distributed.run: [WARNING] 
-[2024-11-25 23:07:37,698] torch.distributed.run: [WARNING] *****************************************
-[2024-11-25 23:07:37,698] torch.distributed.run: [WARNING] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
-[2024-11-25 23:07:37,698] torch.distributed.run: [WARNING] *****************************************
+[2024-11-27 00:46:16,310] torch.distributed.run: [WARNING] 
+[2024-11-27 00:46:16,310] torch.distributed.run: [WARNING] *****************************************
+[2024-11-27 00:46:16,310] torch.distributed.run: [WARNING] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+[2024-11-27 00:46:16,310] torch.distributed.run: [WARNING] *****************************************
 using world size: 20, data-parallel size: 1, context-parallel size: 1, tensor-model-parallel size: 4, pipeline-model-parallel size: 5, 
 WARNING: overriding default arguments for tokenizer_type:GPT2BPETokenizer                        with tokenizer_type:HuggingFaceTokenizer
 WARNING: Setting args.overlap_p2p_comm and args.align_param_gather to False since non-interleaved schedule does not support overlapping p2p communication and aligned param AG
@@ -299,7 +299,7 @@ using torch.float32 for parameters ...
   skipped_train_samples ........................... 0
   spec ............................................ None
   split ........................................... 100,0,0
-  split_spec ...................................... 26,8,8,8,8
+  split_spec ...................................... 22,9,9,9,9
   squared_relu .................................... False
   standalone_embedding_stage ...................... False
   start_weight_decay .............................. 0.01
@@ -385,353 +385,327 @@ You set `add_prefix_space`. The tokenizer needs to be converted from the slow to
 ------world_size:20------
 ------total_model_size:20------
 ------num_pipeline_model_parallel_groups:4------
+------pipeline_parallel_model_size:5------
+------world_size:20------
+------total_model_size:20------
+------num_pipeline_model_parallel_groups:4------
 > initialized tensor model parallel with size 4
 > initialized pipeline model parallel with size 5
 > setting random seeds to 1234 ...
 > compiling dataset index builder ...
+------pipeline_parallel_model_size:5------
+------world_size:20------
+------total_model_size:20------
+------num_pipeline_model_parallel_groups:4------
 make: Entering directory '/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/megatron/core/datasets'
-------pipeline_parallel_model_size:5------
-------world_size:20------
-------total_model_size:20------
-------num_pipeline_model_parallel_groups:4------
-------pipeline_parallel_model_size:5------
-------world_size:20------
-------total_model_size:20------
-------num_pipeline_model_parallel_groups:4------
-------pipeline_parallel_model_size:5------
-------world_size:20------
-------total_model_size:20------
-------num_pipeline_model_parallel_groups:4------
 make: Nothing to be done for 'default'.
 make: Leaving directory '/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/megatron/core/datasets'
->>> done with dataset index builder. Compilation time: 0.079 seconds
+>>> done with dataset index builder. Compilation time: 0.049 seconds
 WARNING: constraints for invoking optimized fused softmax kernel are not met. We default back to unfused kernel invocations.
 > compiling and loading fused kernels ...
----Rank 1---Tensor Parallel Group GPUs: [1, 1, 1, 1]
----Rank 1---Pipeline Parallel Group GPUs: [0, 0, 0, 0, 0]---Rank 3---Tensor Parallel Group GPUs: [3, 3, 3, 3]
+------pipeline_parallel_model_size:5------
+------world_size:20------
+------total_model_size:20------
+------num_pipeline_model_parallel_groups:4------
+>>> done with compiling and loading fused kernels. Compilation time: 9.034 seconds---Rank 1---Tensor Parallel Group GPUs: [1, 1, 1, 1]---Rank 3---Tensor Parallel Group GPUs: [3, 3, 3, 3]
 
+
+---Rank 1---Pipeline Parallel Group GPUs: [0, 0, 0, 0, 0]
 ---Rank 3---Pipeline Parallel Group GPUs: [0, 0, 0, 0, 0]
+---Rank 2---Tensor Parallel Group GPUs: [2, 2, 2, 2][rank3]:[W init.cpp:767] Warning: nvfuser is no longer supported in torch script, use _jit_set_nvfuser_enabled is deprecated and a no-op (function operator())
+
 [rank1]:[W init.cpp:767] Warning: nvfuser is no longer supported in torch script, use _jit_set_nvfuser_enabled is deprecated and a no-op (function operator())
----Rank 2---Tensor Parallel Group GPUs: [2, 2, 2, 2]
-[rank3]:[W init.cpp:767] Warning: nvfuser is no longer supported in torch script, use _jit_set_nvfuser_enabled is deprecated and a no-op (function operator())
 ---Rank 2---Pipeline Parallel Group GPUs: [0, 0, 0, 0, 0]
->>> done with compiling and loading fused kernels. Compilation time: 2.986 seconds
-[rank2]:[W init.cpp:767] Warning: nvfuser is no longer supported in torch script, use _jit_set_nvfuser_enabled is deprecated and a no-op (function operator())
 ---Rank 0---Tensor Parallel Group GPUs: [0, 0, 0, 0]
 ---Rank 0---Pipeline Parallel Group GPUs: [0, 0, 0, 0, 0]
 [rank0]:[W init.cpp:767] Warning: nvfuser is no longer supported in torch script, use _jit_set_nvfuser_enabled is deprecated and a no-op (function operator())
-time to initialize megatron (seconds): 8.538
-[after megatron is initialized] datetime: 2024-11-25 23:07:56 
+[rank2]:[W init.cpp:767] Warning: nvfuser is no longer supported in torch script, use _jit_set_nvfuser_enabled is deprecated and a no-op (function operator())
+time to initialize megatron (seconds): 72.518
+[after megatron is initialized] datetime: 2024-11-27 00:46:40 
 building a multimodal model ...
 WARNING:megatron.core.models.multimodal.llava_model:LLaVA model is under active development. It may be missing features and its methods may change.
 WARNING:megatron.core.models.multimodal.llava_model:LLaVA model is under active development. It may be missing features and its methods may change.
 WARNING:megatron.core.models.multimodal.llava_model:LLaVA model is under active development. It may be missing features and its methods may change.
 WARNING:megatron.core.models.multimodal.llava_model:LLaVA model is under active development. It may be missing features and its methods may change.
- > number of parameters on (tensor, pipeline) model parallel rank (1, 0): 95234048
- > number of parameters on (tensor, pipeline) model parallel rank (0, 0): 95234048
+ > number of parameters on (tensor, pipeline) model parallel rank (3, 0): 70576640
+ > number of parameters on (tensor, pipeline) model parallel rank (0, 0): 70576640
+ > number of parameters on (tensor, pipeline) model parallel rank (2, 0): 70576640
+ > number of parameters on (tensor, pipeline) model parallel rank (1, 0): 70576640
 INFO:megatron.core.distributed.distributed_data_parallel:Setting up DistributedDataParallel with config DistributedDataParallelConfig(grad_reduce_in_fp32=False, overlap_grad_reduce=False, overlap_param_gather=False, align_param_gather=False, use_distributed_optimizer=False, check_for_nan_in_grad=True, bucket_size=None, average_in_collective=False, fp8_param_gather=False)
 INFO:megatron.core.distributed.param_and_grad_buffer:Number of buckets for gradient all-reduce / reduce-scatter: 1
-Params for bucket 1 (95234048 elements):
-	vision_model.decoder.layers.21.self_attention.linear_qkv.bias
-	vision_model.decoder.layers.18.mlp.linear_fc1.layer_norm_bias
-	vision_model.decoder.layers.17.mlp.linear_fc2.weight
-	vision_model.decoder.layers.15.mlp.linear_fc1.layer_norm_bias
-	vision_model.decoder.layers.14.mlp.linear_fc2.weight
-	vision_model.decoder.layers.12.self_attention.linear_proj.weight
-	vision_model.decoder.layers.8.self_attention.linear_qkv.layer_norm_bias
-	vision_model.decoder.layers.7.mlp.linear_fc2.bias
-	vision_model.decoder.layers.4.mlp.linear_fc1.weight
-	vision_model.decoder.layers.1.mlp.linear_fc1.weight
-	vision_model.decoder.layers.21.mlp.linear_fc1.bias
-	vision_model.decoder.layers.13.self_attention.linear_qkv.weight
-	vision_model.decoder.layers.11.self_attention.linear_qkv.layer_norm_bias
-	vision_model.decoder.layers.10.self_attention.linear_qkv.bias
-	vision_model.decoder.layers.8.mlp.linear_fc1.layer_norm_bias
-	vision_model.decoder.layers.5.self_attention.linear_proj.bias
-	vision_model.decoder.layers.2.self_attention.linear_proj.bias
-	vision_model.ln_pre.bias
-	vision_model.decoder.layers.23.self_attention.linear_qkv.layer_norm_weight
-	vision_model.decoder.layers.22.mlp.linear_fc2.bias
-	vision_model.decoder.layers.20.self_attention.linear_qkv.layer_norm_weight
-	vision_model.decoder.layers.19.mlp.linear_fc2.bias
-	vision_model.decoder.layers.16.mlp.linear_fc1.bias
-	vision_model.decoder.layers.16.mlp.linear_fc1.weight
-	vision_model.decoder.layers.13.mlp.linear_fc1.weight
-	vision_model.decoder.layers.9.self_attention.linear_qkv.bias
-	vision_model.decoder.layers.6.self_attention.linear_qkv.bias
-	vision_model.decoder.layers.3.mlp.linear_fc1.layer_norm_bias
-	vision_model.decoder.layers.3.self_attention.linear_qkv.weight
-	vision_model.decoder.layers.5.mlp.linear_fc2.bias
-	vision_model.decoder.layers.23.mlp.linear_fc1.layer_norm_weight
-	vision_model.decoder.layers.20.mlp.linear_fc1.layer_norm_weight
-	vision_model.decoder.layers.17.self_attention.linear_proj.bias
-	vision_model.decoder.layers.14.self_attention.linear_proj.bias
-	vision_model.decoder.layers.12.self_attention.linear_qkv.layer_norm_bias
-	vision_model.decoder.layers.10.mlp.linear_fc1.layer_norm_bias
-	vision_model.decoder.layers.9.mlp.linear_fc1.weight
-	vision_model.decoder.layers.6.mlp.linear_fc1.bias
-	vision_model.decoder.layers.0.mlp.linear_fc2.weight
-	vision_model.decoder.layers.1.mlp.linear_fc1.layer_norm_bias
-	vision_model.decoder.layers.23.self_attention.linear_proj.weight
-	vision_model.decoder.layers.20.self_attention.linear_proj.weight
-	vision_model.decoder.layers.18.self_attention.linear_qkv.bias
-	vision_model.decoder.layers.15.self_attention.linear_qkv.bias
-	vision_model.decoder.layers.12.mlp.linear_fc1.layer_norm_bias
-	vision_model.decoder.layers.11.mlp.linear_fc2.weight
-	vision_model.decoder.layers.10.mlp.linear_fc2.bias
-	vision_model.decoder.layers.5.self_attention.linear_qkv.layer_norm_weight
-	vision_model.decoder.layers.4.mlp.linear_fc2.bias
-	vision_model.decoder.layers.2.self_attention.linear_qkv.layer_norm_weight
-	vision_model.decoder.layers.21.self_attention.linear_qkv.weight
-	vision_model.decoder.layers.18.mlp.linear_fc1.bias
-	vision_model.decoder.layers.15.mlp.linear_fc1.bias
-	vision_model.decoder.layers.10.self_attention.linear_qkv.layer_norm_bias
-	vision_model.decoder.layers.8.self_attention.linear_qkv.bias
-	vision_model.decoder.layers.5.mlp.linear_fc1.layer_norm_weight
-	vision_model.decoder.layers.2.mlp.linear_fc1.layer_norm_weight
-	vision_model.decoder.layers.0.mlp.linear_fc2.bias
+Params for bucket 1 (70576640 elements):
 	vision_model.decoder.layers.21.mlp.linear_fc1.weight
 	vision_model.decoder.layers.17.self_attention.linear_qkv.layer_norm_weight
-	vision_model.decoder.layers.14.self_attention.linear_qkv.layer_norm_weight
-	vision_model.decoder.layers.13.mlp.linear_fc2.bias
-	vision_model.decoder.layers.8.mlp.linear_fc1.bias
+	vision_model.decoder.layers.13.self_attention.linear_qkv.weight
+	vision_model.decoder.layers.8.mlp.linear_fc1.layer_norm_bias
 	vision_model.decoder.layers.7.mlp.linear_fc2.weight
 	vision_model.decoder.layers.5.self_attention.linear_proj.weight
 	vision_model.decoder.layers.2.self_attention.linear_proj.weight
-	vision_model.decoder.layers.4.self_attention.linear_qkv.bias
-	vision_model.decoder.layers.0.mlp.linear_fc1.layer_norm_weight
-	vision_model.decoder.layers.23.self_attention.linear_qkv.layer_norm_bias
-	vision_model.decoder.layers.22.self_attention.linear_proj.bias
+	vision_model.decoder.layers.1.self_attention.linear_proj.weight
 	vision_model.decoder.layers.20.self_attention.linear_qkv.layer_norm_bias
 	vision_model.decoder.layers.17.mlp.linear_fc1.layer_norm_weight
-	vision_model.decoder.layers.14.mlp.linear_fc1.layer_norm_weight
-	vision_model.decoder.layers.10.mlp.linear_fc1.bias
-	vision_model.decoder.layers.10.self_attention.linear_qkv.layer_norm_weight
-	vision_model.decoder.layers.9.mlp.linear_fc2.bias
+	vision_model.decoder.layers.13.mlp.linear_fc1.weight
 	vision_model.decoder.layers.6.self_attention.linear_qkv.weight
-	vision_model.decoder.layers.3.mlp.linear_fc2.bias
-	vision_model.decoder.layers.0.mlp.linear_fc1.layer_norm_bias
-	vision_model.decoder.layers.23.mlp.linear_fc1.layer_norm_bias
-	vision_model.decoder.layers.22.mlp.linear_fc2.weight
+	vision_model.decoder.layers.3.self_attention.linear_qkv.weight
+	vision_model.decoder.layers.16.mlp.linear_fc2.weight
 	vision_model.decoder.layers.20.mlp.linear_fc1.layer_norm_bias
 	vision_model.decoder.layers.19.mlp.linear_fc2.weight
 	vision_model.decoder.layers.17.self_attention.linear_proj.weight
-	vision_model.decoder.layers.14.self_attention.linear_proj.weight
-	vision_model.decoder.layers.12.self_attention.linear_qkv.bias
+	vision_model.decoder.layers.14.self_attention.linear_proj.bias
+	vision_model.decoder.layers.12.self_attention.linear_qkv.layer_norm_bias
+	vision_model.decoder.layers.9.mlp.linear_fc1.bias
+	vision_model.decoder.layers.9.mlp.linear_fc1.weight
 	vision_model.decoder.layers.6.mlp.linear_fc1.weight
-	vision_model.decoder.layers.1.mlp.linear_fc2.bias
+	vision_model.decoder.layers.3.mlp.linear_fc1.weight
 	vision_model.decoder.layers.18.self_attention.linear_qkv.weight
-	vision_model.decoder.layers.15.self_attention.linear_qkv.weight
-	vision_model.decoder.layers.12.mlp.linear_fc1.bias
+	vision_model.decoder.layers.15.self_attention.linear_qkv.bias
+	vision_model.decoder.layers.12.mlp.linear_fc1.layer_norm_bias
+	vision_model.decoder.layers.11.mlp.linear_fc2.weight
 	vision_model.decoder.layers.7.self_attention.linear_proj.bias
 	vision_model.decoder.layers.5.self_attention.linear_qkv.layer_norm_bias
-	vision_model.decoder.layers.3.self_attention.linear_qkv.bias
 	vision_model.decoder.layers.2.self_attention.linear_qkv.layer_norm_bias
-	vision_model.decoder.layers.0.self_attention.linear_qkv.layer_norm_weight
+	vision_model.decoder.layers.0.mlp.linear_fc1.layer_norm_weight
+	vision_model.ln_pre.weight
 	vision_model.decoder.layers.21.mlp.linear_fc2.bias
 	vision_model.decoder.layers.18.mlp.linear_fc1.weight
-	vision_model.decoder.layers.15.mlp.linear_fc1.weight
-	vision_model.decoder.layers.8.self_attention.linear_qkv.weight
+	vision_model.decoder.layers.15.mlp.linear_fc1.bias
+	vision_model.decoder.layers.11.self_attention.linear_proj.weight
+	vision_model.decoder.layers.8.self_attention.linear_qkv.bias
 	vision_model.decoder.layers.5.mlp.linear_fc1.layer_norm_bias
 	vision_model.decoder.layers.4.mlp.linear_fc2.weight
 	vision_model.decoder.layers.2.mlp.linear_fc1.layer_norm_bias
 	vision_model.decoder.layers.1.mlp.linear_fc2.weight
+	vision_model.ln_pre.bias
 	vision_model.decoder.layers.19.self_attention.linear_proj.bias
 	vision_model.decoder.layers.17.self_attention.linear_qkv.layer_norm_bias
 	vision_model.decoder.layers.16.self_attention.linear_proj.bias
-	vision_model.decoder.layers.14.self_attention.linear_qkv.layer_norm_bias
-	vision_model.decoder.layers.11.mlp.linear_fc1.layer_norm_weight
-	vision_model.decoder.layers.11.self_attention.linear_qkv.bias
-	vision_model.decoder.layers.8.mlp.linear_fc1.weight
-	vision_model.decoder.layers.0.mlp.linear_fc1.bias
-	vision_model.decoder.layers.23.self_attention.linear_qkv.bias
-	vision_model.decoder.layers.22.self_attention.linear_proj.weight
+	vision_model.decoder.layers.14.self_attention.linear_qkv.layer_norm_weight
+	vision_model.decoder.layers.13.mlp.linear_fc2.bias
+	vision_model.decoder.layers.8.mlp.linear_fc1.bias
 	vision_model.decoder.layers.20.self_attention.linear_qkv.bias
 	vision_model.decoder.layers.17.mlp.linear_fc1.layer_norm_bias
-	vision_model.decoder.layers.16.mlp.linear_fc2.weight
-	vision_model.decoder.layers.14.mlp.linear_fc1.layer_norm_bias
-	vision_model.decoder.layers.13.mlp.linear_fc2.weight
-	vision_model.decoder.layers.10.self_attention.linear_proj.weight
-	vision_model.decoder.layers.9.self_attention.linear_proj.bias
+	vision_model.decoder.layers.14.mlp.linear_fc1.layer_norm_weight
+	vision_model.decoder.layers.11.self_attention.linear_qkv.bias
+	vision_model.decoder.layers.10.mlp.linear_fc1.weight
 	vision_model.decoder.layers.7.self_attention.linear_qkv.layer_norm_weight
 	vision_model.decoder.layers.6.mlp.linear_fc2.bias
-	vision_model.decoder.layers.23.mlp.linear_fc1.bias
+	vision_model.decoder.layers.3.mlp.linear_fc2.bias
+	vision_model.decoder.layers.4.mlp.linear_fc1.weight
 	vision_model.decoder.layers.20.mlp.linear_fc1.bias
-	vision_model.decoder.layers.12.self_attention.linear_qkv.weight
-	vision_model.decoder.layers.10.self_attention.linear_qkv.weight
-	vision_model.decoder.layers.9.mlp.linear_fc2.weight
+	vision_model.decoder.layers.14.self_attention.linear_proj.weight
+	vision_model.decoder.layers.12.self_attention.linear_qkv.bias
 	vision_model.decoder.layers.7.mlp.linear_fc1.layer_norm_weight
 	vision_model.decoder.layers.4.self_attention.linear_proj.bias
-	vision_model.decoder.layers.0.self_attention.linear_proj.bias
-	vision_model.conv1.weight
-	vision_projection.encoder.linear_fc2.weight
-	vision_model.decoder.layers.22.self_attention.linear_qkv.layer_norm_weight
 	vision_model.decoder.layers.19.self_attention.linear_qkv.layer_norm_weight
 	vision_model.decoder.layers.18.mlp.linear_fc2.bias
 	vision_model.decoder.layers.16.self_attention.linear_qkv.layer_norm_weight
-	vision_model.decoder.layers.15.mlp.linear_fc2.bias
-	vision_model.decoder.layers.12.mlp.linear_fc1.weight
+	vision_model.decoder.layers.15.self_attention.linear_qkv.weight
+	vision_model.decoder.layers.12.mlp.linear_fc1.bias
 	vision_model.decoder.layers.7.self_attention.linear_proj.weight
 	vision_model.decoder.layers.5.self_attention.linear_qkv.bias
 	vision_model.decoder.layers.2.self_attention.linear_qkv.bias
-	vision_model.decoder.layers.22.mlp.linear_fc1.layer_norm_weight
+	vision_model.decoder.layers.1.self_attention.linear_qkv.weight
 	vision_model.decoder.layers.19.mlp.linear_fc1.layer_norm_weight
-	vision_model.decoder.layers.13.self_attention.linear_proj.bias
-	vision_model.decoder.layers.8.mlp.linear_fc2.bias
+	vision_model.decoder.layers.16.mlp.linear_fc1.layer_norm_weight
+	vision_model.decoder.layers.15.mlp.linear_fc1.weight
+	vision_model.decoder.layers.10.mlp.linear_fc1.layer_norm_bias
+	vision_model.decoder.layers.8.self_attention.linear_qkv.weight
 	vision_model.decoder.layers.5.mlp.linear_fc1.bias
 	vision_model.decoder.layers.2.mlp.linear_fc1.bias
-	vision_model.ln_pre.weight
-	vision_model.position_embeddings.weight
+	vision_model.decoder.layers.0.self_attention.linear_qkv.weight
 	vision_model.decoder.layers.21.mlp.linear_fc2.weight
 	vision_model.decoder.layers.19.self_attention.linear_proj.weight
 	vision_model.decoder.layers.17.self_attention.linear_qkv.bias
 	vision_model.decoder.layers.16.self_attention.linear_proj.weight
-	vision_model.decoder.layers.14.self_attention.linear_qkv.bias
-	vision_model.decoder.layers.11.mlp.linear_fc1.layer_norm_bias
+	vision_model.decoder.layers.14.self_attention.linear_qkv.layer_norm_bias
+	vision_model.decoder.layers.11.mlp.linear_fc1.layer_norm_weight
+	vision_model.decoder.layers.8.mlp.linear_fc1.weight
 	vision_model.decoder.layers.4.self_attention.linear_qkv.layer_norm_weight
+	vision_model.decoder.layers.1.mlp.linear_fc2.bias
 	vision_model.decoder.layers.1.self_attention.linear_qkv.layer_norm_weight
-	vision_model.decoder.layers.23.self_attention.linear_qkv.weight
-	vision_model.decoder.layers.22.self_attention.linear_qkv.weight
 	vision_model.decoder.layers.20.self_attention.linear_qkv.weight
 	vision_model.decoder.layers.17.mlp.linear_fc1.bias
-	vision_model.decoder.layers.14.mlp.linear_fc1.bias
-	vision_model.decoder.layers.11.self_attention.linear_proj.bias
-	vision_model.decoder.layers.9.self_attention.linear_proj.weight
+	vision_model.decoder.layers.14.mlp.linear_fc1.layer_norm_bias
+	vision_model.decoder.layers.13.mlp.linear_fc2.weight
+	vision_model.decoder.layers.9.self_attention.linear_proj.bias
 	vision_model.decoder.layers.7.self_attention.linear_qkv.layer_norm_bias
 	vision_model.decoder.layers.4.mlp.linear_fc1.layer_norm_weight
 	vision_model.decoder.layers.1.mlp.linear_fc1.layer_norm_weight
-	vision_model.decoder.layers.2.mlp.linear_fc2.bias
-	vision_model.decoder.layers.1.self_attention.linear_proj.weight
-	vision_model.decoder.layers.23.mlp.linear_fc1.weight
 	vision_model.decoder.layers.20.mlp.linear_fc1.weight
-	vision_model.decoder.layers.13.self_attention.linear_qkv.layer_norm_weight
-	vision_model.decoder.layers.12.mlp.linear_fc2.bias
+	vision_model.decoder.layers.12.self_attention.linear_qkv.weight
+	vision_model.decoder.layers.11.self_attention.linear_qkv.layer_norm_weight
+	vision_model.decoder.layers.9.mlp.linear_fc2.weight
 	vision_model.decoder.layers.7.mlp.linear_fc1.layer_norm_bias
 	vision_model.decoder.layers.6.mlp.linear_fc2.weight
 	vision_model.decoder.layers.4.self_attention.linear_proj.weight
-	vision_model.decoder.layers.22.self_attention.linear_qkv.layer_norm_bias
+	vision_model.decoder.layers.3.mlp.linear_fc2.weight
+	vision_model.decoder.layers.0.mlp.linear_fc1.bias
+	vision_model.decoder.layers.15.mlp.linear_fc2.bias
 	vision_model.decoder.layers.21.self_attention.linear_proj.bias
 	vision_model.decoder.layers.19.self_attention.linear_qkv.layer_norm_bias
-	vision_model.decoder.layers.16.mlp.linear_fc1.layer_norm_weight
 	vision_model.decoder.layers.16.self_attention.linear_qkv.layer_norm_bias
-	vision_model.decoder.layers.13.mlp.linear_fc1.layer_norm_weight
-	vision_model.decoder.layers.11.self_attention.linear_qkv.layer_norm_weight
-	vision_model.decoder.layers.9.self_attention.linear_qkv.layer_norm_weight
+	vision_model.decoder.layers.12.mlp.linear_fc1.weight
+	vision_model.decoder.layers.10.self_attention.linear_proj.weight
 	vision_model.decoder.layers.5.self_attention.linear_qkv.weight
 	vision_model.decoder.layers.2.self_attention.linear_qkv.weight
-	vision_model.decoder.layers.0.self_attention.linear_qkv.bias
-	vision_model.decoder.layers.18.mlp.linear_fc2.weight
-	vision_model.decoder.layers.22.mlp.linear_fc1.layer_norm_bias
+	vision_model.decoder.layers.1.self_attention.linear_qkv.layer_norm_bias
+	vision_model.decoder.layers.0.self_attention.linear_qkv.layer_norm_weight
 	vision_model.decoder.layers.19.mlp.linear_fc1.layer_norm_bias
-	vision_model.decoder.layers.15.mlp.linear_fc2.weight
-	vision_model.decoder.layers.13.self_attention.linear_proj.weight
-	vision_model.decoder.layers.9.mlp.linear_fc1.layer_norm_weight
+	vision_model.decoder.layers.18.mlp.linear_fc2.weight
+	vision_model.decoder.layers.16.mlp.linear_fc1.layer_norm_bias
+	vision_model.decoder.layers.13.self_attention.linear_proj.bias
+	vision_model.decoder.layers.10.self_attention.linear_qkv.layer_norm_bias
+	vision_model.decoder.layers.9.self_attention.linear_qkv.layer_norm_weight
+	vision_model.decoder.layers.8.mlp.linear_fc2.bias
 	vision_model.decoder.layers.5.mlp.linear_fc1.weight
 	vision_model.decoder.layers.2.mlp.linear_fc1.weight
 	vision_model.decoder.layers.17.self_attention.linear_qkv.weight
-	vision_model.decoder.layers.14.self_attention.linear_qkv.weight
-	vision_model.decoder.layers.11.mlp.linear_fc2.bias
-	vision_model.decoder.layers.10.self_attention.linear_proj.bias
-	vision_model.decoder.layers.8.mlp.linear_fc2.weight
+	vision_model.decoder.layers.14.self_attention.linear_qkv.bias
+	vision_model.decoder.layers.11.mlp.linear_fc1.layer_norm_bias
 	vision_model.decoder.layers.6.self_attention.linear_proj.bias
 	vision_model.decoder.layers.4.self_attention.linear_qkv.layer_norm_bias
 	vision_model.decoder.layers.3.self_attention.linear_proj.bias
-	vision_model.decoder.layers.1.self_attention.linear_qkv.layer_norm_bias
 	vision_model.decoder.layers.1.self_attention.linear_qkv.bias
-	vision_model.decoder.layers.23.mlp.linear_fc2.bias
+	vision_model.conv1.weight
 	vision_model.decoder.layers.21.self_attention.linear_qkv.layer_norm_weight
 	vision_model.decoder.layers.20.mlp.linear_fc2.bias
 	vision_model.decoder.layers.17.mlp.linear_fc1.weight
-	vision_model.decoder.layers.14.mlp.linear_fc1.weight
-	vision_model.decoder.layers.11.self_attention.linear_proj.weight
-	vision_model.decoder.layers.9.self_attention.linear_qkv.weight
+	vision_model.decoder.layers.14.mlp.linear_fc1.bias
+	vision_model.decoder.layers.11.self_attention.linear_proj.bias
+	vision_model.decoder.layers.10.mlp.linear_fc1.layer_norm_weight
+	vision_model.decoder.layers.9.self_attention.linear_proj.weight
 	vision_model.decoder.layers.7.self_attention.linear_qkv.bias
 	vision_model.decoder.layers.4.mlp.linear_fc1.layer_norm_bias
-	vision_model.decoder.layers.3.mlp.linear_fc2.weight
-	vision_model.decoder.layers.3.self_attention.linear_qkv.layer_norm_weight
+	vision_model.decoder.layers.1.mlp.linear_fc1.layer_norm_bias
 	vision_model.decoder.layers.21.mlp.linear_fc1.layer_norm_weight
 	vision_model.decoder.layers.18.self_attention.linear_proj.bias
-	vision_model.decoder.layers.15.self_attention.linear_proj.bias
-	vision_model.decoder.layers.13.self_attention.linear_qkv.layer_norm_bias
-	vision_model.decoder.layers.11.mlp.linear_fc1.weight
+	vision_model.decoder.layers.13.self_attention.linear_qkv.layer_norm_weight
+	vision_model.decoder.layers.12.mlp.linear_fc2.bias
 	vision_model.decoder.layers.7.mlp.linear_fc1.bias
-	vision_model.decoder.layers.0.self_attention.linear_qkv.layer_norm_bias
+	vision_model.decoder.layers.0.mlp.linear_fc2.bias
 	vision_model.decoder.layers.21.self_attention.linear_proj.weight
 	vision_model.decoder.layers.19.self_attention.linear_qkv.bias
-	vision_model.decoder.layers.16.mlp.linear_fc1.layer_norm_bias
 	vision_model.decoder.layers.16.self_attention.linear_qkv.bias
-	vision_model.decoder.layers.13.mlp.linear_fc1.layer_norm_bias
-	vision_model.decoder.layers.12.mlp.linear_fc2.weight
-	vision_model.decoder.layers.10.mlp.linear_fc1.weight
-	vision_model.decoder.layers.9.self_attention.linear_qkv.layer_norm_bias
-	vision_model.decoder.layers.8.self_attention.linear_proj.bias
+	vision_model.decoder.layers.13.mlp.linear_fc1.layer_norm_weight
 	vision_model.decoder.layers.6.self_attention.linear_qkv.layer_norm_weight
-	vision_model.decoder.layers.22.mlp.linear_fc1.bias
+	vision_model.decoder.layers.5.mlp.linear_fc2.bias
+	vision_model.decoder.layers.3.self_attention.linear_qkv.layer_norm_weight
+	vision_model.decoder.layers.2.mlp.linear_fc2.bias
 	vision_model.decoder.layers.19.mlp.linear_fc1.bias
-	vision_model.decoder.layers.9.mlp.linear_fc1.layer_norm_bias
+	vision_model.decoder.layers.16.mlp.linear_fc1.bias
+	vision_model.decoder.layers.15.mlp.linear_fc2.weight
+	vision_model.decoder.layers.13.self_attention.linear_proj.weight
+	vision_model.decoder.layers.11.mlp.linear_fc1.weight
+	vision_model.decoder.layers.9.mlp.linear_fc1.layer_norm_weight
+	vision_model.decoder.layers.9.self_attention.linear_qkv.layer_norm_bias
 	vision_model.decoder.layers.6.mlp.linear_fc1.layer_norm_weight
-	vision_model.class_token
-	vision_projection.encoder.linear_fc1.weight
+	vision_model.decoder.layers.3.mlp.linear_fc1.layer_norm_weight
 	vision_model.decoder.layers.18.self_attention.linear_qkv.layer_norm_weight
 	vision_model.decoder.layers.17.mlp.linear_fc2.bias
-	vision_model.decoder.layers.15.self_attention.linear_qkv.layer_norm_weight
-	vision_model.decoder.layers.14.mlp.linear_fc2.bias
-	vision_model.decoder.layers.11.mlp.linear_fc1.bias
-	vision_model.decoder.layers.11.self_attention.linear_qkv.weight
-	vision_model.decoder.layers.10.mlp.linear_fc2.weight
-	vision_model.decoder.layers.10.mlp.linear_fc1.layer_norm_weight
+	vision_model.decoder.layers.14.self_attention.linear_qkv.weight
+	vision_model.decoder.layers.11.mlp.linear_fc2.bias
+	vision_model.decoder.layers.8.mlp.linear_fc2.weight
 	vision_model.decoder.layers.6.self_attention.linear_proj.weight
+	vision_model.decoder.layers.4.self_attention.linear_qkv.bias
+	vision_model.decoder.layers.3.self_attention.linear_proj.weight
+	vision_model.decoder.layers.0.self_attention.linear_qkv.bias
 	vision_model.decoder.layers.21.self_attention.linear_qkv.layer_norm_bias
 	vision_model.decoder.layers.18.mlp.linear_fc1.layer_norm_weight
-	vision_model.decoder.layers.15.mlp.linear_fc1.layer_norm_weight
-	vision_model.decoder.layers.12.self_attention.linear_proj.bias
-	vision_model.decoder.layers.8.self_attention.linear_qkv.layer_norm_weight
+	vision_model.decoder.layers.14.mlp.linear_fc1.weight
+	vision_model.decoder.layers.10.mlp.linear_fc2.weight
 	vision_model.decoder.layers.7.self_attention.linear_qkv.weight
 	vision_model.decoder.layers.4.mlp.linear_fc1.bias
-	vision_model.decoder.layers.3.mlp.linear_fc1.weight
 	vision_model.decoder.layers.1.mlp.linear_fc1.bias
-	vision_model.decoder.layers.1.self_attention.linear_proj.bias
-	vision_model.decoder.layers.0.self_attention.linear_proj.weight
-	vision_model.decoder.layers.23.mlp.linear_fc2.weight
+	vision_model.decoder.layers.0.mlp.linear_fc1.layer_norm_bias
+	vision_model.decoder.layers.1.mlp.linear_fc1.weight
 	vision_model.decoder.layers.21.mlp.linear_fc1.layer_norm_bias
 	vision_model.decoder.layers.20.mlp.linear_fc2.weight
 	vision_model.decoder.layers.18.self_attention.linear_proj.weight
-	vision_model.decoder.layers.15.self_attention.linear_proj.weight
-	vision_model.decoder.layers.13.self_attention.linear_qkv.bias
-	vision_model.decoder.layers.8.mlp.linear_fc1.layer_norm_weight
+	vision_model.decoder.layers.15.self_attention.linear_proj.bias
+	vision_model.decoder.layers.13.self_attention.linear_qkv.layer_norm_bias
 	vision_model.decoder.layers.7.mlp.linear_fc1.weight
-	vision_model.decoder.layers.22.self_attention.linear_qkv.bias
 	vision_model.decoder.layers.19.self_attention.linear_qkv.weight
-	vision_model.decoder.layers.16.mlp.linear_fc2.bias
 	vision_model.decoder.layers.16.self_attention.linear_qkv.weight
-	vision_model.decoder.layers.13.mlp.linear_fc1.bias
-	vision_model.decoder.layers.8.self_attention.linear_proj.weight
+	vision_model.decoder.layers.13.mlp.linear_fc1.layer_norm_bias
+	vision_model.decoder.layers.12.mlp.linear_fc2.weight
+	vision_model.decoder.layers.11.self_attention.linear_qkv.layer_norm_bias
+	vision_model.decoder.layers.8.self_attention.linear_proj.bias
 	vision_model.decoder.layers.6.self_attention.linear_qkv.layer_norm_bias
-	vision_model.decoder.layers.3.mlp.linear_fc1.bias
-	vision_model.decoder.layers.3.mlp.linear_fc1.layer_norm_weight
 	vision_model.decoder.layers.3.self_attention.linear_qkv.layer_norm_bias
-	vision_model.decoder.layers.22.mlp.linear_fc1.weight
 	vision_model.decoder.layers.19.mlp.linear_fc1.weight
-	vision_model.decoder.layers.12.self_attention.linear_qkv.layer_norm_weight
-	vision_model.decoder.layers.9.mlp.linear_fc1.bias
+	vision_model.decoder.layers.16.mlp.linear_fc1.weight
+	vision_model.decoder.layers.10.self_attention.linear_qkv.bias
+	vision_model.decoder.layers.9.mlp.linear_fc1.layer_norm_bias
+	vision_model.decoder.layers.9.self_attention.linear_qkv.bias
 	vision_model.decoder.layers.6.mlp.linear_fc1.layer_norm_bias
 	vision_model.decoder.layers.5.mlp.linear_fc2.weight
+	vision_model.decoder.layers.3.mlp.linear_fc1.layer_norm_bias
 	vision_model.decoder.layers.2.mlp.linear_fc2.weight
-	vision_model.decoder.layers.0.self_attention.linear_qkv.weight
-	vision_model.decoder.layers.0.mlp.linear_fc1.weight
-	vision_model.decoder.layers.23.self_attention.linear_proj.bias
+	vision_model.decoder.layers.1.self_attention.linear_proj.bias
 	vision_model.decoder.layers.20.self_attention.linear_proj.bias
 	vision_model.decoder.layers.18.self_attention.linear_qkv.layer_norm_bias
+	vision_model.decoder.layers.15.self_attention.linear_qkv.layer_norm_weight
+	vision_model.decoder.layers.14.mlp.linear_fc2.bias
+	vision_model.decoder.layers.11.mlp.linear_fc1.bias
+	vision_model.decoder.layers.4.self_attention.linear_qkv.weight
+	vision_model.decoder.layers.0.mlp.linear_fc1.weight
+	vision_model.decoder.layers.0.self_attention.linear_qkv.layer_norm_bias
+	vision_model.decoder.layers.0.self_attention.linear_proj.bias
+	vision_model.position_embeddings.weight
+	vision_model.decoder.layers.21.self_attention.linear_qkv.bias
+	vision_model.decoder.layers.18.mlp.linear_fc1.layer_norm_bias
+	vision_model.decoder.layers.17.mlp.linear_fc2.weight
+	vision_model.decoder.layers.15.mlp.linear_fc1.layer_norm_weight
+	vision_model.decoder.layers.12.self_attention.linear_proj.bias
+	vision_model.decoder.layers.10.mlp.linear_fc1.bias
+	vision_model.decoder.layers.10.self_attention.linear_qkv.weight
+	vision_model.decoder.layers.10.self_attention.linear_proj.bias
+	vision_model.decoder.layers.8.self_attention.linear_qkv.layer_norm_weight
+	vision_model.decoder.layers.7.mlp.linear_fc2.bias
+	vision_model.decoder.layers.21.mlp.linear_fc1.bias
+	vision_model.decoder.layers.15.self_attention.linear_proj.weight
+	vision_model.decoder.layers.13.self_attention.linear_qkv.bias
+	vision_model.decoder.layers.11.self_attention.linear_qkv.weight
+	vision_model.decoder.layers.10.self_attention.linear_qkv.layer_norm_weight
+	vision_model.decoder.layers.8.mlp.linear_fc1.layer_norm_weight
+	vision_model.decoder.layers.5.self_attention.linear_proj.bias
+	vision_model.decoder.layers.2.self_attention.linear_proj.bias
+	vision_model.decoder.layers.20.self_attention.linear_qkv.layer_norm_weight
+	vision_model.decoder.layers.19.mlp.linear_fc2.bias
+	vision_model.decoder.layers.16.mlp.linear_fc2.bias
+	vision_model.decoder.layers.13.mlp.linear_fc1.bias
+	vision_model.decoder.layers.10.mlp.linear_fc2.bias
+	vision_model.decoder.layers.8.self_attention.linear_proj.weight
+	vision_model.decoder.layers.6.self_attention.linear_qkv.bias
+	vision_model.decoder.layers.3.self_attention.linear_qkv.bias
+	vision_model.decoder.layers.20.mlp.linear_fc1.layer_norm_weight
+	vision_model.decoder.layers.17.self_attention.linear_proj.bias
+	vision_model.decoder.layers.12.self_attention.linear_qkv.layer_norm_weight
+	vision_model.decoder.layers.9.mlp.linear_fc2.bias
+	vision_model.decoder.layers.9.self_attention.linear_qkv.weight
+	vision_model.decoder.layers.6.mlp.linear_fc1.bias
+	vision_model.decoder.layers.3.mlp.linear_fc1.bias
+	vision_model.decoder.layers.0.self_attention.linear_proj.weight
+	vision_model.decoder.layers.20.self_attention.linear_proj.weight
+	vision_model.decoder.layers.18.self_attention.linear_qkv.bias
 	vision_model.decoder.layers.15.self_attention.linear_qkv.layer_norm_bias
 	vision_model.decoder.layers.12.mlp.linear_fc1.layer_norm_weight
-	vision_model.decoder.layers.4.self_attention.linear_qkv.weight
-	vision_model.decoder.layers.1.self_attention.linear_qkv.weight
-	vision_model.decoder.layers.3.self_attention.linear_proj.weight
-INFO:megatron.core.optimizer:Setting up optimizer with config OptimizerConfig(optimizer='adam', lr=0.00015, min_lr=1e-05, decoupled_lr=None, decoupled_min_lr=None, weight_decay=0.01, fp16=False, bf16=False, params_dtype=torch.float32, loss_scale=None, initial_loss_scale=4294967296, min_loss_scale=1.0, loss_scale_window=1000, hysteresis=2, adam_beta1=0.9, adam_beta2=0.95, adam_eps=1e-08, sgd_momentum=0.9, use_distributed_optimizer=False, overlap_grad_reduce=False, overlap_param_gather=False, overlap_param_gather_with_optimizer_step=False, clip_grad=0.0, log_num_zeros_in_grad=False, barrier_with_L1_time=True, timers=<megatron.core.timers.Timers object at 0x7fa3f18b7e80>, config_logger_dir='')
+	vision_model.decoder.layers.5.self_attention.linear_qkv.layer_norm_weight
+	vision_model.decoder.layers.4.mlp.linear_fc2.bias
+	vision_model.decoder.layers.2.self_attention.linear_qkv.layer_norm_weight
+	vision_model.class_token
+	vision_model.decoder.layers.21.self_attention.linear_qkv.weight
+	vision_model.decoder.layers.18.mlp.linear_fc1.bias
+	vision_model.decoder.layers.15.mlp.linear_fc1.layer_norm_bias
+	vision_model.decoder.layers.14.mlp.linear_fc2.weight
+	vision_model.decoder.layers.12.self_attention.linear_proj.weight
+	vision_model.decoder.layers.8.self_attention.linear_qkv.layer_norm_bias
+	vision_model.decoder.layers.5.mlp.linear_fc1.layer_norm_weight
+	vision_model.decoder.layers.2.mlp.linear_fc1.layer_norm_weight
+	vision_model.decoder.layers.0.mlp.linear_fc2.weight
+INFO:megatron.core.optimizer:Setting up optimizer with config OptimizerConfig(optimizer='adam', lr=0.00015, min_lr=1e-05, decoupled_lr=None, decoupled_min_lr=None, weight_decay=0.01, fp16=False, bf16=False, params_dtype=torch.float32, loss_scale=None, initial_loss_scale=4294967296, min_loss_scale=1.0, loss_scale_window=1000, hysteresis=2, adam_beta1=0.9, adam_beta2=0.95, adam_eps=1e-08, sgd_momentum=0.9, use_distributed_optimizer=False, overlap_grad_reduce=False, overlap_param_gather=False, overlap_param_gather_with_optimizer_step=False, clip_grad=0.0, log_num_zeros_in_grad=False, barrier_with_L1_time=True, timers=<megatron.core.timers.Timers object at 0x7fa1c40d3df0>, config_logger_dir='')
 INFO:megatron.core.optimizer_param_scheduler:> learning rate decay style: cosine
- > number of parameters on (tensor, pipeline) model parallel rank (2, 0): 95234048
- > number of parameters on (tensor, pipeline) model parallel rank (3, 0): 95234048
-[after model, optimizer, and learning rate scheduler are built] datetime: 2024-11-25 23:07:56 
+[after model, optimizer, and learning rate scheduler are built] datetime: 2024-11-27 00:46:40 
 [DistributedDataParallel(
   (module): LLaVAModel(
     (vision_model): CLIPViTModel(
@@ -740,7 +714,7 @@ INFO:megatron.core.optimizer_param_scheduler:> learning rate decay style: cosine
       (ln_pre): LayerNorm()
       (decoder): TransformerBlock(
         (layers): ModuleList(
-          (0-23): 24 x TransformerLayer(
+          (0-21): 22 x TransformerLayer(
             (input_layernorm): IdentityOp()
             (self_attention): SelfAttention(
               (core_attention): TEDotProductAttention(
@@ -768,15 +742,8 @@ INFO:megatron.core.optimizer_param_scheduler:> learning rate decay style: cosine
         )
       )
     )
-    (vision_projection): MultimodalProjector(
-      (encoder): MLP(
-        (linear_fc1): TEColumnParallelLinear()
-        (linear_fc2): TERowParallelLinear()
-      )
-    )
   )
-)]
-[DistributedDataParallel(
+)][DistributedDataParallel(
   (module): LLaVAModel(
     (vision_model): CLIPViTModel(
       (conv1): Conv2d(3, 1024, kernel_size=(14, 14), stride=(14, 14), bias=False)
@@ -784,7 +751,7 @@ INFO:megatron.core.optimizer_param_scheduler:> learning rate decay style: cosine
       (ln_pre): LayerNorm()
       (decoder): TransformerBlock(
         (layers): ModuleList(
-          (0-23): 24 x TransformerLayer(
+          (0-21): 22 x TransformerLayer(
             (input_layernorm): IdentityOp()
             (self_attention): SelfAttention(
               (core_attention): TEDotProductAttention(
@@ -812,16 +779,9 @@ INFO:megatron.core.optimizer_param_scheduler:> learning rate decay style: cosine
         )
       )
     )
-    (vision_projection): MultimodalProjector(
-      (encoder): MLP(
-        (linear_fc1): TEColumnParallelLinear()
-        (linear_fc2): TERowParallelLinear()
-      )
-    )
   )
 )]
-pretrain configTransformerConfig(tensor_model_parallel_size=4, pipeline_model_parallel_size=5, virtual_pipeline_model_parallel_size=None, sequence_parallel=False, context_parallel_size=1, expert_model_parallel_size=1, moe_extended_tp=False, perform_initialization=True, use_cpu_initialization=None, fp16=False, bf16=False, params_dtype=torch.float32, timers=None, finalize_model_grads_func=None, grad_scale_func=None, no_sync_func=None, grad_sync_func=None, param_sync_func=None, deterministic_mode=False, enable_autocast=False, autocast_dtype=torch.float32, num_microbatches_with_partial_activation_checkpoints=None, gradient_accumulation_fusion=True, async_tensor_model_parallel_allreduce=True, use_te_rng_tracker=False, tp_comm_overlap=False, tp_comm_bulk_wgrad=True, tp_comm_bulk_dgrad=True, tp_comm_overlap_ag=True, tp_comm_overlap_rs=True, tp_comm_overlap_rs_dgrad=False, tp_comm_split_ag=True, tp_comm_atomic_ag=False, tp_comm_split_rs=True, tp_comm_atomic_rs=False, cross_entropy_loss_fusion=False, tp_comm_overlap_disable_qkv=False, tp_comm_overlap_disable_fc1=False, pipeline_dtype=torch.float32, variable_seq_lengths=False, overlap_p2p_comm=False, batch_p2p_comm=True, batch_p2p_sync=True, use_ring_exchange_p2p=False, deallocate_pipeline_outputs=True, defer_embedding_wgrad_compute=False, wgrad_deferral_limit=0, pipeline_model_parallel_split_rank=None, cpu_offloading=False, cpu_offloading_num_layers=0, _cpu_offloading_context=None, cpu_offloading_activations=True, cpu_offloading_weights=True, barrier_with_L1_time=True, num_layers=32, first_pipeline_num_layers=None, last_pipeline_num_layers=None, hidden_size=4096, num_attention_heads=32, num_query_groups=8, ffn_hidden_size=14336, kv_channels=128, hidden_dropout=0.0, attention_dropout=0.0, fp32_residual_connection=False, apply_residual_connection_post_layernorm=False, layernorm_epsilon=1e-05, layernorm_zero_centered_gamma=False, add_bias_linear=False, add_qkv_bias=False, gated_linear_unit=True, activation_func=<function silu at 0x7fa45db195a0>, activation_func_fp8_input_store=False, num_moe_experts=None, rotary_interleaved=False, window_size=None, normalization='RMSNorm', qk_layernorm=False, test_mode=False, calculate_per_token_loss=True, init_method=<function init_method_normal.<locals>.init_ at 0x7fa3801b49d0>, output_layer_init_method=<function scaled_init_method_normal.<locals>.init_ at 0x7fa3801b51b0>, init_method_std=0.014, apply_query_key_layer_scaling=False, attention_softmax_in_fp32=True, bias_activation_fusion=False, masked_softmax_fusion=False, persist_layer_norm=True, memory_efficient_layer_norm=False, bias_dropout_fusion=False, apply_rope_fusion=False, recompute_granularity=None, recompute_method=None, recompute_num_layers=None, distribute_saved_activations=False, fp8=None, fp8_margin=0, fp8_interval=1, fp8_amax_history_len=1, fp8_amax_compute_algo='most_recent', fp8_wgrad=True, fp8_dot_product_attention=False, fp8_multi_head_attention=False, tp_only_amax_red=False, moe_router_load_balancing_type='aux_loss', moe_router_topk=2, moe_router_pre_softmax=False, moe_grouped_gemm=False, moe_aux_loss_coeff=0.0, moe_z_loss_coeff=None, moe_input_jitter_eps=None, moe_token_dropping=False, moe_token_dispatcher_type='allgather', moe_per_layer_logging=False, moe_expert_capacity_factor=None, moe_pad_expert_input_to_capacity=False, moe_token_drop_policy='probs', moe_layer_recompute=False, clone_scatter_output_in_embedding=True, disable_parameter_transpose_cache=False, enable_cuda_graph=False, external_cuda_graph=False, config_logger_dir='')
-pretrain configTransformerConfig(tensor_model_parallel_size=4, pipeline_model_parallel_size=5, virtual_pipeline_model_parallel_size=None, sequence_parallel=False, context_parallel_size=1, expert_model_parallel_size=1, moe_extended_tp=False, perform_initialization=True, use_cpu_initialization=None, fp16=False, bf16=False, params_dtype=torch.float32, timers=None, finalize_model_grads_func=None, grad_scale_func=None, no_sync_func=None, grad_sync_func=None, param_sync_func=None, deterministic_mode=False, enable_autocast=False, autocast_dtype=torch.float32, num_microbatches_with_partial_activation_checkpoints=None, gradient_accumulation_fusion=True, async_tensor_model_parallel_allreduce=True, use_te_rng_tracker=False, tp_comm_overlap=False, tp_comm_bulk_wgrad=True, tp_comm_bulk_dgrad=True, tp_comm_overlap_ag=True, tp_comm_overlap_rs=True, tp_comm_overlap_rs_dgrad=False, tp_comm_split_ag=True, tp_comm_atomic_ag=False, tp_comm_split_rs=True, tp_comm_atomic_rs=False, cross_entropy_loss_fusion=False, tp_comm_overlap_disable_qkv=False, tp_comm_overlap_disable_fc1=False, pipeline_dtype=torch.float32, variable_seq_lengths=False, overlap_p2p_comm=False, batch_p2p_comm=True, batch_p2p_sync=True, use_ring_exchange_p2p=False, deallocate_pipeline_outputs=True, defer_embedding_wgrad_compute=False, wgrad_deferral_limit=0, pipeline_model_parallel_split_rank=None, cpu_offloading=False, cpu_offloading_num_layers=0, _cpu_offloading_context=None, cpu_offloading_activations=True, cpu_offloading_weights=True, barrier_with_L1_time=True, num_layers=32, first_pipeline_num_layers=None, last_pipeline_num_layers=None, hidden_size=4096, num_attention_heads=32, num_query_groups=8, ffn_hidden_size=14336, kv_channels=128, hidden_dropout=0.0, attention_dropout=0.0, fp32_residual_connection=False, apply_residual_connection_post_layernorm=False, layernorm_epsilon=1e-05, layernorm_zero_centered_gamma=False, add_bias_linear=False, add_qkv_bias=False, gated_linear_unit=True, activation_func=<function silu at 0x7f2e63c355a0>, activation_func_fp8_input_store=False, num_moe_experts=None, rotary_interleaved=False, window_size=None, normalization='RMSNorm', qk_layernorm=False, test_mode=False, calculate_per_token_loss=True, init_method=<function init_method_normal.<locals>.init_ at 0x7f2d9876c550>, output_layer_init_method=<function scaled_init_method_normal.<locals>.init_ at 0x7f2d9876c3a0>, init_method_std=0.014, apply_query_key_layer_scaling=False, attention_softmax_in_fp32=True, bias_activation_fusion=False, masked_softmax_fusion=False, persist_layer_norm=True, memory_efficient_layer_norm=False, bias_dropout_fusion=False, apply_rope_fusion=False, recompute_granularity=None, recompute_method=None, recompute_num_layers=None, distribute_saved_activations=False, fp8=None, fp8_margin=0, fp8_interval=1, fp8_amax_history_len=1, fp8_amax_compute_algo='most_recent', fp8_wgrad=True, fp8_dot_product_attention=False, fp8_multi_head_attention=False, tp_only_amax_red=False, moe_router_load_balancing_type='aux_loss', moe_router_topk=2, moe_router_pre_softmax=False, moe_grouped_gemm=False, moe_aux_loss_coeff=0.0, moe_z_loss_coeff=None, moe_input_jitter_eps=None, moe_token_dropping=False, moe_token_dispatcher_type='allgather', moe_per_layer_logging=False, moe_expert_capacity_factor=None, moe_pad_expert_input_to_capacity=False, moe_token_drop_policy='probs', moe_layer_recompute=False, clone_scatter_output_in_embedding=True, disable_parameter_transpose_cache=False, enable_cuda_graph=False, external_cuda_graph=False, config_logger_dir='')
+
 [DistributedDataParallel(
   (module): LLaVAModel(
     (vision_model): CLIPViTModel(
@@ -830,7 +790,7 @@ pretrain configTransformerConfig(tensor_model_parallel_size=4, pipeline_model_pa
       (ln_pre): LayerNorm()
       (decoder): TransformerBlock(
         (layers): ModuleList(
-          (0-23): 24 x TransformerLayer(
+          (0-21): 22 x TransformerLayer(
             (input_layernorm): IdentityOp()
             (self_attention): SelfAttention(
               (core_attention): TEDotProductAttention(
@@ -858,14 +818,9 @@ pretrain configTransformerConfig(tensor_model_parallel_size=4, pipeline_model_pa
         )
       )
     )
-    (vision_projection): MultimodalProjector(
-      (encoder): MLP(
-        (linear_fc1): TEColumnParallelLinear()
-        (linear_fc2): TERowParallelLinear()
-      )
-    )
   )
 )]
+pretrain configTransformerConfig(tensor_model_parallel_size=4, pipeline_model_parallel_size=5, virtual_pipeline_model_parallel_size=None, sequence_parallel=False, context_parallel_size=1, expert_model_parallel_size=1, moe_extended_tp=False, perform_initialization=True, use_cpu_initialization=None, fp16=False, bf16=False, params_dtype=torch.float32, timers=None, finalize_model_grads_func=None, grad_scale_func=None, no_sync_func=None, grad_sync_func=None, param_sync_func=None, deterministic_mode=False, enable_autocast=False, autocast_dtype=torch.float32, num_microbatches_with_partial_activation_checkpoints=None, gradient_accumulation_fusion=True, async_tensor_model_parallel_allreduce=True, use_te_rng_tracker=False, tp_comm_overlap=False, tp_comm_bulk_wgrad=True, tp_comm_bulk_dgrad=True, tp_comm_overlap_ag=True, tp_comm_overlap_rs=True, tp_comm_overlap_rs_dgrad=False, tp_comm_split_ag=True, tp_comm_atomic_ag=False, tp_comm_split_rs=True, tp_comm_atomic_rs=False, cross_entropy_loss_fusion=False, tp_comm_overlap_disable_qkv=False, tp_comm_overlap_disable_fc1=False, pipeline_dtype=torch.float32, variable_seq_lengths=False, overlap_p2p_comm=False, batch_p2p_comm=True, batch_p2p_sync=True, use_ring_exchange_p2p=False, deallocate_pipeline_outputs=True, defer_embedding_wgrad_compute=False, wgrad_deferral_limit=0, pipeline_model_parallel_split_rank=None, cpu_offloading=False, cpu_offloading_num_layers=0, _cpu_offloading_context=None, cpu_offloading_activations=True, cpu_offloading_weights=True, barrier_with_L1_time=True, num_layers=32, first_pipeline_num_layers=None, last_pipeline_num_layers=None, hidden_size=4096, num_attention_heads=32, num_query_groups=8, ffn_hidden_size=14336, kv_channels=128, hidden_dropout=0.0, attention_dropout=0.0, fp32_residual_connection=False, apply_residual_connection_post_layernorm=False, layernorm_epsilon=1e-05, layernorm_zero_centered_gamma=False, add_bias_linear=False, add_qkv_bias=False, gated_linear_unit=True, activation_func=<function silu at 0x7f3a3e74d5a0>, activation_func_fp8_input_store=False, num_moe_experts=None, rotary_interleaved=False, window_size=None, normalization='RMSNorm', qk_layernorm=False, test_mode=False, calculate_per_token_loss=True, init_method=<function init_method_normal.<locals>.init_ at 0x7f39d0b30940>, output_layer_init_method=<function scaled_init_method_normal.<locals>.init_ at 0x7f39d0b31120>, init_method_std=0.014, apply_query_key_layer_scaling=False, attention_softmax_in_fp32=True, bias_activation_fusion=False, masked_softmax_fusion=False, persist_layer_norm=True, memory_efficient_layer_norm=False, bias_dropout_fusion=False, apply_rope_fusion=False, recompute_granularity=None, recompute_method=None, recompute_num_layers=None, distribute_saved_activations=False, fp8=None, fp8_margin=0, fp8_interval=1, fp8_amax_history_len=1, fp8_amax_compute_algo='most_recent', fp8_wgrad=True, fp8_dot_product_attention=False, fp8_multi_head_attention=False, tp_only_amax_red=False, moe_router_load_balancing_type='aux_loss', moe_router_topk=2, moe_router_pre_softmax=False, moe_grouped_gemm=False, moe_aux_loss_coeff=0.0, moe_z_loss_coeff=None, moe_input_jitter_eps=None, moe_token_dropping=False, moe_token_dispatcher_type='allgather', moe_per_layer_logging=False, moe_expert_capacity_factor=None, moe_pad_expert_input_to_capacity=False, moe_token_drop_policy='probs', moe_layer_recompute=False, clone_scatter_output_in_embedding=True, disable_parameter_transpose_cache=False, enable_cuda_graph=False, external_cuda_graph=False, config_logger_dir='')pretrain configTransformerConfig(tensor_model_parallel_size=4, pipeline_model_parallel_size=5, virtual_pipeline_model_parallel_size=None, sequence_parallel=False, context_parallel_size=1, expert_model_parallel_size=1, moe_extended_tp=False, perform_initialization=True, use_cpu_initialization=None, fp16=False, bf16=False, params_dtype=torch.float32, timers=None, finalize_model_grads_func=None, grad_scale_func=None, no_sync_func=None, grad_sync_func=None, param_sync_func=None, deterministic_mode=False, enable_autocast=False, autocast_dtype=torch.float32, num_microbatches_with_partial_activation_checkpoints=None, gradient_accumulation_fusion=True, async_tensor_model_parallel_allreduce=True, use_te_rng_tracker=False, tp_comm_overlap=False, tp_comm_bulk_wgrad=True, tp_comm_bulk_dgrad=True, tp_comm_overlap_ag=True, tp_comm_overlap_rs=True, tp_comm_overlap_rs_dgrad=False, tp_comm_split_ag=True, tp_comm_atomic_ag=False, tp_comm_split_rs=True, tp_comm_atomic_rs=False, cross_entropy_loss_fusion=False, tp_comm_overlap_disable_qkv=False, tp_comm_overlap_disable_fc1=False, pipeline_dtype=torch.float32, variable_seq_lengths=False, overlap_p2p_comm=False, batch_p2p_comm=True, batch_p2p_sync=True, use_ring_exchange_p2p=False, deallocate_pipeline_outputs=True, defer_embedding_wgrad_compute=False, wgrad_deferral_limit=0, pipeline_model_parallel_split_rank=None, cpu_offloading=False, cpu_offloading_num_layers=0, _cpu_offloading_context=None, cpu_offloading_activations=True, cpu_offloading_weights=True, barrier_with_L1_time=True, num_layers=32, first_pipeline_num_layers=None, last_pipeline_num_layers=None, hidden_size=4096, num_attention_heads=32, num_query_groups=8, ffn_hidden_size=14336, kv_channels=128, hidden_dropout=0.0, attention_dropout=0.0, fp32_residual_connection=False, apply_residual_connection_post_layernorm=False, layernorm_epsilon=1e-05, layernorm_zero_centered_gamma=False, add_bias_linear=False, add_qkv_bias=False, gated_linear_unit=True, activation_func=<function silu at 0x7fa22fab55a0>, activation_func_fp8_input_store=False, num_moe_experts=None, rotary_interleaved=False, window_size=None, normalization='RMSNorm', qk_layernorm=False, test_mode=False, calculate_per_token_loss=True, init_method=<function init_method_normal.<locals>.init_ at 0x7fa1c20283a0>, output_layer_init_method=<function scaled_init_method_normal.<locals>.init_ at 0x7fa1c2028dc0>, init_method_std=0.014, apply_query_key_layer_scaling=False, attention_softmax_in_fp32=True, bias_activation_fusion=False, masked_softmax_fusion=False, persist_layer_norm=True, memory_efficient_layer_norm=False, bias_dropout_fusion=False, apply_rope_fusion=False, recompute_granularity=None, recompute_method=None, recompute_num_layers=None, distribute_saved_activations=False, fp8=None, fp8_margin=0, fp8_interval=1, fp8_amax_history_len=1, fp8_amax_compute_algo='most_recent', fp8_wgrad=True, fp8_dot_product_attention=False, fp8_multi_head_attention=False, tp_only_amax_red=False, moe_router_load_balancing_type='aux_loss', moe_router_topk=2, moe_router_pre_softmax=False, moe_grouped_gemm=False, moe_aux_loss_coeff=0.0, moe_z_loss_coeff=None, moe_input_jitter_eps=None, moe_token_dropping=False, moe_token_dispatcher_type='allgather', moe_per_layer_logging=False, moe_expert_capacity_factor=None, moe_pad_expert_input_to_capacity=False, moe_token_drop_policy='probs', moe_layer_recompute=False, clone_scatter_output_in_embedding=True, disable_parameter_transpose_cache=False, enable_cuda_graph=False, external_cuda_graph=False, config_logger_dir='')
 [DistributedDataParallel(
   (module): LLaVAModel(
     (vision_model): CLIPViTModel(
@@ -874,7 +829,7 @@ pretrain configTransformerConfig(tensor_model_parallel_size=4, pipeline_model_pa
       (ln_pre): LayerNorm()
       (decoder): TransformerBlock(
         (layers): ModuleList(
-          (0-23): 24 x TransformerLayer(
+          (0-21): 22 x TransformerLayer(
             (input_layernorm): IdentityOp()
             (self_attention): SelfAttention(
               (core_attention): TEDotProductAttention(
@@ -902,16 +857,11 @@ pretrain configTransformerConfig(tensor_model_parallel_size=4, pipeline_model_pa
         )
       )
     )
-    (vision_projection): MultimodalProjector(
-      (encoder): MLP(
-        (linear_fc1): TEColumnParallelLinear()
-        (linear_fc2): TERowParallelLinear()
-      )
-    )
   )
 )]
-pretrain configTransformerConfig(tensor_model_parallel_size=4, pipeline_model_parallel_size=5, virtual_pipeline_model_parallel_size=None, sequence_parallel=False, context_parallel_size=1, expert_model_parallel_size=1, moe_extended_tp=False, perform_initialization=True, use_cpu_initialization=None, fp16=False, bf16=False, params_dtype=torch.float32, timers=None, finalize_model_grads_func=None, grad_scale_func=None, no_sync_func=None, grad_sync_func=None, param_sync_func=None, deterministic_mode=False, enable_autocast=False, autocast_dtype=torch.float32, num_microbatches_with_partial_activation_checkpoints=None, gradient_accumulation_fusion=True, async_tensor_model_parallel_allreduce=True, use_te_rng_tracker=False, tp_comm_overlap=False, tp_comm_bulk_wgrad=True, tp_comm_bulk_dgrad=True, tp_comm_overlap_ag=True, tp_comm_overlap_rs=True, tp_comm_overlap_rs_dgrad=False, tp_comm_split_ag=True, tp_comm_atomic_ag=False, tp_comm_split_rs=True, tp_comm_atomic_rs=False, cross_entropy_loss_fusion=False, tp_comm_overlap_disable_qkv=False, tp_comm_overlap_disable_fc1=False, pipeline_dtype=torch.float32, variable_seq_lengths=False, overlap_p2p_comm=False, batch_p2p_comm=True, batch_p2p_sync=True, use_ring_exchange_p2p=False, deallocate_pipeline_outputs=True, defer_embedding_wgrad_compute=False, wgrad_deferral_limit=0, pipeline_model_parallel_split_rank=None, cpu_offloading=False, cpu_offloading_num_layers=0, _cpu_offloading_context=None, cpu_offloading_activations=True, cpu_offloading_weights=True, barrier_with_L1_time=True, num_layers=32, first_pipeline_num_layers=None, last_pipeline_num_layers=None, hidden_size=4096, num_attention_heads=32, num_query_groups=8, ffn_hidden_size=14336, kv_channels=128, hidden_dropout=0.0, attention_dropout=0.0, fp32_residual_connection=False, apply_residual_connection_post_layernorm=False, layernorm_epsilon=1e-05, layernorm_zero_centered_gamma=False, add_bias_linear=False, add_qkv_bias=False, gated_linear_unit=True, activation_func=<function silu at 0x7f56d2fc95a0>, activation_func_fp8_input_store=False, num_moe_experts=None, rotary_interleaved=False, window_size=None, normalization='RMSNorm', qk_layernorm=False, test_mode=False, calculate_per_token_loss=True, init_method=<function init_method_normal.<locals>.init_ at 0x7f56061356c0>, output_layer_init_method=<function scaled_init_method_normal.<locals>.init_ at 0x7f56061343a0>, init_method_std=0.014, apply_query_key_layer_scaling=False, attention_softmax_in_fp32=True, bias_activation_fusion=False, masked_softmax_fusion=False, persist_layer_norm=True, memory_efficient_layer_norm=False, bias_dropout_fusion=False, apply_rope_fusion=False, recompute_granularity=None, recompute_method=None, recompute_num_layers=None, distribute_saved_activations=False, fp8=None, fp8_margin=0, fp8_interval=1, fp8_amax_history_len=1, fp8_amax_compute_algo='most_recent', fp8_wgrad=True, fp8_dot_product_attention=False, fp8_multi_head_attention=False, tp_only_amax_red=False, moe_router_load_balancing_type='aux_loss', moe_router_topk=2, moe_router_pre_softmax=False, moe_grouped_gemm=False, moe_aux_loss_coeff=0.0, moe_z_loss_coeff=None, moe_input_jitter_eps=None, moe_token_dropping=False, moe_token_dispatcher_type='allgather', moe_per_layer_logging=False, moe_expert_capacity_factor=None, moe_pad_expert_input_to_capacity=False, moe_token_drop_policy='probs', moe_layer_recompute=False, clone_scatter_output_in_embedding=True, disable_parameter_transpose_cache=False, enable_cuda_graph=False, external_cuda_graph=False, config_logger_dir='')
-pretrain configTransformerConfig(tensor_model_parallel_size=4, pipeline_model_parallel_size=5, virtual_pipeline_model_parallel_size=None, sequence_parallel=False, context_parallel_size=1, expert_model_parallel_size=1, moe_extended_tp=False, perform_initialization=True, use_cpu_initialization=None, fp16=False, bf16=False, params_dtype=torch.float32, timers=None, finalize_model_grads_func=None, grad_scale_func=None, no_sync_func=None, grad_sync_func=None, param_sync_func=None, deterministic_mode=False, enable_autocast=False, autocast_dtype=torch.float32, num_microbatches_with_partial_activation_checkpoints=None, gradient_accumulation_fusion=True, async_tensor_model_parallel_allreduce=True, use_te_rng_tracker=False, tp_comm_overlap=False, tp_comm_bulk_wgrad=True, tp_comm_bulk_dgrad=True, tp_comm_overlap_ag=True, tp_comm_overlap_rs=True, tp_comm_overlap_rs_dgrad=False, tp_comm_split_ag=True, tp_comm_atomic_ag=False, tp_comm_split_rs=True, tp_comm_atomic_rs=False, cross_entropy_loss_fusion=False, tp_comm_overlap_disable_qkv=False, tp_comm_overlap_disable_fc1=False, pipeline_dtype=torch.float32, variable_seq_lengths=False, overlap_p2p_comm=False, batch_p2p_comm=True, batch_p2p_sync=True, use_ring_exchange_p2p=False, deallocate_pipeline_outputs=True, defer_embedding_wgrad_compute=False, wgrad_deferral_limit=0, pipeline_model_parallel_split_rank=None, cpu_offloading=False, cpu_offloading_num_layers=0, _cpu_offloading_context=None, cpu_offloading_activations=True, cpu_offloading_weights=True, barrier_with_L1_time=True, num_layers=32, first_pipeline_num_layers=None, last_pipeline_num_layers=None, hidden_size=4096, num_attention_heads=32, num_query_groups=8, ffn_hidden_size=14336, kv_channels=128, hidden_dropout=0.0, attention_dropout=0.0, fp32_residual_connection=False, apply_residual_connection_post_layernorm=False, layernorm_epsilon=1e-05, layernorm_zero_centered_gamma=False, add_bias_linear=False, add_qkv_bias=False, gated_linear_unit=True, activation_func=<function silu at 0x7fd2296795a0>, activation_func_fp8_input_store=False, num_moe_experts=None, rotary_interleaved=False, window_size=None, normalization='RMSNorm', qk_layernorm=False, test_mode=False, calculate_per_token_loss=True, init_method=<function init_method_normal.<locals>.init_ at 0x7fd15e218550>, output_layer_init_method=<function scaled_init_method_normal.<locals>.init_ at 0x7fd15e2183a0>, init_method_std=0.014, apply_query_key_layer_scaling=False, attention_softmax_in_fp32=True, bias_activation_fusion=False, masked_softmax_fusion=False, persist_layer_norm=True, memory_efficient_layer_norm=False, bias_dropout_fusion=False, apply_rope_fusion=False, recompute_granularity=None, recompute_method=None, recompute_num_layers=None, distribute_saved_activations=False, fp8=None, fp8_margin=0, fp8_interval=1, fp8_amax_history_len=1, fp8_amax_compute_algo='most_recent', fp8_wgrad=True, fp8_dot_product_attention=False, fp8_multi_head_attention=False, tp_only_amax_red=False, moe_router_load_balancing_type='aux_loss', moe_router_topk=2, moe_router_pre_softmax=False, moe_grouped_gemm=False, moe_aux_loss_coeff=0.0, moe_z_loss_coeff=None, moe_input_jitter_eps=None, moe_token_dropping=False, moe_token_dispatcher_type='allgather', moe_per_layer_logging=False, moe_expert_capacity_factor=None, moe_pad_expert_input_to_capacity=False, moe_token_drop_policy='probs', moe_layer_recompute=False, clone_scatter_output_in_embedding=True, disable_parameter_transpose_cache=False, enable_cuda_graph=False, external_cuda_graph=False, config_logger_dir='')
+
+pretrain configTransformerConfig(tensor_model_parallel_size=4, pipeline_model_parallel_size=5, virtual_pipeline_model_parallel_size=None, sequence_parallel=False, context_parallel_size=1, expert_model_parallel_size=1, moe_extended_tp=False, perform_initialization=True, use_cpu_initialization=None, fp16=False, bf16=False, params_dtype=torch.float32, timers=None, finalize_model_grads_func=None, grad_scale_func=None, no_sync_func=None, grad_sync_func=None, param_sync_func=None, deterministic_mode=False, enable_autocast=False, autocast_dtype=torch.float32, num_microbatches_with_partial_activation_checkpoints=None, gradient_accumulation_fusion=True, async_tensor_model_parallel_allreduce=True, use_te_rng_tracker=False, tp_comm_overlap=False, tp_comm_bulk_wgrad=True, tp_comm_bulk_dgrad=True, tp_comm_overlap_ag=True, tp_comm_overlap_rs=True, tp_comm_overlap_rs_dgrad=False, tp_comm_split_ag=True, tp_comm_atomic_ag=False, tp_comm_split_rs=True, tp_comm_atomic_rs=False, cross_entropy_loss_fusion=False, tp_comm_overlap_disable_qkv=False, tp_comm_overlap_disable_fc1=False, pipeline_dtype=torch.float32, variable_seq_lengths=False, overlap_p2p_comm=False, batch_p2p_comm=True, batch_p2p_sync=True, use_ring_exchange_p2p=False, deallocate_pipeline_outputs=True, defer_embedding_wgrad_compute=False, wgrad_deferral_limit=0, pipeline_model_parallel_split_rank=None, cpu_offloading=False, cpu_offloading_num_layers=0, _cpu_offloading_context=None, cpu_offloading_activations=True, cpu_offloading_weights=True, barrier_with_L1_time=True, num_layers=32, first_pipeline_num_layers=None, last_pipeline_num_layers=None, hidden_size=4096, num_attention_heads=32, num_query_groups=8, ffn_hidden_size=14336, kv_channels=128, hidden_dropout=0.0, attention_dropout=0.0, fp32_residual_connection=False, apply_residual_connection_post_layernorm=False, layernorm_epsilon=1e-05, layernorm_zero_centered_gamma=False, add_bias_linear=False, add_qkv_bias=False, gated_linear_unit=True, activation_func=<function silu at 0x7f08376815a0>, activation_func_fp8_input_store=False, num_moe_experts=None, rotary_interleaved=False, window_size=None, normalization='RMSNorm', qk_layernorm=False, test_mode=False, calculate_per_token_loss=True, init_method=<function init_method_normal.<locals>.init_ at 0x7f07c9c20940>, output_layer_init_method=<function scaled_init_method_normal.<locals>.init_ at 0x7f07c9c21120>, init_method_std=0.014, apply_query_key_layer_scaling=False, attention_softmax_in_fp32=True, bias_activation_fusion=False, masked_softmax_fusion=False, persist_layer_norm=True, memory_efficient_layer_norm=False, bias_dropout_fusion=False, apply_rope_fusion=False, recompute_granularity=None, recompute_method=None, recompute_num_layers=None, distribute_saved_activations=False, fp8=None, fp8_margin=0, fp8_interval=1, fp8_amax_history_len=1, fp8_amax_compute_algo='most_recent', fp8_wgrad=True, fp8_dot_product_attention=False, fp8_multi_head_attention=False, tp_only_amax_red=False, moe_router_load_balancing_type='aux_loss', moe_router_topk=2, moe_router_pre_softmax=False, moe_grouped_gemm=False, moe_aux_loss_coeff=0.0, moe_z_loss_coeff=None, moe_input_jitter_eps=None, moe_token_dropping=False, moe_token_dispatcher_type='allgather', moe_per_layer_logging=False, moe_expert_capacity_factor=None, moe_pad_expert_input_to_capacity=False, moe_token_drop_policy='probs', moe_layer_recompute=False, clone_scatter_output_in_embedding=True, disable_parameter_transpose_cache=False, enable_cuda_graph=False, external_cuda_graph=False, config_logger_dir='')
+pretrain configTransformerConfig(tensor_model_parallel_size=4, pipeline_model_parallel_size=5, virtual_pipeline_model_parallel_size=None, sequence_parallel=False, context_parallel_size=1, expert_model_parallel_size=1, moe_extended_tp=False, perform_initialization=True, use_cpu_initialization=None, fp16=False, bf16=False, params_dtype=torch.float32, timers=None, finalize_model_grads_func=None, grad_scale_func=None, no_sync_func=None, grad_sync_func=None, param_sync_func=None, deterministic_mode=False, enable_autocast=False, autocast_dtype=torch.float32, num_microbatches_with_partial_activation_checkpoints=None, gradient_accumulation_fusion=True, async_tensor_model_parallel_allreduce=True, use_te_rng_tracker=False, tp_comm_overlap=False, tp_comm_bulk_wgrad=True, tp_comm_bulk_dgrad=True, tp_comm_overlap_ag=True, tp_comm_overlap_rs=True, tp_comm_overlap_rs_dgrad=False, tp_comm_split_ag=True, tp_comm_atomic_ag=False, tp_comm_split_rs=True, tp_comm_atomic_rs=False, cross_entropy_loss_fusion=False, tp_comm_overlap_disable_qkv=False, tp_comm_overlap_disable_fc1=False, pipeline_dtype=torch.float32, variable_seq_lengths=False, overlap_p2p_comm=False, batch_p2p_comm=True, batch_p2p_sync=True, use_ring_exchange_p2p=False, deallocate_pipeline_outputs=True, defer_embedding_wgrad_compute=False, wgrad_deferral_limit=0, pipeline_model_parallel_split_rank=None, cpu_offloading=False, cpu_offloading_num_layers=0, _cpu_offloading_context=None, cpu_offloading_activations=True, cpu_offloading_weights=True, barrier_with_L1_time=True, num_layers=32, first_pipeline_num_layers=None, last_pipeline_num_layers=None, hidden_size=4096, num_attention_heads=32, num_query_groups=8, ffn_hidden_size=14336, kv_channels=128, hidden_dropout=0.0, attention_dropout=0.0, fp32_residual_connection=False, apply_residual_connection_post_layernorm=False, layernorm_epsilon=1e-05, layernorm_zero_centered_gamma=False, add_bias_linear=False, add_qkv_bias=False, gated_linear_unit=True, activation_func=<function silu at 0x7fbf06ee95a0>, activation_func_fp8_input_store=False, num_moe_experts=None, rotary_interleaved=False, window_size=None, normalization='RMSNorm', qk_layernorm=False, test_mode=False, calculate_per_token_loss=True, init_method=<function init_method_normal.<locals>.init_ at 0x7fbe99454940>, output_layer_init_method=<function scaled_init_method_normal.<locals>.init_ at 0x7fbe99455120>, init_method_std=0.014, apply_query_key_layer_scaling=False, attention_softmax_in_fp32=True, bias_activation_fusion=False, masked_softmax_fusion=False, persist_layer_norm=True, memory_efficient_layer_norm=False, bias_dropout_fusion=False, apply_rope_fusion=False, recompute_granularity=None, recompute_method=None, recompute_num_layers=None, distribute_saved_activations=False, fp8=None, fp8_margin=0, fp8_interval=1, fp8_amax_history_len=1, fp8_amax_compute_algo='most_recent', fp8_wgrad=True, fp8_dot_product_attention=False, fp8_multi_head_attention=False, tp_only_amax_red=False, moe_router_load_balancing_type='aux_loss', moe_router_topk=2, moe_router_pre_softmax=False, moe_grouped_gemm=False, moe_aux_loss_coeff=0.0, moe_z_loss_coeff=None, moe_input_jitter_eps=None, moe_token_dropping=False, moe_token_dispatcher_type='allgather', moe_per_layer_logging=False, moe_expert_capacity_factor=None, moe_pad_expert_input_to_capacity=False, moe_token_drop_policy='probs', moe_layer_recompute=False, clone_scatter_output_in_embedding=True, disable_parameter_transpose_cache=False, enable_cuda_graph=False, external_cuda_graph=False, config_logger_dir='')
 > building train, validation, and test datasets ...
  > datasets target sizes (minimum size):
     train:      320
@@ -923,149 +873,29 @@ rank=0, worker=1: shard_range=[pretrain-29.tar[0, 100), pretrain-29.tar[100, 200
 > building HuggingFaceTokenizer tokenizer ...
 rank=0, worker=0: shard_range=[pretrain-49.tar[0, 10000), pretrain-5.tar[0, 10000), pretrain-50.tar[0, 10000)] sum(count)=30000
 rank=0, worker=1: shard_range=[pretrain-51.tar[0, 10000), pretrain-52.tar[0, 10000), pretrain-53.tar[0, 10000)] sum(count)=30000
-[after dataloaders are built] datetime: 2024-11-25 23:07:58 
+[after dataloaders are built] datetime: 2024-11-27 00:46:42 
 done with setup ...
 training ...
-[before the start of training step] datetime: 2024-11-25 23:07:58 
+[before the start of training step] datetime: 2024-11-27 00:46:42 
 schedules.py decoder_seq_length:1152
-schedules.py decoder_seq_length:1152start layer:1
-
-start layer:1start layer:1
-
-start layer:1
 schedules.py decoder_seq_length:1152
 start layer:1
-c:[(576, 2, 4096)]
-c:[(576, 2, 4096)]start layer:1
+start layer:1
+start layer:22
+start layer:22
+schedules.py decoder_seq_length:1152
+start layer:1
+start layer:22
+schedules.py decoder_seq_length:1152
+start layer:1c:[(576, 2, 1024)]
 
+c:[(576, 2, 1024)]
+start layer:22
 receive input_tensor shapes:[None]receive input_tensor shapes:[None]
 
-schedules.py decoder_seq_length:1152
-start layer:1
-start layer:1
-c:[(576, 2, 4096)]
+c:[(576, 2, 1024)]
 receive input_tensor shapes:[None]
-c:[(576, 2, 4096)]
-receive input_tensor shapes:[None]
-get batch end! tokens size:torch.Size([2, 576])get batch end! tokens size:torch.Size([2, 576])
-
-get batch end! labels size:torch.Size([2, 576])
-get batch end! labels size:torch.Size([2, 576])
-get batch end! loss_mask size:torch.Size([2, 576])
-get batch end! loss_mask size:torch.Size([2, 576])
-get batch end! attention_mask:torch.Size([1, 1, 576, 576])
-get batch end! attention_mask:torch.Size([1, 1, 576, 576])get batch end! position_ids:torch.Size([2, 576])
-
-get batch end! position_ids:torch.Size([2, 576])get batch end! images size:torch.Size([2, 3, 336, 336])
-
-get batch end! num_image_tiles:torch.Size([2])get batch end! images size:torch.Size([2, 3, 336, 336])
-
-get batch end! num_image_tiles:torch.Size([2])
-vision model start! iamge size:torch.Size([2, 3, 336, 336])
-vision model start! iamge size:torch.Size([2, 3, 336, 336])
-get batch end! tokens size:torch.Size([2, 576])
-get batch end! labels size:torch.Size([2, 576])
-get batch end! loss_mask size:torch.Size([2, 576])
-get batch end! attention_mask:torch.Size([1, 1, 576, 576])
-get batch end! position_ids:torch.Size([2, 576])
-get batch end! images size:torch.Size([2, 3, 336, 336])
-get batch end! num_image_tiles:torch.Size([2])
-vision model start! iamge size:torch.Size([2, 3, 336, 336])
-get batch end! tokens size:torch.Size([2, 576])
-get batch end! labels size:torch.Size([2, 576])
-get batch end! loss_mask size:torch.Size([2, 576])
-get batch end! attention_mask:torch.Size([1, 1, 576, 576])
-get batch end! position_ids:torch.Size([2, 576])
-get batch end! images size:torch.Size([2, 3, 336, 336])
-get batch end! num_image_tiles:torch.Size([2])
-vision model start! iamge size:torch.Size([2, 3, 336, 336])
-hidden state size:torch.Size([577, 2, 1024])
-TransformerBlock hidden states size:torch.Size([577, 2, 1024])
-hidden state size:torch.Size([577, 2, 1024])
-TransformerBlock hidden states size:torch.Size([577, 2, 1024])
-hidden state size:torch.Size([577, 2, 1024])
-TransformerBlock hidden states size:torch.Size([577, 2, 1024])
-hidden state size:torch.Size([577, 2, 1024])
-TransformerBlock hidden states size:torch.Size([577, 2, 1024])
-vision model end! image embeddings:torch.Size([2, 577, 1024])
-vision projection start! iamge embeddings size:torch.Size([576, 2, 1024])
-vision projection end! iamge embeddings size:torch.Size([576, 2, 4096])
-vision model end! image embeddings:torch.Size([2, 577, 1024])
-vision projection start! iamge embeddings size:torch.Size([576, 2, 1024])
-vision projection end! iamge embeddings size:torch.Size([576, 2, 4096])
-vision model end! image embeddings:torch.Size([2, 577, 1024])
-vision projection start! iamge embeddings size:torch.Size([576, 2, 1024])
-vision projection end! iamge embeddings size:torch.Size([576, 2, 4096])
-vision model end! image embeddings:torch.Size([2, 577, 1024])
-vision projection start! iamge embeddings size:torch.Size([576, 2, 1024])
-vision projection end! iamge embeddings size:torch.Size([576, 2, 4096])
-c:[(576, 2, 4096)]
-receive input_tensor shapes:[None]
-c:[(576, 2, 4096)]
-receive input_tensor shapes:[None]
-c:[(576, 2, 4096)]
-receive input_tensor shapes:[None]
-c:[(576, 2, 4096)]
-receive input_tensor shapes:[None]
-get batch end! tokens size:torch.Size([2, 576])
-get batch end! labels size:torch.Size([2, 576])
-get batch end! loss_mask size:torch.Size([2, 576])
-get batch end! attention_mask:torch.Size([1, 1, 576, 576])
-get batch end! position_ids:torch.Size([2, 576])
-get batch end! images size:torch.Size([2, 3, 336, 336])
-get batch end! num_image_tiles:torch.Size([2])
-get batch end! tokens size:torch.Size([2, 576])
-get batch end! labels size:torch.Size([2, 576])
-get batch end! loss_mask size:torch.Size([2, 576])
-get batch end! attention_mask:torch.Size([1, 1, 576, 576])
-get batch end! position_ids:torch.Size([2, 576])
-get batch end! images size:torch.Size([2, 3, 336, 336])
-get batch end! num_image_tiles:torch.Size([2])vision model start! iamge size:torch.Size([2, 3, 336, 336])
-
-vision model start! iamge size:torch.Size([2, 3, 336, 336])
-get batch end! tokens size:torch.Size([2, 576])
-get batch end! labels size:torch.Size([2, 576])
-get batch end! loss_mask size:torch.Size([2, 576])
-get batch end! attention_mask:torch.Size([1, 1, 576, 576])
-get batch end! position_ids:torch.Size([2, 576])
-get batch end! images size:torch.Size([2, 3, 336, 336])
-get batch end! num_image_tiles:torch.Size([2])
-vision model start! iamge size:torch.Size([2, 3, 336, 336])
-get batch end! tokens size:torch.Size([2, 576])
-get batch end! labels size:torch.Size([2, 576])
-get batch end! loss_mask size:torch.Size([2, 576])
-get batch end! attention_mask:torch.Size([1, 1, 576, 576])
-get batch end! position_ids:torch.Size([2, 576])
-get batch end! images size:torch.Size([2, 3, 336, 336])
-get batch end! num_image_tiles:torch.Size([2])
-vision model start! iamge size:torch.Size([2, 3, 336, 336])
-hidden state size:torch.Size([577, 2, 1024])hidden state size:torch.Size([577, 2, 1024])
-
-TransformerBlock hidden states size:torch.Size([577, 2, 1024])TransformerBlock hidden states size:torch.Size([577, 2, 1024])
-
-hidden state size:torch.Size([577, 2, 1024])
-TransformerBlock hidden states size:torch.Size([577, 2, 1024])
-hidden state size:torch.Size([577, 2, 1024])
-TransformerBlock hidden states size:torch.Size([577, 2, 1024])
-vision model end! image embeddings:torch.Size([2, 577, 1024])
-vision projection start! iamge embeddings size:torch.Size([576, 2, 1024])
-vision model end! image embeddings:torch.Size([2, 577, 1024])
-vision projection start! iamge embeddings size:torch.Size([576, 2, 1024])
-vision projection end! iamge embeddings size:torch.Size([576, 2, 4096])
-vision projection end! iamge embeddings size:torch.Size([576, 2, 4096])
-vision model end! image embeddings:torch.Size([2, 577, 1024])
-vision projection start! iamge embeddings size:torch.Size([576, 2, 1024])
-vision projection end! iamge embeddings size:torch.Size([576, 2, 4096])
-vision model end! image embeddings:torch.Size([2, 577, 1024])
-vision projection start! iamge embeddings size:torch.Size([576, 2, 1024])
-vision projection end! iamge embeddings size:torch.Size([576, 2, 4096])
-c:[(576, 2, 4096)]
-receive input_tensor shapes:[None]
-c:[(576, 2, 4096)]
-receive input_tensor shapes:[None]
-c:[(576, 2, 4096)]
-receive input_tensor shapes:[None]
-c:[(576, 2, 4096)]
+c:[(576, 2, 1024)]
 receive input_tensor shapes:[None]
 get batch end! tokens size:torch.Size([2, 576])
 get batch end! labels size:torch.Size([2, 576])
@@ -1082,14 +912,6 @@ get batch end! attention_mask:torch.Size([1, 1, 576, 576])
 get batch end! position_ids:torch.Size([2, 576])
 get batch end! images size:torch.Size([2, 3, 336, 336])
 get batch end! num_image_tiles:torch.Size([2])
-get batch end! tokens size:torch.Size([2, 576])
-get batch end! labels size:torch.Size([2, 576])
-get batch end! loss_mask size:torch.Size([2, 576])
-vision model start! iamge size:torch.Size([2, 3, 336, 336])
-get batch end! attention_mask:torch.Size([1, 1, 576, 576])
-get batch end! position_ids:torch.Size([2, 576])
-get batch end! images size:torch.Size([2, 3, 336, 336])
-get batch end! num_image_tiles:torch.Size([2])
 vision model start! iamge size:torch.Size([2, 3, 336, 336])
 get batch end! tokens size:torch.Size([2, 576])
 get batch end! labels size:torch.Size([2, 576])
@@ -1099,33 +921,37 @@ get batch end! position_ids:torch.Size([2, 576])
 get batch end! images size:torch.Size([2, 3, 336, 336])
 get batch end! num_image_tiles:torch.Size([2])
 vision model start! iamge size:torch.Size([2, 3, 336, 336])
-hidden state size:torch.Size([577, 2, 1024])
+get batch end! tokens size:torch.Size([2, 576])
+get batch end! labels size:torch.Size([2, 576])
+get batch end! loss_mask size:torch.Size([2, 576])
+get batch end! attention_mask:torch.Size([1, 1, 576, 576])
+get batch end! position_ids:torch.Size([2, 576])
+get batch end! images size:torch.Size([2, 3, 336, 336])
+get batch end! num_image_tiles:torch.Size([2])
+vision model start! iamge size:torch.Size([2, 3, 336, 336])
+222 hidden state size:torch.Size([577, 2, 1024])
+222222 hidden states:torch.Size([577, 2, 1024])
 TransformerBlock hidden states size:torch.Size([577, 2, 1024])
-hidden state size:torch.Size([577, 2, 1024])
+222 hidden state size:torch.Size([577, 2, 1024])
+222222 hidden states:torch.Size([577, 2, 1024])
 TransformerBlock hidden states size:torch.Size([577, 2, 1024])
-hidden state size:torch.Size([577, 2, 1024])
+222 hidden state size:torch.Size([577, 2, 1024])
+222222 hidden states:torch.Size([577, 2, 1024])
 TransformerBlock hidden states size:torch.Size([577, 2, 1024])
-hidden state size:torch.Size([577, 2, 1024])
+222 hidden state size:torch.Size([577, 2, 1024])
+222222 hidden states:torch.Size([577, 2, 1024])
 TransformerBlock hidden states size:torch.Size([577, 2, 1024])
 vision model end! image embeddings:torch.Size([2, 577, 1024])
-vision projection start! iamge embeddings size:torch.Size([576, 2, 1024])
-vision model end! image embeddings:torch.Size([2, 577, 1024])
-vision projection start! iamge embeddings size:torch.Size([576, 2, 1024])
-vision projection end! iamge embeddings size:torch.Size([576, 2, 4096])
-vision projection end! iamge embeddings size:torch.Size([576, 2, 4096])
 vision model end! image embeddings:torch.Size([2, 577, 1024])
 vision model end! image embeddings:torch.Size([2, 577, 1024])
-vision projection start! iamge embeddings size:torch.Size([576, 2, 1024])
-vision projection start! iamge embeddings size:torch.Size([576, 2, 1024])
-vision projection end! iamge embeddings size:torch.Size([576, 2, 4096])
-vision projection end! iamge embeddings size:torch.Size([576, 2, 4096])
-c:[(576, 2, 4096)]
-c:[(576, 2, 4096)]
+vision model end! image embeddings:torch.Size([2, 577, 1024])
+c:[(576, 2, 1024)]
 receive input_tensor shapes:[None]
+c:[(576, 2, 1024)]
 receive input_tensor shapes:[None]
-c:[(576, 2, 4096)]
+c:[(576, 2, 1024)]
 receive input_tensor shapes:[None]
-c:[(576, 2, 4096)]
+c:[(576, 2, 1024)]
 receive input_tensor shapes:[None]
 get batch end! tokens size:torch.Size([2, 576])
 get batch end! labels size:torch.Size([2, 576])
@@ -1139,69 +965,9 @@ get batch end! labels size:torch.Size([2, 576])
 get batch end! loss_mask size:torch.Size([2, 576])
 get batch end! attention_mask:torch.Size([1, 1, 576, 576])
 get batch end! position_ids:torch.Size([2, 576])
+vision model start! iamge size:torch.Size([2, 3, 336, 336])
 get batch end! images size:torch.Size([2, 3, 336, 336])
 get batch end! num_image_tiles:torch.Size([2])
-vision model start! iamge size:torch.Size([2, 3, 336, 336])
-vision model start! iamge size:torch.Size([2, 3, 336, 336])
-get batch end! tokens size:torch.Size([2, 576])
-get batch end! labels size:torch.Size([2, 576])
-get batch end! loss_mask size:torch.Size([2, 576])
-get batch end! tokens size:torch.Size([2, 576])get batch end! attention_mask:torch.Size([1, 1, 576, 576])
-
-get batch end! labels size:torch.Size([2, 576])get batch end! position_ids:torch.Size([2, 576])
-
-get batch end! loss_mask size:torch.Size([2, 576])get batch end! images size:torch.Size([2, 3, 336, 336])
-
-get batch end! attention_mask:torch.Size([1, 1, 576, 576])get batch end! num_image_tiles:torch.Size([2])
-
-get batch end! position_ids:torch.Size([2, 576])
-get batch end! images size:torch.Size([2, 3, 336, 336])
-get batch end! num_image_tiles:torch.Size([2])
-vision model start! iamge size:torch.Size([2, 3, 336, 336])
-vision model start! iamge size:torch.Size([2, 3, 336, 336])
-hidden state size:torch.Size([577, 2, 1024])
-TransformerBlock hidden states size:torch.Size([577, 2, 1024])
-hidden state size:torch.Size([577, 2, 1024])
-TransformerBlock hidden states size:torch.Size([577, 2, 1024])
-hidden state size:torch.Size([577, 2, 1024])
-TransformerBlock hidden states size:torch.Size([577, 2, 1024])
-hidden state size:torch.Size([577, 2, 1024])
-TransformerBlock hidden states size:torch.Size([577, 2, 1024])
-vision model end! image embeddings:torch.Size([2, 577, 1024])
-vision projection start! iamge embeddings size:torch.Size([576, 2, 1024])
-vision projection end! iamge embeddings size:torch.Size([576, 2, 4096])
-vision model end! image embeddings:torch.Size([2, 577, 1024])
-vision projection start! iamge embeddings size:torch.Size([576, 2, 1024])
-vision projection end! iamge embeddings size:torch.Size([576, 2, 4096])
-vision model end! image embeddings:torch.Size([2, 577, 1024])
-vision projection start! iamge embeddings size:torch.Size([576, 2, 1024])
-vision model end! image embeddings:torch.Size([2, 577, 1024])
-vision projection start! iamge embeddings size:torch.Size([576, 2, 1024])
-vision projection end! iamge embeddings size:torch.Size([576, 2, 4096])
-vision projection end! iamge embeddings size:torch.Size([576, 2, 4096])
-get batch end! tokens size:torch.Size([2, 576])
-get batch end! labels size:torch.Size([2, 576])
-get batch end! loss_mask size:torch.Size([2, 576])
-get batch end! attention_mask:torch.Size([1, 1, 576, 576])
-get batch end! position_ids:torch.Size([2, 576])
-get batch end! images size:torch.Size([2, 3, 336, 336])
-get batch end! num_image_tiles:torch.Size([2])
-get batch end! tokens size:torch.Size([2, 576])vision model start! iamge size:torch.Size([2, 3, 336, 336])
-
-get batch end! labels size:torch.Size([2, 576])
-get batch end! tokens size:torch.Size([2, 576])get batch end! loss_mask size:torch.Size([2, 576])
-
-get batch end! attention_mask:torch.Size([1, 1, 576, 576])
-get batch end! labels size:torch.Size([2, 576])
-get batch end! position_ids:torch.Size([2, 576])
-get batch end! loss_mask size:torch.Size([2, 576])
-get batch end! images size:torch.Size([2, 3, 336, 336])
-get batch end! attention_mask:torch.Size([1, 1, 576, 576])get batch end! num_image_tiles:torch.Size([2])
-
-get batch end! position_ids:torch.Size([2, 576])
-get batch end! images size:torch.Size([2, 3, 336, 336])
-get batch end! num_image_tiles:torch.Size([2])
-vision model start! iamge size:torch.Size([2, 3, 336, 336])
 vision model start! iamge size:torch.Size([2, 3, 336, 336])
 get batch end! tokens size:torch.Size([2, 576])
 get batch end! labels size:torch.Size([2, 576])
@@ -1210,33 +976,29 @@ get batch end! attention_mask:torch.Size([1, 1, 576, 576])
 get batch end! position_ids:torch.Size([2, 576])
 get batch end! images size:torch.Size([2, 3, 336, 336])
 get batch end! num_image_tiles:torch.Size([2])
+get batch end! tokens size:torch.Size([2, 576])
+get batch end! labels size:torch.Size([2, 576])
+get batch end! loss_mask size:torch.Size([2, 576])
+get batch end! attention_mask:torch.Size([1, 1, 576, 576])
+get batch end! position_ids:torch.Size([2, 576])
+get batch end! images size:torch.Size([2, 3, 336, 336])
+get batch end! num_image_tiles:torch.Size([2])
 vision model start! iamge size:torch.Size([2, 3, 336, 336])
-hidden state size:torch.Size([577, 2, 1024])
+vision model start! iamge size:torch.Size([2, 3, 336, 336])
+222 hidden state size:torch.Size([577, 2, 1024])
+222222 hidden states:torch.Size([577, 2, 1024])
 TransformerBlock hidden states size:torch.Size([577, 2, 1024])
-hidden state size:torch.Size([577, 2, 1024])
+222 hidden state size:torch.Size([577, 2, 1024])
+222222 hidden states:torch.Size([577, 2, 1024])
 TransformerBlock hidden states size:torch.Size([577, 2, 1024])
-hidden state size:torch.Size([577, 2, 1024])
+222 hidden state size:torch.Size([577, 2, 1024])
+222222 hidden states:torch.Size([577, 2, 1024])
 TransformerBlock hidden states size:torch.Size([577, 2, 1024])
-hidden state size:torch.Size([577, 2, 1024])
+222 hidden state size:torch.Size([577, 2, 1024])
+222222 hidden states:torch.Size([577, 2, 1024])
 TransformerBlock hidden states size:torch.Size([577, 2, 1024])
 vision model end! image embeddings:torch.Size([2, 577, 1024])
-vision projection start! iamge embeddings size:torch.Size([576, 2, 1024])
-vision projection end! iamge embeddings size:torch.Size([576, 2, 4096])
-1111 output_tensor:torch.Size([576, 2, 4096])
-2222 output_tensor:torch.Size([576, 2, 4096])
 vision model end! image embeddings:torch.Size([2, 577, 1024])
-vision projection start! iamge embeddings size:torch.Size([576, 2, 1024])
-vision projection end! iamge embeddings size:torch.Size([576, 2, 4096])
-1111 output_tensor:torch.Size([576, 2, 4096])
-2222 output_tensor:torch.Size([576, 2, 4096])
 vision model end! image embeddings:torch.Size([2, 577, 1024])
-vision projection start! iamge embeddings size:torch.Size([576, 2, 1024])
-vision projection end! iamge embeddings size:torch.Size([576, 2, 4096])
-1111 output_tensor:torch.Size([576, 2, 4096])
-2222 output_tensor:torch.Size([576, 2, 4096])
 vision model end! image embeddings:torch.Size([2, 577, 1024])
-vision projection start! iamge embeddings size:torch.Size([576, 2, 1024])
-vision projection end! iamge embeddings size:torch.Size([576, 2, 4096])
-1111 output_tensor:torch.Size([576, 2, 4096])
-2222 output_tensor:torch.Size([576, 2, 4096])
-slurmstepd: error: *** STEP 118320.0 ON gn43 CANCELLED AT 2024-11-25T23:09:19 ***
+slurmstepd: error: *** STEP 118639.0 ON gn79 CANCELLED AT 2024-11-27T00:47:53 ***

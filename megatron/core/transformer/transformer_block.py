@@ -185,6 +185,9 @@ class TransformerBlock(MegatronModule):
         post_layer_norm: bool = True,
         pre_process: bool = True,
         post_process: bool = True,
+        encoder_pre_process: bool = True,
+        add_encoder: bool = True,
+        add_decoder: bool = True
     ):
         super().__init__(config=config)
         # 通过 TransforemrConfig 和 spec 得到 submodules，这里 get_num_layers_to_build 计算构建多少层
@@ -192,6 +195,9 @@ class TransformerBlock(MegatronModule):
         self.post_layer_norm = post_layer_norm
         self.pre_process = pre_process
         self.post_process = post_process
+        self.encoder_pre_process = encoder_pre_process
+        self.add_encoder = add_encoder
+        self.add_decoder = add_decoder
         # 存储 CUDA graphs 的字典. Number of items in the dictionary = len(self.layers).
         # Item `i` in the dictionary is a list of `N` CUDA graphs for layer 'i' where N is the
         # number of microbatches. Multiple CUDA graphs per layer is required to support
@@ -398,14 +404,29 @@ class TransformerBlock(MegatronModule):
             Union[Tensor, Tuple[Tensor, Tensor]]: The output hidden states tensor of shape
             [s, b, h], and optionally the updated context tensor if cross-attention is used.
         """
-
+        hidden_states_copy = hidden_states
         if hidden_states is not None:
-            print(f"hidden state size:{hidden_states.size()}")
+            print(f"222 hidden state size:{hidden_states.size()}")
         if self.input_tensor is not None:
-            print(f"self.input tensor size:{self.input_tensor.size()}")
-        if not self.pre_process:
+            print(f"333 self.input tensor size:{self.input_tensor.size()}")
+        if self.add_encoder and not self.encoder_pre_process:
+            print("444444444444")
+            hidden_states = self.input_tensor
+            if hidden_states is not None:
+                print(f"111111 hidden states:{hidden_states.size()}")
+            if self.input_tensor is not None:
+                print(f"111111 input tensor:{self.input_tensor.size()}")
+        if self.add_encoder and not self.encoder_pre_process and self.add_decoder and self.pre_process:
+            hidden_states = hidden_states_copy
+        if self.add_decoder and not self.pre_process:
+            print("55555555555")
             # See set_input_tensor()
             hidden_states = self.input_tensor
+
+        if hidden_states is not None:
+            print(f"222222 hidden states:{hidden_states.size()}")
+        if self.input_tensor is not None:
+            print(f"222222 tensor:{self.input_tensor.size()}")
         print(f"TransformerBlock hidden states size:{hidden_states.size()}")
 
         # Viewless tensor.

@@ -63,6 +63,9 @@ class GPTModel(LanguageModule):
         max_sequence_length: int,
         pre_process: bool = True,
         post_process: bool = True,
+        encoder_pre_process: bool = True,
+        add_encoder: bool = True,
+        add_decoder: bool = True,
         fp16_lm_cross_entropy: bool = False,
         parallel_output: bool = True,
         share_embeddings_and_output_weights: bool = False,
@@ -81,6 +84,9 @@ class GPTModel(LanguageModule):
         self.max_sequence_length = max_sequence_length
         self.pre_process = pre_process
         self.post_process = post_process
+        self.encoder_pre_process = encoder_pre_process
+        self.add_encoder = add_encoder
+        self.add_decoder = add_decoder
         self.fp16_lm_cross_entropy = fp16_lm_cross_entropy
         self.parallel_output = parallel_output
         self.share_embeddings_and_output_weights = share_embeddings_and_output_weights
@@ -118,6 +124,9 @@ class GPTModel(LanguageModule):
             spec=transformer_layer_spec,
             pre_process=self.pre_process,
             post_process=self.post_process,
+            add_decoder=self.add_decoder,
+            add_encoder=self.add_encoder,
+            encoder_pre_process=self.encoder_pre_process,
         )
 
         # Output
@@ -227,7 +236,7 @@ class GPTModel(LanguageModule):
         )
         
         if hidden_states is not None:
-            print(f"hidden state size:{hidden_states.size()}")
+            print(f"111 hidden state size:{hidden_states.size()}")
 
         if not self.post_process:
             return hidden_states

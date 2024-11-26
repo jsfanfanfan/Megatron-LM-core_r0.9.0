@@ -66,9 +66,9 @@ fi
 OPTIONS=" \
     --apply-layernorm-1p \
     --attention-softmax-in-fp32 \
+    --normalization RMSNorm \
     --transformer-impl transformer_engine \
     --use-te \
-    --normalization RMSNorm \
     --group-query-attention \
     --num-query-groups 8 \
     --no-masked-softmax-fusion \
@@ -139,8 +139,6 @@ OPTIONS=" \
 # --bf16 \
 # --log-params-norm \
 # --log-num-zeros-in-grad \
-# --transformer-impl transformer_engine \
-# --use-te \
 # --use-flash-attn \
 
 

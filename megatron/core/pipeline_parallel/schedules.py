@@ -1203,6 +1203,7 @@ def get_receive_tensor_shapes( # 1387 行调用
             )
     """
     start_layer = config.start_layer
+    end_layer = config.end_layer
     print(f"start layer:{start_layer}")
     if model_type == ModelType.encoder_and_decoder:
         # 这里需要修改 tensor_shapes 的逻辑
@@ -1210,7 +1211,8 @@ def get_receive_tensor_shapes( # 1387 行调用
         # 如果划分在 llm 的 transformer 层，tensor_shape 是 [decoderseq_length, micro_batch_size, decoder_hidden_size]
         # if parallel_state.is_inside_encoder(rank):
         if start_layer <= 27:
-            tensor_shapes.append((seq_length, micro_batch_size, config.hidden_size))
+            # tensor_shapes.append((seq_length, micro_batch_size, config.hidden_size))
+            tensor_shapes.append((seq_length, micro_batch_size, 1024))
         elif encoder_decoder_xattn:
             tensor_shapes.append((1024, micro_batch_size, config.hidden_size))
             tensor_shapes.append((seq_length, micro_batch_size, config.hidden_size))

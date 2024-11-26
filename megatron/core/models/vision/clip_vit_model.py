@@ -33,6 +33,10 @@ class CLIPViTModel(VisionModule):
         transformer_config: TransformerConfig,
         transformer_layer_spec: ModuleSpec,
         encoder_pre_process: bool = True,
+        pre_process: bool = True,
+        post_process: bool = True,
+        add_encoder: bool = True,
+        add_decoder: bool = True,
         ln_pre_impl: Union[ModuleSpec, type] = TENorm,
         add_class_token: bool = True,
         class_token_len: int = 1,
@@ -46,6 +50,10 @@ class CLIPViTModel(VisionModule):
             log_config_to_disk(transformer_config, locals(), prefix=type(self).__name__)
 
         self.encoder_pre_process = encoder_pre_process
+        self.add_encoder = add_encoder
+        self.add_decoder = add_decoder
+        self.pre_process = pre_process
+        self.post_process = post_process
         self.class_token_len = class_token_len
         self.visual_hidden_size = transformer_config.hidden_size
         self.patch_dim = patch_dim
@@ -99,6 +107,9 @@ class CLIPViTModel(VisionModule):
         self.decoder = TransformerBlock(
             config=transformer_config, # 这里 config 蕴含层数信息 transformer_layer_num
             spec=transformer_layer_spec,
+            encoder_pre_process=self.encoder_pre_process,
+            add_encoder=self.add_encoder,
+            add_decoder=self.add_decoder,
             pre_process=True,
             post_process=False,
         )

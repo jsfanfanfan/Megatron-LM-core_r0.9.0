@@ -122,6 +122,9 @@ class LLaVAModel(MegatronModule):
                 rotary_percent=language_rotary_percent,
                 pre_process=self.pre_process,
                 post_process=self.post_process,
+                encoder_pre_process=self.encoder_pre_process,
+                add_encoder=self.add_encoder,
+                add_decoder=self.add_decoder,
                 rotary_base=language_rotary_base,
             )
             self.share_embeddings_and_output_weights = (
@@ -135,6 +138,10 @@ class LLaVAModel(MegatronModule):
                 vision_transformer_config,
                 vision_transformer_layer_spec,
                 encoder_pre_process=self.encoder_pre_process,
+                pre_process=self.pre_process,
+                post_process=self.post_process,
+                add_encoder=self.add_encoder,
+                add_decoder=self.add_decoder,
                 img_h=img_h,
                 img_w=img_w,
                 class_token_len=class_token_len,
