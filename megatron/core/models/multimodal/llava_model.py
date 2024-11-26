@@ -471,7 +471,7 @@ class LLaVAModel(MegatronModule):
             image_embeddings = torch.tensor([], dtype=images.dtype, device=images.device)
         elif self.encoder_pre_process and self.add_encoder and has_images: # 最原始的情况
             print(f"vision model start! iamge size:{images.size()}")
-            image_embeddings = self.vision_model(images)  # [num_tiles, img_seq_len, h_vision]
+            image_embeddings = self.vision_model(images, hidden_state=None)  # [num_tiles, img_seq_len, h_vision]
             print(f"vision model end! image embeddings:{image_embeddings.size()}")
             if self._drop_vision_class_token:
                 image_embeddings = image_embeddings[:, self.vision_model.class_token_len :, :]
@@ -488,9 +488,10 @@ class LLaVAModel(MegatronModule):
                     image_embeddings.shape[0] * image_embeddings.shape[1]
                 )
         elif not self.encoder_pre_process and self.add_encoder and not has_images:
-            image_embeddings = self.encoder_hidden_state # 没有头就输入 encoder_hidden_state(这里是 None 吧，llm 怎么处理输入的呢)
+            image_embeddings = self.vision_model(images=None, hidden_state=self.encoder_hidden_state) # 没有头就输入 encoder_hidden_state(这里是 None 吧，llm 怎么处理输入的呢)
         elif not self.encoder_pre_process and self.add_encoder and has_images:
-            image_embeddings = self.encoder_hidden_state # 没有头就输入 encoder_hidden_state(这里是 None 吧，llm 怎么处理输入的呢)
+            # 走这条路需要把上一个流水级的 hidden states 作为输入传递给 self.vision_model
+            image_embeddings = self.vision_model(images=None, hidden_state=self.encoder_hidden_state) # 没有头就输入 encoder_hidden_state(这里是 None 吧，llm 怎么处理输入的呢)
         else:
             image_embeddings = self.encoder_hidden_state
 

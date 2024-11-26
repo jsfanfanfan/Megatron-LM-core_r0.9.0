@@ -112,7 +112,7 @@ class CLIPViTModel(VisionModule):
         self.decoder.set_input_tensor(input_tensor)
 
     def forward(
-        self, x: torch.Tensor, attention_mask: Optional[torch.Tensor] = None
+        self, images: torch.Tensor, hidden_state: torch.Tensor, attention_mask: Optional[torch.Tensor] = None
     ) -> torch.Tensor:
         """Forward function of the CLIP ViT Model. This function passes the input tensors
         through the embedding layer(if has) and then the transformer.
@@ -125,6 +125,11 @@ class CLIPViTModel(VisionModule):
             x (torch.Tensor): output after final transformer block of shape [b, s, h].
         """
         # x 有可能是图像向量，有可能是 hidden states
+        if self.encoder_pre_process:
+            x = images
+        else:
+            x = hidden_state # 只有 transformer 层，没有 pre_process
+        
         if self.encoder_pre_process:
             x = self.conv1(x)  # shape = [batch, hidden_size, grid, grid]
             x = x.reshape(x.shape[0], x.shape[1], -1)  # [batch, hidden_size, grid ** 2]
