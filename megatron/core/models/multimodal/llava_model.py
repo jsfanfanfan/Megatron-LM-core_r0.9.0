@@ -495,7 +495,7 @@ class LLaVAModel(MegatronModule):
             image_embeddings = self.encoder_hidden_state
 
         if not self.add_projector and not self.pre_process and not self.add_decoder:
-            return image_embeddings
+            return image_embeddings, loss_mask
         
         if image_embeddings is not None:
             print(f"vision projection start! iamge embeddings size:{image_embeddings.size()}")

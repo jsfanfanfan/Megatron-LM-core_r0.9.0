@@ -370,12 +370,14 @@ class DistributedDataParallel(MegatronModule):
         """
         Context manager that turns off gradient synchronization.
         """
-        for bucket_group in self.bucket_groups + self.expert_parallel_bucket_groups:
+        # for bucket_group in self.bucket_groups + self.expert_parallel_bucket_groups:
+        for bucket_group in self.bucket_groups:
             bucket_group.is_last_microbatch = False
         try:
             yield
         finally:
-            for bucket_group in self.bucket_groups + self.expert_parallel_bucket_groups:
+            # for bucket_group in self.bucket_groups + self.expert_parallel_bucket_groups:
+            for bucket_group in self.bucket_groups:
                 bucket_group.is_last_microbatch = True
 
     def start_param_sync(self, *unused, force_sync: bool = False, force_dispatch: bool = False):
@@ -397,7 +399,8 @@ class DistributedDataParallel(MegatronModule):
             if self.overlap_param_gather_with_optimizer_step and not force_dispatch:
                 return
 
-        for bucket_group in self.bucket_groups + self.expert_parallel_bucket_groups:
+        # for bucket_group in self.bucket_groups + self.expert_parallel_bucket_groups:
+        for bucket_group in self.bucket_groups:
             bucket_group.start_param_sync(force_sync=force_sync)
 
     def start_grad_sync(self, *unused):
@@ -409,7 +412,8 @@ class DistributedDataParallel(MegatronModule):
         calls. When overlap_grad_reduce is set to False, calls synchronous
         communication ops.
         """
-        for bucket_group in self.bucket_groups + self.expert_parallel_bucket_groups:
+        # for bucket_group in self.bucket_groups + self.expert_parallel_bucket_groups:
+        for bucket_group in self.bucket_groups:
             bucket_group.start_grad_sync()
 
     def finish_grad_sync(self):
@@ -421,12 +425,14 @@ class DistributedDataParallel(MegatronModule):
         calls to complete. When overlap_grad_reduce is set to False, calls synchronous
         communication ops.
         """
-        for bucket_group in self.bucket_groups + self.expert_parallel_bucket_groups:
+        # for bucket_group in self.bucket_groups + self.expert_parallel_bucket_groups:
+        for bucket_group in self.bucket_groups:
             bucket_group.finish_grad_sync()
 
     def scale_gradients(self, scaling_factor: float):
         """Scale all gradients inside the buffers by `scaling_factor`."""
-        for buffer in self.buffers + self.expert_parallel_buffers:
+        # for buffer in self.buffers + self.expert_parallel_buffers:
+        for buffer in self.buffers:
             buffer.scale_gradients(scaling_factor)
 
     def zero_grad_buffer(self):
@@ -436,12 +442,14 @@ class DistributedDataParallel(MegatronModule):
         """
         for param in self.params_with_grad:
             param.grad_added_to_main_grad = False
-        '''
-        for buffer in self.buffers + self.expert_parallel_buffers:
+        
+        # for buffer in self.buffers + self.expert_parallel_buffers:
+        for buffer in self.buffers:
             buffer.reset()
-        for bucket_group in self.bucket_groups + self.expert_parallel_bucket_groups:
+        # for bucket_group in self.bucket_groups + self.expert_parallel_bucket_groups:
+        for bucket_group in self.bucket_groups:
             bucket_group.reset()
-        '''
+        
 
     def broadcast_params(self):
         """

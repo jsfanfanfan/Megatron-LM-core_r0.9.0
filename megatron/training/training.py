@@ -967,13 +967,16 @@ def training_log(loss_dict, total_loss_dict, learning_rate, decoupled_learning_r
         if wandb_writer:
             wandb_writer.log({'samples vs steps': args.consumed_train_samples},
                              iteration)
-        writer.add_scalar('learning-rate', learning_rate, iteration)
+        # 学习率为什么是 NoneType？
+        if learning_rate is not None:
+            writer.add_scalar('learning-rate', learning_rate, iteration)
         if args.decoupled_lr is not None:
             writer.add_scalar('decoupled-learning-rate', decoupled_learning_rate, iteration)
-        writer.add_scalar('learning-rate vs samples', learning_rate,
-                          args.consumed_train_samples)
-        if wandb_writer:
-            wandb_writer.log({'learning-rate': learning_rate}, iteration)
+        if learning_rate is not None:
+            writer.add_scalar('learning-rate vs samples', learning_rate,
+                            args.consumed_train_samples)
+            if wandb_writer:
+                wandb_writer.log({'learning-rate': learning_rate}, iteration)
         if args.skipped_train_samples > 0:
             writer.add_scalar('skipped-train-samples', args.skipped_train_samples, iteration)
             if wandb_writer:
@@ -1078,10 +1081,14 @@ def training_log(loss_dict, total_loss_dict, learning_rate, decoupled_learning_r
         log_string += ' learning rate: {:.6E} |'.format(learning_rate)
         if args.decoupled_lr is not None and (mpu.is_pipeline_first_stage(ignore_virtual=True) or
                                               mpu.is_pipeline_last_stage(ignore_virtual=True)):
-            assert decoupled_learning_rate is not None
+            # assert decoupled_learning_rate is not None
+            if decoupled_learning_rate is None:
+                decoupled_learning_rate = 0.0
             log_string += ' decoupled learning rate: {:.6E} |'.format(decoupled_learning_rate)
         else:
-            assert decoupled_learning_rate is None
+            # assert decoupled_learning_rate is None
+            if decoupled_learning_rate is None:
+                decoupled_learning_rate = 0.0
         log_string += ' global batch size: {:5d} |'.format(batch_size)
         for key in total_loss_dict:
             if key not in [advanced_iters_key, skipped_iters_key,
@@ -1106,7 +1113,8 @@ def training_log(loss_dict, total_loss_dict, learning_rate, decoupled_learning_r
         total_loss_dict[skipped_iters_key] = 0
         total_loss_dict[nan_iters_key] = 0
         print_rank_last(log_string)
-        if report_memory_flag and learning_rate > 0.:
+        # if report_memory_flag and learning_rate > 0.:
+        if report_memory_flag:
             # Report memory after optimizer state has been initialized.
             if torch.distributed.get_rank() == 0:
                 num_microbatches = get_num_microbatches()
@@ -1381,13 +1389,20 @@ def train(forward_step_func, model, optimizer, opt_param_scheduler,
         if args.log_params_norm:
             params_norm = calc_params_l2_norm(model)
 
-        learning_rate = None
-        decoupled_learning_rate = None
+        learning_rate = 0.0
+        decoupled_learning_rate = 0.0
         for param_group in optimizer.param_groups:
-            if param_group['is_decoupled_lr']:
-                decoupled_learning_rate = param_group['lr']
+            # 优化器的参数组没有参数时，lr 给 0 值
+            if param_group['lr'] is not None:
+                if param_group['is_decoupled_lr']:
+                    decoupled_learning_rate = param_group['lr']
+                    learning_rate = param_group['lr']
+                else:
+                    learning_rate = param_group['lr']
             else:
-                learning_rate = param_group['lr']
+                learning_rate = 0.0
+                decoupled_learning_rate = 0.0
+
         report_memory_flag = training_log(loss_dict, total_loss_dict,
                                           learning_rate,
                                           decoupled_learning_rate,

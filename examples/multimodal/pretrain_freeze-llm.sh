@@ -84,7 +84,7 @@ OPTIONS=" \
     --hidden-dropout ${HD} \
     --tensor-model-parallel-size 4 \
     --pipeline-model-parallel-size 5 \
-    --split-spec "26,8,8,8,8"
+    --split-spec "22,9,9,9,9"
     --num-layers 32 \
     --hidden-size 4096 \
     --num-attention-heads 32 \

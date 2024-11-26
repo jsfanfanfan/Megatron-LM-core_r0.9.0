@@ -67,13 +67,15 @@
 
 megatron/core/pipeline_parallel/schedules.py 1193 行
 
-p2p 通信接收 tensor 时有张量 size 参数，由于模型异构，这个p2p通信接收张量的 size 有问题。
+p2p 通信接收 tensor 时有张量 size 参数，由于模型异构，这个p2p通信接收张量的 size 有问题。 解决
 
 构建 self.decoder 的时候传递参数带 config，这个 config 带有 start_layer 和 end_layer
 
 新问题：有的 stage 发送和接收的 tensor 的 shape 不一样，反向传播的时候出问题
 
-schedules.py 1487
+schedules.py 1487 解决
+
+模型划分在 encoder 时，前向传播的输入怎么从上个流水级获取？需要参考 llm 的做法
     
 
 
