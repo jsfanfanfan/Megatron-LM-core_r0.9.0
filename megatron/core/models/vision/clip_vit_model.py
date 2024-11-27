@@ -37,6 +37,8 @@ class CLIPViTModel(VisionModule):
         post_process: bool = True,
         add_encoder: bool = True,
         add_decoder: bool = True,
+        add_projector: bool = False,
+        projector_finished: bool = False,
         ln_pre_impl: Union[ModuleSpec, type] = TENorm,
         add_class_token: bool = True,
         class_token_len: int = 1,
@@ -54,6 +56,8 @@ class CLIPViTModel(VisionModule):
         self.add_decoder = add_decoder
         self.pre_process = pre_process
         self.post_process = post_process
+        self.add_projector = add_projector
+        self.projector_finished = projector_finished
         self.class_token_len = class_token_len
         self.visual_hidden_size = transformer_config.hidden_size
         self.patch_dim = patch_dim
@@ -112,6 +116,8 @@ class CLIPViTModel(VisionModule):
             add_decoder=self.add_decoder,
             pre_process=True,
             post_process=False,
+            add_projector=self.add_projector,
+            projector_finished=False,
         )
 
     def set_input_tensor(self, input_tensor: torch.Tensor) -> None:

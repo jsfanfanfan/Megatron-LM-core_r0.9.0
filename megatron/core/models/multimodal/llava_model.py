@@ -76,6 +76,7 @@ class LLaVAModel(MegatronModule):
         add_encoder: bool = True,
         encoder_pre_process: bool = True,
         add_projector: bool = True,
+        projector_finished: bool = False,
         add_decoder: bool = True,
         pre_process: bool = True,
         post_process: bool = True,
@@ -97,6 +98,7 @@ class LLaVAModel(MegatronModule):
         self.add_encoder = add_encoder
         self.encoder_pre_process = encoder_pre_process
         self.add_projector = add_projector
+        self.projector_finished = projector_finished
         self.add_decoder = add_decoder
         self.pre_process = pre_process
         self.post_process = post_process
@@ -125,6 +127,8 @@ class LLaVAModel(MegatronModule):
                 encoder_pre_process=self.encoder_pre_process,
                 add_encoder=self.add_encoder,
                 add_decoder=self.add_decoder,
+                add_projector=self.add_projector,
+                projector_finished=self.projector_finished,
                 rotary_base=language_rotary_base,
             )
             self.share_embeddings_and_output_weights = (
@@ -142,6 +146,8 @@ class LLaVAModel(MegatronModule):
                 post_process=self.post_process,
                 add_encoder=self.add_encoder,
                 add_decoder=self.add_decoder,
+                add_projector=self.add_projector,
+                projector_finished=self.projector_finished,
                 img_h=img_h,
                 img_w=img_w,
                 class_token_len=class_token_len,

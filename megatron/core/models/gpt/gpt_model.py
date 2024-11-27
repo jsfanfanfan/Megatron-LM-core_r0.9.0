@@ -66,6 +66,8 @@ class GPTModel(LanguageModule):
         encoder_pre_process: bool = True,
         add_encoder: bool = True,
         add_decoder: bool = True,
+        add_projector: bool = False,
+        projector_finished: bool = False,
         fp16_lm_cross_entropy: bool = False,
         parallel_output: bool = True,
         share_embeddings_and_output_weights: bool = False,
@@ -87,6 +89,8 @@ class GPTModel(LanguageModule):
         self.encoder_pre_process = encoder_pre_process
         self.add_encoder = add_encoder
         self.add_decoder = add_decoder
+        self.add_projector = add_projector
+        self.projector_finished = projector_finished
         self.fp16_lm_cross_entropy = fp16_lm_cross_entropy
         self.parallel_output = parallel_output
         self.share_embeddings_and_output_weights = share_embeddings_and_output_weights
@@ -126,6 +130,8 @@ class GPTModel(LanguageModule):
             post_process=self.post_process,
             add_decoder=self.add_decoder,
             add_encoder=self.add_encoder,
+            add_projector=self.add_projector,
+            projector_finished=True,
             encoder_pre_process=self.encoder_pre_process,
         )
 

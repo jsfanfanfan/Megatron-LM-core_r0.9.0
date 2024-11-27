@@ -187,7 +187,9 @@ class TransformerBlock(MegatronModule):
         post_process: bool = True,
         encoder_pre_process: bool = True,
         add_encoder: bool = True,
-        add_decoder: bool = True
+        add_decoder: bool = True,
+        add_projector: bool = True,
+        projector_finished: bool = True,
     ):
         super().__init__(config=config)
         # 通过 TransforemrConfig 和 spec 得到 submodules，这里 get_num_layers_to_build 计算构建多少层
@@ -198,6 +200,8 @@ class TransformerBlock(MegatronModule):
         self.encoder_pre_process = encoder_pre_process
         self.add_encoder = add_encoder
         self.add_decoder = add_decoder
+        self.add_projector = add_projector
+        self.projector_finished = projector_finished
         # 存储 CUDA graphs 的字典. Number of items in the dictionary = len(self.layers).
         # Item `i` in the dictionary is a list of `N` CUDA graphs for layer 'i' where N is the
         # number of microbatches. Multiple CUDA graphs per layer is required to support
@@ -404,6 +408,8 @@ class TransformerBlock(MegatronModule):
             Union[Tensor, Tuple[Tensor, Tensor]]: The output hidden states tensor of shape
             [s, b, h], and optionally the updated context tensor if cross-attention is used.
         """
+        # hidden state 是从上一个 module 传递过来的
+        # input tensor 是从上一个 stage 传递过来的
         hidden_states_copy = hidden_states
         if hidden_states is not None:
             print(f"222 hidden state size:{hidden_states.size()}")
@@ -416,7 +422,10 @@ class TransformerBlock(MegatronModule):
                 print(f"111111 hidden states:{hidden_states.size()}")
             if self.input_tensor is not None:
                 print(f"111111 input tensor:{self.input_tensor.size()}")
-        if self.add_encoder and not self.encoder_pre_process and self.add_decoder and self.pre_process:
+        # 判断特殊情况
+        if self.add_encoder and not self.encoder_pre_process and self.add_decoder \
+            and self.pre_process and self.projection_finished and self.add_projector:
+            print("66666666666")
             hidden_states = hidden_states_copy
         if self.add_decoder and not self.pre_process:
             print("55555555555")

@@ -26,7 +26,7 @@ from dataloader_provider import train_valid_test_dataloaders_provider
 def model_provider(
     add_encoder=True, encoder_pre_process=True, 
     stage_encoder_transformer_layer_num=24,
-    add_projector=True, 
+    add_projector=True, projector_finished=False,
     add_decoder=True, pre_process=True, post_process=True,
     stage_llm_transformer_layer_num=8,
     start_layer=1,
@@ -142,6 +142,7 @@ def model_provider(
         add_encoder=add_encoder,
         encoder_pre_process=encoder_pre_process,
         add_projector=add_projector,
+        projector_finished=projector_finished,
         add_decoder=add_decoder,
         pre_process=pre_process,
         post_process=post_process,
