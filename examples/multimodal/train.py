@@ -363,14 +363,6 @@ def forward_step(data_iterator, model: LLaVAModel):
     # Get the batch.
     timers('batch-generator', log_level=2).start()
     tokens, labels, loss_mask, attention_mask, position_ids, images, num_image_tiles = get_batch(data_iterator)
-    print(f"get batch end! tokens size:{tokens.size()}")
-    print(f"get batch end! labels size:{labels.size()}")
-    print(f"get batch end! loss_mask size:{loss_mask.size()}")
-    print(f"get batch end! attention_mask:{attention_mask.size()}")
-    print(f"get batch end! position_ids:{position_ids.size()}")
-    print(f"get batch end! images size:{images.size()}")
-    print(f"get batch end! num_image_tiles:{num_image_tiles.size()}")
-
     timers('batch-generator').stop()
 
     output_tensor, loss_mask = model(images, tokens, position_ids, attention_mask, labels, loss_mask, num_image_tiles=num_image_tiles)

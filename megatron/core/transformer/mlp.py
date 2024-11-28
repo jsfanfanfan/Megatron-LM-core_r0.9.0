@@ -6,6 +6,7 @@ from typing import Optional, Tuple, Union
 import numpy as np
 import torch
 import torch.nn.functional as F
+from torch import Tensor
 
 from megatron.core import parallel_state
 from megatron.core.dist_checkpointing import ShardedTensor
@@ -52,12 +53,28 @@ class MLP(MegatronModule):
         submodules: MLPSubmodules,
         is_expert: bool = False,
         input_size: int = None,
+        pre_process: bool = True,
+        post_process: bool = True,
+        encoder_pre_process: bool = True,
+        add_encoder: bool = True,
+        add_decoder: bool = True,
+        add_projector: bool = True,
+        projector_finished: bool = True,
     ):
         super().__init__(config=config)
 
         self.config: TransformerConfig = config
+        self.pre_process = pre_process
+        self.post_process = post_process
+        self.encoder_pre_process = encoder_pre_process
+        self.add_encoder = add_encoder
+        self.add_decoder = add_decoder
+        self.add_projector = add_projector
+        self.projector_finished = projector_finished
 
         self.input_size = input_size if input_size != None else self.config.hidden_size
+        # pipeline schedules needed
+        self.input_tensor = None
 
         # If this is a gated linear unit we double the output width, see https://arxiv.org/pdf/2002.05202.pdf
         ffn_hidden_size = self.config.ffn_hidden_size
@@ -92,11 +109,21 @@ class MLP(MegatronModule):
             tp_comm_buffer_name='fc2',
         )
 
-    def forward(self, hidden_states):
+    def set_input_tensor(self, input_tensor: Tensor):
+        """设置使用的输入张量而不是 forward() 的输出.
 
+        当做流水线并行时 ，从上一个流水级来的输入是通过同通信, 
+        而不是来自输入, 所以模型的 forward_step_func() 没有输入. 
+        This function is thus
+        used by internal code to 绕过
+        forward_step_func() 提供的输入 """
+        self.input_tensor = input_tensor
+
+    def forward(self, hidden_states):
+        if not self.add_decoder and not self.add_encoder and self.add_projector:
+            hidden_states = self.input_tensor
         # [s, b, 4 * h/p]
         intermediate_parallel, bias_parallel = self.linear_fc1(hidden_states)
-
         if self.config.bias_activation_fusion:
             if self.activation_func == F.gelu:
                 if self.config.gated_linear_unit:
@@ -116,7 +143,6 @@ class MLP(MegatronModule):
             if bias_parallel is not None:
                 intermediate_parallel = intermediate_parallel + bias_parallel
             if self.config.gated_linear_unit:
-
                 def glu(x):
                     x = torch.chunk(x, 2, dim=-1)
                     return self.config.activation_func(x[0]) * x[1]
@@ -124,10 +150,8 @@ class MLP(MegatronModule):
                 intermediate_parallel = glu(intermediate_parallel)
             else:
                 intermediate_parallel = self.activation_func(intermediate_parallel)
-
         # [s, b, h]
         output, output_bias = self.linear_fc2(intermediate_parallel)
-
         return output, output_bias
 
     def sharded_state_dict(

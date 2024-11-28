@@ -76,6 +76,8 @@ p2p 通信接收 tensor 时有张量 size 参数，由于模型异构，这个p2
 schedules.py 1487 解决
 
 模型划分在 encoder 时，前向传播的输入怎么从上个流水级获取？需要参考 llm 的做法
+
+MLP 怎么单独在一个流水级？怎么把 hidden state 作为 MLP 的输入？
     
 
 

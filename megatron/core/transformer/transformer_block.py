@@ -411,32 +411,15 @@ class TransformerBlock(MegatronModule):
         # hidden state 是从上一个 module 传递过来的
         # input tensor 是从上一个 stage 传递过来的
         hidden_states_copy = hidden_states
-        if hidden_states is not None:
-            print(f"222 hidden state size:{hidden_states.size()}")
-        if self.input_tensor is not None:
-            print(f"333 self.input tensor size:{self.input_tensor.size()}")
         if self.add_encoder and not self.encoder_pre_process:
-            print("444444444444")
             hidden_states = self.input_tensor
-            if hidden_states is not None:
-                print(f"111111 hidden states:{hidden_states.size()}")
-            if self.input_tensor is not None:
-                print(f"111111 input tensor:{self.input_tensor.size()}")
         # 判断特殊情况
         if self.add_encoder and not self.encoder_pre_process and self.add_decoder \
-            and self.pre_process and self.projection_finished and self.add_projector:
-            print("66666666666")
+            and self.pre_process and self.projector_finished and self.add_projector:
             hidden_states = hidden_states_copy
         if self.add_decoder and not self.pre_process:
-            print("55555555555")
             # See set_input_tensor()
             hidden_states = self.input_tensor
-
-        if hidden_states is not None:
-            print(f"222222 hidden states:{hidden_states.size()}")
-        if self.input_tensor is not None:
-            print(f"222222 tensor:{self.input_tensor.size()}")
-        print(f"TransformerBlock hidden states size:{hidden_states.size()}")
 
         # Viewless tensor.
         # - We only need to create a viewless tensor in the case of micro batch

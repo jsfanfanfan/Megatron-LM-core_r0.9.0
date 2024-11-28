@@ -6,6 +6,8 @@ from megatron.core.transformer.spec_utils import ModuleSpec, build_module
 from megatron.core.transformer.transformer_config import TransformerConfig
 from megatron.core.utils import make_viewless_tensor
 
+import torch
+
 
 class MultimodalProjector(MegatronModule):
     """
@@ -26,14 +28,29 @@ class MultimodalProjector(MegatronModule):
         submodules: MLPSubmodules,
         projector_type: str,
         input_size: int,
+        pre_process: bool = True,
+        post_process: bool = True,
+        encoder_pre_process: bool = True,
+        add_encoder: bool = True,
+        add_decoder: bool = True,
+        add_projector: bool = True,
+        projector_finished: bool = True,
     ):
+
         super().__init__(config=config)
         self.projector_type = projector_type
-
+        self.pre_process = pre_process
+        self.post_process = post_process
+        self.encoder_pre_process = encoder_pre_process
+        self.add_encoder = add_encoder
+        self.add_decoder = add_decoder
+        self.add_projector = add_projector
+        self.projector_finished = projector_finished
         assert submodules is not None, "MLPSubmodules must be provided"
 
         if self.projector_type == "mlp": # 2 个 Linear 层
-            self.encoder = MLP(config=config, submodules=submodules, input_size=input_size)
+            self.encoder = MLP(config=config, submodules=submodules, input_size=input_size,
+                               add_encoder=add_encoder, add_projector=add_projector, add_decoder=add_decoder)
         elif self.projector_type == "affine":
             self.encoder = build_module( # 1 个 Linear 层
                 submodules.linear_fc1,
@@ -49,12 +66,20 @@ class MultimodalProjector(MegatronModule):
             )
         else:
             raise Exception(f"Unsupported multimodal projection type {self.projector_type}")
+        
+    def set_input_tensor(self, input_tensor: torch.Tensor) -> None:
+        """给 clip-vit 的 self.decoder(transformer层, 一个 transformer_block 类) 设置输入
+
+        Args:
+            input_tensor (Tensor): Sets the input tensor for the model.
+        """
+        self.encoder.set_input_tensor(input_tensor)
 
     def forward(self, hidden_states):
-        # Run encoder.
         """接收 encoder 最后一层 transformer 的 hidden states, 生成 encoder_output"""
+        # print(f"mlp forward begin hidden states:{hidden_states.size()}")
         encoder_output, encoder_output_bias = self.encoder(hidden_states)
-
+        # print(f"mlp forward end hidden states:{hidden_states.size()}")
         if encoder_output_bias is not None:
             encoder_output = encoder_output + encoder_output_bias
 

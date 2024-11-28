@@ -362,17 +362,8 @@ def backward_step(input_tensor, output_tensor, output_tensor_grad, model_type, c
     # 添加一行使用 torch.autograd.backward
     config.deallocate_pipeline_outputs = False
     if config.deallocate_pipeline_outputs:
-        if output_tensor[0] is not None:
-            print(f"custom_backward output_tensor[0]:{output_tensor[0].shape}")
-        if output_tensor_grad[0] is not None:
-            print(f"output_tensor_grad[0]:{output_tensor_grad[0].shape}")
         custom_backward(output_tensor[0], output_tensor_grad[0])
     else:
-        print(f"torch.autograd.backward")
-        if output_tensor[0] is not None:
-            print(f"custom_backward output_tensor[0]:{output_tensor[0].shape}")
-        if output_tensor_grad[0] is not None:
-            print(f"output_tensor_grad[0]:{output_tensor_grad[0].shape}")
         torch.autograd.backward(output_tensor[0], grad_tensors=output_tensor_grad[0])
 
     # Collect the grad of the input_tensor.
@@ -384,8 +375,6 @@ def backward_step(input_tensor, output_tensor, output_tensor_grad, model_type, c
                 input_tensor_grad.append(None)
             else:
                 input_tensor_grad.append(x.grad)
-
-    print(f"backward step:{input_tensor_grad}")
 
     # Handle single skip connection if it exists (encoder_hidden_state in
     # model with encoder and decoder).
@@ -1204,20 +1193,21 @@ def get_receive_tensor_shapes( # 1387 行调用
     """
     start_layer = config.start_layer
     end_layer = config.end_layer
-    print(f"start layer:{start_layer}")
     if model_type == ModelType.encoder_and_decoder:
         # 这里需要修改 tensor_shapes 的逻辑
         # 如果划分在 encoder 的 transformer 层，tensor_shape 是 [encoder_seq_length, micro_batch_size, encoder_hidden_size]
         # 如果划分在 llm 的 transformer 层，tensor_shape 是 [decoderseq_length, micro_batch_size, decoder_hidden_size]
         # if parallel_state.is_inside_encoder(rank):
-        if start_layer <= 27:
+        if start_layer <= 26:
             # tensor_shapes.append((seq_length, micro_batch_size, config.hidden_size))
             tensor_shapes.append((seq_length, micro_batch_size, 1024))
         elif encoder_decoder_xattn:
             tensor_shapes.append((1024, micro_batch_size, config.hidden_size))
             tensor_shapes.append((seq_length, micro_batch_size, config.hidden_size))
-        else:
+        elif start_layer == 27:
             # tensor_shapes.append((decoder_seq_length, micro_batch_size, config.hidden_size))
+            tensor_shapes.append((seq_length, micro_batch_size, config.hidden_size))
+        else:
             tensor_shapes.append((1024, micro_batch_size, config.hidden_size))
     else:  # model_type == ModelType.encoder_or_decoder
         tensor_shapes.append((seq_length, micro_batch_size, config.hidden_size))
@@ -1257,20 +1247,22 @@ def get_send_tensor_shapes( # 1396 行调用
             )
     """
     end_layer = config.end_layer
-    print(f"start layer:{end_layer}")
     if model_type == ModelType.encoder_and_decoder:
         # 这里需要修改 tensor_shapes 的逻辑
         # 如果划分在 encoder 的 transformer 层，tensor_shape 是 [encoder_seq_length, micro_batch_size, encoder_hidden_size]
         # 如果划分在 llm 的 transformer 层，tensor_shape 是 [decoderseq_length, micro_batch_size, decoder_hidden_size]
         # if parallel_state.is_inside_encoder(rank):
-        if end_layer >= 28:
+        if end_layer >= 27:
             tensor_shapes.append((1024, micro_batch_size, config.hidden_size))
         elif encoder_decoder_xattn:
             tensor_shapes.append((1024, micro_batch_size, config.hidden_size))
-            tensor_shapes.append((seq_length, micro_batch_size, config.hidden_size))
+            # tensor_shapes.append((seq_length, micro_batch_size, config.hidden_size))
+            tensor_shapes.append((576, micro_batch_size, 1024))
+        elif end_layer == 26:
+            tensor_shapes.append((576, micro_batch_size, config.hidden_size))
         else:
             # tensor_shapes.append((decoder_seq_length, micro_batch_size, config.hidden_size))
-            tensor_shapes.append((seq_length, micro_batch_size, config.hidden_size))
+            tensor_shapes.append((576, micro_batch_size, 1024))
     else:  # model_type == ModelType.encoder_or_decoder
         tensor_shapes.append((seq_length, micro_batch_size, config.hidden_size))
     return tensor_shapes
@@ -1437,7 +1429,6 @@ def forward_backward_pipelining_without_interleaving(
     encoder_decoder_xattn = get_model_xattn(model)
 
     rank = parallel_state.get_pipeline_model_parallel_rank()
-    print(f"schedules.py decoder_seq_length:{decoder_seq_length}")
     recv_tensor_shapes = get_receive_tensor_shapes( # 这里 get_tensor_shapes 出问题
         rank=rank - 1,
         model_type=model_type,
@@ -1456,7 +1447,6 @@ def forward_backward_pipelining_without_interleaving(
         config=config,
         encoder_decoder_xattn=encoder_decoder_xattn,
     )
-
     # Input, output tensors only need to be saved when doing backward passes
     input_tensors = None
     output_tensors = None
@@ -1477,9 +1467,7 @@ def forward_backward_pipelining_without_interleaving(
             )
         else:
             checkpoint_activations_microbatch = None
-        print(f"c:{recv_tensor_shapes}")
         input_tensor = recv_forward(recv_tensor_shapes, config)
-        print(f"receive input_tensor shapes:{input_tensor}")
         output_tensor, num_tokens = forward_step(
             forward_step_func,
             data_iterator,
@@ -1537,7 +1525,6 @@ def forward_backward_pipelining_without_interleaving(
             encoder_decoder_xattn=encoder_decoder_xattn,
         )
         total_num_tokens += num_tokens.item()
-        print(f"1111 output_tensor:{output_tensor[0].size()}")
         if forward_only:
             send_forward(output_tensor, send_tensor_shapes, config)
 
@@ -1545,19 +1532,14 @@ def forward_backward_pipelining_without_interleaving(
                 input_tensor = recv_forward(recv_tensor_shapes, config)
 
         else:
-            print(f"2222 output_tensor:{output_tensor[0].size()}")
             output_tensor_grad = send_forward_recv_backward( # 这里获取到的 output_tensor_grad 不对
                 output_tensor, send_tensor_shapes, config
             )
-            if output_tensor_grad[0] is not None:
-                print(f"----------output_tensor_grad:{output_tensor_grad[0].size()}")
             # Add input_tensor and output_tensor to end of list.
             input_tensors.append(input_tensor)
             output_tensors.append(output_tensor)
             # 下面有什么用？
             # deallocate_output_tensor(output_tensor[0], config.deallocate_pipeline_outputs)
-            print(f"3333 output_tensor:{output_tensor[0].size()}")
-            print(f"output tensors:{output_tensors}")
             # Pop input_tensor and output_tensor from the start of the list for
             # the backward pass.
             input_tensor = input_tensors.pop(0)
@@ -1568,7 +1550,6 @@ def forward_backward_pipelining_without_interleaving(
             if num_warmup_microbatches == 0 and last_iteration:
                 if config.grad_sync_func is None or rank == 0:
                     enable_grad_sync()
-            print(f"4444 output_tensor:{output_tensor[0].size()}")
             input_tensor_grad = backward_step( # 调用 329 行
                 input_tensor, output_tensor, output_tensor_grad, model_type, config
             )

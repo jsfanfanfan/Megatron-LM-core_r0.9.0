@@ -15,12 +15,13 @@ HAVE_APEX_OR_TE = True
 try:
     from transformer_engine.pytorch.optimizers import FusedAdam as Adam
 except ImportError:
-    try:
-        from apex.optimizers import FusedAdam as Adam
-    except ImportError:
-        from torch.optim import Adam
+    from torch.optim import Adam
+    # try:
+    #     from apex.optimizers import FusedAdam as Adam
+    # except ImportError:
+    #     from torch.optim import Adam
 
-        HAVE_APEX_OR_TE = False
+    HAVE_APEX_OR_TE = False
 
 from .. import tensor_parallel
 from ..config_logger import has_config_logger_enabled, log_config_to_disk

@@ -306,17 +306,11 @@ def pretrain(
         model_provider, model_type, checkpointing_context=checkpointing_context)
 
     timers('model-and-optimizer-setup').stop()
-    
     print_datetime('after model, optimizer, and learning rate '
                    'scheduler are built')
     app_metrics['app_build_optimizer_finish_time'] = one_logger_utils.get_timestamp_in_ms()
-
-    # 打印每个 rank 的获取的模型结构看看
-    print(model)
     
     config = get_model_config(model[0])
-
-    print(f"pretrain config{config}")
     
     # Data stuff.
     app_metrics['app_build_dataiters_start_time'] = one_logger_utils.get_timestamp_in_ms()
@@ -539,7 +533,7 @@ def  get_model(model_provider_func, model_type=ModelType.encoder_or_decoder, wra
                 # 修改后的 encoder_pre_process 逻辑
                 encoder_pre_process = (start_layer == 1)
                 # 修改后的 add_projector 逻辑：
-                add_projector = (start_layer <= encoder_layer_num + 1) and (end_layer >= encoder_layer_num + projector_layer_num) 
+                add_projector = (start_layer <= encoder_layer_num + 1) and (end_layer >= encoder_layer_num + projector_layer_num)
                 # 修改后的 add_decoder 逻辑：
                 add_decoder = (end_layer >= encoder_layer_num + projector_layer_num + 1)
                 # 修改后的 pre_process 逻辑：
@@ -815,7 +809,7 @@ def train_step(forward_step_func, data_iterator, # 被 1334 行调用
 
     # Forward pass.
     forward_backward_func = get_forward_backward_func()
-    losses_reduced = forward_backward_func( # schedules.py 1278 行 forward_backward_pipelining_without_interleaving
+    losses_reduced = forward_backward_func( # schedules.py 1345 行 forward_backward_pipelining_without_interleaving
         forward_step_func=forward_step_func,
         data_iterator=data_iterator,
         model=model,

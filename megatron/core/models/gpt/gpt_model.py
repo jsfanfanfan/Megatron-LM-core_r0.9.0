@@ -212,10 +212,8 @@ class GPTModel(LanguageModule):
 
         # Decoder embedding.
         if decoder_input is not None: # 实际走这条路
-            print("111111111111")
             pass
         elif self.pre_process:
-            print("222222222222")
             decoder_input = self.embedding(input_ids=input_ids, position_ids=position_ids)
         else:
             # intermediate stage of pipeline
@@ -229,8 +227,6 @@ class GPTModel(LanguageModule):
                 inference_params, self.decoder, decoder_input, self.config
             )
             rotary_pos_emb = self.rotary_pos_emb(rotary_seq_len)
-        if decoder_input is not None:
-            print(f"decoder begin! decoder input size:{decoder_input.size()}")
         # Run decoder.
         hidden_states = self.decoder(
             hidden_states=decoder_input,
@@ -240,9 +236,6 @@ class GPTModel(LanguageModule):
             packed_seq_params=packed_seq_params,
             **(extra_block_kwargs or {}),
         )
-        
-        if hidden_states is not None:
-            print(f"111 hidden state size:{hidden_states.size()}")
 
         if not self.post_process:
             return hidden_states

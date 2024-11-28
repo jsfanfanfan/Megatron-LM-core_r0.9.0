@@ -4,12 +4,14 @@ splits:
   train:
     datasets:
       - weight: 1.
+        # path: /datasets/fjs/LLaVA-Pretrain/wds
         path: /dat/fjs/data/LLaVA-Pretrain/wds
         subflavors:
           augmentation: false
   val:
     datasets:
       - weight: 1.
+        # path: /datasets/fjs/LLaVA-Pretrain/wds
         path: /dat/fjs/data/LLaVA-Pretrain/wds
         subflavors:
           augmentation: false

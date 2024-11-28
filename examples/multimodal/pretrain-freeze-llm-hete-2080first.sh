@@ -67,8 +67,6 @@ OPTIONS=" \
     --apply-layernorm-1p \
     --attention-softmax-in-fp32 \
     --normalization RMSNorm \
-    --transformer-impl transformer_engine \
-    --use-te \
     --group-query-attention \
     --num-query-groups 8 \
     --no-masked-softmax-fusion \
@@ -84,7 +82,7 @@ OPTIONS=" \
     --hidden-dropout ${HD} \
     --tensor-model-parallel-size 4 \
     --pipeline-model-parallel-size 5 \
-    --split-spec "22,9,9,9,9"
+    --split-spec "13,11,8,13,13"
     --num-layers 32 \
     --hidden-size 4096 \
     --num-attention-heads 32 \
@@ -127,6 +125,9 @@ OPTIONS=" \
     --log-interval ${LI} \
     --eval-iters 10 \
     --eval-interval 1000 \
+    --use-flash-attn \
+    --transformer-impl transformer_engine \
+    --use-te \
 "
 # --pretrained-checkpoint ${CHECKPOINT_DIR} \
 # --load ${FINETUNE_DIR} \
@@ -139,7 +140,6 @@ OPTIONS=" \
 # --bf16 \
 # --log-params-norm \
 # --log-num-zeros-in-grad \
-# --use-flash-attn \
 
 
 export NVTE_APPLY_QK_LAYER_SCALING=0
@@ -148,27 +148,35 @@ export NVTE_ALLOW_NONDETERMINISTIC_ALGO=${NONDETERMINISTIC_ATTN}
 GPUS_PER_NODE=4
 
 # Change for multinode config
-# gn=`hostname | awk -F "n" '{print int($2)}'`
+gn=`hostname | awk -F "n" '{print int($2)}'`
+# node 9,2,3,33,34 2080 + 2080ti + 2080ti + 3090 + 3090
+case $gn
+        in 9)
+        rank=0
+        ;;
+        2)
+        rank=1
+        ;;
+        3)
+        rank=2
+        ;;
+        33)
+        rank=3
+        ;;
+        *)
+        rank=4
+esac
 
-# case $gn
-#        in 59)
-#        rank=0
-#        ;;
-#        60)
-#       rank=1
-#        ;;
-#        *)
-#        rank=2
-# esac
-
-# MASTER_ADDR=`scontrol show hostname $SLURM_NODELIST| head -n 2 | tail -n 1`
-MASTER_ADDR=`scontrol show hostname $SLURM_NODELIST| head -n 1`
+MASTER_ADDR=`scontrol show hostname $SLURM_NODELIST| head -n 3 | tail -n 1`
+# MASTER_ADDR=`scontrol show hostname $SLURM_NODELIST| head -n 1`
 MASTER_PORT=2234
 NNODES=5
-# NODE_RANK=${rank:-"0"}
-NODE_RANK=$SLURM_PROCID
+NODE_RANK=${rank:-"0"}
+# NODE_RANK=$SLURM_PROCID
 WORLD_SIZE=$(($GPUS_PER_NODE*$NNODES))
 
 DISTRIBUTED_ARGS="--nproc_per_node $GPUS_PER_NODE --nnodes $NNODES --node_rank $NODE_RANK --master_addr $MASTER_ADDR --master_port $MASTER_PORT"
+
+echo $NODE_RANK
 
 torchrun $DISTRIBUTED_ARGS examples/multimodal/train.py ${OPTIONS}
