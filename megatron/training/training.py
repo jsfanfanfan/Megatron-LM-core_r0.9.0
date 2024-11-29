@@ -256,6 +256,7 @@ def pretrain(
     args = get_args()
     timers = get_timers()
 
+    print("11111" + timers.get_all_timers_string())
     if args.log_progress:
         append_to_progress_log("Starting job")
 
@@ -284,6 +285,7 @@ def pretrain(
 
     args = get_args()
     timers = get_timers()
+    print("22222" + timers.get_all_timers_string())
 
     # Track E2E metrics on pretrain start
     one_logger_utils.on_pretrain_start()
@@ -349,6 +351,8 @@ def pretrain(
     print_rank_0('done with setup ...')
     timers.log(['model-and-optimizer-setup',
                 'train/valid/test-data-iterators-setup'], barrier=True)
+    
+    print("33333" + timers.get_all_timers_string())
     one_logger = get_one_logger()
     one_logger and one_logger.log_metrics(app_metrics)
 
@@ -882,9 +886,10 @@ def training_log(loss_dict, total_loss_dict, learning_rate, decoupled_learning_r
     args = get_args()
     timers = get_timers()
     writer = get_tensorboard_writer()
+    print(f"tensorboard writer:{writer}")
     wandb_writer = get_wandb_writer()
     one_logger = get_one_logger()
-
+    print("training log" + timers.get_all_timers_string())
     # Advanced, skipped, and Nan iterations.
     advanced_iters_key = 'advanced iterations'
     skipped_iters_key = 'skipped iterations'
@@ -953,6 +958,9 @@ def training_log(loss_dict, total_loss_dict, learning_rate, decoupled_learning_r
 
     # Tensorboard values.
     # Timer requires all the ranks to call.
+    print(f"args.log_timers_to_tensorboard:{args.log_timers_to_tensorboard}")
+    print(f"iteration:{iteration}")
+    print(f"args.tensorboard_log_interval:{args.tensorboard_log_interval}")
     if args.log_timers_to_tensorboard and \
        (iteration % args.tensorboard_log_interval == 0):
         timers.write(timers_to_log, writer, iteration,
@@ -1016,6 +1024,7 @@ def training_log(loss_dict, total_loss_dict, learning_rate, decoupled_learning_r
                               args.consumed_train_samples)
             if wandb_writer:
                 wandb_writer.log({'params-norm': params_norm}, iteration)
+        print(f"args.log_memory_to_tensorboard:{args.log_memory_to_tensorboard}")
         if args.log_memory_to_tensorboard:
             mem_stats = torch.cuda.memory_stats()
             writer.add_scalar(
@@ -1202,7 +1211,7 @@ def train(forward_step_func, model, optimizer, opt_param_scheduler,
     args = get_args()
     timers = get_timers()
     one_logger = get_one_logger()
-
+    print("44444" + timers.get_all_timers_string())
     # Write args to tensorboard
     write_args_to_tensorboard()
 
@@ -1305,6 +1314,7 @@ def train(forward_step_func, model, optimizer, opt_param_scheduler,
         with_stack=True)
         prof.start()
 
+    print("55555" + timers.get_all_timers_string())
     while iteration < args.train_iters:
         if args.profile and torch.distributed.get_rank() in args.profile_ranks:
             if args.use_pytorch_profiler:
@@ -1383,8 +1393,8 @@ def train(forward_step_func, model, optimizer, opt_param_scheduler,
         if args.log_params_norm:
             params_norm = calc_params_l2_norm(model)
 
-        learning_rate = 0.0
-        decoupled_learning_rate = 0.0
+        learning_rate = 1e-5
+        decoupled_learning_rate = 1e-5
         for param_group in optimizer.param_groups:
             # 优化器的参数组没有参数时，lr 给 0 值
             if param_group['lr'] is not None:
@@ -1394,15 +1404,16 @@ def train(forward_step_func, model, optimizer, opt_param_scheduler,
                 else:
                     learning_rate = param_group['lr']
             else:
-                learning_rate = 0.0
-                decoupled_learning_rate = 0.0
-
+                learning_rate = 1e-5
+                decoupled_learning_rate = 1e-5
+        print(f"before training log report memory flag:{report_memory_flag}")
         report_memory_flag = training_log(loss_dict, total_loss_dict,
                                           learning_rate,
                                           decoupled_learning_rate,
                                           iteration, loss_scale,
                                           report_memory_flag, skipped_iter,
                                           grad_norm, params_norm, num_zeros_in_grad)
+        print(f"after training log report memory flag:{report_memory_flag}")
 
         # StragglerDetector
         if iteration % args.log_interval == 0 and args.log_straggler:

@@ -7,6 +7,7 @@ from abc import ABC, abstractmethod
 from typing import List
 
 import torch
+import torch.distributed
 
 
 class TimerBase(ABC):
@@ -363,7 +364,9 @@ class Timers:
         # If no input rank is provided, log on last rank.
         if rank is None:
             rank = torch.distributed.get_world_size() - 1
+            print(f"Timers log rank:{rank}")
         if rank == torch.distributed.get_rank() and output_string is not None:
+            print(f"rank:{rank} get_rank:{torch.distributed.get_rank()} output_string:{output_string}")
             print(output_string, flush=True)
 
     def write(

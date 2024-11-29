@@ -78,6 +78,19 @@ schedules.py 1487 解决
 模型划分在 encoder 时，前向传播的输入怎么从上个流水级获取？需要参考 llm 的做法
 
 MLP 怎么单独在一个流水级？怎么把 hidden state 作为 MLP 的输入？
+
+以上问题全部解决
+
+\
+\
+\
+下一步：
+
+1. timers 模块为什么无法显示？
+2. 在 Megatron 的划分方式下找到最好 GPU 排列作为 baseline
+3. 统计模型每一层的参数，按照设备算力划分模型可以作为 baseline
+4. HetPipe/HPH 等论文是怎么划分模型的？可以作为 baseline
+
     
 
 
