@@ -1,9 +1,9 @@
 examples/multimodal/pretrain-freeze-llm-hete-3090first.sh: line 4: activate: No such file or directory
 0
-[2024-11-28 18:40:38,025] torch.distributed.run: [WARNING] 
-[2024-11-28 18:40:38,025] torch.distributed.run: [WARNING] *****************************************
-[2024-11-28 18:40:38,025] torch.distributed.run: [WARNING] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
-[2024-11-28 18:40:38,025] torch.distributed.run: [WARNING] *****************************************
+[2024-11-29 15:19:04,007] torch.distributed.run: [WARNING] 
+[2024-11-29 15:19:04,007] torch.distributed.run: [WARNING] *****************************************
+[2024-11-29 15:19:04,007] torch.distributed.run: [WARNING] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+[2024-11-29 15:19:04,007] torch.distributed.run: [WARNING] *****************************************
 using world size: 20, data-parallel size: 1, context-parallel size: 1, tensor-model-parallel size: 4, pipeline-model-parallel size: 5, 
 WARNING: overriding default arguments for tokenizer_type:GPT2BPETokenizer                        with tokenizer_type:HuggingFaceTokenizer
 WARNING: Setting args.overlap_p2p_comm and args.align_param_gather to False since non-interleaved schedule does not support overlapping p2p communication and aligned param AG
@@ -300,7 +300,7 @@ using torch.float32 for parameters ...
   skipped_train_samples ........................... 0
   spec ............................................ None
   split ........................................... 100,0,0
-  split_spec ...................................... 24,8,8,8,10
+  split_spec ...................................... 26,8,8,8,8
   squared_relu .................................... False
   standalone_embedding_stage ...................... False
   start_weight_decay .............................. 0.01
@@ -380,16 +380,16 @@ You set `add_prefix_space`. The tokenizer needs to be converted from the slow to
 You set `add_prefix_space`. The tokenizer needs to be converted from the slow tokenizers
 You set `add_prefix_space`. The tokenizer needs to be converted from the slow tokenizers
 You set `add_prefix_space`. The tokenizer needs to be converted from the slow tokenizers
-------pipeline_parallel_model_size:5------
-------world_size:20------
-------total_model_size:20------
-------num_pipeline_model_parallel_groups:4------
-------pipeline_parallel_model_size:5------
-------world_size:20------
-------total_model_size:20------
-------num_pipeline_model_parallel_groups:4------
  > padded vocab (size: 32768) with 0 dummy tokens (new size: 32768)
 > initializing torch distributed ...
+------pipeline_parallel_model_size:5------
+------world_size:20------
+------total_model_size:20------
+------num_pipeline_model_parallel_groups:4------
+------pipeline_parallel_model_size:5------
+------world_size:20------
+------total_model_size:20------
+------num_pipeline_model_parallel_groups:4------
 ------pipeline_parallel_model_size:5------
 ------world_size:20------
 ------total_model_size:20------
@@ -399,338 +399,340 @@ You set `add_prefix_space`. The tokenizer needs to be converted from the slow to
 > setting random seeds to 1234 ...
 > compiling dataset index builder ...
 make: Entering directory '/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/megatron/core/datasets'
-make: Nothing to be done for 'default'.
-make: Leaving directory '/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/megatron/core/datasets'
->>> done with dataset index builder. Compilation time: 0.072 seconds
-WARNING: constraints for invoking optimized fused softmax kernel are not met. We default back to unfused kernel invocations.
-> compiling and loading fused kernels ...
 ------pipeline_parallel_model_size:5------
 ------world_size:20------
 ------total_model_size:20------
 ------num_pipeline_model_parallel_groups:4------
----Rank 2---Tensor Parallel Group GPUs: [2, 2, 2, 2]---Rank 1---Tensor Parallel Group GPUs: [1, 1, 1, 1]
+make: Nothing to be done for 'default'.
+make: Leaving directory '/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/megatron/core/datasets'
+>>> done with dataset index builder. Compilation time: 0.054 seconds
+WARNING: constraints for invoking optimized fused softmax kernel are not met. We default back to unfused kernel invocations.
+> compiling and loading fused kernels ...
+>>> done with compiling and loading fused kernels. Compilation time: 4.180 seconds---Rank 1---Tensor Parallel Group GPUs: [1, 1, 1, 1]
 
----Rank 3---Tensor Parallel Group GPUs: [3, 3, 3, 3]---Rank 2---Pipeline Parallel Group GPUs: [0, 0, 0, 0, 0]
+---Rank 3---Tensor Parallel Group GPUs: [3, 3, 3, 3]
+---Rank 2---Tensor Parallel Group GPUs: [2, 2, 2, 2]---Rank 1---Pipeline Parallel Group GPUs: [0, 0, 0, 0, 0]
 
----Rank 1---Pipeline Parallel Group GPUs: [0, 0, 0, 0, 0]
 ---Rank 3---Pipeline Parallel Group GPUs: [0, 0, 0, 0, 0]
->>> done with compiling and loading fused kernels. Compilation time: 2.830 seconds[rank1]:[W init.cpp:767] Warning: nvfuser is no longer supported in torch script, use _jit_set_nvfuser_enabled is deprecated and a no-op (function operator())
-
-[rank2]:[W init.cpp:767] Warning: nvfuser is no longer supported in torch script, use _jit_set_nvfuser_enabled is deprecated and a no-op (function operator())
+---Rank 2---Pipeline Parallel Group GPUs: [0, 0, 0, 0, 0]
+[rank1]:[W init.cpp:767] Warning: nvfuser is no longer supported in torch script, use _jit_set_nvfuser_enabled is deprecated and a no-op (function operator())
 [rank3]:[W init.cpp:767] Warning: nvfuser is no longer supported in torch script, use _jit_set_nvfuser_enabled is deprecated and a no-op (function operator())
 ---Rank 0---Tensor Parallel Group GPUs: [0, 0, 0, 0]
----Rank 0---Pipeline Parallel Group GPUs: [0, 0, 0, 0, 0]
+---Rank 0---Pipeline Parallel Group GPUs: [0, 0, 0, 0, 0][rank2]:[W init.cpp:767] Warning: nvfuser is no longer supported in torch script, use _jit_set_nvfuser_enabled is deprecated and a no-op (function operator())
+
 [rank0]:[W init.cpp:767] Warning: nvfuser is no longer supported in torch script, use _jit_set_nvfuser_enabled is deprecated and a no-op (function operator())
-time to initialize megatron (seconds): 78.371
-[after megatron is initialized] datetime: 2024-11-28 18:41:05 
+time to initialize megatron (seconds): 69.522
+[after megatron is initialized] datetime: 2024-11-29 15:19:23 
 building a multimodal model ...
 WARNING:megatron.core.models.multimodal.llava_model:LLaVA model is under active development. It may be missing features and its methods may change.
 WARNING:megatron.core.models.multimodal.llava_model:LLaVA model is under active development. It may be missing features and its methods may change.
 WARNING:megatron.core.models.multimodal.llava_model:LLaVA model is under active development. It may be missing features and its methods may change.
 WARNING:megatron.core.models.multimodal.llava_model:LLaVA model is under active development. It may be missing features and its methods may change.
- > number of parameters on (tensor, pipeline) model parallel rank (3, 0): 76883968
- > number of parameters on (tensor, pipeline) model parallel rank (1, 0): 76883968
- > number of parameters on (tensor, pipeline) model parallel rank (2, 0): 76883968
- > number of parameters on (tensor, pipeline) model parallel rank (0, 0): 76883968
+ > number of parameters on (tensor, pipeline) model parallel rank (3, 0): 95234048
+ > number of parameters on (tensor, pipeline) model parallel rank (1, 0): 95234048
+ > number of parameters on (tensor, pipeline) model parallel rank (2, 0): 95234048
+ > number of parameters on (tensor, pipeline) model parallel rank (0, 0): 95234048
 INFO:megatron.core.distributed.distributed_data_parallel:Setting up DistributedDataParallel with config DistributedDataParallelConfig(grad_reduce_in_fp32=False, overlap_grad_reduce=False, overlap_param_gather=False, align_param_gather=False, use_distributed_optimizer=False, check_for_nan_in_grad=True, bucket_size=None, average_in_collective=False, fp8_param_gather=False)
 INFO:megatron.core.distributed.param_and_grad_buffer:Number of buckets for gradient all-reduce / reduce-scatter: 1
-Params for bucket 1 (76883968 elements):
-	vision_model.decoder.layers.19.self_attention.linear_qkv.bias
-	vision_model.decoder.layers.16.self_attention.linear_qkv.bias
-	vision_model.decoder.layers.13.mlp.linear_fc1.layer_norm_weight
-	vision_model.decoder.layers.10.mlp.linear_fc1.layer_norm_bias
-	vision_model.decoder.layers.8.self_attention.linear_proj.bias
-	vision_model.decoder.layers.6.self_attention.linear_qkv.layer_norm_bias
-	vision_model.decoder.layers.3.self_attention.linear_qkv.layer_norm_bias
-	vision_model.decoder.layers.2.mlp.linear_fc2.bias
-	vision_model.ln_pre.bias
-	vision_model.decoder.layers.22.mlp.linear_fc2.bias
-	vision_model.decoder.layers.19.mlp.linear_fc1.bias
-	vision_model.decoder.layers.16.mlp.linear_fc1.bias
-	vision_model.decoder.layers.15.mlp.linear_fc2.weight
-	vision_model.decoder.layers.13.self_attention.linear_proj.weight
-	vision_model.decoder.layers.9.self_attention.linear_qkv.bias
-	vision_model.decoder.layers.6.mlp.linear_fc1.layer_norm_bias
-	vision_model.decoder.layers.5.mlp.linear_fc2.weight
-	vision_model.decoder.layers.3.mlp.linear_fc1.layer_norm_bias
-	vision_model.decoder.layers.0.self_attention.linear_proj.weight
-	vision_model.decoder.layers.3.self_attention.linear_qkv.layer_norm_weight
-	vision_model.decoder.layers.23.self_attention.linear_proj.bias
-	vision_model.decoder.layers.20.self_attention.linear_proj.bias
-	vision_model.decoder.layers.18.self_attention.linear_qkv.layer_norm_weight
-	vision_model.decoder.layers.17.mlp.linear_fc2.bias
-	vision_model.decoder.layers.14.self_attention.linear_qkv.weight
-	vision_model.decoder.layers.11.mlp.linear_fc2.bias
-	vision_model.decoder.layers.9.mlp.linear_fc1.bias
-	vision_model.decoder.layers.4.self_attention.linear_qkv.bias
-	vision_model.conv1.weight
-	vision_model.decoder.layers.0.self_attention.linear_proj.bias
-	vision_model.decoder.layers.21.self_attention.linear_qkv.bias
-	vision_model.decoder.layers.18.mlp.linear_fc1.layer_norm_weight
-	vision_model.decoder.layers.14.mlp.linear_fc1.weight
-	vision_model.decoder.layers.8.self_attention.linear_qkv.layer_norm_weight
-	vision_model.decoder.layers.7.mlp.linear_fc2.bias
-	vision_model.decoder.layers.4.mlp.linear_fc1.weight
-	vision_model.decoder.layers.1.mlp.linear_fc2.bias
-	vision_model.decoder.layers.2.self_attention.linear_qkv.bias
-	vision_model.decoder.layers.1.self_attention.linear_proj.weight
-	vision_model.decoder.layers.21.mlp.linear_fc1.bias
-	vision_model.decoder.layers.18.self_attention.linear_proj.weight
-	vision_model.decoder.layers.15.self_attention.linear_proj.bias
-	vision_model.decoder.layers.13.self_attention.linear_qkv.layer_norm_bias
-	vision_model.decoder.layers.8.mlp.linear_fc1.layer_norm_weight
-	vision_model.decoder.layers.5.self_attention.linear_proj.bias
-	vision_model.decoder.layers.4.mlp.linear_fc2.bias
-	vision_model.decoder.layers.0.mlp.linear_fc2.bias
-	vision_model.decoder.layers.0.self_attention.linear_qkv.layer_norm_bias
-	vision_model.decoder.layers.23.self_attention.linear_qkv.layer_norm_weight
-	vision_model.decoder.layers.20.self_attention.linear_qkv.layer_norm_weight
-	vision_model.decoder.layers.19.self_attention.linear_qkv.weight
-	vision_model.decoder.layers.16.self_attention.linear_qkv.weight
-	vision_model.decoder.layers.13.mlp.linear_fc1.layer_norm_bias
-	vision_model.decoder.layers.12.mlp.linear_fc2.weight
-	vision_model.decoder.layers.8.self_attention.linear_proj.weight
-	vision_model.decoder.layers.6.self_attention.linear_qkv.bias
-	vision_model.decoder.layers.3.self_attention.linear_qkv.bias
-	vision_model.decoder.layers.0.mlp.linear_fc2.weight
-	vision_model.class_token
-	vision_model.decoder.layers.23.mlp.linear_fc1.layer_norm_weight
-	vision_model.decoder.layers.20.mlp.linear_fc1.layer_norm_weight
-	vision_model.decoder.layers.19.mlp.linear_fc1.weight
-	vision_model.decoder.layers.16.mlp.linear_fc1.weight
-	vision_model.decoder.layers.9.self_attention.linear_qkv.weight
-	vision_model.decoder.layers.6.mlp.linear_fc1.bias
-	vision_model.decoder.layers.3.mlp.linear_fc1.bias
-	vision_model.decoder.layers.2.mlp.linear_fc2.weight
-	vision_model.decoder.layers.18.self_attention.linear_qkv.layer_norm_bias
-	vision_model.decoder.layers.23.self_attention.linear_proj.weight
-	vision_model.decoder.layers.22.mlp.linear_fc2.weight
-	vision_model.decoder.layers.20.self_attention.linear_proj.weight
-	vision_model.decoder.layers.17.self_attention.linear_proj.bias
-	vision_model.decoder.layers.15.self_attention.linear_qkv.layer_norm_weight
-	vision_model.decoder.layers.14.mlp.linear_fc2.bias
-	vision_model.decoder.layers.11.mlp.linear_fc1.bias
-	vision_model.decoder.layers.9.mlp.linear_fc1.weight
-	vision_model.decoder.layers.5.self_attention.linear_qkv.layer_norm_weight
-	vision_model.decoder.layers.21.self_attention.linear_qkv.weight
-	vision_model.decoder.layers.18.mlp.linear_fc1.layer_norm_bias
-	vision_model.decoder.layers.17.mlp.linear_fc2.weight
-	vision_model.decoder.layers.15.mlp.linear_fc1.layer_norm_weight
-	vision_model.decoder.layers.12.self_attention.linear_proj.bias
-	vision_model.decoder.layers.11.self_attention.linear_qkv.layer_norm_weight
-	vision_model.decoder.layers.8.self_attention.linear_qkv.layer_norm_bias
-	vision_model.decoder.layers.5.mlp.linear_fc1.layer_norm_weight
-	vision_model.decoder.layers.1.mlp.linear_fc1.bias
-	vision_model.decoder.layers.21.mlp.linear_fc1.weight
-	vision_model.decoder.layers.15.self_attention.linear_proj.weight
-	vision_model.decoder.layers.13.self_attention.linear_qkv.bias
-	vision_model.decoder.layers.11.self_attention.linear_proj.weight
-	vision_model.decoder.layers.8.mlp.linear_fc1.layer_norm_bias
-	vision_model.decoder.layers.7.mlp.linear_fc2.weight
-	vision_model.decoder.layers.5.self_attention.linear_proj.weight
-	vision_model.decoder.layers.2.self_attention.linear_proj.bias
-	vision_model.decoder.layers.23.self_attention.linear_qkv.layer_norm_bias
-	vision_model.decoder.layers.22.self_attention.linear_proj.bias
-	vision_model.decoder.layers.20.self_attention.linear_qkv.layer_norm_bias
-	vision_model.decoder.layers.19.mlp.linear_fc2.bias
-	vision_model.decoder.layers.16.mlp.linear_fc2.bias
-	vision_model.decoder.layers.13.mlp.linear_fc1.bias
-	vision_model.decoder.layers.10.self_attention.linear_proj.weight
-	vision_model.decoder.layers.6.self_attention.linear_qkv.weight
-	vision_model.decoder.layers.3.self_attention.linear_qkv.weight
-	vision_model.decoder.layers.0.mlp.linear_fc1.bias
-	vision_model.decoder.layers.23.mlp.linear_fc1.layer_norm_bias
-	vision_model.decoder.layers.20.mlp.linear_fc1.layer_norm_bias
-	vision_model.decoder.layers.12.self_attention.linear_qkv.layer_norm_weight
-	vision_model.decoder.layers.9.mlp.linear_fc2.bias
-	vision_model.decoder.layers.6.mlp.linear_fc1.weight
-	vision_model.decoder.layers.3.mlp.linear_fc1.weight
-	vision_model.decoder.layers.0.mlp.linear_fc1.weight
+Params for bucket 1 (95234048 elements):
 	vision_model.decoder.layers.18.self_attention.linear_qkv.bias
 	vision_model.decoder.layers.17.self_attention.linear_proj.weight
 	vision_model.decoder.layers.15.self_attention.linear_qkv.layer_norm_bias
 	vision_model.decoder.layers.12.mlp.linear_fc1.layer_norm_weight
-	vision_model.decoder.layers.10.mlp.linear_fc2.weight
+	vision_model.decoder.layers.10.mlp.linear_fc1.layer_norm_weight
 	vision_model.decoder.layers.7.self_attention.linear_proj.bias
-	vision_model.decoder.layers.5.self_attention.linear_qkv.layer_norm_bias
-	vision_model.decoder.layers.4.self_attention.linear_proj.bias
-	vision_model.decoder.layers.2.self_attention.linear_qkv.layer_norm_weight
-	vision_model.decoder.layers.0.mlp.linear_fc1.layer_norm_bias
-	vision_model.position_embeddings.weight
+	vision_model.decoder.layers.5.self_attention.linear_qkv.layer_norm_weight
+	vision_model.decoder.layers.1.mlp.linear_fc1.weight
 	vision_model.decoder.layers.22.self_attention.linear_qkv.layer_norm_weight
 	vision_model.decoder.layers.21.mlp.linear_fc2.bias
 	vision_model.decoder.layers.18.mlp.linear_fc1.bias
 	vision_model.decoder.layers.15.mlp.linear_fc1.layer_norm_bias
 	vision_model.decoder.layers.14.mlp.linear_fc2.weight
-	vision_model.decoder.layers.12.self_attention.linear_proj.weight
-	vision_model.decoder.layers.11.self_attention.linear_qkv.bias
+	vision_model.decoder.layers.11.mlp.linear_fc2.weight
+	vision_model.decoder.layers.10.self_attention.linear_proj.weight
 	vision_model.decoder.layers.8.self_attention.linear_qkv.bias
-	vision_model.decoder.layers.5.mlp.linear_fc1.layer_norm_bias
-	vision_model.decoder.layers.4.mlp.linear_fc2.weight
+	vision_model.decoder.layers.5.mlp.linear_fc1.layer_norm_weight
+	vision_model.decoder.layers.0.mlp.linear_fc1.layer_norm_weight
 	vision_model.decoder.layers.22.mlp.linear_fc1.layer_norm_weight
-	vision_model.decoder.layers.17.self_attention.linear_qkv.layer_norm_weight
+	vision_model.decoder.layers.19.self_attention.linear_proj.bias
 	vision_model.decoder.layers.13.self_attention.linear_qkv.weight
-	vision_model.decoder.layers.10.mlp.linear_fc2.bias
+	vision_model.decoder.layers.12.self_attention.linear_qkv.weight
 	vision_model.decoder.layers.8.mlp.linear_fc1.bias
-	vision_model.decoder.layers.2.self_attention.linear_proj.weight
-	vision_model.decoder.layers.23.self_attention.linear_qkv.bias
+	vision_model.decoder.layers.5.self_attention.linear_proj.weight
+	vision_model.decoder.layers.4.mlp.linear_fc2.weight
+	vision_model.decoder.layers.2.self_attention.linear_proj.bias
+	vision_model.decoder.layers.1.self_attention.linear_qkv.layer_norm_bias
+	vision_model.decoder.layers.0.mlp.linear_fc1.bias
 	vision_model.decoder.layers.22.self_attention.linear_proj.weight
 	vision_model.decoder.layers.20.self_attention.linear_qkv.bias
-	vision_model.decoder.layers.17.mlp.linear_fc1.layer_norm_weight
+	vision_model.decoder.layers.17.self_attention.linear_qkv.layer_norm_bias
+	vision_model.decoder.layers.16.mlp.linear_fc2.bias
 	vision_model.decoder.layers.13.mlp.linear_fc1.weight
+	vision_model.decoder.layers.10.mlp.linear_fc1.layer_norm_bias
 	vision_model.decoder.layers.7.self_attention.linear_qkv.layer_norm_weight
+	vision_model.decoder.layers.6.self_attention.linear_qkv.weight
+	vision_model.decoder.layers.3.self_attention.linear_qkv.weight
+	vision_model.decoder.layers.23.mlp.linear_fc2.bias
+	vision_model.decoder.layers.23.self_attention.linear_qkv.weight
+	vision_model.decoder.layers.20.mlp.linear_fc1.bias
+	vision_model.decoder.layers.17.mlp.linear_fc1.layer_norm_bias
+	vision_model.decoder.layers.14.self_attention.linear_proj.bias
+	vision_model.decoder.layers.12.self_attention.linear_qkv.layer_norm_bias
+	vision_model.decoder.layers.7.mlp.linear_fc1.layer_norm_weight
+	vision_model.decoder.layers.6.mlp.linear_fc1.weight
+	vision_model.decoder.layers.3.mlp.linear_fc1.weight
+	vision_model.position_embeddings.weight
+	vision_model.decoder.layers.19.self_attention.linear_qkv.layer_norm_weight
+	vision_model.decoder.layers.18.self_attention.linear_qkv.weight
+	vision_model.decoder.layers.15.self_attention.linear_qkv.bias
+	vision_model.decoder.layers.12.mlp.linear_fc1.layer_norm_bias
+	vision_model.decoder.layers.11.self_attention.linear_qkv.weight
+	vision_model.decoder.layers.9.mlp.linear_fc2.weight
+	vision_model.decoder.layers.7.self_attention.linear_proj.weight
+	vision_model.decoder.layers.5.self_attention.linear_qkv.layer_norm_bias
+	vision_model.decoder.layers.4.self_attention.linear_proj.bias
+	vision_model.decoder.layers.2.self_attention.linear_qkv.layer_norm_weight
+	vision_model.decoder.layers.1.self_attention.linear_proj.bias
+	vision_model.decoder.layers.22.self_attention.linear_qkv.layer_norm_bias
+	vision_model.decoder.layers.19.mlp.linear_fc1.layer_norm_weight
+	vision_model.decoder.layers.18.mlp.linear_fc1.weight
+	vision_model.decoder.layers.15.mlp.linear_fc1.bias
+	vision_model.decoder.layers.11.mlp.linear_fc1.weight
+	vision_model.decoder.layers.11.self_attention.linear_proj.bias
+	vision_model.decoder.layers.8.self_attention.linear_qkv.weight
+	vision_model.decoder.layers.5.mlp.linear_fc1.layer_norm_bias
+	vision_model.decoder.layers.2.mlp.linear_fc1.layer_norm_weight
+	vision_model.decoder.layers.22.mlp.linear_fc1.layer_norm_bias
+	vision_model.decoder.layers.21.mlp.linear_fc2.weight
+	vision_model.decoder.layers.19.self_attention.linear_proj.weight
+	vision_model.decoder.layers.14.self_attention.linear_qkv.layer_norm_weight
+	vision_model.decoder.layers.13.mlp.linear_fc2.bias
+	vision_model.decoder.layers.10.self_attention.linear_qkv.weight
+	vision_model.decoder.layers.8.mlp.linear_fc1.weight
+	vision_model.decoder.layers.2.self_attention.linear_proj.weight
+	vision_model.decoder.layers.1.self_attention.linear_qkv.weight
+	vision_model.decoder.layers.20.self_attention.linear_qkv.weight
+	vision_model.decoder.layers.17.self_attention.linear_qkv.bias
+	vision_model.decoder.layers.14.mlp.linear_fc1.layer_norm_weight
+	vision_model.decoder.layers.11.mlp.linear_fc1.layer_norm_weight
+	vision_model.decoder.layers.10.mlp.linear_fc1.bias
+	vision_model.decoder.layers.9.self_attention.linear_proj.bias
+	vision_model.decoder.layers.7.self_attention.linear_qkv.layer_norm_bias
 	vision_model.decoder.layers.6.mlp.linear_fc2.bias
+	vision_model.decoder.layers.4.self_attention.linear_qkv.layer_norm_weight
 	vision_model.decoder.layers.3.mlp.linear_fc2.bias
 	vision_model.ln_pre.weight
 	vision_model.decoder.layers.23.mlp.linear_fc1.bias
-	vision_model.decoder.layers.20.mlp.linear_fc1.bias
-	vision_model.decoder.layers.19.mlp.linear_fc2.weight
+	vision_model.decoder.layers.23.mlp.linear_fc1.weight
+	vision_model.decoder.layers.20.mlp.linear_fc1.weight
+	vision_model.decoder.layers.17.mlp.linear_fc1.bias
 	vision_model.decoder.layers.16.mlp.linear_fc2.weight
-	vision_model.decoder.layers.14.self_attention.linear_proj.bias
-	vision_model.decoder.layers.12.self_attention.linear_qkv.layer_norm_bias
-	vision_model.decoder.layers.10.mlp.linear_fc1.bias
-	vision_model.decoder.layers.7.mlp.linear_fc1.layer_norm_weight
-	vision_model.decoder.layers.18.self_attention.linear_qkv.weight
-	vision_model.decoder.layers.17.self_attention.linear_qkv.weight
-	vision_model.decoder.layers.15.self_attention.linear_qkv.bias
-	vision_model.decoder.layers.12.mlp.linear_fc1.layer_norm_bias
-	vision_model.decoder.layers.11.mlp.linear_fc2.weight
-	vision_model.decoder.layers.9.mlp.linear_fc2.weight
-	vision_model.decoder.layers.7.self_attention.linear_proj.weight
+	vision_model.decoder.layers.14.self_attention.linear_proj.weight
+	vision_model.decoder.layers.10.mlp.linear_fc1.weight
+	vision_model.decoder.layers.7.mlp.linear_fc1.layer_norm_bias
+	vision_model.decoder.layers.4.mlp.linear_fc1.layer_norm_weight
+	vision_model.decoder.layers.1.mlp.linear_fc2.bias
+	vision_projection.encoder.linear_fc2.weight
+	vision_model.decoder.layers.21.self_attention.linear_proj.bias
+	vision_model.decoder.layers.19.self_attention.linear_qkv.layer_norm_bias
+	vision_model.decoder.layers.18.mlp.linear_fc2.bias
+	vision_model.decoder.layers.15.self_attention.linear_qkv.weight
+	vision_model.decoder.layers.12.mlp.linear_fc1.bias
+	vision_model.decoder.layers.10.self_attention.linear_qkv.layer_norm_weight
 	vision_model.decoder.layers.5.self_attention.linear_qkv.bias
 	vision_model.decoder.layers.4.self_attention.linear_proj.weight
 	vision_model.decoder.layers.2.self_attention.linear_qkv.layer_norm_bias
-	vision_model.decoder.layers.22.self_attention.linear_qkv.layer_norm_bias
-	vision_model.decoder.layers.18.mlp.linear_fc1.weight
-	vision_model.decoder.layers.15.mlp.linear_fc1.bias
-	vision_model.decoder.layers.10.self_attention.linear_qkv.weight
-	vision_model.decoder.layers.8.self_attention.linear_qkv.weight
-	vision_model.decoder.layers.5.mlp.linear_fc1.bias
-	vision_model.decoder.layers.2.mlp.linear_fc1.layer_norm_bias
-	vision_model.decoder.layers.1.mlp.linear_fc2.weight
-	vision_model.decoder.layers.1.self_attention.linear_qkv.layer_norm_weight
-	vision_model.decoder.layers.0.self_attention.linear_qkv.bias
-	vision_model.decoder.layers.22.mlp.linear_fc1.layer_norm_bias
-	vision_model.decoder.layers.21.mlp.linear_fc2.weight
-	vision_model.decoder.layers.19.self_attention.linear_proj.bias
-	vision_model.decoder.layers.17.self_attention.linear_qkv.layer_norm_bias
-	vision_model.decoder.layers.16.self_attention.linear_proj.bias
-	vision_model.decoder.layers.14.self_attention.linear_qkv.layer_norm_weight
-	vision_model.decoder.layers.13.mlp.linear_fc2.bias
-	vision_model.decoder.layers.11.self_attention.linear_qkv.weight
-	vision_model.decoder.layers.8.mlp.linear_fc1.weight
-	vision_model.decoder.layers.4.self_attention.linear_qkv.layer_norm_weight
-	vision_model.decoder.layers.1.mlp.linear_fc1.weight
-	vision_model.decoder.layers.23.self_attention.linear_qkv.weight
-	vision_model.decoder.layers.20.self_attention.linear_qkv.weight
-	vision_model.decoder.layers.17.mlp.linear_fc1.layer_norm_bias
-	vision_model.decoder.layers.14.mlp.linear_fc1.layer_norm_weight
-	vision_model.decoder.layers.10.mlp.linear_fc1.layer_norm_weight
-	vision_model.decoder.layers.9.self_attention.linear_proj.bias
-	vision_model.decoder.layers.7.self_attention.linear_qkv.layer_norm_bias
-	vision_model.decoder.layers.4.mlp.linear_fc1.layer_norm_weight
-	vision_model.decoder.layers.23.mlp.linear_fc1.weight
-	vision_model.decoder.layers.20.mlp.linear_fc1.weight
-	vision_model.decoder.layers.14.self_attention.linear_proj.weight
-	vision_model.decoder.layers.12.self_attention.linear_qkv.bias
-	vision_model.decoder.layers.10.self_attention.linear_qkv.layer_norm_bias
-	vision_model.decoder.layers.7.mlp.linear_fc1.layer_norm_bias
-	vision_model.decoder.layers.6.mlp.linear_fc2.weight
-	vision_model.decoder.layers.3.mlp.linear_fc2.weight
-	vision_model.decoder.layers.21.self_attention.linear_proj.bias
-	vision_model.decoder.layers.19.self_attention.linear_qkv.layer_norm_weight
-	vision_model.decoder.layers.18.mlp.linear_fc2.bias
-	vision_model.decoder.layers.16.self_attention.linear_qkv.layer_norm_weight
-	vision_model.decoder.layers.15.self_attention.linear_qkv.weight
-	vision_model.decoder.layers.12.mlp.linear_fc1.bias
-	vision_model.decoder.layers.11.mlp.linear_fc1.weight
-	vision_model.decoder.layers.11.self_attention.linear_qkv.layer_norm_bias
-	vision_model.decoder.layers.5.self_attention.linear_qkv.weight
-	vision_model.decoder.layers.4.self_attention.linear_qkv.weight
-	vision_model.decoder.layers.19.mlp.linear_fc1.layer_norm_weight
+	vision_model.decoder.layers.1.self_attention.linear_proj.weight
 	vision_model.decoder.layers.22.self_attention.linear_qkv.bias
-	vision_model.decoder.layers.16.mlp.linear_fc1.layer_norm_weight
+	vision_model.decoder.layers.19.mlp.linear_fc1.layer_norm_bias
 	vision_model.decoder.layers.15.mlp.linear_fc1.weight
-	vision_model.decoder.layers.10.self_attention.linear_qkv.layer_norm_weight
+	vision_model.decoder.layers.10.self_attention.linear_qkv.bias
 	vision_model.decoder.layers.9.self_attention.linear_qkv.layer_norm_weight
 	vision_model.decoder.layers.8.mlp.linear_fc2.bias
-	vision_model.decoder.layers.5.mlp.linear_fc1.weight
-	vision_model.decoder.layers.2.mlp.linear_fc1.bias
-	vision_model.decoder.layers.0.self_attention.linear_qkv.weight
+	vision_model.decoder.layers.5.mlp.linear_fc1.bias
+	vision_model.decoder.layers.2.mlp.linear_fc1.layer_norm_bias
+	vision_model.decoder.layers.0.mlp.linear_fc1.layer_norm_bias
 	vision_model.decoder.layers.22.mlp.linear_fc1.bias
-	vision_model.decoder.layers.19.self_attention.linear_proj.weight
-	vision_model.decoder.layers.16.self_attention.linear_proj.weight
+	vision_model.decoder.layers.16.self_attention.linear_proj.bias
 	vision_model.decoder.layers.14.self_attention.linear_qkv.layer_norm_bias
-	vision_model.decoder.layers.11.mlp.linear_fc1.layer_norm_weight
-	vision_model.decoder.layers.10.mlp.linear_fc1.weight
+	vision_model.decoder.layers.10.mlp.linear_fc2.weight
+	vision_model.decoder.layers.10.self_attention.linear_qkv.layer_norm_bias
+	vision_model.decoder.layers.10.self_attention.linear_proj.bias
 	vision_model.decoder.layers.9.mlp.linear_fc1.layer_norm_weight
-	vision_model.decoder.layers.6.self_attention.linear_proj.bias
-	vision_model.decoder.layers.4.self_attention.linear_qkv.layer_norm_bias
-	vision_model.decoder.layers.3.self_attention.linear_proj.bias
-	vision_model.decoder.layers.2.mlp.linear_fc1.layer_norm_weight
-	vision_model.decoder.layers.0.self_attention.linear_qkv.layer_norm_weight
-	vision_model.decoder.layers.23.mlp.linear_fc2.bias
+	vision_model.decoder.layers.1.self_attention.linear_qkv.layer_norm_weight
+	vision_model.decoder.layers.0.self_attention.linear_qkv.layer_norm_bias
 	vision_model.decoder.layers.21.self_attention.linear_qkv.layer_norm_weight
 	vision_model.decoder.layers.20.mlp.linear_fc2.bias
-	vision_model.decoder.layers.17.mlp.linear_fc1.bias
+	vision_model.decoder.layers.17.self_attention.linear_qkv.weight
 	vision_model.decoder.layers.14.mlp.linear_fc1.layer_norm_bias
 	vision_model.decoder.layers.13.mlp.linear_fc2.weight
+	vision_model.decoder.layers.11.mlp.linear_fc1.layer_norm_bias
+	vision_model.decoder.layers.11.self_attention.linear_qkv.layer_norm_bias
 	vision_model.decoder.layers.9.self_attention.linear_proj.weight
 	vision_model.decoder.layers.7.self_attention.linear_qkv.bias
-	vision_model.decoder.layers.4.mlp.linear_fc1.layer_norm_bias
-	vision_model.decoder.layers.1.mlp.linear_fc1.layer_norm_weight
+	vision_model.decoder.layers.4.self_attention.linear_qkv.layer_norm_bias
+	vision_model.conv1.weight
 	vision_model.decoder.layers.21.mlp.linear_fc1.layer_norm_weight
-	vision_model.decoder.layers.12.self_attention.linear_qkv.weight
+	vision_model.decoder.layers.17.mlp.linear_fc1.weight
+	vision_model.decoder.layers.12.self_attention.linear_qkv.bias
+	vision_model.decoder.layers.11.self_attention.linear_proj.weight
 	vision_model.decoder.layers.7.mlp.linear_fc1.bias
-	vision_model.decoder.layers.1.self_attention.linear_qkv.bias
+	vision_model.decoder.layers.6.mlp.linear_fc2.weight
+	vision_model.decoder.layers.4.mlp.linear_fc1.layer_norm_bias
+	vision_model.decoder.layers.3.mlp.linear_fc2.weight
 	vision_model.decoder.layers.21.self_attention.linear_proj.weight
-	vision_model.decoder.layers.19.self_attention.linear_qkv.layer_norm_bias
-	vision_model.decoder.layers.16.self_attention.linear_qkv.layer_norm_bias
+	vision_model.decoder.layers.19.self_attention.linear_qkv.bias
+	vision_model.decoder.layers.16.self_attention.linear_qkv.layer_norm_weight
 	vision_model.decoder.layers.15.mlp.linear_fc2.bias
 	vision_model.decoder.layers.12.mlp.linear_fc1.weight
-	vision_model.decoder.layers.11.self_attention.linear_proj.bias
-	vision_model.decoder.layers.10.self_attention.linear_qkv.bias
-	vision_model.decoder.layers.10.self_attention.linear_proj.bias
-	vision_model.decoder.layers.6.self_attention.linear_qkv.layer_norm_weight
-	vision_model.decoder.layers.5.mlp.linear_fc2.bias
+	vision_model.decoder.layers.5.self_attention.linear_qkv.weight
+	vision_model.decoder.layers.2.self_attention.linear_qkv.bias
+	vision_model.decoder.layers.1.mlp.linear_fc1.layer_norm_weight
 	vision_model.decoder.layers.22.self_attention.linear_qkv.weight
-	vision_model.decoder.layers.19.mlp.linear_fc1.layer_norm_bias
+	vision_model.decoder.layers.19.mlp.linear_fc1.bias
 	vision_model.decoder.layers.18.mlp.linear_fc2.weight
-	vision_model.decoder.layers.16.mlp.linear_fc1.layer_norm_bias
+	vision_model.decoder.layers.16.mlp.linear_fc1.layer_norm_weight
 	vision_model.decoder.layers.13.self_attention.linear_proj.bias
+	vision_model.decoder.layers.11.self_attention.linear_qkv.layer_norm_weight
 	vision_model.decoder.layers.9.self_attention.linear_qkv.layer_norm_bias
-	vision_model.decoder.layers.6.mlp.linear_fc1.layer_norm_weight
-	vision_model.decoder.layers.3.mlp.linear_fc1.layer_norm_weight
-	vision_model.decoder.layers.2.mlp.linear_fc1.weight
-	vision_model.decoder.layers.1.self_attention.linear_qkv.weight
-	vision_model.decoder.layers.2.self_attention.linear_qkv.weight
+	vision_model.decoder.layers.5.mlp.linear_fc1.weight
+	vision_model.decoder.layers.2.mlp.linear_fc1.bias
+	vision_model.decoder.layers.0.self_attention.linear_qkv.layer_norm_weight
 	vision_model.decoder.layers.22.mlp.linear_fc1.weight
-	vision_model.decoder.layers.17.self_attention.linear_qkv.bias
+	vision_model.decoder.layers.16.self_attention.linear_proj.weight
 	vision_model.decoder.layers.14.self_attention.linear_qkv.bias
-	vision_model.decoder.layers.11.mlp.linear_fc1.layer_norm_bias
 	vision_model.decoder.layers.9.mlp.linear_fc1.layer_norm_bias
 	vision_model.decoder.layers.8.mlp.linear_fc2.weight
-	vision_model.decoder.layers.6.self_attention.linear_proj.weight
-	vision_model.decoder.layers.3.self_attention.linear_proj.weight
-	vision_model.decoder.layers.1.self_attention.linear_qkv.layer_norm_bias
+	vision_model.decoder.layers.6.self_attention.linear_proj.bias
+	vision_model.decoder.layers.3.self_attention.linear_proj.bias
+	vision_model.decoder.layers.0.mlp.linear_fc2.weight
+	vision_model.ln_pre.bias
+	vision_model.decoder.layers.23.self_attention.linear_proj.bias
 	vision_model.decoder.layers.21.self_attention.linear_qkv.layer_norm_bias
-	vision_model.decoder.layers.17.mlp.linear_fc1.weight
+	vision_model.decoder.layers.17.mlp.linear_fc2.bias
 	vision_model.decoder.layers.14.mlp.linear_fc1.bias
+	vision_model.decoder.layers.11.mlp.linear_fc2.bias
 	vision_model.decoder.layers.7.self_attention.linear_qkv.weight
-	vision_model.decoder.layers.4.mlp.linear_fc1.bias
-	vision_model.decoder.layers.1.mlp.linear_fc1.layer_norm_bias
-	vision_model.decoder.layers.1.self_attention.linear_proj.bias
-	vision_model.decoder.layers.18.self_attention.linear_proj.bias
+	vision_model.decoder.layers.4.self_attention.linear_qkv.bias
+	vision_model.class_token
 	vision_model.decoder.layers.23.mlp.linear_fc2.weight
 	vision_model.decoder.layers.21.mlp.linear_fc1.layer_norm_bias
 	vision_model.decoder.layers.20.mlp.linear_fc2.weight
+	vision_model.decoder.layers.18.self_attention.linear_proj.bias
 	vision_model.decoder.layers.13.self_attention.linear_qkv.layer_norm_weight
 	vision_model.decoder.layers.12.mlp.linear_fc2.bias
 	vision_model.decoder.layers.7.mlp.linear_fc1.weight
-	vision_model.decoder.layers.0.mlp.linear_fc1.layer_norm_weight
-INFO:megatron.core.optimizer:Setting up optimizer with config OptimizerConfig(optimizer='adam', lr=0.00015, min_lr=1e-05, decoupled_lr=None, decoupled_min_lr=None, weight_decay=0.01, fp16=False, bf16=False, params_dtype=torch.float32, loss_scale=None, initial_loss_scale=4294967296, min_loss_scale=1.0, loss_scale_window=1000, hysteresis=2, adam_beta1=0.9, adam_beta2=0.95, adam_eps=1e-08, sgd_momentum=0.9, use_distributed_optimizer=False, overlap_grad_reduce=False, overlap_param_gather=False, overlap_param_gather_with_optimizer_step=False, clip_grad=0.0, log_num_zeros_in_grad=False, barrier_with_L1_time=True, timers=<megatron.core.timers.Timers object at 0x7f0ab1be3fa0>, config_logger_dir='')
+	vision_model.decoder.layers.4.mlp.linear_fc1.bias
+	vision_model.decoder.layers.0.self_attention.linear_proj.bias
+	vision_model.decoder.layers.19.self_attention.linear_qkv.weight
+	vision_model.decoder.layers.16.self_attention.linear_qkv.layer_norm_bias
+	vision_model.decoder.layers.13.mlp.linear_fc1.layer_norm_weight
+	vision_model.decoder.layers.8.self_attention.linear_proj.bias
+	vision_model.decoder.layers.6.self_attention.linear_qkv.layer_norm_weight
+	vision_model.decoder.layers.5.mlp.linear_fc2.bias
+	vision_model.decoder.layers.3.self_attention.linear_qkv.layer_norm_weight
+	vision_model.decoder.layers.2.self_attention.linear_qkv.weight
+	vision_model.decoder.layers.1.mlp.linear_fc1.layer_norm_bias
+	vision_model.decoder.layers.0.self_attention.linear_qkv.weight
+	vision_model.decoder.layers.23.self_attention.linear_qkv.layer_norm_weight
+	vision_model.decoder.layers.22.mlp.linear_fc2.bias
+	vision_model.decoder.layers.19.mlp.linear_fc1.weight
+	vision_model.decoder.layers.16.mlp.linear_fc1.layer_norm_bias
+	vision_model.decoder.layers.15.mlp.linear_fc2.weight
+	vision_model.decoder.layers.13.self_attention.linear_proj.weight
+	vision_model.decoder.layers.9.self_attention.linear_qkv.bias
+	vision_model.decoder.layers.6.mlp.linear_fc1.layer_norm_weight
+	vision_model.decoder.layers.3.mlp.linear_fc1.layer_norm_weight
+	vision_model.decoder.layers.2.mlp.linear_fc1.weight
+	vision_projection.encoder.linear_fc1.weight
+	vision_model.decoder.layers.23.mlp.linear_fc1.layer_norm_weight
+	vision_model.decoder.layers.20.self_attention.linear_proj.bias
+	vision_model.decoder.layers.18.self_attention.linear_qkv.layer_norm_weight
+	vision_model.decoder.layers.14.self_attention.linear_qkv.weight
+	vision_model.decoder.layers.10.mlp.linear_fc2.bias
+	vision_model.decoder.layers.9.mlp.linear_fc1.bias
+	vision_model.decoder.layers.6.self_attention.linear_proj.weight
+	vision_model.decoder.layers.3.self_attention.linear_proj.weight
+	vision_model.decoder.layers.1.mlp.linear_fc2.weight
+	vision_model.decoder.layers.18.mlp.linear_fc1.layer_norm_weight
+	vision_model.decoder.layers.23.self_attention.linear_proj.weight
+	vision_model.decoder.layers.21.self_attention.linear_qkv.bias
+	vision_model.decoder.layers.14.mlp.linear_fc1.weight
+	vision_model.decoder.layers.11.mlp.linear_fc1.bias
+	vision_model.decoder.layers.8.self_attention.linear_qkv.layer_norm_weight
+	vision_model.decoder.layers.7.mlp.linear_fc2.bias
+	vision_model.decoder.layers.4.self_attention.linear_qkv.weight
+	vision_model.decoder.layers.21.mlp.linear_fc1.bias
+	vision_model.decoder.layers.18.self_attention.linear_proj.weight
+	vision_model.decoder.layers.17.mlp.linear_fc2.weight
+	vision_model.decoder.layers.15.self_attention.linear_proj.bias
+	vision_model.decoder.layers.13.self_attention.linear_qkv.layer_norm_bias
+	vision_model.decoder.layers.12.self_attention.linear_proj.bias
+	vision_model.decoder.layers.8.mlp.linear_fc1.layer_norm_weight
+	vision_model.decoder.layers.4.mlp.linear_fc1.weight
+	vision_model.decoder.layers.0.mlp.linear_fc2.bias
+	vision_model.decoder.layers.20.self_attention.linear_qkv.layer_norm_weight
+	vision_model.decoder.layers.19.mlp.linear_fc2.bias
+	vision_model.decoder.layers.16.self_attention.linear_qkv.bias
+	vision_model.decoder.layers.13.mlp.linear_fc1.layer_norm_bias
+	vision_model.decoder.layers.12.mlp.linear_fc2.weight
+	vision_model.decoder.layers.8.self_attention.linear_proj.weight
+	vision_model.decoder.layers.6.self_attention.linear_qkv.layer_norm_bias
+	vision_model.decoder.layers.3.self_attention.linear_qkv.layer_norm_bias
+	vision_model.decoder.layers.2.mlp.linear_fc2.bias
+	vision_model.decoder.layers.23.self_attention.linear_qkv.layer_norm_bias
+	vision_model.decoder.layers.20.mlp.linear_fc1.layer_norm_weight
+	vision_model.decoder.layers.16.mlp.linear_fc1.bias
+	vision_model.decoder.layers.11.self_attention.linear_qkv.bias
+	vision_model.decoder.layers.9.self_attention.linear_qkv.weight
+	vision_model.decoder.layers.6.mlp.linear_fc1.layer_norm_bias
+	vision_model.decoder.layers.5.mlp.linear_fc2.weight
+	vision_model.decoder.layers.3.mlp.linear_fc1.layer_norm_bias
+	vision_model.decoder.layers.18.self_attention.linear_qkv.layer_norm_bias
+	vision_model.decoder.layers.23.mlp.linear_fc1.layer_norm_bias
+	vision_model.decoder.layers.22.mlp.linear_fc2.weight
+	vision_model.decoder.layers.20.self_attention.linear_proj.weight
+	vision_model.decoder.layers.17.self_attention.linear_proj.bias
+	vision_model.decoder.layers.15.self_attention.linear_qkv.layer_norm_weight
+	vision_model.decoder.layers.14.mlp.linear_fc2.bias
+	vision_model.decoder.layers.12.self_attention.linear_qkv.layer_norm_weight
+	vision_model.decoder.layers.9.mlp.linear_fc1.weight
+	vision_model.decoder.layers.1.mlp.linear_fc1.bias
+	vision_model.decoder.layers.21.self_attention.linear_qkv.weight
+	vision_model.decoder.layers.18.mlp.linear_fc1.layer_norm_bias
+	vision_model.decoder.layers.15.mlp.linear_fc1.layer_norm_weight
+	vision_model.decoder.layers.8.self_attention.linear_qkv.layer_norm_bias
+	vision_model.decoder.layers.4.mlp.linear_fc2.bias
+	vision_model.decoder.layers.21.mlp.linear_fc1.weight
+	vision_model.decoder.layers.15.self_attention.linear_proj.weight
+	vision_model.decoder.layers.13.self_attention.linear_qkv.bias
+	vision_model.decoder.layers.12.self_attention.linear_proj.weight
+	vision_model.decoder.layers.8.mlp.linear_fc1.layer_norm_bias
+	vision_model.decoder.layers.7.mlp.linear_fc2.weight
+	vision_model.decoder.layers.5.self_attention.linear_proj.bias
+	vision_model.decoder.layers.1.self_attention.linear_qkv.bias
+	vision_model.decoder.layers.0.mlp.linear_fc1.weight
+	vision_model.decoder.layers.0.self_attention.linear_qkv.bias
+	vision_model.decoder.layers.22.self_attention.linear_proj.bias
+	vision_model.decoder.layers.20.self_attention.linear_qkv.layer_norm_bias
+	vision_model.decoder.layers.17.self_attention.linear_qkv.layer_norm_weight
+	vision_model.decoder.layers.16.self_attention.linear_qkv.weight
+	vision_model.decoder.layers.13.mlp.linear_fc1.bias
+	vision_model.decoder.layers.6.self_attention.linear_qkv.bias
+	vision_model.decoder.layers.3.self_attention.linear_qkv.bias
+	vision_model.decoder.layers.0.self_attention.linear_proj.weight
+	vision_model.decoder.layers.23.self_attention.linear_qkv.bias
+	vision_model.decoder.layers.20.mlp.linear_fc1.layer_norm_bias
+	vision_model.decoder.layers.19.mlp.linear_fc2.weight
+	vision_model.decoder.layers.17.mlp.linear_fc1.layer_norm_weight
+	vision_model.decoder.layers.16.mlp.linear_fc1.weight
+	vision_model.decoder.layers.9.mlp.linear_fc2.bias
+	vision_model.decoder.layers.6.mlp.linear_fc1.bias
+	vision_model.decoder.layers.3.mlp.linear_fc1.bias
+	vision_model.decoder.layers.2.mlp.linear_fc2.weight
+INFO:megatron.core.optimizer:Setting up optimizer with config OptimizerConfig(optimizer='adam', lr=0.00015, min_lr=1e-05, decoupled_lr=None, decoupled_min_lr=None, weight_decay=0.01, fp16=False, bf16=False, params_dtype=torch.float32, loss_scale=None, initial_loss_scale=4294967296, min_loss_scale=1.0, loss_scale_window=1000, hysteresis=2, adam_beta1=0.9, adam_beta2=0.95, adam_eps=1e-08, sgd_momentum=0.9, use_distributed_optimizer=False, overlap_grad_reduce=False, overlap_param_gather=False, overlap_param_gather_with_optimizer_step=False, clip_grad=0.0, log_num_zeros_in_grad=False, barrier_with_L1_time=True, timers=<megatron.core.timers.Timers object at 0x7fc0fe5e7e80>, config_logger_dir='')
 INFO:megatron.core.optimizer_param_scheduler:> learning rate decay style: cosine
-[after model, optimizer, and learning rate scheduler are built] datetime: 2024-11-28 18:41:05 
+[after model, optimizer, and learning rate scheduler are built] datetime: 2024-11-29 15:19:23 
 > building train, validation, and test datasets ...
  > datasets target sizes (minimum size):
     train:      320
@@ -742,18 +744,17 @@ rank=0, worker=1: shard_range=[pretrain-29.tar[0, 100), pretrain-29.tar[100, 200
 > building HuggingFaceTokenizer tokenizer ...
 rank=0, worker=0: shard_range=[pretrain-49.tar[0, 10000), pretrain-5.tar[0, 10000), pretrain-50.tar[0, 10000)] sum(count)=30000
 rank=0, worker=1: shard_range=[pretrain-51.tar[0, 10000), pretrain-52.tar[0, 10000), pretrain-53.tar[0, 10000)] sum(count)=30000
-[after dataloaders are built] datetime: 2024-11-28 18:41:06 
+[after dataloaders are built] datetime: 2024-11-29 15:19:24 
 done with setup ...
 training ...
-[before the start of training step] datetime: 2024-11-28 18:41:06 
+[before the start of training step] datetime: 2024-11-29 15:19:24 
 Number of parameters in transformer layers in billions:  6.98
 Number of parameters in embedding layers in billions: 0.27
 Total number of parameters in billions: 7.25
 Number of parameters in most loaded shard in billions: 0.3825
 Number of parameters in other shards in billions: 0.3490
 Theoretical memory footprints: weight and optimizer=6566.86 MB
-[Rank 3] (after 1 iterations) memory (MB) | allocated: 1200.01025390625 | max allocated: 5825.71875 | reserved: 6644.0 | max reserved: 6644.0
-[Rank 1] (after 1 iterations) memory (MB) | allocated: 1199.15087890625 | max allocated: 5825.48583984375 | reserved: 6624.0 | max reserved: 6624.0
-[Rank 2] (after 1 iterations) memory (MB) | allocated: 1199.15087890625 | max allocated: 5828.068359375 | reserved: 6596.0 | max reserved: 6596.0
-[Rank 0] (after 1 iterations) memory (MB) | allocated: 1200.01025390625 | max allocated: 5828.93115234375 | reserved: 6724.0 | max reserved: 6724.0
-[after training is done] datetime: 2024-11-28 18:43:50 
+[Rank 1] (after 1 iterations) memory (MB) | allocated: 1479.15087890625 | max allocated: 6291.46630859375 | reserved: 7102.0 | max reserved: 7102.0[Rank 2] (after 1 iterations) memory (MB) | allocated: 1479.15087890625 | max allocated: 6279.89794921875 | reserved: 7100.0 | max reserved: 7100.0[Rank 3] (after 1 iterations) memory (MB) | allocated: 1479.15087890625 | max allocated: 6284.0107421875 | reserved: 7092.0 | max reserved: 7092.0
+
+
+[Rank 0] (after 1 iterations) memory (MB) | allocated: 1525.75634765625 | max allocated: 6287.39599609375 | reserved: 7100.0 | max reserved: 7100.0

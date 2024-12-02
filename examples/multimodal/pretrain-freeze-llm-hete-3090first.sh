@@ -82,7 +82,7 @@ OPTIONS=" \
     --hidden-dropout ${HD} \
     --tensor-model-parallel-size 4 \
     --pipeline-model-parallel-size 5 \
-    --split-spec "24,8,8,8,10"
+    --split-spec "26,8,8,8,8"
     --num-layers 32 \
     --hidden-size 4096 \
     --num-attention-heads 32 \
@@ -151,16 +151,16 @@ GPUS_PER_NODE=4
 gn=`hostname | awk -F "n" '{print int($2)}'`
 # node 71,72,2,3,9 3090 + 3090 + 2080ti + 2080ti + 2080
 case $gn
-        in 33)
+        in 79)
         rank=0
         ;;
         2)
         rank=1
         ;;
-        3)
+        80)
         rank=2
         ;;
-        9)
+        3)
         rank=3
         ;;
         *)

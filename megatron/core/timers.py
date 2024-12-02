@@ -245,7 +245,6 @@ class Timers:
 
     def _get_global_min_max_time(self, names, reset, barrier, normalizer):
         """Report only min and max times across all ranks."""
-
         rank_name_to_time = self._get_elapsed_time_all_ranks(names, reset, barrier)
         name_to_min_max_time = {}
         for i, name in enumerate(names):
@@ -324,7 +323,7 @@ class Timers:
 
         if names == None:  # get all registered timers
             names = self._timers.keys()
-
+        output_string = ""
         assert normalizer > 0.0
         if self._log_option in ['max', 'minmax']:
             max_only = False
@@ -364,9 +363,7 @@ class Timers:
         # If no input rank is provided, log on last rank.
         if rank is None:
             rank = torch.distributed.get_world_size() - 1
-            print(f"Timers log rank:{rank}")
         if rank == torch.distributed.get_rank() and output_string is not None:
-            print(f"rank:{rank} get_rank:{torch.distributed.get_rank()} output_string:{output_string}")
             print(output_string, flush=True)
 
     def write(

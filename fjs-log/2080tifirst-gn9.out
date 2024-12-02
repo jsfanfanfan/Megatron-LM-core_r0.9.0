@@ -1,13 +1,23 @@
 examples/multimodal/pretrain-freeze-llm-hete-2080tifirst.sh: line 4: activate: No such file or directory
-2
-[2024-11-28 22:18:49,526] torch.distributed.run: [WARNING] 
-[2024-11-28 22:18:49,526] torch.distributed.run: [WARNING] *****************************************
-[2024-11-28 22:18:49,526] torch.distributed.run: [WARNING] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
-[2024-11-28 22:18:49,526] torch.distributed.run: [WARNING] *****************************************
+4
+[2024-12-02 14:30:41,012] torch.distributed.run: [WARNING] 
+[2024-12-02 14:30:41,012] torch.distributed.run: [WARNING] *****************************************
+[2024-12-02 14:30:41,012] torch.distributed.run: [WARNING] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+[2024-12-02 14:30:41,012] torch.distributed.run: [WARNING] *****************************************
 You set `add_prefix_space`. The tokenizer needs to be converted from the slow tokenizers
 You set `add_prefix_space`. The tokenizer needs to be converted from the slow tokenizers
 You set `add_prefix_space`. The tokenizer needs to be converted from the slow tokenizers
 You set `add_prefix_space`. The tokenizer needs to be converted from the slow tokenizers
+global vars Timers:0 + minmax
+Timers:<megatron.core.timers.Timers object at 0x7f75e6dada20>
+global vars Timers:0 + minmax
+Timers:<megatron.core.timers.Timers object at 0x7f47627d3eb0>
+------pipeline_parallel_model_size:5------
+------world_size:20------
+------total_model_size:20------
+------num_pipeline_model_parallel_groups:4------
+global vars Timers:0 + minmax
+Timers:<megatron.core.timers.Timers object at 0x7f4d46ae3ee0>
 ------pipeline_parallel_model_size:5------
 ------world_size:20------
 ------total_model_size:20------
@@ -16,43 +26,941 @@ You set `add_prefix_space`. The tokenizer needs to be converted from the slow to
 ------world_size:20------
 ------total_model_size:20------
 ------num_pipeline_model_parallel_groups:4------
+> setting tensorboard ...
+WARNING: one_logger package is required to enable e2e metrics tracking. please go to https://confluence.nvidia.com/display/MLWFO/Package+Repositories for details to install it
+global vars Timers:0 + minmax
+Timers:<megatron.core.timers.Timers object at 0x7fd762861000>
 ------pipeline_parallel_model_size:5------
 ------world_size:20------
 ------total_model_size:20------
 ------num_pipeline_model_parallel_groups:4------
-------pipeline_parallel_model_size:5------
-------world_size:20------
-------total_model_size:20------
-------num_pipeline_model_parallel_groups:4------
----Rank 11---Tensor Parallel Group GPUs: [3, 3, 3, 3]
----Rank 8---Tensor Parallel Group GPUs: [0, 0, 0, 0]---Rank 10---Tensor Parallel Group GPUs: [2, 2, 2, 2]
+---Rank 16---Tensor Parallel Group GPUs: [0, 0, 0, 0]---Rank 19---Tensor Parallel Group GPUs: [3, 3, 3, 3]---Rank 18---Tensor Parallel Group GPUs: [2, 2, 2, 2]
 
----Rank 9---Tensor Parallel Group GPUs: [1, 1, 1, 1]---Rank 11---Pipeline Parallel Group GPUs: [2, 2, 2, 2, 2]
+---Rank 17---Tensor Parallel Group GPUs: [1, 1, 1, 1]
 
----Rank 8---Pipeline Parallel Group GPUs: [2, 2, 2, 2, 2]
----Rank 10---Pipeline Parallel Group GPUs: [2, 2, 2, 2, 2]
----Rank 9---Pipeline Parallel Group GPUs: [2, 2, 2, 2, 2]
-[rank11]:[W init.cpp:767] Warning: nvfuser is no longer supported in torch script, use _jit_set_nvfuser_enabled is deprecated and a no-op (function operator())
-[rank8]:[W init.cpp:767] Warning: nvfuser is no longer supported in torch script, use _jit_set_nvfuser_enabled is deprecated and a no-op (function operator())
-[rank10]:[W init.cpp:767] Warning: nvfuser is no longer supported in torch script, use _jit_set_nvfuser_enabled is deprecated and a no-op (function operator())
-[rank9]:[W init.cpp:767] Warning: nvfuser is no longer supported in torch script, use _jit_set_nvfuser_enabled is deprecated and a no-op (function operator())
-WARNING:megatron.core.models.multimodal.llava_model:LLaVA model is under active development. It may be missing features and its methods may change.
-WARNING:megatron.core.models.multimodal.llava_model:LLaVA model is under active development. It may be missing features and its methods may change.
-WARNING:megatron.core.models.multimodal.llava_model:LLaVA model is under active development. It may be missing features and its methods may change.
-WARNING:megatron.core.models.multimodal.llava_model:LLaVA model is under active development. It may be missing features and its methods may change.
- > number of parameters on (tensor, pipeline) model parallel rank (3, 2): 18350080 > number of parameters on (tensor, pipeline) model parallel rank (0, 2): 18350080
+---Rank 16---Pipeline Parallel Group GPUs: [4, 4, 4, 4, 4]
+---Rank 19---Pipeline Parallel Group GPUs: [4, 4, 4, 4, 4]
+---Rank 18---Pipeline Parallel Group GPUs: [4, 4, 4, 4, 4]000000 dict_keys([])
 
- > number of parameters on (tensor, pipeline) model parallel rank (2, 2): 18350080
- > number of parameters on (tensor, pipeline) model parallel rank (1, 2): 18350080
-INFO:megatron.core.distributed.param_and_grad_buffer:Number of buckets for gradient all-reduce / reduce-scatter: 1
-Params for bucket 1 (18350080 elements):
-	vision_projection.encoder.linear_fc2.weight
-	vision_projection.encoder.linear_fc1.weight
+---Rank 17---Pipeline Parallel Group GPUs: [4, 4, 4, 4, 4]
+_get_global_min_max_time_string:dict_keys([])000000 dict_keys([])
+
+_get_elapsed_time_all_ranks:dict_keys([])
+_get_global_min_max_time_string:dict_keys([])000000 dict_keys([])
+000000 dict_keys([])
+_get_elapsed_time_all_ranks:dict_keys([])
+
+_get_global_min_max_time_string:dict_keys([])
+_get_elapsed_time_all_ranks:dict_keys([])_get_global_min_max_time_string:dict_keys([])
+
+_get_elapsed_time_all_ranks:dict_keys([])
+_get_elapsed_time_all_ranks:tensor([], device='cuda:2', size=(20, 0))_get_elapsed_time_all_ranks:tensor([], device='cuda:3', size=(20, 0))
+_get_elapsed_time_all_ranks:tensor([], device='cuda:0', size=(20, 0))
+
+name_to_min_max_time:{}
+name_to_min_max_time:{}11111
+name_to_min_max_time:{} 11111
+None 
+11111None 
+None
+[rank18]:[W init.cpp:767] Warning: nvfuser is no longer supported in torch script, use _jit_set_nvfuser_enabled is deprecated and a no-op (function operator())
+[rank19]:[W init.cpp:767] Warning: nvfuser is no longer supported in torch script, use _jit_set_nvfuser_enabled is deprecated and a no-op (function operator())
+[rank16]:[W init.cpp:767] Warning: nvfuser is no longer supported in torch script, use _jit_set_nvfuser_enabled is deprecated and a no-op (function operator())
+_get_elapsed_time_all_ranks:tensor([], device='cuda:1', size=(20, 0))
+name_to_min_max_time:{}
+11111 None
+[rank17]:[W init.cpp:767] Warning: nvfuser is no longer supported in torch script, use _jit_set_nvfuser_enabled is deprecated and a no-op (function operator())
+000000 dict_keys([])000000 dict_keys([])
+
+000000 dict_keys([])_get_global_min_max_time_string:dict_keys([])_get_global_min_max_time_string:dict_keys([])
+
+
+_get_elapsed_time_all_ranks:dict_keys([])_get_elapsed_time_all_ranks:dict_keys([])
+
+_get_global_min_max_time_string:dict_keys([])000000 dict_keys([])
+
+_get_elapsed_time_all_ranks:dict_keys([])
+_get_global_min_max_time_string:dict_keys([])
+_get_elapsed_time_all_ranks:dict_keys([])
+_get_elapsed_time_all_ranks:tensor([], device='cuda:2', size=(20, 0))
+name_to_min_max_time:{}
+22222 None
+_get_elapsed_time_all_ranks:tensor([], device='cuda:3', size=(20, 0))
+name_to_min_max_time:{}
+22222 None
+_get_elapsed_time_all_ranks:tensor([], device='cuda:0', size=(20, 0))
+name_to_min_max_time:{}
+22222 None
+_get_elapsed_time_all_ranks:tensor([], device='cuda:1', size=(20, 0))
+name_to_min_max_time:{}
+22222 None
+WARNING:megatron.core.models.multimodal.llava_model:LLaVA model is under active development. It may be missing features and its methods may change.
+WARNING:megatron.core.models.multimodal.llava_model:LLaVA model is under active development. It may be missing features and its methods may change.
+WARNING:megatron.core.models.multimodal.llava_model:LLaVA model is under active development. It may be missing features and its methods may change.
+WARNING:megatron.core.models.multimodal.llava_model:LLaVA model is under active development. It may be missing features and its methods may change.
+ > number of parameters on (tensor, pipeline) model parallel rank (2, 4): 469831680
+ > number of parameters on (tensor, pipeline) model parallel rank (0, 4): 469831680
+ > number of parameters on (tensor, pipeline) model parallel rank (3, 4): 469831680
+Layer: module.language_model.decoder.layers.0.self_attention.linear_proj.weight, Size: torch.Size([4096, 1024]), Parameters: 4194304
+Layer: module.language_model.decoder.layers.0.self_attention.linear_qkv.layer_norm_weight, Size: torch.Size([4096]), Parameters: 4096
+Layer: module.language_model.decoder.layers.0.self_attention.linear_qkv.weight, Size: torch.Size([1536, 4096]), Parameters: 6291456
+Layer: module.language_model.decoder.layers.0.mlp.linear_fc1.layer_norm_weight, Size: torch.Size([4096]), Parameters: 4096
+Layer: module.language_model.decoder.layers.0.mlp.linear_fc1.weight, Size: torch.Size([7168, 4096]), Parameters: 29360128
+Layer: module.language_model.decoder.layers.0.mlp.linear_fc2.weight, Size: torch.Size([4096, 3584]), Parameters: 14680064
+Layer: module.language_model.decoder.layers.1.self_attention.linear_proj.weight, Size: torch.Size([4096, 1024]), Parameters: 4194304
+Layer: module.language_model.decoder.layers.1.self_attention.linear_qkv.layer_norm_weight, Size: torch.Size([4096]), Parameters: 4096
+Layer: module.language_model.decoder.layers.1.self_attention.linear_qkv.weight, Size: torch.Size([1536, 4096]), Parameters: 6291456
+Layer: module.language_model.decoder.layers.1.mlp.linear_fc1.layer_norm_weight, Size: torch.Size([4096]), Parameters: 4096
+Layer: module.language_model.decoder.layers.1.mlp.linear_fc1.weight, Size: torch.Size([7168, 4096]), Parameters: 29360128
+Layer: module.language_model.decoder.layers.1.mlp.linear_fc2.weight, Size: torch.Size([4096, 3584]), Parameters: 14680064
+Layer: module.language_model.decoder.layers.2.self_attention.linear_proj.weight, Size: torch.Size([4096, 1024]), Parameters: 4194304
+Layer: module.language_model.decoder.layers.2.self_attention.linear_qkv.layer_norm_weight, Size: torch.Size([4096]), Parameters: 4096
+Layer: module.language_model.decoder.layers.2.self_attention.linear_qkv.weight, Size: torch.Size([1536, 4096]), Parameters: 6291456
+Layer: module.language_model.decoder.layers.2.mlp.linear_fc1.layer_norm_weight, Size: torch.Size([4096]), Parameters: 4096
+Layer: module.language_model.decoder.layers.2.mlp.linear_fc1.weight, Size: torch.Size([7168, 4096]), Parameters: 29360128
+Layer: module.language_model.decoder.layers.2.mlp.linear_fc2.weight, Size: torch.Size([4096, 3584]), Parameters: 14680064
+Layer: module.language_model.decoder.layers.3.self_attention.linear_proj.weight, Size: torch.Size([4096, 1024]), Parameters: 4194304
+Layer: module.language_model.decoder.layers.3.self_attention.linear_qkv.layer_norm_weight, Size: torch.Size([4096]), Parameters: 4096
+Layer: module.language_model.decoder.layers.3.self_attention.linear_qkv.weight, Size: torch.Size([1536, 4096]), Parameters: 6291456
+Layer: module.language_model.decoder.layers.3.mlp.linear_fc1.layer_norm_weight, Size: torch.Size([4096]), Parameters: 4096
+Layer: module.language_model.decoder.layers.3.mlp.linear_fc1.weight, Size: torch.Size([7168, 4096]), Parameters: 29360128
+Layer: module.language_model.decoder.layers.3.mlp.linear_fc2.weight, Size: torch.Size([4096, 3584]), Parameters: 14680064
+Layer: module.language_model.decoder.layers.4.self_attention.linear_proj.weight, Size: torch.Size([4096, 1024]), Parameters: 4194304
+Layer: module.language_model.decoder.layers.4.self_attention.linear_qkv.layer_norm_weight, Size: torch.Size([4096]), Parameters: 4096
+Layer: module.language_model.decoder.layers.4.self_attention.linear_qkv.weight, Size: torch.Size([1536, 4096]), Parameters: 6291456
+Layer: module.language_model.decoder.layers.4.mlp.linear_fc1.layer_norm_weight, Size: torch.Size([4096]), Parameters: 4096
+Layer: module.language_model.decoder.layers.4.mlp.linear_fc1.weight, Size: torch.Size([7168, 4096]), Parameters: 29360128
+Layer: module.language_model.decoder.layers.4.mlp.linear_fc2.weight, Size: torch.Size([4096, 3584]), Parameters: 14680064
+Layer: module.language_model.decoder.layers.5.self_attention.linear_proj.weight, Size: torch.Size([4096, 1024]), Parameters: 4194304
+Layer: module.language_model.decoder.layers.5.self_attention.linear_qkv.layer_norm_weight, Size: torch.Size([4096]), Parameters: 4096
+Layer: module.language_model.decoder.layers.5.self_attention.linear_qkv.weight, Size: torch.Size([1536, 4096]), Parameters: 6291456
+Layer: module.language_model.decoder.layers.5.mlp.linear_fc1.layer_norm_weight, Size: torch.Size([4096]), Parameters: 4096
+Layer: module.language_model.decoder.layers.5.mlp.linear_fc1.weight, Size: torch.Size([7168, 4096]), Parameters: 29360128
+Layer: module.language_model.decoder.layers.5.mlp.linear_fc2.weight, Size: torch.Size([4096, 3584]), Parameters: 14680064
+Layer: module.language_model.decoder.layers.6.self_attention.linear_proj.weight, Size: torch.Size([4096, 1024]), Parameters: 4194304
+Layer: module.language_model.decoder.layers.6.self_attention.linear_qkv.layer_norm_weight, Size: torch.Size([4096]), Parameters: 4096
+Layer: module.language_model.decoder.layers.6.self_attention.linear_qkv.weight, Size: torch.Size([1536, 4096]), Parameters: 6291456
+Layer: module.language_model.decoder.layers.6.mlp.linear_fc1.layer_norm_weight, Size: torch.Size([4096]), Parameters: 4096
+Layer: module.language_model.decoder.layers.6.mlp.linear_fc1.weight, Size: torch.Size([7168, 4096]), Parameters: 29360128
+Layer: module.language_model.decoder.layers.6.mlp.linear_fc2.weight, Size: torch.Size([4096, 3584]), Parameters: 14680064
+Layer: module.language_model.decoder.layers.7.self_attention.linear_proj.weight, Size: torch.Size([4096, 1024]), Parameters: 4194304
+Layer: module.language_model.decoder.layers.7.self_attention.linear_qkv.layer_norm_weight, Size: torch.Size([4096]), Parameters: 4096
+Layer: module.language_model.decoder.layers.7.self_attention.linear_qkv.weight, Size: torch.Size([1536, 4096]), Parameters: 6291456
+Layer: module.language_model.decoder.layers.7.mlp.linear_fc1.layer_norm_weight, Size: torch.Size([4096]), Parameters: 4096
+Layer: module.language_model.decoder.layers.7.mlp.linear_fc1.weight, Size: torch.Size([7168, 4096]), Parameters: 29360128
+Layer: module.language_model.decoder.layers.7.mlp.linear_fc2.weight, Size: torch.Size([4096, 3584]), Parameters: 14680064
+Layer: module.language_model.decoder.final_layernorm.weight, Size: torch.Size([4096]), Parameters: 4096
+Layer: module.language_model.output_layer.weight, Size: torch.Size([8192, 4096]), Parameters: 33554432
+000000 dict_keys(['model-and-optimizer-setup'])
+_get_global_min_max_time_string:dict_keys(['model-and-optimizer-setup'])
+_get_elapsed_time_all_ranks:dict_keys(['model-and-optimizer-setup'])
+Layer: module.language_model.decoder.layers.0.self_attention.linear_proj.weight, Size: torch.Size([4096, 1024]), Parameters: 4194304
+Layer: module.language_model.decoder.layers.0.self_attention.linear_qkv.layer_norm_weight, Size: torch.Size([4096]), Parameters: 4096
+Layer: module.language_model.decoder.layers.0.self_attention.linear_qkv.weight, Size: torch.Size([1536, 4096]), Parameters: 6291456
+Layer: module.language_model.decoder.layers.0.mlp.linear_fc1.layer_norm_weight, Size: torch.Size([4096]), Parameters: 4096
+Layer: module.language_model.decoder.layers.0.mlp.linear_fc1.weight, Size: torch.Size([7168, 4096]), Parameters: 29360128
+Layer: module.language_model.decoder.layers.0.mlp.linear_fc2.weight, Size: torch.Size([4096, 3584]), Parameters: 14680064
+Layer: module.language_model.decoder.layers.1.self_attention.linear_proj.weight, Size: torch.Size([4096, 1024]), Parameters: 4194304
+Layer: module.language_model.decoder.layers.1.self_attention.linear_qkv.layer_norm_weight, Size: torch.Size([4096]), Parameters: 4096
+Layer: module.language_model.decoder.layers.1.self_attention.linear_qkv.weight, Size: torch.Size([1536, 4096]), Parameters: 6291456
+Layer: module.language_model.decoder.layers.1.mlp.linear_fc1.layer_norm_weight, Size: torch.Size([4096]), Parameters: 4096
+Layer: module.language_model.decoder.layers.1.mlp.linear_fc1.weight, Size: torch.Size([7168, 4096]), Parameters: 29360128
+Layer: module.language_model.decoder.layers.1.mlp.linear_fc2.weight, Size: torch.Size([4096, 3584]), Parameters: 14680064
+Layer: module.language_model.decoder.layers.2.self_attention.linear_proj.weight, Size: torch.Size([4096, 1024]), Parameters: 4194304
+Layer: module.language_model.decoder.layers.2.self_attention.linear_qkv.layer_norm_weight, Size: torch.Size([4096]), Parameters: 4096
+Layer: module.language_model.decoder.layers.2.self_attention.linear_qkv.weight, Size: torch.Size([1536, 4096]), Parameters: 6291456
+Layer: module.language_model.decoder.layers.2.mlp.linear_fc1.layer_norm_weight, Size: torch.Size([4096]), Parameters: 4096
+Layer: module.language_model.decoder.layers.2.mlp.linear_fc1.weight, Size: torch.Size([7168, 4096]), Parameters: 29360128
+Layer: module.language_model.decoder.layers.2.mlp.linear_fc2.weight, Size: torch.Size([4096, 3584]), Parameters: 14680064
+Layer: module.language_model.decoder.layers.3.self_attention.linear_proj.weight, Size: torch.Size([4096, 1024]), Parameters: 4194304
+Layer: module.language_model.decoder.layers.3.self_attention.linear_qkv.layer_norm_weight, Size: torch.Size([4096]), Parameters: 4096
+Layer: module.language_model.decoder.layers.3.self_attention.linear_qkv.weight, Size: torch.Size([1536, 4096]), Parameters: 6291456
+Layer: module.language_model.decoder.layers.3.mlp.linear_fc1.layer_norm_weight, Size: torch.Size([4096]), Parameters: 4096
+Layer: module.language_model.decoder.layers.3.mlp.linear_fc1.weight, Size: torch.Size([7168, 4096]), Parameters: 29360128
+Layer: module.language_model.decoder.layers.3.mlp.linear_fc2.weight, Size: torch.Size([4096, 3584]), Parameters: 14680064
+Layer: module.language_model.decoder.layers.4.self_attention.linear_proj.weight, Size: torch.Size([4096, 1024]), Parameters: 4194304
+Layer: module.language_model.decoder.layers.4.self_attention.linear_qkv.layer_norm_weight, Size: torch.Size([4096]), Parameters: 4096
+Layer: module.language_model.decoder.layers.4.self_attention.linear_qkv.weight, Size: torch.Size([1536, 4096]), Parameters: 6291456
+Layer: module.language_model.decoder.layers.4.mlp.linear_fc1.layer_norm_weight, Size: torch.Size([4096]), Parameters: 4096
+Layer: module.language_model.decoder.layers.4.mlp.linear_fc1.weight, Size: torch.Size([7168, 4096]), Parameters: 29360128
+Layer: module.language_model.decoder.layers.4.mlp.linear_fc2.weight, Size: torch.Size([4096, 3584]), Parameters: 14680064
+Layer: module.language_model.decoder.layers.5.self_attention.linear_proj.weight, Size: torch.Size([4096, 1024]), Parameters: 4194304
+Layer: module.language_model.decoder.layers.5.self_attention.linear_qkv.layer_norm_weight, Size: torch.Size([4096]), Parameters: 4096
+Layer: module.language_model.decoder.layers.5.self_attention.linear_qkv.weight, Size: torch.Size([1536, 4096]), Parameters: 6291456
+Layer: module.language_model.decoder.layers.5.mlp.linear_fc1.layer_norm_weight, Size: torch.Size([4096]), Parameters: 4096
+Layer: module.language_model.decoder.layers.5.mlp.linear_fc1.weight, Size: torch.Size([7168, 4096]), Parameters: 29360128
+Layer: module.language_model.decoder.layers.5.mlp.linear_fc2.weight, Size: torch.Size([4096, 3584]), Parameters: 14680064
+Layer: module.language_model.decoder.layers.6.self_attention.linear_proj.weight, Size: torch.Size([4096, 1024]), Parameters: 4194304
+Layer: module.language_model.decoder.layers.6.self_attention.linear_qkv.layer_norm_weight, Size: torch.Size([4096]), Parameters: 4096
+Layer: module.language_model.decoder.layers.6.self_attention.linear_qkv.weight, Size: torch.Size([1536, 4096]), Parameters: 6291456
+Layer: module.language_model.decoder.layers.6.mlp.linear_fc1.layer_norm_weight, Size: torch.Size([4096]), Parameters: 4096
+Layer: module.language_model.decoder.layers.6.mlp.linear_fc1.weight, Size: torch.Size([7168, 4096]), Parameters: 29360128
+Layer: module.language_model.decoder.layers.6.mlp.linear_fc2.weight, Size: torch.Size([4096, 3584]), Parameters: 14680064
+Layer: module.language_model.decoder.layers.7.self_attention.linear_proj.weight, Size: torch.Size([4096, 1024]), Parameters: 4194304
+Layer: module.language_model.decoder.layers.7.self_attention.linear_qkv.layer_norm_weight, Size: torch.Size([4096]), Parameters: 4096
+Layer: module.language_model.decoder.layers.7.self_attention.linear_qkv.weight, Size: torch.Size([1536, 4096]), Parameters: 6291456
+Layer: module.language_model.decoder.layers.7.mlp.linear_fc1.layer_norm_weight, Size: torch.Size([4096]), Parameters: 4096
+Layer: module.language_model.decoder.layers.7.mlp.linear_fc1.weight, Size: torch.Size([7168, 4096]), Parameters: 29360128
+Layer: module.language_model.decoder.layers.7.mlp.linear_fc2.weight, Size: torch.Size([4096, 3584]), Parameters: 14680064
+Layer: module.language_model.decoder.final_layernorm.weight, Size: torch.Size([4096]), Parameters: 4096
+Layer: module.language_model.output_layer.weight, Size: torch.Size([8192, 4096]), Parameters: 33554432
+000000 dict_keys(['model-and-optimizer-setup'])
+_get_global_min_max_time_string:dict_keys(['model-and-optimizer-setup'])
+_get_elapsed_time_all_ranks:dict_keys(['model-and-optimizer-setup'])
+ > number of parameters on (tensor, pipeline) model parallel rank (1, 4): 469831680Layer: module.language_model.decoder.layers.0.self_attention.linear_proj.weight, Size: torch.Size([4096, 1024]), Parameters: 4194304
+
+Layer: module.language_model.decoder.layers.0.self_attention.linear_qkv.layer_norm_weight, Size: torch.Size([4096]), Parameters: 4096
+Layer: module.language_model.decoder.layers.0.self_attention.linear_qkv.weight, Size: torch.Size([1536, 4096]), Parameters: 6291456
+Layer: module.language_model.decoder.layers.0.mlp.linear_fc1.layer_norm_weight, Size: torch.Size([4096]), Parameters: 4096
+Layer: module.language_model.decoder.layers.0.mlp.linear_fc1.weight, Size: torch.Size([7168, 4096]), Parameters: 29360128
+Layer: module.language_model.decoder.layers.0.mlp.linear_fc2.weight, Size: torch.Size([4096, 3584]), Parameters: 14680064
+Layer: module.language_model.decoder.layers.1.self_attention.linear_proj.weight, Size: torch.Size([4096, 1024]), Parameters: 4194304
+Layer: module.language_model.decoder.layers.1.self_attention.linear_qkv.layer_norm_weight, Size: torch.Size([4096]), Parameters: 4096
+Layer: module.language_model.decoder.layers.1.self_attention.linear_qkv.weight, Size: torch.Size([1536, 4096]), Parameters: 6291456
+Layer: module.language_model.decoder.layers.1.mlp.linear_fc1.layer_norm_weight, Size: torch.Size([4096]), Parameters: 4096
+Layer: module.language_model.decoder.layers.1.mlp.linear_fc1.weight, Size: torch.Size([7168, 4096]), Parameters: 29360128
+Layer: module.language_model.decoder.layers.1.mlp.linear_fc2.weight, Size: torch.Size([4096, 3584]), Parameters: 14680064
+Layer: module.language_model.decoder.layers.2.self_attention.linear_proj.weight, Size: torch.Size([4096, 1024]), Parameters: 4194304
+Layer: module.language_model.decoder.layers.2.self_attention.linear_qkv.layer_norm_weight, Size: torch.Size([4096]), Parameters: 4096
+Layer: module.language_model.decoder.layers.2.self_attention.linear_qkv.weight, Size: torch.Size([1536, 4096]), Parameters: 6291456
+Layer: module.language_model.decoder.layers.2.mlp.linear_fc1.layer_norm_weight, Size: torch.Size([4096]), Parameters: 4096
+Layer: module.language_model.decoder.layers.2.mlp.linear_fc1.weight, Size: torch.Size([7168, 4096]), Parameters: 29360128
+Layer: module.language_model.decoder.layers.2.mlp.linear_fc2.weight, Size: torch.Size([4096, 3584]), Parameters: 14680064
+Layer: module.language_model.decoder.layers.3.self_attention.linear_proj.weight, Size: torch.Size([4096, 1024]), Parameters: 4194304
+Layer: module.language_model.decoder.layers.3.self_attention.linear_qkv.layer_norm_weight, Size: torch.Size([4096]), Parameters: 4096
+Layer: module.language_model.decoder.layers.3.self_attention.linear_qkv.weight, Size: torch.Size([1536, 4096]), Parameters: 6291456
+Layer: module.language_model.decoder.layers.3.mlp.linear_fc1.layer_norm_weight, Size: torch.Size([4096]), Parameters: 4096
+Layer: module.language_model.decoder.layers.3.mlp.linear_fc1.weight, Size: torch.Size([7168, 4096]), Parameters: 29360128
+Layer: module.language_model.decoder.layers.3.mlp.linear_fc2.weight, Size: torch.Size([4096, 3584]), Parameters: 14680064
+Layer: module.language_model.decoder.layers.4.self_attention.linear_proj.weight, Size: torch.Size([4096, 1024]), Parameters: 4194304
+Layer: module.language_model.decoder.layers.4.self_attention.linear_qkv.layer_norm_weight, Size: torch.Size([4096]), Parameters: 4096
+Layer: module.language_model.decoder.layers.4.self_attention.linear_qkv.weight, Size: torch.Size([1536, 4096]), Parameters: 6291456
+Layer: module.language_model.decoder.layers.4.mlp.linear_fc1.layer_norm_weight, Size: torch.Size([4096]), Parameters: 4096
+Layer: module.language_model.decoder.layers.4.mlp.linear_fc1.weight, Size: torch.Size([7168, 4096]), Parameters: 29360128
+Layer: module.language_model.decoder.layers.4.mlp.linear_fc2.weight, Size: torch.Size([4096, 3584]), Parameters: 14680064
+Layer: module.language_model.decoder.layers.5.self_attention.linear_proj.weight, Size: torch.Size([4096, 1024]), Parameters: 4194304
+Layer: module.language_model.decoder.layers.5.self_attention.linear_qkv.layer_norm_weight, Size: torch.Size([4096]), Parameters: 4096
+Layer: module.language_model.decoder.layers.5.self_attention.linear_qkv.weight, Size: torch.Size([1536, 4096]), Parameters: 6291456
+Layer: module.language_model.decoder.layers.5.mlp.linear_fc1.layer_norm_weight, Size: torch.Size([4096]), Parameters: 4096
+Layer: module.language_model.decoder.layers.5.mlp.linear_fc1.weight, Size: torch.Size([7168, 4096]), Parameters: 29360128
+Layer: module.language_model.decoder.layers.5.mlp.linear_fc2.weight, Size: torch.Size([4096, 3584]), Parameters: 14680064
+Layer: module.language_model.decoder.layers.6.self_attention.linear_proj.weight, Size: torch.Size([4096, 1024]), Parameters: 4194304
+Layer: module.language_model.decoder.layers.6.self_attention.linear_qkv.layer_norm_weight, Size: torch.Size([4096]), Parameters: 4096
+Layer: module.language_model.decoder.layers.6.self_attention.linear_qkv.weight, Size: torch.Size([1536, 4096]), Parameters: 6291456
+Layer: module.language_model.decoder.layers.6.mlp.linear_fc1.layer_norm_weight, Size: torch.Size([4096]), Parameters: 4096
+Layer: module.language_model.decoder.layers.6.mlp.linear_fc1.weight, Size: torch.Size([7168, 4096]), Parameters: 29360128
+Layer: module.language_model.decoder.layers.6.mlp.linear_fc2.weight, Size: torch.Size([4096, 3584]), Parameters: 14680064
+Layer: module.language_model.decoder.layers.7.self_attention.linear_proj.weight, Size: torch.Size([4096, 1024]), Parameters: 4194304
+Layer: module.language_model.decoder.layers.7.self_attention.linear_qkv.layer_norm_weight, Size: torch.Size([4096]), Parameters: 4096
+Layer: module.language_model.decoder.layers.7.self_attention.linear_qkv.weight, Size: torch.Size([1536, 4096]), Parameters: 6291456
+Layer: module.language_model.decoder.layers.7.mlp.linear_fc1.layer_norm_weight, Size: torch.Size([4096]), Parameters: 4096
+Layer: module.language_model.decoder.layers.7.mlp.linear_fc1.weight, Size: torch.Size([7168, 4096]), Parameters: 29360128
+Layer: module.language_model.decoder.layers.7.mlp.linear_fc2.weight, Size: torch.Size([4096, 3584]), Parameters: 14680064
+Layer: module.language_model.decoder.final_layernorm.weight, Size: torch.Size([4096]), Parameters: 4096
+Layer: module.language_model.output_layer.weight, Size: torch.Size([8192, 4096]), Parameters: 33554432
+000000 dict_keys(['model-and-optimizer-setup'])
+_get_global_min_max_time_string:dict_keys(['model-and-optimizer-setup'])
+_get_elapsed_time_all_ranks:dict_keys(['model-and-optimizer-setup'])
+Layer: module.language_model.decoder.layers.0.self_attention.linear_proj.weight, Size: torch.Size([4096, 1024]), Parameters: 4194304
+Layer: module.language_model.decoder.layers.0.self_attention.linear_qkv.layer_norm_weight, Size: torch.Size([4096]), Parameters: 4096
+Layer: module.language_model.decoder.layers.0.self_attention.linear_qkv.weight, Size: torch.Size([1536, 4096]), Parameters: 6291456
+Layer: module.language_model.decoder.layers.0.mlp.linear_fc1.layer_norm_weight, Size: torch.Size([4096]), Parameters: 4096
+Layer: module.language_model.decoder.layers.0.mlp.linear_fc1.weight, Size: torch.Size([7168, 4096]), Parameters: 29360128
+Layer: module.language_model.decoder.layers.0.mlp.linear_fc2.weight, Size: torch.Size([4096, 3584]), Parameters: 14680064
+Layer: module.language_model.decoder.layers.1.self_attention.linear_proj.weight, Size: torch.Size([4096, 1024]), Parameters: 4194304
+Layer: module.language_model.decoder.layers.1.self_attention.linear_qkv.layer_norm_weight, Size: torch.Size([4096]), Parameters: 4096
+Layer: module.language_model.decoder.layers.1.self_attention.linear_qkv.weight, Size: torch.Size([1536, 4096]), Parameters: 6291456
+Layer: module.language_model.decoder.layers.1.mlp.linear_fc1.layer_norm_weight, Size: torch.Size([4096]), Parameters: 4096
+Layer: module.language_model.decoder.layers.1.mlp.linear_fc1.weight, Size: torch.Size([7168, 4096]), Parameters: 29360128
+Layer: module.language_model.decoder.layers.1.mlp.linear_fc2.weight, Size: torch.Size([4096, 3584]), Parameters: 14680064
+Layer: module.language_model.decoder.layers.2.self_attention.linear_proj.weight, Size: torch.Size([4096, 1024]), Parameters: 4194304
+Layer: module.language_model.decoder.layers.2.self_attention.linear_qkv.layer_norm_weight, Size: torch.Size([4096]), Parameters: 4096
+Layer: module.language_model.decoder.layers.2.self_attention.linear_qkv.weight, Size: torch.Size([1536, 4096]), Parameters: 6291456
+Layer: module.language_model.decoder.layers.2.mlp.linear_fc1.layer_norm_weight, Size: torch.Size([4096]), Parameters: 4096
+Layer: module.language_model.decoder.layers.2.mlp.linear_fc1.weight, Size: torch.Size([7168, 4096]), Parameters: 29360128
+Layer: module.language_model.decoder.layers.2.mlp.linear_fc2.weight, Size: torch.Size([4096, 3584]), Parameters: 14680064
+Layer: module.language_model.decoder.layers.3.self_attention.linear_proj.weight, Size: torch.Size([4096, 1024]), Parameters: 4194304
+Layer: module.language_model.decoder.layers.3.self_attention.linear_qkv.layer_norm_weight, Size: torch.Size([4096]), Parameters: 4096
+Layer: module.language_model.decoder.layers.3.self_attention.linear_qkv.weight, Size: torch.Size([1536, 4096]), Parameters: 6291456
+Layer: module.language_model.decoder.layers.3.mlp.linear_fc1.layer_norm_weight, Size: torch.Size([4096]), Parameters: 4096
+Layer: module.language_model.decoder.layers.3.mlp.linear_fc1.weight, Size: torch.Size([7168, 4096]), Parameters: 29360128
+Layer: module.language_model.decoder.layers.3.mlp.linear_fc2.weight, Size: torch.Size([4096, 3584]), Parameters: 14680064
+Layer: module.language_model.decoder.layers.4.self_attention.linear_proj.weight, Size: torch.Size([4096, 1024]), Parameters: 4194304
+Layer: module.language_model.decoder.layers.4.self_attention.linear_qkv.layer_norm_weight, Size: torch.Size([4096]), Parameters: 4096
+Layer: module.language_model.decoder.layers.4.self_attention.linear_qkv.weight, Size: torch.Size([1536, 4096]), Parameters: 6291456
+Layer: module.language_model.decoder.layers.4.mlp.linear_fc1.layer_norm_weight, Size: torch.Size([4096]), Parameters: 4096
+Layer: module.language_model.decoder.layers.4.mlp.linear_fc1.weight, Size: torch.Size([7168, 4096]), Parameters: 29360128
+Layer: module.language_model.decoder.layers.4.mlp.linear_fc2.weight, Size: torch.Size([4096, 3584]), Parameters: 14680064
+Layer: module.language_model.decoder.layers.5.self_attention.linear_proj.weight, Size: torch.Size([4096, 1024]), Parameters: 4194304
+Layer: module.language_model.decoder.layers.5.self_attention.linear_qkv.layer_norm_weight, Size: torch.Size([4096]), Parameters: 4096
+Layer: module.language_model.decoder.layers.5.self_attention.linear_qkv.weight, Size: torch.Size([1536, 4096]), Parameters: 6291456
+Layer: module.language_model.decoder.layers.5.mlp.linear_fc1.layer_norm_weight, Size: torch.Size([4096]), Parameters: 4096
+Layer: module.language_model.decoder.layers.5.mlp.linear_fc1.weight, Size: torch.Size([7168, 4096]), Parameters: 29360128
+Layer: module.language_model.decoder.layers.5.mlp.linear_fc2.weight, Size: torch.Size([4096, 3584]), Parameters: 14680064
+Layer: module.language_model.decoder.layers.6.self_attention.linear_proj.weight, Size: torch.Size([4096, 1024]), Parameters: 4194304
+Layer: module.language_model.decoder.layers.6.self_attention.linear_qkv.layer_norm_weight, Size: torch.Size([4096]), Parameters: 4096
+Layer: module.language_model.decoder.layers.6.self_attention.linear_qkv.weight, Size: torch.Size([1536, 4096]), Parameters: 6291456
+Layer: module.language_model.decoder.layers.6.mlp.linear_fc1.layer_norm_weight, Size: torch.Size([4096]), Parameters: 4096
+Layer: module.language_model.decoder.layers.6.mlp.linear_fc1.weight, Size: torch.Size([7168, 4096]), Parameters: 29360128
+Layer: module.language_model.decoder.layers.6.mlp.linear_fc2.weight, Size: torch.Size([4096, 3584]), Parameters: 14680064
+Layer: module.language_model.decoder.layers.7.self_attention.linear_proj.weight, Size: torch.Size([4096, 1024]), Parameters: 4194304
+Layer: module.language_model.decoder.layers.7.self_attention.linear_qkv.layer_norm_weight, Size: torch.Size([4096]), Parameters: 4096
+Layer: module.language_model.decoder.layers.7.self_attention.linear_qkv.weight, Size: torch.Size([1536, 4096]), Parameters: 6291456
+Layer: module.language_model.decoder.layers.7.mlp.linear_fc1.layer_norm_weight, Size: torch.Size([4096]), Parameters: 4096
+Layer: module.language_model.decoder.layers.7.mlp.linear_fc1.weight, Size: torch.Size([7168, 4096]), Parameters: 29360128
+Layer: module.language_model.decoder.layers.7.mlp.linear_fc2.weight, Size: torch.Size([4096, 3584]), Parameters: 14680064
+Layer: module.language_model.decoder.final_layernorm.weight, Size: torch.Size([4096]), Parameters: 4096
+Layer: module.language_model.output_layer.weight, Size: torch.Size([8192, 4096]), Parameters: 33554432
+000000 dict_keys(['model-and-optimizer-setup'])
+_get_global_min_max_time_string:dict_keys(['model-and-optimizer-setup'])
+_get_elapsed_time_all_ranks:dict_keys(['model-and-optimizer-setup'])
+_get_elapsed_time_all_ranks:tensor([[0.0953],
+        [0.1016],
+        [0.0987],
+        [0.1065],
+        [0.1054],
+        [0.1199],
+        [0.0856],
+        [0.1181],
+        [0.0678],
+        [0.0786],
+        [0.0753],
+        [0.0756],
+        [0.0415],
+        [0.0314],
+        [0.0324],
+        [0.0416],
+        [0.0657],
+        [0.0690],
+        [0.0650],
+        [0.0666]], device='cuda:2')
+name_to_min_max_time:{'model-and-optimizer-setup': (31.438112258911133, 119.91262435913086)}
+33333 (min, max) time across ranks (ms):
+    model-and-optimizer-setup ......................: (31.44, 119.91)
+_get_elapsed_time_all_ranks:tensor([[0.0953],
+        [0.1016],
+        [0.0987],
+        [0.1065],
+        [0.1054],
+        [0.1199],
+        [0.0856],
+        [0.1181],
+        [0.0678],
+        [0.0786],
+        [0.0753],
+        [0.0756],
+        [0.0415],
+        [0.0314],
+        [0.0324],
+        [0.0416],
+        [0.0657],
+        [0.0690],
+        [0.0650],
+        [0.0666]], device='cuda:1')
+name_to_min_max_time:{'model-and-optimizer-setup': (31.438112258911133, 119.91262435913086)}
+33333 (min, max) time across ranks (ms):
+    model-and-optimizer-setup ......................: (31.44, 119.91)
+_get_elapsed_time_all_ranks:tensor([[0.0953],
+        [0.1016],
+        [0.0987],
+        [0.1065],
+        [0.1054],
+        [0.1199],
+        [0.0856],
+        [0.1181],
+        [0.0678],
+        [0.0786],
+        [0.0753],
+        [0.0756],
+        [0.0415],
+        [0.0314],
+        [0.0324],
+        [0.0416],
+        [0.0657],
+        [0.0690],
+        [0.0650],
+        [0.0666]], device='cuda:0')
+name_to_min_max_time:{'model-and-optimizer-setup': (31.438112258911133, 119.91262435913086)}
+33333 (min, max) time across ranks (ms):
+    model-and-optimizer-setup ......................: (31.44, 119.91)
+_get_elapsed_time_all_ranks:tensor([[0.0953],
+        [0.1016],
+        [0.0987],
+        [0.1065],
+        [0.1054],
+        [0.1199],
+        [0.0856],
+        [0.1181],
+        [0.0678],
+        [0.0786],
+        [0.0753],
+        [0.0756],
+        [0.0415],
+        [0.0314],
+        [0.0324],
+        [0.0416],
+        [0.0657],
+        [0.0690],
+        [0.0650],
+        [0.0666]], device='cuda:3')
+name_to_min_max_time:{'model-and-optimizer-setup': (31.438112258911133, 119.91262435913086)}
+33333 (min, max) time across ranks (ms):
+    model-and-optimizer-setup ......................: (31.44, 119.91)
 rank=0, worker=0: shard_range=[pretrain-0.tar[0, 100), pretrain-0.tar[100, 200), pretrain-0.tar[200, 300), ...<2194>, pretrain-28.tar[9700, 9800), pretrain-28.tar[9800, 9900), pretrain-28.tar[9900, 10000)] sum(count)=220000
 rank=0, worker=1: shard_range=[pretrain-29.tar[0, 100), pretrain-29.tar[100, 200), pretrain-29.tar[200, 300), ...<2194>, pretrain-48.tar[9700, 9800), pretrain-48.tar[9800, 9900), pretrain-48.tar[9900, 10000)] sum(count)=220000
 rank=0, worker=0: shard_range=[pretrain-49.tar[0, 10000), pretrain-5.tar[0, 10000), pretrain-50.tar[0, 10000)] sum(count)=30000
 rank=0, worker=1: shard_range=[pretrain-51.tar[0, 10000), pretrain-52.tar[0, 10000), pretrain-53.tar[0, 10000)] sum(count)=30000
-[Rank 9] (after 1 iterations) memory (MB) | allocated: 293.00146484375 | max allocated: 402.001953125 | reserved: 534.0 | max reserved: 534.0
-[Rank 10] (after 1 iterations) memory (MB) | allocated: 293.00146484375 | max allocated: 402.001953125 | reserved: 534.0 | max reserved: 534.0
-[Rank 11] (after 1 iterations) memory (MB) | allocated: 293.00146484375 | max allocated: 402.001953125 | reserved: 534.0 | max reserved: 534.0
-[Rank 8] (after 1 iterations) memory (MB) | allocated: 293.00146484375 | max allocated: 402.001953125 | reserved: 534.0 | max reserved: 534.0
+000000 dict_keys(['model-and-optimizer-setup', 'train/valid/test-data-iterators-setup'])
+000000 dict_keys(['model-and-optimizer-setup', 'train/valid/test-data-iterators-setup'])_get_global_min_max_time_string:dict_keys(['model-and-optimizer-setup', 'train/valid/test-data-iterators-setup'])
+
+000000 dict_keys(['model-and-optimizer-setup', 'train/valid/test-data-iterators-setup'])_get_global_min_max_time_string:dict_keys(['model-and-optimizer-setup', 'train/valid/test-data-iterators-setup'])_get_elapsed_time_all_ranks:dict_keys(['model-and-optimizer-setup', 'train/valid/test-data-iterators-setup'])
+
+
+_get_global_min_max_time_string:dict_keys(['model-and-optimizer-setup', 'train/valid/test-data-iterators-setup'])_get_elapsed_time_all_ranks:dict_keys(['model-and-optimizer-setup', 'train/valid/test-data-iterators-setup'])
+
+_get_elapsed_time_all_ranks:dict_keys(['model-and-optimizer-setup', 'train/valid/test-data-iterators-setup'])
+000000 dict_keys(['model-and-optimizer-setup', 'train/valid/test-data-iterators-setup'])
+_get_global_min_max_time_string:dict_keys(['model-and-optimizer-setup', 'train/valid/test-data-iterators-setup'])
+_get_elapsed_time_all_ranks:dict_keys(['model-and-optimizer-setup', 'train/valid/test-data-iterators-setup'])
+_get_elapsed_time_all_ranks:tensor([[0.0953, 1.1971],
+        [0.1016, 1.1969],
+        [0.0987, 1.2002],
+        [0.1065, 1.1970],
+        [0.1054, 1.2003],
+        [0.1199, 1.2003],
+        [0.0856, 1.1970],
+        [0.1181, 1.2003],
+        [0.0678, 1.2002],
+        [0.0786, 1.2007],
+        [0.0753, 1.2003],
+        [0.0756, 1.2004],
+        [0.0415, 1.2002],
+        [0.0314, 1.2003],
+        [0.0324, 1.2003],
+        [0.0416, 1.2003],
+        [0.0657, 1.2002],
+        [0.0690, 1.2007],
+        [0.0650, 1.2002],
+        [0.0666, 1.2002]], device='cuda:2')
+_get_elapsed_time_all_ranks:tensor([[0.0953, 1.1971],
+        [0.1016, 1.1969],
+        [0.0987, 1.2002],
+        [0.1065, 1.1970],
+        [0.1054, 1.2003],
+        [0.1199, 1.2003],
+        [0.0856, 1.1970],
+        [0.1181, 1.2003],
+        [0.0678, 1.2002],
+        [0.0786, 1.2007],
+        [0.0753, 1.2003],
+        [0.0756, 1.2004],
+        [0.0415, 1.2002],
+        [0.0314, 1.2003],
+        [0.0324, 1.2003],
+        [0.0416, 1.2003],
+        [0.0657, 1.2002],
+        [0.0690, 1.2007],
+        [0.0650, 1.2002],
+        [0.0666, 1.2002]], device='cuda:0')
+name_to_min_max_time:{'model-and-optimizer-setup': (31.438112258911133, 119.91262435913086), 'train/valid/test-data-iterators-setup': (1196.8536376953125, 1200.7055282592773)}
+444444 (min, max) time across ranks (ms):
+    model-and-optimizer-setup ......................: (31.44, 119.91)
+    train/valid/test-data-iterators-setup ..........: (1196.85, 1200.71)
+_get_elapsed_time_all_ranks:tensor([[0.0953, 1.1971],
+        [0.1016, 1.1969],
+        [0.0987, 1.2002],
+        [0.1065, 1.1970],
+        [0.1054, 1.2003],
+        [0.1199, 1.2003],
+        [0.0856, 1.1970],
+        [0.1181, 1.2003],
+        [0.0678, 1.2002],
+        [0.0786, 1.2007],
+        [0.0753, 1.2003],
+        [0.0756, 1.2004],
+        [0.0415, 1.2002],
+        [0.0314, 1.2003],
+        [0.0324, 1.2003],
+        [0.0416, 1.2003],
+        [0.0657, 1.2002],
+        [0.0690, 1.2007],
+        [0.0650, 1.2002],
+        [0.0666, 1.2002]], device='cuda:3')
+name_to_min_max_time:{'model-and-optimizer-setup': (31.438112258911133, 119.91262435913086), 'train/valid/test-data-iterators-setup': (1196.8536376953125, 1200.7055282592773)}
+444444 (min, max) time across ranks (ms):
+    model-and-optimizer-setup ......................: (31.44, 119.91)
+    train/valid/test-data-iterators-setup ..........: (1196.85, 1200.71)
+name_to_min_max_time:{'model-and-optimizer-setup': (31.438112258911133, 119.91262435913086), 'train/valid/test-data-iterators-setup': (1196.8536376953125, 1200.7055282592773)}
+444444 (min, max) time across ranks (ms):
+    model-and-optimizer-setup ......................: (31.44, 119.91)
+    train/valid/test-data-iterators-setup ..........: (1196.85, 1200.71)
+_get_elapsed_time_all_ranks:tensor([[0.0953, 1.1971],
+        [0.1016, 1.1969],
+        [0.0987, 1.2002],
+        [0.1065, 1.1970],
+        [0.1054, 1.2003],
+        [0.1199, 1.2003],
+        [0.0856, 1.1970],
+        [0.1181, 1.2003],
+        [0.0678, 1.2002],
+        [0.0786, 1.2007],
+        [0.0753, 1.2003],
+        [0.0756, 1.2004],
+        [0.0415, 1.2002],
+        [0.0314, 1.2003],
+        [0.0324, 1.2003],
+        [0.0416, 1.2003],
+        [0.0657, 1.2002],
+        [0.0690, 1.2007],
+        [0.0650, 1.2002],
+        [0.0666, 1.2002]], device='cuda:1')
+name_to_min_max_time:{'model-and-optimizer-setup': (31.438112258911133, 119.91262435913086), 'train/valid/test-data-iterators-setup': (1196.8536376953125, 1200.7055282592773)}
+444444 (min, max) time across ranks (ms):
+    model-and-optimizer-setup ......................: (31.44, 119.91)
+    train/valid/test-data-iterators-setup ..........: (1196.85, 1200.71)
+_get_global_min_max_time_string:['model-and-optimizer-setup', 'train/valid/test-data-iterators-setup']_get_global_min_max_time_string:['model-and-optimizer-setup', 'train/valid/test-data-iterators-setup']
+
+_get_elapsed_time_all_ranks:['model-and-optimizer-setup', 'train/valid/test-data-iterators-setup']_get_elapsed_time_all_ranks:['model-and-optimizer-setup', 'train/valid/test-data-iterators-setup']
+
+_get_global_min_max_time_string:['model-and-optimizer-setup', 'train/valid/test-data-iterators-setup']
+_get_elapsed_time_all_ranks:['model-and-optimizer-setup', 'train/valid/test-data-iterators-setup']
+_get_global_min_max_time_string:['model-and-optimizer-setup', 'train/valid/test-data-iterators-setup']
+_get_elapsed_time_all_ranks:['model-and-optimizer-setup', 'train/valid/test-data-iterators-setup']
+_get_elapsed_time_all_ranks:tensor([[0.0953, 1.1971],
+        [0.1016, 1.1969],
+        [0.0987, 1.2002],
+        [0.1065, 1.1970],
+        [0.1054, 1.2003],
+        [0.1199, 1.2003],
+        [0.0856, 1.1970],
+        [0.1181, 1.2003],
+        [0.0678, 1.2002],
+        [0.0786, 1.2007],
+        [0.0753, 1.2003],
+        [0.0756, 1.2004],
+        [0.0415, 1.2002],
+        [0.0314, 1.2003],
+        [0.0324, 1.2003],
+        [0.0416, 1.2003],
+        [0.0657, 1.2002],
+        [0.0690, 1.2007],
+        [0.0650, 1.2002],
+        [0.0666, 1.2002]], device='cuda:1')
+_get_elapsed_time_all_ranks:tensor([[0.0953, 1.1971],
+        [0.1016, 1.1969],
+        [0.0987, 1.2002],
+        [0.1065, 1.1970],
+        [0.1054, 1.2003],
+        [0.1199, 1.2003],
+        [0.0856, 1.1970],
+        [0.1181, 1.2003],
+        [0.0678, 1.2002],
+        [0.0786, 1.2007],
+        [0.0753, 1.2003],
+        [0.0756, 1.2004],
+        [0.0415, 1.2002],
+        [0.0314, 1.2003],
+        [0.0324, 1.2003],
+        [0.0416, 1.2003],
+        [0.0657, 1.2002],
+        [0.0690, 1.2007],
+        [0.0650, 1.2002],
+        [0.0666, 1.2002]], device='cuda:2')
+_get_elapsed_time_all_ranks:tensor([[0.0953, 1.1971],
+        [0.1016, 1.1969],
+        [0.0987, 1.2002],
+        [0.1065, 1.1970],
+        [0.1054, 1.2003],
+        [0.1199, 1.2003],
+        [0.0856, 1.1970],
+        [0.1181, 1.2003],
+        [0.0678, 1.2002],
+        [0.0786, 1.2007],
+        [0.0753, 1.2003],
+        [0.0756, 1.2004],
+        [0.0415, 1.2002],
+        [0.0314, 1.2003],
+        [0.0324, 1.2003],
+        [0.0416, 1.2003],
+        [0.0657, 1.2002],
+        [0.0690, 1.2007],
+        [0.0650, 1.2002],
+        [0.0666, 1.2002]], device='cuda:0')
+name_to_min_max_time:{'model-and-optimizer-setup': (31.438112258911133, 119.91262435913086), 'train/valid/test-data-iterators-setup': (1196.8536376953125, 1200.7055282592773)}name_to_min_max_time:{'model-and-optimizer-setup': (31.438112258911133, 119.91262435913086), 'train/valid/test-data-iterators-setup': (1196.8536376953125, 1200.7055282592773)}
+
+Timers log rank:19Timers log rank:19
+
+000000 dict_keys(['model-and-optimizer-setup', 'train/valid/test-data-iterators-setup'])
+_get_global_min_max_time_string:dict_keys(['model-and-optimizer-setup', 'train/valid/test-data-iterators-setup'])
+_get_elapsed_time_all_ranks:dict_keys(['model-and-optimizer-setup', 'train/valid/test-data-iterators-setup'])
+000000 dict_keys(['model-and-optimizer-setup', 'train/valid/test-data-iterators-setup'])name_to_min_max_time:{'model-and-optimizer-setup': (31.438112258911133, 119.91262435913086), 'train/valid/test-data-iterators-setup': (1196.8536376953125, 1200.7055282592773)}
+
+_get_global_min_max_time_string:dict_keys(['model-and-optimizer-setup', 'train/valid/test-data-iterators-setup'])
+_get_elapsed_time_all_ranks:dict_keys(['model-and-optimizer-setup', 'train/valid/test-data-iterators-setup'])
+Timers log rank:19
+000000 dict_keys(['model-and-optimizer-setup', 'train/valid/test-data-iterators-setup'])
+_get_global_min_max_time_string:dict_keys(['model-and-optimizer-setup', 'train/valid/test-data-iterators-setup'])
+_get_elapsed_time_all_ranks:dict_keys(['model-and-optimizer-setup', 'train/valid/test-data-iterators-setup'])
+_get_elapsed_time_all_ranks:tensor([[0.0953, 1.1971],
+        [0.1016, 1.1969],
+        [0.0987, 1.2002],
+        [0.1065, 1.1970],
+        [0.1054, 1.2003],
+        [0.1199, 1.2003],
+        [0.0856, 1.1970],
+        [0.1181, 1.2003],
+        [0.0678, 1.2002],
+        [0.0786, 1.2007],
+        [0.0753, 1.2003],
+        [0.0756, 1.2004],
+        [0.0415, 1.2002],
+        [0.0314, 1.2003],
+        [0.0324, 1.2003],
+        [0.0416, 1.2003],
+        [0.0657, 1.2002],
+        [0.0690, 1.2007],
+        [0.0650, 1.2002],
+        [0.0666, 1.2002]], device='cuda:3')
+name_to_min_max_time:{'model-and-optimizer-setup': (31.438112258911133, 119.91262435913086), 'train/valid/test-data-iterators-setup': (1196.8536376953125, 1200.7055282592773)}
+Timers log rank:19
+rank:19 get_rank:19 output_string:(min, max) time across ranks (ms):
+    model-and-optimizer-setup ......................: (31.44, 119.91)
+    train/valid/test-data-iterators-setup ..........: (1196.85, 1200.71)
+(min, max) time across ranks (ms):
+    model-and-optimizer-setup ......................: (31.44, 119.91)
+    train/valid/test-data-iterators-setup ..........: (1196.85, 1200.71)
+000000 dict_keys(['model-and-optimizer-setup', 'train/valid/test-data-iterators-setup'])
+_get_global_min_max_time_string:dict_keys(['model-and-optimizer-setup', 'train/valid/test-data-iterators-setup'])
+_get_elapsed_time_all_ranks:dict_keys(['model-and-optimizer-setup', 'train/valid/test-data-iterators-setup'])
+_get_elapsed_time_all_ranks:tensor([[0.0953, 1.1971],
+        [0.1016, 1.1969],
+        [0.0987, 1.2002],
+        [0.1065, 1.1970],
+        [0.1054, 1.2003],
+        [0.1199, 1.2003],
+        [0.0856, 1.1970],
+        [0.1181, 1.2003],
+        [0.0678, 1.2002],
+        [0.0786, 1.2007],
+        [0.0753, 1.2003],
+        [0.0756, 1.2004],
+        [0.0415, 1.2002],
+        [0.0314, 1.2003],
+        [0.0324, 1.2003],
+        [0.0416, 1.2003],
+        [0.0657, 1.2002],
+        [0.0690, 1.2007],
+        [0.0650, 1.2002],
+        [0.0666, 1.2002]], device='cuda:1')
+_get_elapsed_time_all_ranks:tensor([[0.0953, 1.1971],
+        [0.1016, 1.1969],
+        [0.0987, 1.2002],
+        [0.1065, 1.1970],
+        [0.1054, 1.2003],
+        [0.1199, 1.2003],
+        [0.0856, 1.1970],
+        [0.1181, 1.2003],
+        [0.0678, 1.2002],
+        [0.0786, 1.2007],
+        [0.0753, 1.2003],
+        [0.0756, 1.2004],
+        [0.0415, 1.2002],
+        [0.0314, 1.2003],
+        [0.0324, 1.2003],
+        [0.0416, 1.2003],
+        [0.0657, 1.2002],
+        [0.0690, 1.2007],
+        [0.0650, 1.2002],
+        [0.0666, 1.2002]], device='cuda:0')_get_elapsed_time_all_ranks:tensor([[0.0953, 1.1971],
+        [0.1016, 1.1969],
+        [0.0987, 1.2002],
+        [0.1065, 1.1970],
+        [0.1054, 1.2003],
+        [0.1199, 1.2003],
+        [0.0856, 1.1970],
+        [0.1181, 1.2003],
+        [0.0678, 1.2002],
+        [0.0786, 1.2007],
+        [0.0753, 1.2003],
+        [0.0756, 1.2004],
+        [0.0415, 1.2002],
+        [0.0314, 1.2003],
+        [0.0324, 1.2003],
+        [0.0416, 1.2003],
+        [0.0657, 1.2002],
+        [0.0690, 1.2007],
+        [0.0650, 1.2002],
+        [0.0666, 1.2002]], device='cuda:2')
+
+name_to_min_max_time:{'model-and-optimizer-setup': (31.438112258911133, 119.91262435913086), 'train/valid/test-data-iterators-setup': (1196.8536376953125, 1200.7055282592773)}
+55555 (min, max) time across ranks (ms):
+    model-and-optimizer-setup ......................: (31.44, 119.91)
+    train/valid/test-data-iterators-setup ..........: (1196.85, 1200.71)
+name_to_min_max_time:{'model-and-optimizer-setup': (31.438112258911133, 119.91262435913086), 'train/valid/test-data-iterators-setup': (1196.8536376953125, 1200.7055282592773)}
+name_to_min_max_time:{'model-and-optimizer-setup': (31.438112258911133, 119.91262435913086), 'train/valid/test-data-iterators-setup': (1196.8536376953125, 1200.7055282592773)}
+55555 (min, max) time across ranks (ms):
+    model-and-optimizer-setup ......................: (31.44, 119.91)
+    train/valid/test-data-iterators-setup ..........: (1196.85, 1200.71)
+55555 (min, max) time across ranks (ms):
+    model-and-optimizer-setup ......................: (31.44, 119.91)
+    train/valid/test-data-iterators-setup ..........: (1196.85, 1200.71)
+_get_elapsed_time_all_ranks:tensor([[0.0953, 1.1971],
+        [0.1016, 1.1969],
+        [0.0987, 1.2002],
+        [0.1065, 1.1970],
+        [0.1054, 1.2003],
+        [0.1199, 1.2003],
+        [0.0856, 1.1970],
+        [0.1181, 1.2003],
+        [0.0678, 1.2002],
+        [0.0786, 1.2007],
+        [0.0753, 1.2003],
+        [0.0756, 1.2004],
+        [0.0415, 1.2002],
+        [0.0314, 1.2003],
+        [0.0324, 1.2003],
+        [0.0416, 1.2003],
+        [0.0657, 1.2002],
+        [0.0690, 1.2007],
+        [0.0650, 1.2002],
+        [0.0666, 1.2002]], device='cuda:3')
+name_to_min_max_time:{'model-and-optimizer-setup': (31.438112258911133, 119.91262435913086), 'train/valid/test-data-iterators-setup': (1196.8536376953125, 1200.7055282592773)}
+55555 (min, max) time across ranks (ms):
+    model-and-optimizer-setup ......................: (31.44, 119.91)
+    train/valid/test-data-iterators-setup ..........: (1196.85, 1200.71)
+000000 dict_keys(['model-and-optimizer-setup', 'train/valid/test-data-iterators-setup', 'interval-time'])000000 dict_keys(['model-and-optimizer-setup', 'train/valid/test-data-iterators-setup', 'interval-time'])
+000000 dict_keys(['model-and-optimizer-setup', 'train/valid/test-data-iterators-setup', 'interval-time'])_get_global_min_max_time_string:dict_keys(['model-and-optimizer-setup', 'train/valid/test-data-iterators-setup', 'interval-time'])000000 dict_keys(['model-and-optimizer-setup', 'train/valid/test-data-iterators-setup', 'interval-time'])
+
+
+
+_get_global_min_max_time_string:dict_keys(['model-and-optimizer-setup', 'train/valid/test-data-iterators-setup', 'interval-time'])_get_elapsed_time_all_ranks:dict_keys(['model-and-optimizer-setup', 'train/valid/test-data-iterators-setup', 'interval-time'])_get_global_min_max_time_string:dict_keys(['model-and-optimizer-setup', 'train/valid/test-data-iterators-setup', 'interval-time'])_get_global_min_max_time_string:dict_keys(['model-and-optimizer-setup', 'train/valid/test-data-iterators-setup', 'interval-time'])
+
+
+
+_get_elapsed_time_all_ranks:dict_keys(['model-and-optimizer-setup', 'train/valid/test-data-iterators-setup', 'interval-time'])_get_elapsed_time_all_ranks:dict_keys(['model-and-optimizer-setup', 'train/valid/test-data-iterators-setup', 'interval-time'])_get_elapsed_time_all_ranks:dict_keys(['model-and-optimizer-setup', 'train/valid/test-data-iterators-setup', 'interval-time'])
+
+
+_get_elapsed_time_all_ranks:tensor([[9.5306e-02, 1.1971e+00, 3.4881e-04],
+        [1.0163e-01, 1.1969e+00, 3.5214e-04],
+        [9.8728e-02, 1.2002e+00, 3.4356e-04],
+        [1.0655e-01, 1.1970e+00, 3.4833e-04],
+        [1.0538e-01, 1.2003e+00, 3.5310e-04],
+        [1.1991e-01, 1.2003e+00, 3.4642e-04],
+        [8.5566e-02, 1.1970e+00, 3.5334e-04],
+        [1.1807e-01, 1.2003e+00, 3.3951e-04],
+        [6.7803e-02, 1.2002e+00, 3.5262e-04],
+        [7.8565e-02, 1.2007e+00, 3.2616e-04],
+        [7.5272e-02, 1.2003e+00, 3.2282e-04],
+        [7.5570e-02, 1.2004e+00, 3.3712e-04],
+        [4.1451e-02, 1.2002e+00, 3.3545e-04],
+        [3.1438e-02, 1.2003e+00, 3.3665e-04],
+        [3.2359e-02, 1.2003e+00, 3.3188e-04],
+        [4.1552e-02, 1.2003e+00, 3.4094e-04],
+        [6.5731e-02, 1.2002e+00, 3.4547e-04],
+        [6.9017e-02, 1.2007e+00, 3.4118e-04],
+        [6.4970e-02, 1.2002e+00, 3.3832e-04],
+        [6.6579e-02, 1.2002e+00, 3.5024e-04]], device='cuda:1')
+_get_elapsed_time_all_ranks:tensor([[9.5306e-02, 1.1971e+00, 3.4881e-04],
+        [1.0163e-01, 1.1969e+00, 3.5214e-04],
+        [9.8728e-02, 1.2002e+00, 3.4356e-04],
+        [1.0655e-01, 1.1970e+00, 3.4833e-04],
+        [1.0538e-01, 1.2003e+00, 3.5310e-04],
+        [1.1991e-01, 1.2003e+00, 3.4642e-04],
+        [8.5566e-02, 1.1970e+00, 3.5334e-04],
+        [1.1807e-01, 1.2003e+00, 3.3951e-04],
+        [6.7803e-02, 1.2002e+00, 3.5262e-04],
+        [7.8565e-02, 1.2007e+00, 3.2616e-04],
+        [7.5272e-02, 1.2003e+00, 3.2282e-04],
+        [7.5570e-02, 1.2004e+00, 3.3712e-04],
+        [4.1451e-02, 1.2002e+00, 3.3545e-04],
+        [3.1438e-02, 1.2003e+00, 3.3665e-04],
+        [3.2359e-02, 1.2003e+00, 3.3188e-04],
+        [4.1552e-02, 1.2003e+00, 3.4094e-04],
+        [6.5731e-02, 1.2002e+00, 3.4547e-04],
+        [6.9017e-02, 1.2007e+00, 3.4118e-04],
+        [6.4970e-02, 1.2002e+00, 3.3832e-04],
+        [6.6579e-02, 1.2002e+00, 3.5024e-04]], device='cuda:2')
+_get_elapsed_time_all_ranks:tensor([[9.5306e-02, 1.1971e+00, 3.4881e-04],
+        [1.0163e-01, 1.1969e+00, 3.5214e-04],
+        [9.8728e-02, 1.2002e+00, 3.4356e-04],
+        [1.0655e-01, 1.1970e+00, 3.4833e-04],
+        [1.0538e-01, 1.2003e+00, 3.5310e-04],
+        [1.1991e-01, 1.2003e+00, 3.4642e-04],
+        [8.5566e-02, 1.1970e+00, 3.5334e-04],
+        [1.1807e-01, 1.2003e+00, 3.3951e-04],
+        [6.7803e-02, 1.2002e+00, 3.5262e-04],
+        [7.8565e-02, 1.2007e+00, 3.2616e-04],
+        [7.5272e-02, 1.2003e+00, 3.2282e-04],
+        [7.5570e-02, 1.2004e+00, 3.3712e-04],
+        [4.1451e-02, 1.2002e+00, 3.3545e-04],
+        [3.1438e-02, 1.2003e+00, 3.3665e-04],
+        [3.2359e-02, 1.2003e+00, 3.3188e-04],
+        [4.1552e-02, 1.2003e+00, 3.4094e-04],
+        [6.5731e-02, 1.2002e+00, 3.4547e-04],
+        [6.9017e-02, 1.2007e+00, 3.4118e-04],
+        [6.4970e-02, 1.2002e+00, 3.3832e-04],
+        [6.6579e-02, 1.2002e+00, 3.5024e-04]], device='cuda:0')
+name_to_min_max_time:{'model-and-optimizer-setup': (31.438112258911133, 119.91262435913086), 'train/valid/test-data-iterators-setup': (1196.8536376953125, 1200.7055282592773), 'interval-time': (0.3228187561035156, 0.3533363342285156)}
+66666 (min, max) time across ranks (ms):
+    model-and-optimizer-setup ......................: (31.44, 119.91)
+    train/valid/test-data-iterators-setup ..........: (1196.85, 1200.71)
+    interval-time ..................................: (0.32, 0.35)
+name_to_min_max_time:{'model-and-optimizer-setup': (31.438112258911133, 119.91262435913086), 'train/valid/test-data-iterators-setup': (1196.8536376953125, 1200.7055282592773), 'interval-time': (0.3228187561035156, 0.3533363342285156)}
+66666 (min, max) time across ranks (ms):
+    model-and-optimizer-setup ......................: (31.44, 119.91)
+    train/valid/test-data-iterators-setup ..........: (1196.85, 1200.71)
+    interval-time ..................................: (0.32, 0.35)
+000000 dict_keys(['model-and-optimizer-setup', 'train/valid/test-data-iterators-setup', 'interval-time'])
+_get_global_min_max_time_string:dict_keys(['model-and-optimizer-setup', 'train/valid/test-data-iterators-setup', 'interval-time'])
+_get_elapsed_time_all_ranks:dict_keys(['model-and-optimizer-setup', 'train/valid/test-data-iterators-setup', 'interval-time'])
+000000 dict_keys(['model-and-optimizer-setup', 'train/valid/test-data-iterators-setup', 'interval-time'])
+_get_global_min_max_time_string:dict_keys(['model-and-optimizer-setup', 'train/valid/test-data-iterators-setup', 'interval-time'])
+_get_elapsed_time_all_ranks:dict_keys(['model-and-optimizer-setup', 'train/valid/test-data-iterators-setup', 'interval-time'])
+name_to_min_max_time:{'model-and-optimizer-setup': (31.438112258911133, 119.91262435913086), 'train/valid/test-data-iterators-setup': (1196.8536376953125, 1200.7055282592773), 'interval-time': (0.3228187561035156, 0.3533363342285156)}
+66666 (min, max) time across ranks (ms):
+    model-and-optimizer-setup ......................: (31.44, 119.91)
+    train/valid/test-data-iterators-setup ..........: (1196.85, 1200.71)
+    interval-time ..................................: (0.32, 0.35)
+000000 dict_keys(['model-and-optimizer-setup', 'train/valid/test-data-iterators-setup', 'interval-time'])
+_get_global_min_max_time_string:dict_keys(['model-and-optimizer-setup', 'train/valid/test-data-iterators-setup', 'interval-time'])
+_get_elapsed_time_all_ranks:dict_keys(['model-and-optimizer-setup', 'train/valid/test-data-iterators-setup', 'interval-time'])
+_get_elapsed_time_all_ranks:tensor([[9.5306e-02, 1.1971e+00, 3.4881e-04],
+        [1.0163e-01, 1.1969e+00, 3.5214e-04],
+        [9.8728e-02, 1.2002e+00, 3.4356e-04],
+        [1.0655e-01, 1.1970e+00, 3.4833e-04],
+        [1.0538e-01, 1.2003e+00, 3.5310e-04],
+        [1.1991e-01, 1.2003e+00, 3.4642e-04],
+        [8.5566e-02, 1.1970e+00, 3.5334e-04],
+        [1.1807e-01, 1.2003e+00, 3.3951e-04],
+        [6.7803e-02, 1.2002e+00, 3.5262e-04],
+        [7.8565e-02, 1.2007e+00, 3.2616e-04],
+        [7.5272e-02, 1.2003e+00, 3.2282e-04],
+        [7.5570e-02, 1.2004e+00, 3.3712e-04],
+        [4.1451e-02, 1.2002e+00, 3.3545e-04],
+        [3.1438e-02, 1.2003e+00, 3.3665e-04],
+        [3.2359e-02, 1.2003e+00, 3.3188e-04],
+        [4.1552e-02, 1.2003e+00, 3.4094e-04],
+        [6.5731e-02, 1.2002e+00, 3.4547e-04],
+        [6.9017e-02, 1.2007e+00, 3.4118e-04],
+        [6.4970e-02, 1.2002e+00, 3.3832e-04],
+        [6.6579e-02, 1.2002e+00, 3.5024e-04]], device='cuda:3')
+name_to_min_max_time:{'model-and-optimizer-setup': (31.438112258911133, 119.91262435913086), 'train/valid/test-data-iterators-setup': (1196.8536376953125, 1200.7055282592773), 'interval-time': (0.3228187561035156, 0.3533363342285156)}
+66666 (min, max) time across ranks (ms):
+    model-and-optimizer-setup ......................: (31.44, 119.91)
+    train/valid/test-data-iterators-setup ..........: (1196.85, 1200.71)
+    interval-time ..................................: (0.32, 0.35)
+000000 dict_keys(['model-and-optimizer-setup', 'train/valid/test-data-iterators-setup', 'interval-time'])
+_get_global_min_max_time_string:dict_keys(['model-and-optimizer-setup', 'train/valid/test-data-iterators-setup', 'interval-time'])
+_get_elapsed_time_all_ranks:dict_keys(['model-and-optimizer-setup', 'train/valid/test-data-iterators-setup', 'interval-time'])
+_get_elapsed_time_all_ranks:tensor([[0.0953, 1.1971, 0.0027],
+        [0.1016, 1.1969, 0.0027],
+        [0.0987, 1.2002, 0.0027],
+        [0.1065, 1.1970, 0.0028],
+        [0.1054, 1.2003, 0.0027],
+        [0.1199, 1.2003, 0.0028],
+        [0.0856, 1.1970, 0.0027],
+        [0.1181, 1.2003, 0.0028],
+        [0.0678, 1.2002, 0.0031],
+        [0.0786, 1.2007, 0.0025],
+        [0.0753, 1.2003, 0.0026],
+        [0.0756, 1.2004, 0.0026],
+        [0.0415, 1.2002, 0.0025],
+        [0.0314, 1.2003, 0.0025],
+        [0.0324, 1.2003, 0.0025],
+        [0.0416, 1.2003, 0.0026],
+        [0.0657, 1.2002, 0.0027],
+        [0.0690, 1.2007, 0.0026],
+        [0.0650, 1.2002, 0.0027],
+        [0.0666, 1.2002, 0.0040]], device='cuda:1')
+_get_elapsed_time_all_ranks:tensor([[0.0953, 1.1971, 0.0027],
+        [0.1016, 1.1969, 0.0027],
+        [0.0987, 1.2002, 0.0027],
+        [0.1065, 1.1970, 0.0028],
+        [0.1054, 1.2003, 0.0027],
+        [0.1199, 1.2003, 0.0028],
+        [0.0856, 1.1970, 0.0027],
+        [0.1181, 1.2003, 0.0028],
+        [0.0678, 1.2002, 0.0031],
+        [0.0786, 1.2007, 0.0025],
+        [0.0753, 1.2003, 0.0026],
+        [0.0756, 1.2004, 0.0026],
+        [0.0415, 1.2002, 0.0025],
+        [0.0314, 1.2003, 0.0025],
+        [0.0324, 1.2003, 0.0025],
+        [0.0416, 1.2003, 0.0026],
+        [0.0657, 1.2002, 0.0027],
+        [0.0690, 1.2007, 0.0026],
+        [0.0650, 1.2002, 0.0027],
+        [0.0666, 1.2002, 0.0040]], device='cuda:2')
+_get_elapsed_time_all_ranks:tensor([[0.0953, 1.1971, 0.0027],
+        [0.1016, 1.1969, 0.0027],
+        [0.0987, 1.2002, 0.0027],
+        [0.1065, 1.1970, 0.0028],
+        [0.1054, 1.2003, 0.0027],
+        [0.1199, 1.2003, 0.0028],
+        [0.0856, 1.1970, 0.0027],
+        [0.1181, 1.2003, 0.0028],
+        [0.0678, 1.2002, 0.0031],
+        [0.0786, 1.2007, 0.0025],
+        [0.0753, 1.2003, 0.0026],
+        [0.0756, 1.2004, 0.0026],
+        [0.0415, 1.2002, 0.0025],
+        [0.0314, 1.2003, 0.0025],
+        [0.0324, 1.2003, 0.0025],
+        [0.0416, 1.2003, 0.0026],
+        [0.0657, 1.2002, 0.0027],
+        [0.0690, 1.2007, 0.0026],
+        [0.0650, 1.2002, 0.0027],
+        [0.0666, 1.2002, 0.0040]], device='cuda:0')
+name_to_min_max_time:{'model-and-optimizer-setup': (31.438112258911133, 119.91262435913086), 'train/valid/test-data-iterators-setup': (1196.8536376953125, 1200.7055282592773), 'interval-time': (2.4628639221191406, 4.048585891723633)}
+77777 (min, max) time across ranks (ms):
+    model-and-optimizer-setup ......................: (31.44, 119.91)
+    train/valid/test-data-iterators-setup ..........: (1196.85, 1200.71)
+    interval-time ..................................: (2.46, 4.05)
+name_to_min_max_time:{'model-and-optimizer-setup': (31.438112258911133, 119.91262435913086), 'train/valid/test-data-iterators-setup': (1196.8536376953125, 1200.7055282592773), 'interval-time': (2.4628639221191406, 4.048585891723633)}
+77777 (min, max) time across ranks (ms):
+    model-and-optimizer-setup ......................: (31.44, 119.91)
+    train/valid/test-data-iterators-setup ..........: (1196.85, 1200.71)
+    interval-time ..................................: (2.46, 4.05)
+name_to_min_max_time:{'model-and-optimizer-setup': (31.438112258911133, 119.91262435913086), 'train/valid/test-data-iterators-setup': (1196.8536376953125, 1200.7055282592773), 'interval-time': (2.4628639221191406, 4.048585891723633)}
+77777 (min, max) time across ranks (ms):
+    model-and-optimizer-setup ......................: (31.44, 119.91)
+    train/valid/test-data-iterators-setup ..........: (1196.85, 1200.71)
+    interval-time ..................................: (2.46, 4.05)
+_get_elapsed_time_all_ranks:tensor([[0.0953, 1.1971, 0.0027],
+        [0.1016, 1.1969, 0.0027],
+        [0.0987, 1.2002, 0.0027],
+        [0.1065, 1.1970, 0.0028],
+        [0.1054, 1.2003, 0.0027],
+        [0.1199, 1.2003, 0.0028],
+        [0.0856, 1.1970, 0.0027],
+        [0.1181, 1.2003, 0.0028],
+        [0.0678, 1.2002, 0.0031],
+        [0.0786, 1.2007, 0.0025],
+        [0.0753, 1.2003, 0.0026],
+        [0.0756, 1.2004, 0.0026],
+        [0.0415, 1.2002, 0.0025],
+        [0.0314, 1.2003, 0.0025],
+        [0.0324, 1.2003, 0.0025],
+        [0.0416, 1.2003, 0.0026],
+        [0.0657, 1.2002, 0.0027],
+        [0.0690, 1.2007, 0.0026],
+        [0.0650, 1.2002, 0.0027],
+        [0.0666, 1.2002, 0.0040]], device='cuda:3')
+name_to_min_max_time:{'model-and-optimizer-setup': (31.438112258911133, 119.91262435913086), 'train/valid/test-data-iterators-setup': (1196.8536376953125, 1200.7055282592773), 'interval-time': (2.4628639221191406, 4.048585891723633)}
+77777 (min, max) time across ranks (ms):
+    model-and-optimizer-setup ......................: (31.44, 119.91)
+    train/valid/test-data-iterators-setup ..........: (1196.85, 1200.71)
+    interval-time ..................................: (2.46, 4.05)
+000000 dict_keys(['model-and-optimizer-setup', 'train/valid/test-data-iterators-setup', 'interval-time'])000000 dict_keys(['model-and-optimizer-setup', 'train/valid/test-data-iterators-setup', 'interval-time'])
+
+000000 dict_keys(['model-and-optimizer-setup', 'train/valid/test-data-iterators-setup', 'interval-time'])_get_global_min_max_time_string:dict_keys(['model-and-optimizer-setup', 'train/valid/test-data-iterators-setup', 'interval-time'])_get_global_min_max_time_string:dict_keys(['model-and-optimizer-setup', 'train/valid/test-data-iterators-setup', 'interval-time'])
+
+000000 dict_keys(['model-and-optimizer-setup', 'train/valid/test-data-iterators-setup', 'interval-time'])
+_get_elapsed_time_all_ranks:dict_keys(['model-and-optimizer-setup', 'train/valid/test-data-iterators-setup', 'interval-time'])_get_elapsed_time_all_ranks:dict_keys(['model-and-optimizer-setup', 'train/valid/test-data-iterators-setup', 'interval-time'])
+
+_get_global_min_max_time_string:dict_keys(['model-and-optimizer-setup', 'train/valid/test-data-iterators-setup', 'interval-time'])
+_get_elapsed_time_all_ranks:dict_keys(['model-and-optimizer-setup', 'train/valid/test-data-iterators-setup', 'interval-time'])
+
+_get_global_min_max_time_string:dict_keys(['model-and-optimizer-setup', 'train/valid/test-data-iterators-setup', 'interval-time'])
+_get_elapsed_time_all_ranks:dict_keys(['model-and-optimizer-setup', 'train/valid/test-data-iterators-setup', 'interval-time'])

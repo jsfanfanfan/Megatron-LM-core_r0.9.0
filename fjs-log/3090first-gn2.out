@@ -1,9 +1,9 @@
 examples/multimodal/pretrain-freeze-llm-hete-3090first.sh: line 4: activate: No such file or directory
 1
-[2024-11-28 18:40:59,356] torch.distributed.run: [WARNING] 
-[2024-11-28 18:40:59,356] torch.distributed.run: [WARNING] *****************************************
-[2024-11-28 18:40:59,356] torch.distributed.run: [WARNING] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
-[2024-11-28 18:40:59,356] torch.distributed.run: [WARNING] *****************************************
+[2024-11-29 15:19:32,948] torch.distributed.run: [WARNING] 
+[2024-11-29 15:19:32,948] torch.distributed.run: [WARNING] *****************************************
+[2024-11-29 15:19:32,948] torch.distributed.run: [WARNING] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+[2024-11-29 15:19:32,948] torch.distributed.run: [WARNING] *****************************************
 You set `add_prefix_space`. The tokenizer needs to be converted from the slow tokenizers
 You set `add_prefix_space`. The tokenizer needs to be converted from the slow tokenizers
 You set `add_prefix_space`. The tokenizer needs to be converted from the slow tokenizers
@@ -25,34 +25,79 @@ You set `add_prefix_space`. The tokenizer needs to be converted from the slow to
 ------total_model_size:20------
 ------num_pipeline_model_parallel_groups:4------
 ---Rank 7---Tensor Parallel Group GPUs: [3, 3, 3, 3]
----Rank 4---Tensor Parallel Group GPUs: [0, 0, 0, 0]---Rank 7---Pipeline Parallel Group GPUs: [1, 1, 1, 1, 1]
-
----Rank 4---Pipeline Parallel Group GPUs: [1, 1, 1, 1, 1]
----Rank 6---Tensor Parallel Group GPUs: [2, 2, 2, 2]
+---Rank 7---Pipeline Parallel Group GPUs: [1, 1, 1, 1, 1]
 [rank7]:[W init.cpp:767] Warning: nvfuser is no longer supported in torch script, use _jit_set_nvfuser_enabled is deprecated and a no-op (function operator())
----Rank 6---Pipeline Parallel Group GPUs: [1, 1, 1, 1, 1]
-[rank4]:[W init.cpp:767] Warning: nvfuser is no longer supported in torch script, use _jit_set_nvfuser_enabled is deprecated and a no-op (function operator())
-[rank6]:[W init.cpp:767] Warning: nvfuser is no longer supported in torch script, use _jit_set_nvfuser_enabled is deprecated and a no-op (function operator())
 ---Rank 5---Tensor Parallel Group GPUs: [1, 1, 1, 1]
 ---Rank 5---Pipeline Parallel Group GPUs: [1, 1, 1, 1, 1]
-[rank5]:[W init.cpp:767] Warning: nvfuser is no longer supported in torch script, use _jit_set_nvfuser_enabled is deprecated and a no-op (function operator())
+---Rank 6---Tensor Parallel Group GPUs: [2, 2, 2, 2]
+---Rank 6---Pipeline Parallel Group GPUs: [1, 1, 1, 1, 1][rank5]:[W init.cpp:767] Warning: nvfuser is no longer supported in torch script, use _jit_set_nvfuser_enabled is deprecated and a no-op (function operator())
+
+---Rank 4---Tensor Parallel Group GPUs: [0, 0, 0, 0]
+---Rank 4---Pipeline Parallel Group GPUs: [1, 1, 1, 1, 1]
+[rank6]:[W init.cpp:767] Warning: nvfuser is no longer supported in torch script, use _jit_set_nvfuser_enabled is deprecated and a no-op (function operator())
+[rank4]:[W init.cpp:767] Warning: nvfuser is no longer supported in torch script, use _jit_set_nvfuser_enabled is deprecated and a no-op (function operator())
 WARNING:megatron.core.models.multimodal.llava_model:LLaVA model is under active development. It may be missing features and its methods may change.
 WARNING:megatron.core.models.multimodal.llava_model:LLaVA model is under active development. It may be missing features and its methods may change.
 WARNING:megatron.core.models.multimodal.llava_model:LLaVA model is under active development. It may be missing features and its methods may change.
 WARNING:megatron.core.models.multimodal.llava_model:LLaVA model is under active development. It may be missing features and its methods may change.
- > number of parameters on (tensor, pipeline) model parallel rank (0, 1): 379109376
-INFO:megatron.core.distributed.param_and_grad_buffer:Number of buckets for gradient all-reduce / reduce-scatter: 1
-Params for bucket 1 (18350080 elements):
-	vision_projection.encoder.linear_fc2.weight
-	vision_projection.encoder.linear_fc1.weight
- > number of parameters on (tensor, pipeline) model parallel rank (3, 1): 379109376
- > number of parameters on (tensor, pipeline) model parallel rank (1, 1): 379109376
- > number of parameters on (tensor, pipeline) model parallel rank (2, 1): 379109376
+ > number of parameters on (tensor, pipeline) model parallel rank (0, 1): 469827584
+ > number of parameters on (tensor, pipeline) model parallel rank (1, 1): 469827584
+ > number of parameters on (tensor, pipeline) model parallel rank (2, 1): 469827584
+ > number of parameters on (tensor, pipeline) model parallel rank (3, 1): 469827584
 rank=0, worker=0: shard_range=[pretrain-0.tar[0, 100), pretrain-0.tar[100, 200), pretrain-0.tar[200, 300), ...<2194>, pretrain-28.tar[9700, 9800), pretrain-28.tar[9800, 9900), pretrain-28.tar[9900, 10000)] sum(count)=220000
 rank=0, worker=1: shard_range=[pretrain-29.tar[0, 100), pretrain-29.tar[100, 200), pretrain-29.tar[200, 300), ...<2194>, pretrain-48.tar[9700, 9800), pretrain-48.tar[9800, 9900), pretrain-48.tar[9900, 10000)] sum(count)=220000
 rank=0, worker=0: shard_range=[pretrain-49.tar[0, 10000), pretrain-5.tar[0, 10000), pretrain-50.tar[0, 10000)] sum(count)=30000
 rank=0, worker=1: shard_range=[pretrain-51.tar[0, 10000), pretrain-52.tar[0, 10000), pretrain-53.tar[0, 10000)] sum(count)=30000
-[Rank 4] (after 1 iterations) memory (MB) | allocated: 1686.439453125 | max allocated: 7685.462890625 | reserved: 8404.0 | max reserved: 8404.0[Rank 5] (after 1 iterations) memory (MB) | allocated: 1686.439453125 | max allocated: 7685.837890625 | reserved: 8380.0 | max reserved: 8380.0
-[Rank 6] (after 1 iterations) memory (MB) | allocated: 1687.439453125 | max allocated: 7686.337890625 | reserved: 8432.0 | max reserved: 8432.0
-[Rank 7] (after 1 iterations) memory (MB) | allocated: 1687.439453125 | max allocated: 7687.119140625 | reserved: 8436.0 | max reserved: 8436.0
+[Rank 4] (after 1 iterations) memory (MB) | allocated: 1849.501953125 | max allocated: 9804.00439453125 | reserved: 10640.0 | max reserved: 10640.0[Rank 5] (after 1 iterations) memory (MB) | allocated: 1849.501953125 | max allocated: 9804.00439453125 | reserved: 10632.0 | max reserved: 10632.0
 
+[Rank 7] (after 1 iterations) memory (MB) | allocated: 1849.501953125 | max allocated: 9804.00439453125 | reserved: 10632.0 | max reserved: 10632.0
+[Rank 6] (after 1 iterations) memory (MB) | allocated: 1849.501953125 | max allocated: 9804.00439453125 | reserved: 10604.0 | max reserved: 10604.0
+Traceback (most recent call last):
+  File "/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/examples/multimodal/train.py", line 456, in <module>
+    pretrain(
+  File "/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/megatron/training/training.py", line 365, in pretrain
+    iteration, num_floating_point_operations_so_far = train( # 调用 1172 行进行训练
+  File "/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/megatron/training/training.py", line 1336, in train
+    train_step(forward_step_func, # 调用 805 行
+  File "/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/megatron/training/training.py", line 812, in train_step
+    losses_reduced = forward_backward_func( # schedules.py 1345 行 forward_backward_pipelining_without_interleaving
+  File "/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/megatron/core/pipeline_parallel/schedules.py", line 1553, in forward_backward_pipelining_without_interleaving
+    input_tensor_grad = backward_step( # 调用 329 行
+  File "/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/megatron/core/pipeline_parallel/schedules.py", line 367, in backward_step
+    torch.autograd.backward(output_tensor[0], grad_tensors=output_tensor_grad[0])
+  File "/gf3/home/fjs/anaconda3/envs/megatron/lib/python3.10/site-packages/torch/autograd/__init__.py", line 266, in backward
+    Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+torch.cuda.OutOfMemoryError: CUDA out of memory. Tried to allocate 64.00 MiB. GPU 2 has a total capacity of 10.75 GiB of which 63.56 MiB is free. Including non-PyTorch memory, this process has 10.68 GiB memory in use. Of the allocated memory 9.51 GiB is allocated by PyTorch, and 842.00 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+[2024-11-29 15:21:18,178] torch.distributed.elastic.multiprocessing.api: [WARNING] Sending process 24044 closing signal SIGTERM
+[2024-11-29 15:21:18,179] torch.distributed.elastic.multiprocessing.api: [WARNING] Sending process 24045 closing signal SIGTERM
+[2024-11-29 15:21:18,182] torch.distributed.elastic.multiprocessing.api: [WARNING] Sending process 24047 closing signal SIGTERM
+[2024-11-29 15:21:18,680] torch.distributed.elastic.multiprocessing.api: [ERROR] failed (exitcode: 1) local_rank: 2 (pid: 24046) of binary: /gf3/home/fjs/anaconda3/envs/megatron/bin/python3.10
+Traceback (most recent call last):
+  File "/gf3/home/fjs/anaconda3/envs/megatron/bin/torchrun", line 8, in <module>
+    sys.exit(main())
+  File "/gf3/home/fjs/anaconda3/envs/megatron/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 347, in wrapper
+    return f(*args, **kwargs)
+  File "/gf3/home/fjs/anaconda3/envs/megatron/lib/python3.10/site-packages/torch/distributed/run.py", line 812, in main
+    run(args)
+  File "/gf3/home/fjs/anaconda3/envs/megatron/lib/python3.10/site-packages/torch/distributed/run.py", line 803, in run
+    elastic_launch(
+  File "/gf3/home/fjs/anaconda3/envs/megatron/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 135, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/gf3/home/fjs/anaconda3/envs/megatron/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 268, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+examples/multimodal/train.py FAILED
+------------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2024-11-29_15:21:18
+  host      : gn2
+  rank      : 6 (local_rank: 2)
+  exitcode  : 1 (pid: 24046)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================

@@ -121,13 +121,15 @@ OPTIONS=" \
     --allow-missing-vision-projection-checkpoint \
     --no-load-optim \
     --no-load-rng \
-    --freeze-LM \
     --log-interval ${LI} \
     --eval-iters 10 \
     --eval-interval 1000 \
     --use-flash-attn \
     --transformer-impl transformer_engine \
     --use-te \
+    --timing-log-level 2 \
+    --timing-log-option all \
+    --freeze-ViT \
 "
 # --pretrained-checkpoint ${CHECKPOINT_DIR} \
 # --load ${FINETUNE_DIR} \

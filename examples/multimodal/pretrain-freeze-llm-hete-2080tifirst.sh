@@ -82,7 +82,7 @@ OPTIONS=" \
     --hidden-dropout ${HD} \
     --tensor-model-parallel-size 4 \
     --pipeline-model-parallel-size 5 \
-    --split-spec "12,12,2,16,16"
+    --split-spec "26,8,8,8,8"
     --num-layers 32 \
     --hidden-size 4096 \
     --num-attention-heads 32 \
@@ -157,10 +157,10 @@ case $gn
         3)
         rank=1
         ;;
-        9)
+        79)
         rank=2
         ;;
-        33)
+        80)
         rank=3
         ;;
         *)

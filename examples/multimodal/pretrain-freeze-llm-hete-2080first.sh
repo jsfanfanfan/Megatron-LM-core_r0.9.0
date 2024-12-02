@@ -82,7 +82,7 @@ OPTIONS=" \
     --hidden-dropout ${HD} \
     --tensor-model-parallel-size 4 \
     --pipeline-model-parallel-size 5 \
-    --split-spec "13,11,8,13,13"
+    --split-spec "24,4,13,13,4"
     --num-layers 32 \
     --hidden-size 4096 \
     --num-attention-heads 32 \
@@ -134,7 +134,7 @@ OPTIONS=" \
 # --use-checkpoint-args \
 # --save ${FINETUNE_DIR} \
 # --dataloader-save ${FINETUNE_DIR}/dataloader \
-# --freeze-ViT \
+# --freeze-LM \
 # --use-distributed-optimizer \
 # --save-interval 1000 \
 # --bf16 \
@@ -157,10 +157,10 @@ case $gn
         2)
         rank=1
         ;;
-        3)
+        79)
         rank=2
         ;;
-        33)
+        80)
         rank=3
         ;;
         *)
