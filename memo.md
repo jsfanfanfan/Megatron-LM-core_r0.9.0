@@ -154,10 +154,12 @@ post-llm：33558528
 
 
 
-**baseling1  3090 * 5  26-8-8-8-8(Megatron):   7960ms/iteration   **
+**baseling1  3090 * 5  26-8-8-8-8(Megatron):   7960ms/iteration**
 **baseline2   26-8-8-8-8(Megatron)，最佳设备排列 2080ti-3090-2080ti-3090-2080i     2080ti_2 OOM** 
 **baseline3   按照设备算力划分参数量 28-11-11-4-4     2080 OOM**
 
 **必须进行重新划分：27-7-11-6-7  12945ms/iteration 108.13 tflops 算力是 ≈ 60.7%，速度是 ≈ 61.5%**
 
-冻结对于线性层和 transformer 层反向传播的影响差异很大~~~
+
+pre-encoder 冻结和不冻结，为什么反向传播的时间变化如此巨大？backward-recv-time 也观察不到原来的趋势？
+冻结对于反向传播的额事件影响为什么很小？

@@ -234,8 +234,10 @@ class LLaVAModel(MegatronModule):
             modules.append(self.vision_projection)
 
         for module in modules:
-            for param in module.parameters():
-                param.requires_grad = False
+            for name, param in module.named_parameters():
+                print(f"111111---name:{name} param:{param.size()}")
+                if name.startswith("decoder.layers"):
+                    param.requires_grad = False
 
     def _preprocess_data(
         self,

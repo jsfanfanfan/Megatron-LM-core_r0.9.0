@@ -82,7 +82,7 @@ OPTIONS=" \
     --hidden-dropout ${HD} \
     --tensor-model-parallel-size 4 \
     --pipeline-model-parallel-size 5 \
-    --split-spec "26,8,8,8,8"
+    --split-spec "24,10,8,8,8"
     --num-layers 32 \
     --hidden-size 4096 \
     --num-attention-heads 32 \
@@ -129,13 +129,14 @@ OPTIONS=" \
     --use-te \
     --timing-log-level 2 \
     --timing-log-option all \
-    --freeze-ViT \
+    --freeze-LM \
 "
 # --pretrained-checkpoint ${CHECKPOINT_DIR} \
 # --load ${FINETUNE_DIR} \
 # --use-checkpoint-args \
 # --save ${FINETUNE_DIR} \
 # --dataloader-save ${FINETUNE_DIR}/dataloader \
+# --freeze-ViT \
 # --freeze-ViT \
 # --use-distributed-optimizer \
 # --save-interval 1000 \
