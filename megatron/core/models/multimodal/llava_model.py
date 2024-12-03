@@ -235,9 +235,9 @@ class LLaVAModel(MegatronModule):
 
         for module in modules:
             for name, param in module.named_parameters():
-                print(f"111111---name:{name} param:{param.size()}")
-                if name.startswith("decoder.layers"):
-                    param.requires_grad = False
+                # print(f"111111---name:{name} param:{param.size()}")
+                # if name.startswith("decoder.layers"):
+                param.requires_grad = False
 
     def _preprocess_data(
         self,

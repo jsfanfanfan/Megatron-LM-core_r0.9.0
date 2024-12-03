@@ -129,7 +129,7 @@ OPTIONS=" \
     --use-te \
     --timing-log-level 2 \
     --timing-log-option all \
-    --freeze-LM \
+    --freeze-ViT \
 "
 # --pretrained-checkpoint ${CHECKPOINT_DIR} \
 # --load ${FINETUNE_DIR} \
@@ -143,6 +143,7 @@ OPTIONS=" \
 # --bf16 \
 # --log-params-norm \
 # --log-num-zeros-in-grad \
+# --freeze-ViT \
 
 
 export NVTE_APPLY_QK_LAYER_SCALING=0

@@ -1,0 +1,4121 @@
+examples/multimodal/pretrain-freeze-llm-homo.sh: line 4: activate: No such file or directory
+4
+[2024-12-03 23:10:17,340] torch.distributed.run: [WARNING] 
+[2024-12-03 23:10:17,340] torch.distributed.run: [WARNING] *****************************************
+[2024-12-03 23:10:17,340] torch.distributed.run: [WARNING] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+[2024-12-03 23:10:17,340] torch.distributed.run: [WARNING] *****************************************
+You set `add_prefix_space`. The tokenizer needs to be converted from the slow tokenizers
+You set `add_prefix_space`. The tokenizer needs to be converted from the slow tokenizers
+You set `add_prefix_space`. The tokenizer needs to be converted from the slow tokenizers
+You set `add_prefix_space`. The tokenizer needs to be converted from the slow tokenizers
+------pipeline_parallel_model_size:5------
+------world_size:20------
+------total_model_size:20------
+------num_pipeline_model_parallel_groups:4------
+------pipeline_parallel_model_size:5------------pipeline_parallel_model_size:5------
+
+------world_size:20------------world_size:20------
+
+------total_model_size:20------------total_model_size:20------
+
+------num_pipeline_model_parallel_groups:4------------num_pipeline_model_parallel_groups:4------
+
+> setting tensorboard ...
+WARNING: one_logger package is required to enable e2e metrics tracking. please go to https://confluence.nvidia.com/display/MLWFO/Package+Repositories for details to install it
+------pipeline_parallel_model_size:5------
+------world_size:20------
+------total_model_size:20------
+------num_pipeline_model_parallel_groups:4------
+---Rank 19---Tensor Parallel Group GPUs: [3, 3, 3, 3]
+---Rank 16---Tensor Parallel Group GPUs: [0, 0, 0, 0]---Rank 19---Pipeline Parallel Group GPUs: [4, 4, 4, 4, 4]
+
+---Rank 18---Tensor Parallel Group GPUs: [2, 2, 2, 2]---Rank 17---Tensor Parallel Group GPUs: [1, 1, 1, 1]
+
+---Rank 17---Pipeline Parallel Group GPUs: [4, 4, 4, 4, 4]
+---Rank 16---Pipeline Parallel Group GPUs: [4, 4, 4, 4, 4]
+---Rank 18---Pipeline Parallel Group GPUs: [4, 4, 4, 4, 4]
+[rank19]:[W init.cpp:767] Warning: nvfuser is no longer supported in torch script, use _jit_set_nvfuser_enabled is deprecated and a no-op (function operator())
+[rank16]:[W init.cpp:767] Warning: nvfuser is no longer supported in torch script, use _jit_set_nvfuser_enabled is deprecated and a no-op (function operator())
+[rank18]:[W init.cpp:767] Warning: nvfuser is no longer supported in torch script, use _jit_set_nvfuser_enabled is deprecated and a no-op (function operator())
+[rank17]:[W init.cpp:767] Warning: nvfuser is no longer supported in torch script, use _jit_set_nvfuser_enabled is deprecated and a no-op (function operator())
+WARNING:megatron.core.models.multimodal.llava_model:LLaVA model is under active development. It may be missing features and its methods may change.
+WARNING:megatron.core.models.multimodal.llava_model:LLaVA model is under active development. It may be missing features and its methods may change.
+WARNING:megatron.core.models.multimodal.llava_model:LLaVA model is under active development. It may be missing features and its methods may change.
+WARNING:megatron.core.models.multimodal.llava_model:LLaVA model is under active development. It may be missing features and its methods may change.
+ > number of parameters on (tensor, pipeline) model parallel rank (3, 4): 469831680
+ > number of parameters on (tensor, pipeline) model parallel rank (1, 4): 469831680
+ > number of parameters on (tensor, pipeline) model parallel rank (0, 4): 469831680
+ > number of parameters on (tensor, pipeline) model parallel rank (2, 4): 469831680
+INFO:megatron.core.distributed.param_and_grad_buffer:Number of buckets for gradient all-reduce / reduce-scatter: 1
+Params for bucket 1 (469831680 elements):
+	language_model.decoder.final_layernorm.weight
+	language_model.decoder.layers.6.self_attention.linear_qkv.layer_norm_weight
+	language_model.decoder.layers.3.mlp.linear_fc2.weight
+	language_model.decoder.layers.3.self_attention.linear_qkv.weight
+	language_model.decoder.layers.2.self_attention.linear_proj.weight
+	language_model.decoder.layers.7.mlp.linear_fc1.weight
+	language_model.decoder.layers.6.mlp.linear_fc2.weight
+	language_model.decoder.layers.5.mlp.linear_fc1.weight
+	language_model.decoder.layers.5.self_attention.linear_qkv.weight
+	language_model.decoder.layers.5.self_attention.linear_qkv.layer_norm_weight
+	language_model.decoder.layers.3.mlp.linear_fc1.weight
+	language_model.decoder.layers.3.self_attention.linear_proj.weight
+	language_model.decoder.layers.2.mlp.linear_fc2.weight
+	language_model.decoder.layers.1.self_attention.linear_qkv.layer_norm_weight
+	language_model.decoder.layers.7.mlp.linear_fc1.layer_norm_weight
+	language_model.decoder.layers.7.self_attention.linear_qkv.weight
+	language_model.decoder.layers.5.mlp.linear_fc2.weight
+	language_model.decoder.layers.0.mlp.linear_fc1.layer_norm_weight
+	language_model.decoder.layers.6.mlp.linear_fc1.weight
+	language_model.decoder.layers.5.self_attention.linear_proj.weight
+	language_model.decoder.layers.4.mlp.linear_fc1.layer_norm_weight
+	language_model.decoder.layers.0.mlp.linear_fc2.weight
+	language_model.decoder.layers.0.self_attention.linear_qkv.weight
+	language_model.decoder.layers.7.self_attention.linear_proj.weight
+	language_model.decoder.layers.6.self_attention.linear_qkv.weight
+	language_model.decoder.layers.4.mlp.linear_fc2.weight
+	language_model.decoder.layers.3.self_attention.linear_qkv.layer_norm_weight
+	language_model.decoder.layers.2.mlp.linear_fc1.layer_norm_weight
+	language_model.decoder.layers.2.self_attention.linear_qkv.weight
+	language_model.decoder.layers.1.self_attention.linear_qkv.weight
+	language_model.decoder.layers.0.self_attention.linear_proj.weight
+	language_model.decoder.layers.1.self_attention.linear_proj.weight
+	language_model.decoder.layers.0.mlp.linear_fc1.weight
+	language_model.decoder.layers.0.self_attention.linear_qkv.layer_norm_weight
+	language_model.decoder.layers.7.self_attention.linear_qkv.layer_norm_weight
+	language_model.decoder.layers.6.self_attention.linear_proj.weight
+	language_model.decoder.layers.5.mlp.linear_fc1.layer_norm_weight
+	language_model.decoder.layers.4.mlp.linear_fc1.weight
+	language_model.decoder.layers.4.self_attention.linear_qkv.layer_norm_weight
+	language_model.decoder.layers.4.self_attention.linear_proj.weight
+	language_model.decoder.layers.2.self_attention.linear_qkv.layer_norm_weight
+	language_model.decoder.layers.1.mlp.linear_fc2.weight
+	language_model.decoder.layers.1.mlp.linear_fc1.layer_norm_weight
+	language_model.output_layer.weight
+	language_model.decoder.layers.7.mlp.linear_fc2.weight
+	language_model.decoder.layers.6.mlp.linear_fc1.layer_norm_weight
+	language_model.decoder.layers.4.self_attention.linear_qkv.weight
+	language_model.decoder.layers.3.mlp.linear_fc1.layer_norm_weight
+	language_model.decoder.layers.2.mlp.linear_fc1.weight
+	language_model.decoder.layers.1.mlp.linear_fc1.weight
+name:module.language_model.decoder.layers.0.self_attention.linear_proj.weight param:torch.Size([4096, 1024]) require_grad:True
+name:module.language_model.decoder.layers.0.self_attention.linear_qkv.layer_norm_weight param:torch.Size([4096]) require_grad:True
+name:module.language_model.decoder.layers.0.self_attention.linear_qkv.weight param:torch.Size([1536, 4096]) require_grad:True
+name:module.language_model.decoder.layers.0.mlp.linear_fc1.layer_norm_weight param:torch.Size([4096]) require_grad:True
+name:module.language_model.decoder.layers.0.mlp.linear_fc1.weight param:torch.Size([7168, 4096]) require_grad:True
+name:module.language_model.decoder.layers.0.mlp.linear_fc2.weight param:torch.Size([4096, 3584]) require_grad:True
+name:module.language_model.decoder.layers.1.self_attention.linear_proj.weight param:torch.Size([4096, 1024]) require_grad:True
+name:module.language_model.decoder.layers.1.self_attention.linear_qkv.layer_norm_weight param:torch.Size([4096]) require_grad:True
+name:module.language_model.decoder.layers.1.self_attention.linear_qkv.weight param:torch.Size([1536, 4096]) require_grad:True
+name:module.language_model.decoder.layers.1.mlp.linear_fc1.layer_norm_weight param:torch.Size([4096]) require_grad:True
+name:module.language_model.decoder.layers.1.mlp.linear_fc1.weight param:torch.Size([7168, 4096]) require_grad:True
+name:module.language_model.decoder.layers.1.mlp.linear_fc2.weight param:torch.Size([4096, 3584]) require_grad:True
+name:module.language_model.decoder.layers.2.self_attention.linear_proj.weight param:torch.Size([4096, 1024]) require_grad:True
+name:module.language_model.decoder.layers.2.self_attention.linear_qkv.layer_norm_weight param:torch.Size([4096]) require_grad:True
+name:module.language_model.decoder.layers.2.self_attention.linear_qkv.weight param:torch.Size([1536, 4096]) require_grad:True
+name:module.language_model.decoder.layers.2.mlp.linear_fc1.layer_norm_weight param:torch.Size([4096]) require_grad:True
+name:module.language_model.decoder.layers.2.mlp.linear_fc1.weight param:torch.Size([7168, 4096]) require_grad:True
+name:module.language_model.decoder.layers.2.mlp.linear_fc2.weight param:torch.Size([4096, 3584]) require_grad:True
+name:module.language_model.decoder.layers.3.self_attention.linear_proj.weight param:torch.Size([4096, 1024]) require_grad:True
+name:module.language_model.decoder.layers.3.self_attention.linear_qkv.layer_norm_weight param:torch.Size([4096]) require_grad:True
+name:module.language_model.decoder.layers.3.self_attention.linear_qkv.weight param:torch.Size([1536, 4096]) require_grad:True
+name:module.language_model.decoder.layers.3.mlp.linear_fc1.layer_norm_weight param:torch.Size([4096]) require_grad:True
+name:module.language_model.decoder.layers.3.mlp.linear_fc1.weight param:torch.Size([7168, 4096]) require_grad:True
+name:module.language_model.decoder.layers.3.mlp.linear_fc2.weight param:torch.Size([4096, 3584]) require_grad:True
+name:module.language_model.decoder.layers.4.self_attention.linear_proj.weight param:torch.Size([4096, 1024]) require_grad:True
+name:module.language_model.decoder.layers.4.self_attention.linear_qkv.layer_norm_weight param:torch.Size([4096]) require_grad:True
+name:module.language_model.decoder.layers.4.self_attention.linear_qkv.weight param:torch.Size([1536, 4096]) require_grad:True
+name:module.language_model.decoder.layers.4.mlp.linear_fc1.layer_norm_weight param:torch.Size([4096]) require_grad:True
+name:module.language_model.decoder.layers.4.mlp.linear_fc1.weight param:torch.Size([7168, 4096]) require_grad:True
+name:module.language_model.decoder.layers.4.mlp.linear_fc2.weight param:torch.Size([4096, 3584]) require_grad:True
+name:module.language_model.decoder.layers.5.self_attention.linear_proj.weight param:torch.Size([4096, 1024]) require_grad:True
+name:module.language_model.decoder.layers.5.self_attention.linear_qkv.layer_norm_weight param:torch.Size([4096]) require_grad:True
+name:module.language_model.decoder.layers.5.self_attention.linear_qkv.weight param:torch.Size([1536, 4096]) require_grad:True
+name:module.language_model.decoder.layers.5.mlp.linear_fc1.layer_norm_weight param:torch.Size([4096]) require_grad:True
+name:module.language_model.decoder.layers.5.mlp.linear_fc1.weight param:torch.Size([7168, 4096]) require_grad:True
+name:module.language_model.decoder.layers.5.mlp.linear_fc2.weight param:torch.Size([4096, 3584]) require_grad:True
+name:module.language_model.decoder.layers.6.self_attention.linear_proj.weight param:torch.Size([4096, 1024]) require_grad:True
+name:module.language_model.decoder.layers.6.self_attention.linear_qkv.layer_norm_weight param:torch.Size([4096]) require_grad:True
+name:module.language_model.decoder.layers.6.self_attention.linear_qkv.weight param:torch.Size([1536, 4096]) require_grad:True
+name:module.language_model.decoder.layers.6.mlp.linear_fc1.layer_norm_weight param:torch.Size([4096]) require_grad:True
+name:module.language_model.decoder.layers.6.mlp.linear_fc1.weight param:torch.Size([7168, 4096]) require_grad:True
+name:module.language_model.decoder.layers.6.mlp.linear_fc2.weight param:torch.Size([4096, 3584]) require_grad:True
+name:module.language_model.decoder.layers.7.self_attention.linear_proj.weight param:torch.Size([4096, 1024]) require_grad:True
+name:module.language_model.decoder.layers.7.self_attention.linear_qkv.layer_norm_weight param:torch.Size([4096]) require_grad:True
+name:module.language_model.decoder.layers.7.self_attention.linear_qkv.weight param:torch.Size([1536, 4096]) require_grad:True
+name:module.language_model.decoder.layers.7.mlp.linear_fc1.layer_norm_weight param:torch.Size([4096]) require_grad:True
+name:module.language_model.decoder.layers.7.mlp.linear_fc1.weight param:torch.Size([7168, 4096]) require_grad:True
+name:module.language_model.decoder.layers.7.mlp.linear_fc2.weight param:torch.Size([4096, 3584]) require_grad:True
+name:module.language_model.decoder.final_layernorm.weight param:torch.Size([4096]) require_grad:True
+name:module.language_model.output_layer.weight param:torch.Size([8192, 4096]) require_grad:True
+name:module.language_model.decoder.layers.0.self_attention.linear_proj.weight param:torch.Size([4096, 1024]) require_grad:True
+name:module.language_model.decoder.layers.0.self_attention.linear_qkv.layer_norm_weight param:torch.Size([4096]) require_grad:True
+name:module.language_model.decoder.layers.0.self_attention.linear_qkv.weight param:torch.Size([1536, 4096]) require_grad:True
+name:module.language_model.decoder.layers.0.mlp.linear_fc1.layer_norm_weight param:torch.Size([4096]) require_grad:True
+name:module.language_model.decoder.layers.0.mlp.linear_fc1.weight param:torch.Size([7168, 4096]) require_grad:True
+name:module.language_model.decoder.layers.0.mlp.linear_fc2.weight param:torch.Size([4096, 3584]) require_grad:True
+name:module.language_model.decoder.layers.0.self_attention.linear_proj.weight param:torch.Size([4096, 1024]) require_grad:True
+name:module.language_model.decoder.layers.1.self_attention.linear_proj.weight param:torch.Size([4096, 1024]) require_grad:Truename:module.language_model.decoder.layers.0.self_attention.linear_qkv.layer_norm_weight param:torch.Size([4096]) require_grad:True
+
+name:module.language_model.decoder.layers.0.self_attention.linear_qkv.weight param:torch.Size([1536, 4096]) require_grad:Truename:module.language_model.decoder.layers.1.self_attention.linear_qkv.layer_norm_weight param:torch.Size([4096]) require_grad:True
+
+name:module.language_model.decoder.layers.1.self_attention.linear_qkv.weight param:torch.Size([1536, 4096]) require_grad:True
+name:module.language_model.decoder.layers.0.mlp.linear_fc1.layer_norm_weight param:torch.Size([4096]) require_grad:True
+name:module.language_model.decoder.layers.1.mlp.linear_fc1.layer_norm_weight param:torch.Size([4096]) require_grad:Truename:module.language_model.decoder.layers.0.mlp.linear_fc1.weight param:torch.Size([7168, 4096]) require_grad:True
+
+name:module.language_model.decoder.layers.1.mlp.linear_fc1.weight param:torch.Size([7168, 4096]) require_grad:True
+name:module.language_model.decoder.layers.0.mlp.linear_fc2.weight param:torch.Size([4096, 3584]) require_grad:True
+name:module.language_model.decoder.layers.1.mlp.linear_fc2.weight param:torch.Size([4096, 3584]) require_grad:True
+name:module.language_model.decoder.layers.1.self_attention.linear_proj.weight param:torch.Size([4096, 1024]) require_grad:Truename:module.language_model.decoder.layers.0.self_attention.linear_proj.weight param:torch.Size([4096, 1024]) require_grad:True
+name:module.language_model.decoder.layers.2.self_attention.linear_proj.weight param:torch.Size([4096, 1024]) require_grad:True
+
+name:module.language_model.decoder.layers.1.self_attention.linear_qkv.layer_norm_weight param:torch.Size([4096]) require_grad:True
+name:module.language_model.decoder.layers.2.self_attention.linear_qkv.layer_norm_weight param:torch.Size([4096]) require_grad:Truename:module.language_model.decoder.layers.0.self_attention.linear_qkv.layer_norm_weight param:torch.Size([4096]) require_grad:Truename:module.language_model.decoder.layers.1.self_attention.linear_qkv.weight param:torch.Size([1536, 4096]) require_grad:True
+
+
+name:module.language_model.decoder.layers.2.self_attention.linear_qkv.weight param:torch.Size([1536, 4096]) require_grad:Truename:module.language_model.decoder.layers.0.self_attention.linear_qkv.weight param:torch.Size([1536, 4096]) require_grad:True
+name:module.language_model.decoder.layers.1.mlp.linear_fc1.layer_norm_weight param:torch.Size([4096]) require_grad:True
+
+name:module.language_model.decoder.layers.1.mlp.linear_fc1.weight param:torch.Size([7168, 4096]) require_grad:True
+name:module.language_model.decoder.layers.2.mlp.linear_fc1.layer_norm_weight param:torch.Size([4096]) require_grad:True
+name:module.language_model.decoder.layers.1.mlp.linear_fc2.weight param:torch.Size([4096, 3584]) require_grad:True
+name:module.language_model.decoder.layers.2.mlp.linear_fc1.weight param:torch.Size([7168, 4096]) require_grad:Truename:module.language_model.decoder.layers.0.mlp.linear_fc1.layer_norm_weight param:torch.Size([4096]) require_grad:True
+
+name:module.language_model.decoder.layers.2.mlp.linear_fc2.weight param:torch.Size([4096, 3584]) require_grad:Truename:module.language_model.decoder.layers.0.mlp.linear_fc1.weight param:torch.Size([7168, 4096]) require_grad:Truename:module.language_model.decoder.layers.2.self_attention.linear_proj.weight param:torch.Size([4096, 1024]) require_grad:True
+
+
+name:module.language_model.decoder.layers.0.mlp.linear_fc2.weight param:torch.Size([4096, 3584]) require_grad:Truename:module.language_model.decoder.layers.2.self_attention.linear_qkv.layer_norm_weight param:torch.Size([4096]) require_grad:True
+
+name:module.language_model.decoder.layers.3.self_attention.linear_proj.weight param:torch.Size([4096, 1024]) require_grad:Truename:module.language_model.decoder.layers.2.self_attention.linear_qkv.weight param:torch.Size([1536, 4096]) require_grad:True
+
+name:module.language_model.decoder.layers.3.self_attention.linear_qkv.layer_norm_weight param:torch.Size([4096]) require_grad:True
+name:module.language_model.decoder.layers.1.self_attention.linear_proj.weight param:torch.Size([4096, 1024]) require_grad:Truename:module.language_model.decoder.layers.3.self_attention.linear_qkv.weight param:torch.Size([1536, 4096]) require_grad:True
+name:module.language_model.decoder.layers.2.mlp.linear_fc1.layer_norm_weight param:torch.Size([4096]) require_grad:True
+
+name:module.language_model.decoder.layers.1.self_attention.linear_qkv.layer_norm_weight param:torch.Size([4096]) require_grad:True
+name:module.language_model.decoder.layers.2.mlp.linear_fc1.weight param:torch.Size([7168, 4096]) require_grad:True
+name:module.language_model.decoder.layers.1.self_attention.linear_qkv.weight param:torch.Size([1536, 4096]) require_grad:True
+name:module.language_model.decoder.layers.3.mlp.linear_fc1.layer_norm_weight param:torch.Size([4096]) require_grad:Truename:module.language_model.decoder.layers.2.mlp.linear_fc2.weight param:torch.Size([4096, 3584]) require_grad:True
+
+name:module.language_model.decoder.layers.3.mlp.linear_fc1.weight param:torch.Size([7168, 4096]) require_grad:True
+name:module.language_model.decoder.layers.1.mlp.linear_fc1.layer_norm_weight param:torch.Size([4096]) require_grad:True
+name:module.language_model.decoder.layers.3.mlp.linear_fc2.weight param:torch.Size([4096, 3584]) require_grad:True
+name:module.language_model.decoder.layers.1.mlp.linear_fc1.weight param:torch.Size([7168, 4096]) require_grad:True
+name:module.language_model.decoder.layers.3.self_attention.linear_proj.weight param:torch.Size([4096, 1024]) require_grad:True
+name:module.language_model.decoder.layers.1.mlp.linear_fc2.weight param:torch.Size([4096, 3584]) require_grad:True
+name:module.language_model.decoder.layers.3.self_attention.linear_qkv.layer_norm_weight param:torch.Size([4096]) require_grad:True
+name:module.language_model.decoder.layers.4.self_attention.linear_proj.weight param:torch.Size([4096, 1024]) require_grad:True
+name:module.language_model.decoder.layers.3.self_attention.linear_qkv.weight param:torch.Size([1536, 4096]) require_grad:True
+name:module.language_model.decoder.layers.4.self_attention.linear_qkv.layer_norm_weight param:torch.Size([4096]) require_grad:True
+name:module.language_model.decoder.layers.2.self_attention.linear_proj.weight param:torch.Size([4096, 1024]) require_grad:Truename:module.language_model.decoder.layers.4.self_attention.linear_qkv.weight param:torch.Size([1536, 4096]) require_grad:Truename:module.language_model.decoder.layers.3.mlp.linear_fc1.layer_norm_weight param:torch.Size([4096]) require_grad:True
+
+
+name:module.language_model.decoder.layers.2.self_attention.linear_qkv.layer_norm_weight param:torch.Size([4096]) require_grad:Truename:module.language_model.decoder.layers.3.mlp.linear_fc1.weight param:torch.Size([7168, 4096]) require_grad:True
+
+name:module.language_model.decoder.layers.2.self_attention.linear_qkv.weight param:torch.Size([1536, 4096]) require_grad:Truename:module.language_model.decoder.layers.4.mlp.linear_fc1.layer_norm_weight param:torch.Size([4096]) require_grad:True
+name:module.language_model.decoder.layers.3.mlp.linear_fc2.weight param:torch.Size([4096, 3584]) require_grad:True
+
+name:module.language_model.decoder.layers.4.mlp.linear_fc1.weight param:torch.Size([7168, 4096]) require_grad:True
+name:module.language_model.decoder.layers.4.mlp.linear_fc2.weight param:torch.Size([4096, 3584]) require_grad:Truename:module.language_model.decoder.layers.2.mlp.linear_fc1.layer_norm_weight param:torch.Size([4096]) require_grad:True
+
+name:module.language_model.decoder.layers.4.self_attention.linear_proj.weight param:torch.Size([4096, 1024]) require_grad:True
+name:module.language_model.decoder.layers.2.mlp.linear_fc1.weight param:torch.Size([7168, 4096]) require_grad:True
+name:module.language_model.decoder.layers.4.self_attention.linear_qkv.layer_norm_weight param:torch.Size([4096]) require_grad:True
+name:module.language_model.decoder.layers.2.mlp.linear_fc2.weight param:torch.Size([4096, 3584]) require_grad:True
+name:module.language_model.decoder.layers.4.self_attention.linear_qkv.weight param:torch.Size([1536, 4096]) require_grad:Truename:module.language_model.decoder.layers.5.self_attention.linear_proj.weight param:torch.Size([4096, 1024]) require_grad:True
+
+name:module.language_model.decoder.layers.5.self_attention.linear_qkv.layer_norm_weight param:torch.Size([4096]) require_grad:True
+name:module.language_model.decoder.layers.5.self_attention.linear_qkv.weight param:torch.Size([1536, 4096]) require_grad:True
+name:module.language_model.decoder.layers.4.mlp.linear_fc1.layer_norm_weight param:torch.Size([4096]) require_grad:Truename:module.language_model.decoder.layers.3.self_attention.linear_proj.weight param:torch.Size([4096, 1024]) require_grad:True
+
+name:module.language_model.decoder.layers.4.mlp.linear_fc1.weight param:torch.Size([7168, 4096]) require_grad:True
+name:module.language_model.decoder.layers.5.mlp.linear_fc1.layer_norm_weight param:torch.Size([4096]) require_grad:Truename:module.language_model.decoder.layers.3.self_attention.linear_qkv.layer_norm_weight param:torch.Size([4096]) require_grad:True
+name:module.language_model.decoder.layers.4.mlp.linear_fc2.weight param:torch.Size([4096, 3584]) require_grad:True
+name:module.language_model.decoder.layers.5.mlp.linear_fc1.weight param:torch.Size([7168, 4096]) require_grad:True
+
+name:module.language_model.decoder.layers.3.self_attention.linear_qkv.weight param:torch.Size([1536, 4096]) require_grad:True
+name:module.language_model.decoder.layers.5.mlp.linear_fc2.weight param:torch.Size([4096, 3584]) require_grad:True
+name:module.language_model.decoder.layers.5.self_attention.linear_proj.weight param:torch.Size([4096, 1024]) require_grad:Truename:module.language_model.decoder.layers.3.mlp.linear_fc1.layer_norm_weight param:torch.Size([4096]) require_grad:True
+
+name:module.language_model.decoder.layers.6.self_attention.linear_proj.weight param:torch.Size([4096, 1024]) require_grad:Truename:module.language_model.decoder.layers.3.mlp.linear_fc1.weight param:torch.Size([7168, 4096]) require_grad:Truename:module.language_model.decoder.layers.5.self_attention.linear_qkv.layer_norm_weight param:torch.Size([4096]) require_grad:True
+
+
+name:module.language_model.decoder.layers.6.self_attention.linear_qkv.layer_norm_weight param:torch.Size([4096]) require_grad:Truename:module.language_model.decoder.layers.5.self_attention.linear_qkv.weight param:torch.Size([1536, 4096]) require_grad:Truename:module.language_model.decoder.layers.3.mlp.linear_fc2.weight param:torch.Size([4096, 3584]) require_grad:True
+
+
+name:module.language_model.decoder.layers.6.self_attention.linear_qkv.weight param:torch.Size([1536, 4096]) require_grad:True
+name:module.language_model.decoder.layers.5.mlp.linear_fc1.layer_norm_weight param:torch.Size([4096]) require_grad:True
+name:module.language_model.decoder.layers.4.self_attention.linear_proj.weight param:torch.Size([4096, 1024]) require_grad:Truename:module.language_model.decoder.layers.5.mlp.linear_fc1.weight param:torch.Size([7168, 4096]) require_grad:Truename:module.language_model.decoder.layers.6.mlp.linear_fc1.layer_norm_weight param:torch.Size([4096]) require_grad:True
+
+
+name:module.language_model.decoder.layers.4.self_attention.linear_qkv.layer_norm_weight param:torch.Size([4096]) require_grad:Truename:module.language_model.decoder.layers.6.mlp.linear_fc1.weight param:torch.Size([7168, 4096]) require_grad:Truename:module.language_model.decoder.layers.5.mlp.linear_fc2.weight param:torch.Size([4096, 3584]) require_grad:True
+
+
+name:module.language_model.decoder.layers.4.self_attention.linear_qkv.weight param:torch.Size([1536, 4096]) require_grad:True
+name:module.language_model.decoder.layers.6.mlp.linear_fc2.weight param:torch.Size([4096, 3584]) require_grad:True
+name:module.language_model.decoder.layers.4.mlp.linear_fc1.layer_norm_weight param:torch.Size([4096]) require_grad:Truename:module.language_model.decoder.layers.6.self_attention.linear_proj.weight param:torch.Size([4096, 1024]) require_grad:True
+
+name:module.language_model.decoder.layers.7.self_attention.linear_proj.weight param:torch.Size([4096, 1024]) require_grad:True
+name:module.language_model.decoder.layers.4.mlp.linear_fc1.weight param:torch.Size([7168, 4096]) require_grad:Truename:module.language_model.decoder.layers.6.self_attention.linear_qkv.layer_norm_weight param:torch.Size([4096]) require_grad:True
+
+name:module.language_model.decoder.layers.7.self_attention.linear_qkv.layer_norm_weight param:torch.Size([4096]) require_grad:True
+name:module.language_model.decoder.layers.4.mlp.linear_fc2.weight param:torch.Size([4096, 3584]) require_grad:Truename:module.language_model.decoder.layers.6.self_attention.linear_qkv.weight param:torch.Size([1536, 4096]) require_grad:Truename:module.language_model.decoder.layers.7.self_attention.linear_qkv.weight param:torch.Size([1536, 4096]) require_grad:True
+
+
+name:module.language_model.decoder.layers.6.mlp.linear_fc1.layer_norm_weight param:torch.Size([4096]) require_grad:Truename:module.language_model.decoder.layers.7.mlp.linear_fc1.layer_norm_weight param:torch.Size([4096]) require_grad:True
+name:module.language_model.decoder.layers.5.self_attention.linear_proj.weight param:torch.Size([4096, 1024]) require_grad:True
+name:module.language_model.decoder.layers.6.mlp.linear_fc1.weight param:torch.Size([7168, 4096]) require_grad:True
+
+name:module.language_model.decoder.layers.7.mlp.linear_fc1.weight param:torch.Size([7168, 4096]) require_grad:True
+name:module.language_model.decoder.layers.5.self_attention.linear_qkv.layer_norm_weight param:torch.Size([4096]) require_grad:Truename:module.language_model.decoder.layers.6.mlp.linear_fc2.weight param:torch.Size([4096, 3584]) require_grad:True
+name:module.language_model.decoder.layers.7.mlp.linear_fc2.weight param:torch.Size([4096, 3584]) require_grad:True
+
+name:module.language_model.decoder.layers.5.self_attention.linear_qkv.weight param:torch.Size([1536, 4096]) require_grad:True
+name:module.language_model.decoder.final_layernorm.weight param:torch.Size([4096]) require_grad:True
+name:module.language_model.decoder.layers.7.self_attention.linear_proj.weight param:torch.Size([4096, 1024]) require_grad:Truename:module.language_model.output_layer.weight param:torch.Size([8192, 4096]) require_grad:Truename:module.language_model.decoder.layers.5.mlp.linear_fc1.layer_norm_weight param:torch.Size([4096]) require_grad:True
+
+
+name:module.language_model.decoder.layers.7.self_attention.linear_qkv.layer_norm_weight param:torch.Size([4096]) require_grad:True
+name:module.language_model.decoder.layers.5.mlp.linear_fc1.weight param:torch.Size([7168, 4096]) require_grad:True
+name:module.language_model.decoder.layers.7.self_attention.linear_qkv.weight param:torch.Size([1536, 4096]) require_grad:True
+name:module.language_model.decoder.layers.5.mlp.linear_fc2.weight param:torch.Size([4096, 3584]) require_grad:True
+name:module.language_model.decoder.layers.7.mlp.linear_fc1.layer_norm_weight param:torch.Size([4096]) require_grad:True
+name:module.language_model.decoder.layers.7.mlp.linear_fc1.weight param:torch.Size([7168, 4096]) require_grad:True
+name:module.language_model.decoder.layers.6.self_attention.linear_proj.weight param:torch.Size([4096, 1024]) require_grad:True
+name:module.language_model.decoder.layers.7.mlp.linear_fc2.weight param:torch.Size([4096, 3584]) require_grad:True
+name:module.language_model.decoder.layers.6.self_attention.linear_qkv.layer_norm_weight param:torch.Size([4096]) require_grad:True
+name:module.language_model.decoder.final_layernorm.weight param:torch.Size([4096]) require_grad:Truename:module.language_model.decoder.layers.6.self_attention.linear_qkv.weight param:torch.Size([1536, 4096]) require_grad:True
+
+name:module.language_model.output_layer.weight param:torch.Size([8192, 4096]) require_grad:True
+name:module.language_model.decoder.layers.6.mlp.linear_fc1.layer_norm_weight param:torch.Size([4096]) require_grad:True
+name:module.language_model.decoder.layers.6.mlp.linear_fc1.weight param:torch.Size([7168, 4096]) require_grad:True
+name:module.language_model.decoder.layers.6.mlp.linear_fc2.weight param:torch.Size([4096, 3584]) require_grad:True
+name:module.language_model.decoder.layers.7.self_attention.linear_proj.weight param:torch.Size([4096, 1024]) require_grad:True
+name:module.language_model.decoder.layers.7.self_attention.linear_qkv.layer_norm_weight param:torch.Size([4096]) require_grad:True
+name:module.language_model.decoder.layers.7.self_attention.linear_qkv.weight param:torch.Size([1536, 4096]) require_grad:True
+name:module.language_model.decoder.layers.7.mlp.linear_fc1.layer_norm_weight param:torch.Size([4096]) require_grad:True
+name:module.language_model.decoder.layers.7.mlp.linear_fc1.weight param:torch.Size([7168, 4096]) require_grad:True
+name:module.language_model.decoder.layers.7.mlp.linear_fc2.weight param:torch.Size([4096, 3584]) require_grad:True
+name:module.language_model.decoder.final_layernorm.weight param:torch.Size([4096]) require_grad:True
+name:module.language_model.output_layer.weight param:torch.Size([8192, 4096]) require_grad:True
+rank=0, worker=0: shard_range=[pretrain-0.tar[0, 100), pretrain-0.tar[100, 200), pretrain-0.tar[200, 300), ...<2194>, pretrain-28.tar[9700, 9800), pretrain-28.tar[9800, 9900), pretrain-28.tar[9900, 10000)] sum(count)=220000
+rank=0, worker=1: shard_range=[pretrain-29.tar[0, 100), pretrain-29.tar[100, 200), pretrain-29.tar[200, 300), ...<2194>, pretrain-48.tar[9700, 9800), pretrain-48.tar[9800, 9900), pretrain-48.tar[9900, 10000)] sum(count)=220000
+rank=0, worker=0: shard_range=[pretrain-49.tar[0, 10000), pretrain-5.tar[0, 10000), pretrain-50.tar[0, 10000)] sum(count)=30000
+rank=0, worker=1: shard_range=[pretrain-51.tar[0, 10000), pretrain-52.tar[0, 10000), pretrain-53.tar[0, 10000)] sum(count)=30000
+times across ranks (ms):
+  model-and-optimizer-setup:
+     rank  0: 74.55
+     rank  1: 102.73
+     rank  2: 78.41
+     rank  3: 78.40
+     rank  4: 51.82
+     rank  5: 36.55
+     rank  6: 54.22
+     rank  7: 37.02
+     rank  8: 43.23
+     rank  9: 35.56
+     rank 10: 36.01
+     rank 11: 35.76
+     rank 12: 31.37
+     rank 13: 32.80
+     rank 14: 32.85
+     rank 15: 36.28
+     rank 16: 177.91
+     rank 17: 177.68
+     rank 18: 176.72
+     rank 19: 177.72
+  train/valid/test-data-iterators-setup:
+     rank  0: 802.65
+     rank  1: 803.72
+     rank  2: 802.43
+     rank  3: 802.44
+     rank  4: 949.74
+     rank  5: 949.77
+     rank  6: 949.74
+     rank  7: 949.76
+     rank  8: 949.79
+     rank  9: 949.78
+     rank 10: 949.74
+     rank 11: 950.00
+     rank 12: 963.97
+     rank 13: 964.02
+     rank 14: 964.01
+     rank 15: 964.06
+     rank 16: 1403.32
+     rank 17: 1403.39
+     rank 18: 1403.26
+     rank 19: 1403.21
+ [2024-12-03 23:12:09] iteration        1/      10 | consumed samples:           32 | elapsed time per iteration (ms): 36910.0 | learning rate: 7.500000E-07 | global batch size:    32 | lm loss: 6.941158E+00 | loss scale: 1.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+[Rank 17] (after 1 iterations) memory (MB) | allocated: 7254.3154296875 | max allocated: 9045.791015625 | reserved: 10094.0 | max reserved: 10094.0
+[Rank 18] (after 1 iterations) memory (MB) | allocated: 7254.3154296875 | max allocated: 9045.791015625 | reserved: 10130.0 | max reserved: 10130.0
+[Rank 16] (after 1 iterations) memory (MB) | allocated: 7254.3154296875 | max allocated: 9045.791015625 | reserved: 10090.0 | max reserved: 10090.0
+[Rank 19] (after 1 iterations) memory (MB) | allocated: 7254.3154296875 | max allocated: 9045.791015625 | reserved: 10134.0 | max reserved: 10134.0
+times across ranks (ms):
+  forward-backward:
+     rank  0: 36728.42
+     rank  1: 36728.48
+     rank  2: 36728.31
+     rank  3: 36728.41
+     rank  4: 36732.66
+     rank  5: 36732.87
+     rank  6: 36732.63
+     rank  7: 36732.84
+     rank  8: 36732.41
+     rank  9: 36732.16
+     rank 10: 36731.92
+     rank 11: 36732.33
+     rank 12: 36732.33
+     rank 13: 36732.20
+     rank 14: 36732.14
+     rank 15: 36732.16
+     rank 16: 36732.53
+     rank 17: 36732.27
+     rank 18: 36732.34
+     rank 19: 36732.30
+  forward-compute:
+     rank  0: 12714.82
+     rank  1: 12719.87
+     rank  2: 12728.69
+     rank  3: 12696.56
+     rank  4: 5703.96
+     rank  5: 5717.00
+     rank  6: 5718.26
+     rank  7: 5689.91
+     rank  8: 5272.73
+     rank  9: 5276.43
+     rank 10: 5282.80
+     rank 11: 5267.14
+     rank 12: 4998.15
+     rank 13: 5000.87
+     rank 14: 5007.76
+     rank 15: 4991.49
+     rank 16: 9543.12
+     rank 17: 9549.11
+     rank 18: 9547.30
+     rank 19: 9543.73
+  backward-compute:
+     rank  0: 4083.85
+     rank  1: 4087.50
+     rank  2: 4084.33
+     rank  3: 4088.61
+     rank  4: 3401.38
+     rank  5: 3404.53
+     rank  6: 3407.82
+     rank  7: 3401.26
+     rank  8: 3311.63
+     rank  9: 3314.76
+     rank 10: 3314.12
+     rank 11: 3311.92
+     rank 12: 3323.41
+     rank 13: 3332.73
+     rank 14: 3321.29
+     rank 15: 3325.92
+     rank 16: 3514.56
+     rank 17: 3517.70
+     rank 18: 3515.76
+     rank 19: 3514.70
+  pure-backward-compute:
+     rank  0: 4082.93
+     rank  1: 4086.54
+     rank  2: 4083.48
+     rank  3: 4087.77
+     rank  4: 3399.68
+     rank  5: 3403.51
+     rank  6: 3406.23
+     rank  7: 3399.94
+     rank  8: 3309.98
+     rank  9: 3313.75
+     rank 10: 3312.99
+     rank 11: 3310.65
+     rank 12: 3322.23
+     rank 13: 3331.59
+     rank 14: 3320.22
+     rank 15: 3324.48
+     rank 16: 3512.14
+     rank 17: 3515.54
+     rank 18: 3513.10
+     rank 19: 3512.73
+  batch-generator:
+     rank  0: 1134.69
+     rank  1: 1142.26
+     rank  2: 1158.58
+     rank  3: 1128.31
+     rank  4: 1397.98
+     rank  5: 1407.14
+     rank  6: 1416.50
+     rank  7: 1386.41
+     rank  8: 1163.40
+     rank  9: 1172.32
+     rank 10: 1177.94
+     rank 11: 1160.87
+     rank 12: 1185.83
+     rank 13: 1193.34
+     rank 14: 1200.54
+     rank 15: 1183.92
+     rank 16: 1870.16
+     rank 17: 1877.34
+     rank 18: 1878.38
+     rank 19: 1870.62
+  forward-recv:
+     rank  4: 11773.39
+     rank  5: 11771.72
+     rank  6: 11767.98
+     rank  7: 11785.15
+     rank  8: 14699.30
+     rank  9: 14697.09
+     rank 10: 14698.58
+     rank 11: 14700.22
+     rank 12: 17362.13
+     rank 13: 17357.23
+     rank 14: 17361.01
+     rank 15: 17364.47
+     rank 16: 19745.21
+     rank 17: 19748.64
+     rank 18: 19739.57
+     rank 19: 19748.73
+  forward-send:
+     rank  0: 7901.11
+     rank  1: 7896.18
+     rank  2: 7887.56
+     rank  3: 7919.23
+     rank  4: 4721.21
+     rank  5: 4718.01
+     rank  6: 4713.72
+     rank  7: 4727.50
+     rank  8: 2239.91
+     rank  9: 2239.00
+     rank 10: 2233.23
+     rank 11: 2245.29
+     rank 12: 31.52
+     rank 13: 35.04
+     rank 14: 26.26
+     rank 15: 35.01
+  backward-recv:
+     rank  0: 1432.80
+     rank  1: 1431.92
+     rank  2: 1433.27
+     rank  3: 1432.83
+     rank  4: 605.38
+     rank  5: 604.82
+     rank  6: 604.56
+     rank  7: 606.64
+     rank  8: 394.29
+     rank  9: 395.26
+     rank 10: 395.36
+     rank 11: 394.90
+     rank 12: 195.93
+     rank 13: 196.49
+     rank 14: 196.24
+     rank 15: 196.02
+  backward-send:
+     rank  4: 4.54
+     rank  5: 4.27
+     rank  6: 4.71
+     rank  7: 3.45
+     rank  8: 31.34
+     rank  9: 30.35
+     rank 10: 30.03
+     rank 11: 31.19
+     rank 12: 20.86
+     rank 13: 20.00
+     rank 14: 20.51
+     rank 15: 20.95
+     rank 16: 10.48
+     rank 17: 10.02
+     rank 18: 10.56
+     rank 19: 10.40
+  forward-send-backward-recv:
+     rank  0: 10533.98
+     rank  1: 10529.73
+     rank  2: 10535.24
+     rank  3: 10531.47
+     rank  4: 7455.44
+     rank  5: 7454.07
+     rank  6: 7452.92
+     rank  7: 7456.96
+     rank  8: 7292.41
+     rank  9: 7291.98
+     rank 10: 7290.35
+     rank 11: 7294.31
+     rank 12: 7095.52
+     rank 13: 7087.10
+     rank 14: 7096.81
+     rank 15: 7092.93
+  backward-send-forward-recv:
+     rank  4: 2943.65
+     rank  5: 2938.58
+     rank  6: 2942.79
+     rank  7: 2939.43
+     rank  8: 3159.16
+     rank  9: 3157.90
+     rank 10: 3156.69
+     rank 11: 3158.29
+     rank 12: 3156.58
+     rank 13: 3154.95
+     rank 14: 3153.67
+     rank 15: 3156.98
+     rank 16: 3151.70
+     rank 17: 3142.40
+     rank 18: 3152.01
+     rank 19: 3150.77
+  layernorm-grads-all-reduce:
+     rank  0: 0.05
+     rank  1: 0.07
+     rank  2: 0.05
+     rank  3: 0.06
+     rank  4: 0.04
+     rank  5: 0.05
+     rank  6: 0.04
+     rank  7: 0.05
+     rank  8: 0.09
+     rank  9: 0.04
+     rank 10: 0.03
+     rank 11: 0.09
+     rank 12: 0.06
+     rank 13: 0.04
+     rank 14: 0.05
+     rank 15: 0.04
+     rank 16: 0.03
+     rank 17: 0.02
+     rank 18: 0.02
+     rank 19: 0.02
+  embedding-grads-all-reduce:
+     rank  0: 0.05
+     rank  1: 0.05
+     rank  2: 0.05
+     rank  3: 0.05
+     rank  4: 0.12
+     rank  5: 0.15
+     rank  6: 0.12
+     rank  7: 0.17
+     rank  8: 0.08
+     rank  9: 0.04
+     rank 10: 0.03
+     rank 11: 0.07
+     rank 12: 0.06
+     rank 13: 0.03
+     rank 14: 0.05
+     rank 15: 0.04
+     rank 16: 0.09
+     rank 17: 0.05
+     rank 18: 0.05
+     rank 19: 0.05
+  all-grads-sync:
+     rank  0: 45.89
+     rank  1: 42.89
+     rank  2: 46.29
+     rank  3: 45.40
+     rank  4: 41.07
+     rank  5: 42.52
+     rank  6: 41.88
+     rank  7: 46.64
+     rank  8: 46.69
+     rank  9: 40.75
+     rank 10: 37.43
+     rank 11: 46.76
+     rank 12: 44.08
+     rank 13: 39.08
+     rank 14: 42.59
+     rank 15: 45.52
+     rank 16: 25.48
+     rank 17: 25.27
+     rank 18: 25.61
+     rank 19: 25.47
+  optimizer-copy-to-main-grad:
+     rank  0: 0.04
+     rank  1: 0.04
+     rank  2: 0.04
+     rank  3: 0.05
+     rank  4: 0.09
+     rank  5: 0.19
+     rank  6: 0.09
+     rank  7: 0.12
+     rank  8: 0.16
+     rank  9: 0.12
+     rank 10: 0.06
+     rank 11: 0.09
+     rank 12: 0.10
+     rank 13: 0.08
+     rank 14: 0.09
+     rank 15: 0.10
+     rank 16: 0.17
+     rank 17: 0.05
+     rank 18: 0.07
+     rank 19: 0.09
+  optimizer-clip-main-grad:
+     rank  0: 0.02
+     rank  1: 0.02
+     rank  2: 0.02
+     rank  3: 0.02
+     rank  4: 0.03
+     rank  5: 0.07
+     rank  6: 0.02
+     rank  7: 0.04
+     rank  8: 0.04
+     rank  9: 0.02
+     rank 10: 0.02
+     rank 11: 0.02
+     rank 12: 0.04
+     rank 13: 0.02
+     rank 14: 0.03
+     rank 15: 0.03
+     rank 16: 0.02
+     rank 17: 0.01
+     rank 18: 0.01
+     rank 19: 0.01
+  optimizer-count-zeros:
+     rank  0: 0.01
+     rank  1: 0.01
+     rank  2: 0.02
+     rank  3: 0.02
+     rank  4: 0.02
+     rank  5: 0.03
+     rank  6: 0.02
+     rank  7: 0.03
+     rank  8: 0.06
+     rank  9: 0.02
+     rank 10: 0.01
+     rank 11: 0.01
+     rank 12: 0.01
+     rank 13: 0.01
+     rank 14: 0.01
+     rank 15: 0.03
+     rank 16: 0.02
+     rank 17: 0.01
+     rank 18: 0.01
+     rank 19: 0.01
+  optimizer-inner-step:
+     rank  0: 1.73
+     rank  1: 1.86
+     rank  2: 1.60
+     rank  3: 1.77
+     rank  4: 58.84
+     rank  5: 58.90
+     rank  6: 58.77
+     rank  7: 58.89
+     rank  8: 54.03
+     rank  9: 53.41
+     rank 10: 53.41
+     rank 11: 53.63
+     rank 12: 51.96
+     rank 13: 52.06
+     rank 14: 52.37
+     rank 15: 52.46
+     rank 16: 169.55
+     rank 17: 169.52
+     rank 18: 169.58
+     rank 19: 169.53
+  optimizer:
+     rank  0: 3.33
+     rank  1: 3.45
+     rank  2: 3.20
+     rank  3: 3.36
+     rank  4: 60.46
+     rank  5: 60.49
+     rank  6: 60.37
+     rank  7: 60.49
+     rank  8: 55.60
+     rank  9: 55.01
+     rank 10: 55.01
+     rank 11: 55.22
+     rank 12: 53.52
+     rank 13: 53.65
+     rank 14: 53.93
+     rank 15: 54.06
+     rank 16: 171.15
+     rank 17: 171.12
+     rank 18: 171.19
+     rank 19: 171.12
+ [2024-12-03 23:12:17] iteration        2/      10 | consumed samples:           64 | elapsed time per iteration (ms): 8060.2 | learning rate: 1.500000E-06 | global batch size:    32 | lm loss: 7.144479E+00 | loss scale: 1.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+times across ranks (ms):
+  forward-backward:
+     rank  0: 7969.25
+     rank  1: 7969.17
+     rank  2: 7969.18
+     rank  3: 7969.21
+     rank  4: 7973.80
+     rank  5: 7973.70
+     rank  6: 7973.69
+     rank  7: 7973.74
+     rank  8: 7973.33
+     rank  9: 7973.28
+     rank 10: 7973.21
+     rank 11: 7973.27
+     rank 12: 7973.34
+     rank 13: 7973.23
+     rank 14: 7973.25
+     rank 15: 7973.26
+     rank 16: 7973.68
+     rank 17: 7973.55
+     rank 18: 7973.60
+     rank 19: 7973.55
+  forward-compute:
+     rank  0: 956.79
+     rank  1: 957.26
+     rank  2: 962.96
+     rank  3: 957.00
+     rank  4: 2959.30
+     rank  5: 2962.09
+     rank  6: 2971.04
+     rank  7: 2958.63
+     rank  8: 2805.11
+     rank  9: 2809.36
+     rank 10: 2810.46
+     rank 11: 2806.07
+     rank 12: 2803.16
+     rank 13: 2803.83
+     rank 14: 2809.17
+     rank 15: 2801.79
+     rank 16: 2935.83
+     rank 17: 2940.44
+     rank 18: 2937.27
+     rank 19: 2939.52
+  backward-compute:
+     rank  0: 910.06
+     rank  1: 908.75
+     rank  2: 912.59
+     rank  3: 909.85
+     rank  4: 3376.21
+     rank  5: 3381.80
+     rank  6: 3378.25
+     rank  7: 3375.95
+     rank  8: 3299.83
+     rank  9: 3299.62
+     rank 10: 3303.12
+     rank 11: 3299.05
+     rank 12: 3323.89
+     rank 13: 3325.10
+     rank 14: 3322.35
+     rank 15: 3329.22
+     rank 16: 3505.60
+     rank 17: 3507.56
+     rank 18: 3505.76
+     rank 19: 3508.78
+  pure-backward-compute:
+     rank  0: 909.41
+     rank  1: 907.99
+     rank  2: 911.93
+     rank  3: 909.17
+     rank  4: 3375.37
+     rank  5: 3380.85
+     rank  6: 3377.46
+     rank  7: 3375.07
+     rank  8: 3298.39
+     rank  9: 3298.66
+     rank 10: 3302.04
+     rank 11: 3298.18
+     rank 12: 3322.71
+     rank 13: 3323.74
+     rank 14: 3321.28
+     rank 15: 3327.56
+     rank 16: 3503.16
+     rank 17: 3505.81
+     rank 18: 3503.43
+     rank 19: 3507.11
+  batch-generator:
+     rank  0: 49.66
+     rank  1: 53.16
+     rank  2: 58.97
+     rank  3: 52.67
+     rank  4: 54.23
+     rank  5: 65.21
+     rank  6: 73.96
+     rank  7: 65.50
+     rank  8: 60.38
+     rank  9: 68.32
+     rank 10: 69.32
+     rank 11: 63.29
+     rank 12: 51.31
+     rank 13: 57.06
+     rank 14: 61.28
+     rank 15: 53.53
+     rank 16: 57.09
+     rank 17: 64.88
+     rank 18: 62.73
+     rank 19: 64.13
+  forward-recv:
+     rank  4: 63.38
+     rank  5: 61.79
+     rank  6: 60.92
+     rank  7: 62.12
+     rank  8: 274.82
+     rank  9: 274.59
+     rank 10: 271.88
+     rank 11: 274.42
+     rank 12: 455.69
+     rank 13: 455.69
+     rank 14: 455.37
+     rank 15: 455.81
+     rank 16: 631.53
+     rank 17: 631.48
+     rank 18: 630.52
+     rank 19: 631.40
+  forward-send:
+     rank  0: 416.73
+     rank  1: 416.02
+     rank  2: 410.53
+     rank  3: 417.05
+     rank  4: 34.60
+     rank  5: 34.27
+     rank  6: 29.55
+     rank  7: 35.40
+     rank  8: 20.78
+     rank  9: 21.33
+     rank 10: 19.44
+     rank 11: 21.28
+     rank 12: 10.32
+     rank 13: 10.51
+     rank 14: 9.56
+     rank 15: 10.40
+  backward-recv:
+     rank  0: 1419.82
+     rank  1: 1419.89
+     rank  2: 1419.80
+     rank  3: 1419.29
+     rank  4: 602.26
+     rank  5: 601.26
+     rank  6: 602.17
+     rank  7: 602.72
+     rank  8: 392.07
+     rank  9: 392.88
+     rank 10: 391.97
+     rank 11: 392.29
+     rank 12: 193.23
+     rank 13: 193.76
+     rank 14: 194.00
+     rank 15: 192.41
+  backward-send:
+     rank  4: 4.41
+     rank  5: 4.44
+     rank  6: 4.21
+     rank  7: 3.83
+     rank  8: 31.28
+     rank  9: 30.41
+     rank 10: 30.87
+     rank 11: 31.24
+     rank 12: 20.94
+     rank 13: 20.33
+     rank 14: 20.29
+     rank 15: 21.03
+     rank 16: 10.41
+     rank 17: 10.30
+     rank 18: 10.40
+     rank 19: 9.58
+  forward-send-backward-recv:
+     rank  0: 4251.64
+     rank  1: 4252.14
+     rank  2: 4251.08
+     rank  3: 4253.18
+     rank  4: 838.97
+     rank  5: 834.93
+     rank  6: 838.54
+     rank  7: 839.11
+     rank  8: 716.52
+     rank  9: 719.85
+     rank 10: 714.25
+     rank 11: 718.88
+     rank 12: 507.86
+     rank 13: 507.06
+     rank 14: 508.80
+     rank 15: 505.03
+  backward-send-forward-recv:
+     rank  4: 20.18
+     rank  5: 20.79
+     rank  6: 17.05
+     rank  7: 20.49
+     rank  8: 145.99
+     rank  9: 141.42
+     rank 10: 145.51
+     rank 11: 146.03
+     rank 12: 155.48
+     rank 13: 153.98
+     rank 14: 150.77
+     rank 15: 155.13
+     rank 16: 168.17
+     rank 17: 164.79
+     rank 18: 168.31
+     rank 19: 165.12
+  layernorm-grads-all-reduce:
+     rank  0: 0.02
+     rank  1: 0.02
+     rank  2: 0.02
+     rank  3: 0.02
+     rank  4: 0.02
+     rank  5: 0.02
+     rank  6: 0.02
+     rank  7: 0.02
+     rank  8: 0.02
+     rank  9: 0.02
+     rank 10: 0.02
+     rank 11: 0.02
+     rank 12: 0.02
+     rank 13: 0.02
+     rank 14: 0.02
+     rank 15: 0.02
+     rank 16: 0.04
+     rank 17: 0.02
+     rank 18: 0.02
+     rank 19: 0.02
+  embedding-grads-all-reduce:
+     rank  0: 0.02
+     rank  1: 0.02
+     rank  2: 0.02
+     rank  3: 0.02
+     rank  4: 0.05
+     rank  5: 0.05
+     rank  6: 0.05
+     rank  7: 0.05
+     rank  8: 0.02
+     rank  9: 0.02
+     rank 10: 0.02
+     rank 11: 0.02
+     rank 12: 0.02
+     rank 13: 0.02
+     rank 14: 0.02
+     rank 15: 0.02
+     rank 16: 0.09
+     rank 17: 0.04
+     rank 18: 0.05
+     rank 19: 0.05
+  all-grads-sync:
+     rank  0: 0.23
+     rank  1: 0.35
+     rank  2: 0.24
+     rank  3: 0.31
+     rank  4: 2.42
+     rank  5: 2.38
+     rank  6: 2.38
+     rank  7: 2.44
+     rank  8: 2.23
+     rank  9: 2.22
+     rank 10: 2.14
+     rank 11: 2.21
+     rank 12: 2.22
+     rank 13: 2.25
+     rank 14: 2.21
+     rank 15: 2.24
+     rank 16: 2.59
+     rank 17: 2.36
+     rank 18: 2.38
+     rank 19: 2.36
+  optimizer-copy-to-main-grad:
+     rank  0: 0.02
+     rank  1: 0.03
+     rank  2: 0.02
+     rank  3: 0.03
+     rank  4: 0.05
+     rank  5: 0.04
+     rank  6: 0.04
+     rank  7: 0.04
+     rank  8: 0.06
+     rank  9: 0.06
+     rank 10: 0.04
+     rank 11: 0.05
+     rank 12: 0.06
+     rank 13: 0.06
+     rank 14: 0.06
+     rank 15: 0.06
+     rank 16: 0.12
+     rank 17: 0.05
+     rank 18: 0.10
+     rank 19: 0.05
+  optimizer-clip-main-grad:
+     rank  0: 0.01
+     rank  1: 0.01
+     rank  2: 0.01
+     rank  3: 0.01
+     rank  4: 0.02
+     rank  5: 0.01
+     rank  6: 0.01
+     rank  7: 0.01
+     rank  8: 0.08
+     rank  9: 0.01
+     rank 10: 0.01
+     rank 11: 0.01
+     rank 12: 0.01
+     rank 13: 0.01
+     rank 14: 0.01
+     rank 15: 0.01
+     rank 16: 0.01
+     rank 17: 0.01
+     rank 18: 0.01
+     rank 19: 0.01
+  optimizer-count-zeros:
+     rank  0: 0.01
+     rank  1: 0.01
+     rank  2: 0.01
+     rank  3: 0.01
+     rank  4: 0.01
+     rank  5: 0.01
+     rank  6: 0.01
+     rank  7: 0.01
+     rank  8: 0.01
+     rank  9: 0.01
+     rank 10: 0.01
+     rank 11: 0.01
+     rank 12: 0.01
+     rank 13: 0.01
+     rank 14: 0.01
+     rank 15: 0.01
+     rank 16: 0.01
+     rank 17: 0.01
+     rank 18: 0.01
+     rank 19: 0.01
+  optimizer-inner-step:
+     rank  0: 0.51
+     rank  1: 0.60
+     rank  2: 0.52
+     rank  3: 0.64
+     rank  4: 48.20
+     rank  5: 48.08
+     rank  6: 48.10
+     rank  7: 48.15
+     rank  8: 43.51
+     rank  9: 43.10
+     rank 10: 43.02
+     rank 11: 43.03
+     rank 12: 42.99
+     rank 13: 43.06
+     rank 14: 43.04
+     rank 15: 43.11
+     rank 16: 46.50
+     rank 17: 46.32
+     rank 18: 46.32
+     rank 19: 46.34
+  optimizer:
+     rank  0: 1.23
+     rank  1: 1.32
+     rank  2: 1.25
+     rank  3: 1.37
+     rank  4: 48.93
+     rank  5: 48.81
+     rank  6: 48.83
+     rank  7: 48.88
+     rank  8: 44.24
+     rank  9: 43.83
+     rank 10: 43.75
+     rank 11: 43.76
+     rank 12: 43.71
+     rank 13: 43.80
+     rank 14: 43.77
+     rank 15: 43.85
+     rank 16: 47.23
+     rank 17: 47.05
+     rank 18: 47.04
+     rank 19: 47.07
+ [2024-12-03 23:12:25] iteration        3/      10 | consumed samples:           96 | elapsed time per iteration (ms): 8044.3 | learning rate: 2.250000E-06 | global batch size:    32 | lm loss: 2.786489E+00 | loss scale: 1.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+times across ranks (ms):
+  forward-backward:
+     rank  0: 7962.83
+     rank  1: 7962.84
+     rank  2: 7962.91
+     rank  3: 7962.94
+     rank  4: 7967.38
+     rank  5: 7967.34
+     rank  6: 7967.40
+     rank  7: 7967.44
+     rank  8: 7966.91
+     rank  9: 7966.93
+     rank 10: 7966.91
+     rank 11: 7967.02
+     rank 12: 7966.93
+     rank 13: 7966.94
+     rank 14: 7966.93
+     rank 15: 7967.04
+     rank 16: 7967.27
+     rank 17: 7967.20
+     rank 18: 7967.26
+     rank 19: 7967.23
+  forward-compute:
+     rank  0: 914.76
+     rank  1: 916.26
+     rank  2: 915.09
+     rank  3: 914.11
+     rank  4: 2957.59
+     rank  5: 2960.95
+     rank  6: 2960.90
+     rank  7: 2955.53
+     rank  8: 2803.93
+     rank  9: 2807.43
+     rank 10: 2805.70
+     rank 11: 2805.05
+     rank 12: 2801.64
+     rank 13: 2803.13
+     rank 14: 2803.26
+     rank 15: 2800.19
+     rank 16: 2930.69
+     rank 17: 2935.51
+     rank 18: 2931.56
+     rank 19: 2934.76
+  backward-compute:
+     rank  0: 931.15
+     rank  1: 930.30
+     rank  2: 932.55
+     rank  3: 930.58
+     rank  4: 3376.65
+     rank  5: 3381.43
+     rank  6: 3380.07
+     rank  7: 3376.71
+     rank  8: 3305.24
+     rank  9: 3305.44
+     rank 10: 3305.28
+     rank 11: 3303.92
+     rank 12: 3328.74
+     rank 13: 3330.94
+     rank 14: 3328.03
+     rank 15: 3333.85
+     rank 16: 3514.68
+     rank 17: 3516.93
+     rank 18: 3513.62
+     rank 19: 3517.64
+  pure-backward-compute:
+     rank  0: 930.49
+     rank  1: 929.66
+     rank  2: 931.82
+     rank  3: 929.90
+     rank  4: 3375.79
+     rank  5: 3380.58
+     rank  6: 3379.17
+     rank  7: 3375.77
+     rank  8: 3303.83
+     rank  9: 3304.38
+     rank 10: 3304.32
+     rank 11: 3303.03
+     rank 12: 3327.69
+     rank 13: 3329.63
+     rank 14: 3326.84
+     rank 15: 3332.27
+     rank 16: 3512.34
+     rank 17: 3515.06
+     rank 18: 3511.30
+     rank 19: 3516.21
+  batch-generator:
+     rank  0: 52.08
+     rank  1: 57.96
+     rank  2: 55.30
+     rank  3: 54.31
+     rank  4: 54.46
+     rank  5: 60.06
+     rank  6: 63.25
+     rank  7: 63.30
+     rank  8: 57.63
+     rank  9: 63.88
+     rank 10: 62.08
+     rank 11: 59.01
+     rank 12: 51.65
+     rank 13: 57.91
+     rank 14: 57.53
+     rank 15: 53.81
+     rank 16: 54.36
+     rank 17: 59.94
+     rank 18: 58.25
+     rank 19: 60.68
+  forward-recv:
+     rank  4: 60.61
+     rank  5: 60.27
+     rank  6: 60.54
+     rank  7: 61.03
+     rank  8: 273.63
+     rank  9: 274.10
+     rank 10: 273.93
+     rank 11: 273.75
+     rank 12: 450.93
+     rank 13: 449.57
+     rank 14: 451.30
+     rank 15: 450.66
+     rank 16: 621.19
+     rank 17: 621.30
+     rank 18: 620.70
+     rank 19: 621.36
+  forward-send:
+     rank  0: 411.90
+     rank  1: 410.37
+     rank  2: 411.49
+     rank  3: 412.62
+     rank  4: 31.78
+     rank  5: 30.39
+     rank  6: 31.61
+     rank  7: 32.21
+     rank  8: 20.94
+     rank  9: 19.89
+     rank 10: 20.73
+     rank 11: 20.93
+     rank 12: 10.26
+     rank 13: 10.57
+     rank 14: 9.84
+     rank 15: 10.56
+  backward-recv:
+     rank  0: 1426.56
+     rank  1: 1427.31
+     rank  2: 1426.83
+     rank  3: 1426.30
+     rank  4: 605.76
+     rank  5: 604.02
+     rank  6: 604.65
+     rank  7: 605.78
+     rank  8: 394.49
+     rank  9: 395.14
+     rank 10: 394.66
+     rank 11: 394.56
+     rank 12: 196.55
+     rank 13: 196.93
+     rank 14: 196.49
+     rank 15: 196.64
+  backward-send:
+     rank  4: 3.95
+     rank  5: 4.60
+     rank  6: 4.14
+     rank  7: 3.88
+     rank  8: 31.19
+     rank  9: 30.37
+     rank 10: 30.64
+     rank 11: 31.39
+     rank 12: 20.73
+     rank 13: 20.11
+     rank 14: 20.55
+     rank 15: 20.91
+     rank 16: 10.52
+     rank 17: 9.95
+     rank 18: 10.42
+     rank 19: 10.48
+  forward-send-backward-recv:
+     rank  0: 4264.48
+     rank  1: 4265.03
+     rank  2: 4264.93
+     rank  3: 4266.96
+     rank  4: 834.18
+     rank  5: 830.58
+     rank  6: 832.44
+     rank  7: 834.72
+     rank  8: 702.33
+     rank  9: 704.87
+     rank 10: 702.36
+     rank 11: 705.74
+     rank 12: 499.90
+     rank 13: 498.27
+     rank 14: 500.70
+     rank 15: 496.08
+  backward-send-forward-recv:
+     rank  4: 20.51
+     rank  5: 20.57
+     rank  6: 18.19
+     rank  7: 20.67
+     rank  8: 146.56
+     rank  9: 143.67
+     rank 10: 145.35
+     rank 11: 146.12
+     rank 12: 156.19
+     rank 13: 155.45
+     rank 14: 154.31
+     rank 15: 156.27
+     rank 16: 168.28
+     rank 17: 164.29
+     rank 18: 168.58
+     rank 19: 164.52
+  layernorm-grads-all-reduce:
+     rank  0: 0.02
+     rank  1: 0.02
+     rank  2: 0.02
+     rank  3: 0.02
+     rank  4: 0.02
+     rank  5: 0.02
+     rank  6: 0.02
+     rank  7: 0.02
+     rank  8: 0.02
+     rank  9: 0.02
+     rank 10: 0.02
+     rank 11: 0.02
+     rank 12: 0.02
+     rank 13: 0.02
+     rank 14: 0.02
+     rank 15: 0.02
+     rank 16: 0.02
+     rank 17: 0.02
+     rank 18: 0.02
+     rank 19: 0.02
+  embedding-grads-all-reduce:
+     rank  0: 0.02
+     rank  1: 0.02
+     rank  2: 0.02
+     rank  3: 0.02
+     rank  4: 0.05
+     rank  5: 0.05
+     rank  6: 0.05
+     rank  7: 0.06
+     rank  8: 0.02
+     rank  9: 0.02
+     rank 10: 0.02
+     rank 11: 0.02
+     rank 12: 0.02
+     rank 13: 0.02
+     rank 14: 0.02
+     rank 15: 0.02
+     rank 16: 0.05
+     rank 17: 0.04
+     rank 18: 0.05
+     rank 19: 0.05
+  all-grads-sync:
+     rank  0: 0.23
+     rank  1: 0.27
+     rank  2: 0.28
+     rank  3: 0.32
+     rank  4: 2.38
+     rank  5: 2.38
+     rank  6: 2.37
+     rank  7: 2.42
+     rank  8: 2.20
+     rank  9: 2.26
+     rank 10: 2.15
+     rank 11: 2.28
+     rank 12: 2.16
+     rank 13: 2.22
+     rank 14: 2.17
+     rank 15: 2.29
+     rank 16: 2.41
+     rank 17: 2.37
+     rank 18: 2.40
+     rank 19: 2.36
+  optimizer-copy-to-main-grad:
+     rank  0: 0.02
+     rank  1: 0.02
+     rank  2: 0.02
+     rank  3: 0.03
+     rank  4: 0.04
+     rank  5: 0.04
+     rank  6: 0.05
+     rank  7: 0.04
+     rank  8: 0.08
+     rank  9: 0.06
+     rank 10: 0.04
+     rank 11: 0.06
+     rank 12: 0.05
+     rank 13: 0.06
+     rank 14: 0.05
+     rank 15: 0.10
+     rank 16: 0.11
+     rank 17: 0.05
+     rank 18: 0.06
+     rank 19: 0.04
+  optimizer-clip-main-grad:
+     rank  0: 0.01
+     rank  1: 0.01
+     rank  2: 0.01
+     rank  3: 0.01
+     rank  4: 0.01
+     rank  5: 0.01
+     rank  6: 0.01
+     rank  7: 0.01
+     rank  8: 0.01
+     rank  9: 0.01
+     rank 10: 0.01
+     rank 11: 0.01
+     rank 12: 0.01
+     rank 13: 0.01
+     rank 14: 0.02
+     rank 15: 0.01
+     rank 16: 0.01
+     rank 17: 0.01
+     rank 18: 0.01
+     rank 19: 0.01
+  optimizer-count-zeros:
+     rank  0: 0.01
+     rank  1: 0.01
+     rank  2: 0.01
+     rank  3: 0.01
+     rank  4: 0.01
+     rank  5: 0.01
+     rank  6: 0.01
+     rank  7: 0.01
+     rank  8: 0.01
+     rank  9: 0.01
+     rank 10: 0.01
+     rank 11: 0.01
+     rank 12: 0.01
+     rank 13: 0.01
+     rank 14: 0.01
+     rank 15: 0.01
+     rank 16: 0.01
+     rank 17: 0.01
+     rank 18: 0.01
+     rank 19: 0.01
+  optimizer-inner-step:
+     rank  0: 0.52
+     rank  1: 0.55
+     rank  2: 0.57
+     rank  3: 0.60
+     rank  4: 48.07
+     rank  5: 48.04
+     rank  6: 48.04
+     rank  7: 48.04
+     rank  8: 43.22
+     rank  9: 43.13
+     rank 10: 43.00
+     rank 11: 43.04
+     rank 12: 42.99
+     rank 13: 43.06
+     rank 14: 43.10
+     rank 15: 43.14
+     rank 16: 46.35
+     rank 17: 46.30
+     rank 18: 46.34
+     rank 19: 46.26
+  optimizer:
+     rank  0: 1.17
+     rank  1: 1.19
+     rank  2: 1.17
+     rank  3: 1.20
+     rank  4: 48.67
+     rank  5: 48.64
+     rank  6: 48.64
+     rank  7: 48.64
+     rank  8: 43.83
+     rank  9: 43.73
+     rank 10: 43.60
+     rank 11: 43.64
+     rank 12: 43.60
+     rank 13: 43.67
+     rank 14: 43.71
+     rank 15: 43.74
+     rank 16: 46.97
+     rank 17: 46.92
+     rank 18: 46.95
+     rank 19: 46.87
+ [2024-12-03 23:12:33] iteration        4/      10 | consumed samples:          128 | elapsed time per iteration (ms): 8053.4 | learning rate: 3.000000E-06 | global batch size:    32 | lm loss: 4.020505E-01 | loss scale: 1.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+times across ranks (ms):
+  forward-backward:
+     rank  0: 7975.60
+     rank  1: 7975.62
+     rank  2: 7975.59
+     rank  3: 7975.61
+     rank  4: 7980.13
+     rank  5: 7980.15
+     rank  6: 7980.08
+     rank  7: 7980.11
+     rank  8: 7979.67
+     rank  9: 7979.70
+     rank 10: 7979.61
+     rank 11: 7979.72
+     rank 12: 7979.66
+     rank 13: 7979.68
+     rank 14: 7979.65
+     rank 15: 7979.79
+     rank 16: 7979.99
+     rank 17: 7979.98
+     rank 18: 7980.00
+     rank 19: 7979.96
+  forward-compute:
+     rank  0: 1076.54
+     rank  1: 1077.91
+     rank  2: 1079.25
+     rank  3: 1076.65
+     rank  4: 2963.10
+     rank  5: 2966.53
+     rank  6: 2966.97
+     rank  7: 2961.75
+     rank  8: 2798.67
+     rank  9: 2802.50
+     rank 10: 2800.03
+     rank 11: 2799.68
+     rank 12: 2818.59
+     rank 13: 2820.64
+     rank 14: 2820.74
+     rank 15: 2816.82
+     rank 16: 2935.72
+     rank 17: 2942.92
+     rank 18: 2936.68
+     rank 19: 2936.76
+  backward-compute:
+     rank  0: 933.08
+     rank  1: 933.33
+     rank  2: 933.97
+     rank  3: 932.92
+     rank  4: 3364.33
+     rank  5: 3369.42
+     rank  6: 3366.90
+     rank  7: 3364.24
+     rank  8: 3310.73
+     rank  9: 3311.02
+     rank 10: 3312.05
+     rank 11: 3310.08
+     rank 12: 3332.23
+     rank 13: 3334.33
+     rank 14: 3331.43
+     rank 15: 3335.10
+     rank 16: 3520.26
+     rank 17: 3521.90
+     rank 18: 3519.32
+     rank 19: 3523.93
+  pure-backward-compute:
+     rank  0: 932.26
+     rank  1: 932.66
+     rank  2: 933.34
+     rank  3: 932.31
+     rank  4: 3363.36
+     rank  5: 3368.54
+     rank  6: 3365.89
+     rank  7: 3363.38
+     rank  8: 3309.54
+     rank  9: 3310.15
+     rank 10: 3310.94
+     rank 11: 3309.23
+     rank 12: 3331.11
+     rank 13: 3333.05
+     rank 14: 3330.31
+     rank 15: 3333.22
+     rank 16: 3518.01
+     rank 17: 3520.39
+     rank 18: 3517.31
+     rank 19: 3522.50
+  batch-generator:
+     rank  0: 55.37
+     rank  1: 59.34
+     rank  2: 61.62
+     rank  3: 59.26
+     rank  4: 61.44
+     rank  5: 67.25
+     rank  6: 72.15
+     rank  7: 68.26
+     rank  8: 51.15
+     rank  9: 59.13
+     rank 10: 56.54
+     rank 11: 53.80
+     rank 12: 51.66
+     rank 13: 57.77
+     rank 14: 58.21
+     rank 15: 58.67
+     rank 16: 54.80
+     rank 17: 62.60
+     rank 18: 59.96
+     rank 19: 59.01
+  forward-recv:
+     rank  4: 59.50
+     rank  5: 58.99
+     rank  6: 57.64
+     rank  7: 59.57
+     rank  8: 277.71
+     rank  9: 278.61
+     rank 10: 277.40
+     rank 11: 277.64
+     rank 12: 449.39
+     rank 13: 449.14
+     rank 14: 449.37
+     rank 15: 449.28
+     rank 16: 624.51
+     rank 17: 624.02
+     rank 18: 624.42
+     rank 19: 624.64
+  forward-send:
+     rank  0: 419.62
+     rank  1: 418.53
+     rank  2: 417.25
+     rank  3: 419.83
+     rank  4: 31.61
+     rank  5: 30.89
+     rank  6: 30.91
+     rank  7: 32.06
+     rank  8: 20.90
+     rank  9: 19.86
+     rank 10: 20.84
+     rank 11: 20.94
+     rank 12: 10.42
+     rank 13: 9.80
+     rank 14: 10.41
+     rank 15: 10.54
+  backward-recv:
+     rank  0: 1422.61
+     rank  1: 1423.21
+     rank  2: 1423.18
+     rank  3: 1423.24
+     rank  4: 608.65
+     rank  5: 606.89
+     rank  6: 607.13
+     rank  7: 608.74
+     rank  8: 391.93
+     rank  9: 392.47
+     rank 10: 392.11
+     rank 11: 392.16
+     rank 12: 195.81
+     rank 13: 196.53
+     rank 14: 195.94
+     rank 15: 195.74
+  backward-send:
+     rank  4: 4.15
+     rank  5: 4.50
+     rank  6: 4.37
+     rank  7: 4.14
+     rank  8: 31.30
+     rank  9: 30.31
+     rank 10: 30.40
+     rank 11: 31.24
+     rank 12: 20.78
+     rank 13: 19.98
+     rank 14: 20.32
+     rank 15: 20.95
+     rank 16: 10.48
+     rank 17: 10.14
+     rank 18: 10.49
+     rank 19: 10.48
+  forward-send-backward-recv:
+     rank  0: 4109.18
+     rank  1: 4108.84
+     rank  2: 4109.93
+     rank  3: 4110.76
+     rank  4: 852.56
+     rank  5: 849.61
+     rank  6: 852.98
+     rank  7: 853.69
+     rank  8: 718.99
+     rank  9: 721.10
+     rank 10: 717.57
+     rank 11: 720.64
+     rank 12: 497.43
+     rank 13: 495.79
+     rank 14: 498.18
+     rank 15: 495.53
+  backward-send-forward-recv:
+     rank  4: 20.42
+     rank  5: 19.51
+     rank  6: 19.08
+     rank  7: 20.18
+     rank  8: 144.88
+     rank  9: 140.76
+     rank 10: 144.07
+     rank 11: 144.46
+     rank 12: 155.22
+     rank 13: 154.29
+     rank 14: 152.75
+     rank 15: 155.26
+     rank 16: 169.10
+     rank 17: 163.80
+     rank 18: 169.44
+     rank 19: 167.78
+  layernorm-grads-all-reduce:
+     rank  0: 0.02
+     rank  1: 0.02
+     rank  2: 0.02
+     rank  3: 0.02
+     rank  4: 0.02
+     rank  5: 0.02
+     rank  6: 0.02
+     rank  7: 0.02
+     rank  8: 0.02
+     rank  9: 0.02
+     rank 10: 0.02
+     rank 11: 0.03
+     rank 12: 0.02
+     rank 13: 0.02
+     rank 14: 0.02
+     rank 15: 0.03
+     rank 16: 0.02
+     rank 17: 0.02
+     rank 18: 0.02
+     rank 19: 0.02
+  embedding-grads-all-reduce:
+     rank  0: 0.02
+     rank  1: 0.02
+     rank  2: 0.02
+     rank  3: 0.02
+     rank  4: 0.05
+     rank  5: 0.04
+     rank  6: 0.05
+     rank  7: 0.05
+     rank  8: 0.02
+     rank  9: 0.02
+     rank 10: 0.02
+     rank 11: 0.03
+     rank 12: 0.02
+     rank 13: 0.02
+     rank 14: 0.02
+     rank 15: 0.03
+     rank 16: 0.05
+     rank 17: 0.05
+     rank 18: 0.05
+     rank 19: 0.05
+  all-grads-sync:
+     rank  0: 0.23
+     rank  1: 0.26
+     rank  2: 0.24
+     rank  3: 0.31
+     rank  4: 2.38
+     rank  5: 2.38
+     rank  6: 2.38
+     rank  7: 2.39
+     rank  8: 2.17
+     rank  9: 2.21
+     rank 10: 2.17
+     rank 11: 2.30
+     rank 12: 2.18
+     rank 13: 2.18
+     rank 14: 2.18
+     rank 15: 2.32
+     rank 16: 2.42
+     rank 17: 2.39
+     rank 18: 2.39
+     rank 19: 2.36
+  optimizer-copy-to-main-grad:
+     rank  0: 0.02
+     rank  1: 0.02
+     rank  2: 0.02
+     rank  3: 0.03
+     rank  4: 0.04
+     rank  5: 0.04
+     rank  6: 0.04
+     rank  7: 0.04
+     rank  8: 0.09
+     rank  9: 0.05
+     rank 10: 0.05
+     rank 11: 0.07
+     rank 12: 0.04
+     rank 13: 0.05
+     rank 14: 0.05
+     rank 15: 0.07
+     rank 16: 0.07
+     rank 17: 0.09
+     rank 18: 0.06
+     rank 19: 0.05
+  optimizer-clip-main-grad:
+     rank  0: 0.01
+     rank  1: 0.01
+     rank  2: 0.01
+     rank  3: 0.01
+     rank  4: 0.01
+     rank  5: 0.01
+     rank  6: 0.01
+     rank  7: 0.01
+     rank  8: 0.01
+     rank  9: 0.01
+     rank 10: 0.01
+     rank 11: 0.02
+     rank 12: 0.01
+     rank 13: 0.01
+     rank 14: 0.01
+     rank 15: 0.02
+     rank 16: 0.01
+     rank 17: 0.01
+     rank 18: 0.01
+     rank 19: 0.01
+  optimizer-count-zeros:
+     rank  0: 0.01
+     rank  1: 0.01
+     rank  2: 0.01
+     rank  3: 0.01
+     rank  4: 0.01
+     rank  5: 0.01
+     rank  6: 0.01
+     rank  7: 0.01
+     rank  8: 0.01
+     rank  9: 0.01
+     rank 10: 0.01
+     rank 11: 0.01
+     rank 12: 0.01
+     rank 13: 0.01
+     rank 14: 0.01
+     rank 15: 0.01
+     rank 16: 0.01
+     rank 17: 0.01
+     rank 18: 0.01
+     rank 19: 0.01
+  optimizer-inner-step:
+     rank  0: 0.50
+     rank  1: 0.50
+     rank  2: 0.51
+     rank  3: 0.63
+     rank  4: 48.06
+     rank  5: 48.06
+     rank  6: 48.07
+     rank  7: 48.06
+     rank  8: 43.05
+     rank  9: 43.06
+     rank 10: 43.07
+     rank 11: 43.18
+     rank 12: 42.98
+     rank 13: 42.98
+     rank 14: 43.04
+     rank 15: 43.29
+     rank 16: 46.48
+     rank 17: 46.38
+     rank 18: 46.31
+     rank 19: 46.30
+  optimizer:
+     rank  0: 1.14
+     rank  1: 1.14
+     rank  2: 1.15
+     rank  3: 1.28
+     rank  4: 48.71
+     rank  5: 48.71
+     rank  6: 48.71
+     rank  7: 48.71
+     rank  8: 43.69
+     rank  9: 43.70
+     rank 10: 43.71
+     rank 11: 43.83
+     rank 12: 43.62
+     rank 13: 43.62
+     rank 14: 43.68
+     rank 15: 43.93
+     rank 16: 47.13
+     rank 17: 47.02
+     rank 18: 46.95
+     rank 19: 46.94
+ [2024-12-03 23:12:42] iteration        5/      10 | consumed samples:          160 | elapsed time per iteration (ms): 8040.1 | learning rate: 3.750000E-06 | global batch size:    32 | lm loss: 2.727008E+00 | loss scale: 1.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+times across ranks (ms):
+  forward-backward:
+     rank  0: 7954.55
+     rank  1: 7954.38
+     rank  2: 7954.29
+     rank  3: 7954.26
+     rank  4: 7959.13
+     rank  5: 7958.90
+     rank  6: 7958.85
+     rank  7: 7958.93
+     rank  8: 7958.60
+     rank  9: 7958.43
+     rank 10: 7958.39
+     rank 11: 7958.45
+     rank 12: 7958.62
+     rank 13: 7958.39
+     rank 14: 7958.36
+     rank 15: 7958.47
+     rank 16: 7959.40
+     rank 17: 7958.69
+     rank 18: 7958.71
+     rank 19: 7958.67
+  forward-compute:
+     rank  0: 967.20
+     rank  1: 973.66
+     rank  2: 969.38
+     rank  3: 967.16
+     rank  4: 2962.77
+     rank  5: 2970.52
+     rank  6: 2966.50
+     rank  7: 2960.02
+     rank  8: 2803.25
+     rank  9: 2810.42
+     rank 10: 2805.02
+     rank 11: 2804.73
+     rank 12: 2802.73
+     rank 13: 2803.86
+     rank 14: 2804.95
+     rank 15: 2801.38
+     rank 16: 2937.78
+     rank 17: 2942.07
+     rank 18: 2939.22
+     rank 19: 2940.05
+  backward-compute:
+     rank  0: 931.85
+     rank  1: 933.18
+     rank  2: 934.02
+     rank  3: 931.21
+     rank  4: 3354.85
+     rank  5: 3359.01
+     rank  6: 3356.87
+     rank  7: 3355.19
+     rank  8: 3306.50
+     rank  9: 3306.81
+     rank 10: 3307.00
+     rank 11: 3305.92
+     rank 12: 3317.05
+     rank 13: 3318.58
+     rank 14: 3316.24
+     rank 15: 3320.16
+     rank 16: 3507.19
+     rank 17: 3509.65
+     rank 18: 3506.99
+     rank 19: 3510.47
+  pure-backward-compute:
+     rank  0: 931.07
+     rank  1: 932.51
+     rank  2: 933.37
+     rank  3: 930.48
+     rank  4: 3353.68
+     rank  5: 3358.15
+     rank  6: 3355.96
+     rank  7: 3353.88
+     rank  8: 3305.25
+     rank  9: 3305.97
+     rank 10: 3306.04
+     rank 11: 3305.14
+     rank 12: 3315.89
+     rank 13: 3317.40
+     rank 14: 3315.15
+     rank 15: 3318.70
+     rank 16: 3504.87
+     rank 17: 3507.90
+     rank 18: 3504.75
+     rank 19: 3509.02
+  batch-generator:
+     rank  0: 58.72
+     rank  1: 66.74
+     rank  2: 63.12
+     rank  3: 60.88
+     rank  4: 62.36
+     rank  5: 74.85
+     rank  6: 70.28
+     rank  7: 74.40
+     rank  8: 52.66
+     rank  9: 64.06
+     rank 10: 58.46
+     rank 11: 56.45
+     rank 12: 51.25
+     rank 13: 56.98
+     rank 14: 57.85
+     rank 15: 55.24
+     rank 16: 58.03
+     rank 17: 61.65
+     rank 18: 61.19
+     rank 19: 61.14
+  forward-recv:
+     rank  4: 61.03
+     rank  5: 59.60
+     rank  6: 59.96
+     rank  7: 61.05
+     rank  8: 271.16
+     rank  9: 268.03
+     rank 10: 270.79
+     rank 11: 271.16
+     rank 12: 448.95
+     rank 13: 447.50
+     rank 14: 449.07
+     rank 15: 448.71
+     rank 16: 622.07
+     rank 17: 622.10
+     rank 18: 621.73
+     rank 19: 622.08
+  forward-send:
+     rank  0: 409.92
+     rank  1: 403.40
+     rank  2: 407.71
+     rank  3: 409.97
+     rank  4: 32.84
+     rank  5: 27.76
+     rank  6: 32.44
+     rank  7: 33.23
+     rank  8: 20.96
+     rank  9: 19.61
+     rank 10: 20.78
+     rank 11: 20.79
+     rank 12: 10.33
+     rank 13: 10.56
+     rank 14: 10.07
+     rank 15: 10.59
+  backward-recv:
+     rank  0: 1408.63
+     rank  1: 1407.78
+     rank  2: 1408.58
+     rank  3: 1407.91
+     rank  4: 597.47
+     rank  5: 598.30
+     rank  6: 597.36
+     rank  7: 597.81
+     rank  8: 390.87
+     rank  9: 391.03
+     rank 10: 391.13
+     rank 11: 391.41
+     rank 12: 193.54
+     rank 13: 194.40
+     rank 14: 193.65
+     rank 15: 193.51
+  backward-send:
+     rank  4: 4.85
+     rank  5: 3.47
+     rank  6: 4.14
+     rank  7: 4.16
+     rank  8: 31.16
+     rank  9: 30.50
+     rank 10: 31.01
+     rank 11: 31.13
+     rank 12: 20.82
+     rank 13: 19.68
+     rank 14: 20.64
+     rank 15: 20.79
+     rank 16: 10.53
+     rank 17: 9.86
+     rank 18: 10.57
+     rank 19: 10.24
+  forward-send-backward-recv:
+     rank  0: 4220.93
+     rank  1: 4221.22
+     rank  2: 4221.85
+     rank  3: 4225.04
+     rank  4: 851.95
+     rank  5: 849.94
+     rank  6: 852.42
+     rank  7: 852.24
+     rank  8: 705.84
+     rank  9: 709.19
+     rank 10: 705.00
+     rank 11: 707.70
+     rank 12: 512.49
+     rank 13: 512.41
+     rank 14: 513.22
+     rank 15: 510.25
+  backward-send-forward-recv:
+     rank  4: 19.56
+     rank  5: 19.44
+     rank  6: 17.65
+     rank  7: 20.58
+     rank  8: 147.24
+     rank  9: 143.85
+     rank 10: 146.50
+     rank 11: 146.73
+     rank 12: 156.56
+     rank 13: 155.88
+     rank 14: 154.17
+     rank 15: 156.79
+     rank 16: 169.13
+     rank 17: 165.79
+     rank 18: 168.46
+     rank 19: 167.23
+  layernorm-grads-all-reduce:
+     rank  0: 0.02
+     rank  1: 0.02
+     rank  2: 0.02
+     rank  3: 0.02
+     rank  4: 0.02
+     rank  5: 0.02
+     rank  6: 0.02
+     rank  7: 0.02
+     rank  8: 0.02
+     rank  9: 0.02
+     rank 10: 0.02
+     rank 11: 0.02
+     rank 12: 0.02
+     rank 13: 0.02
+     rank 14: 0.02
+     rank 15: 0.02
+     rank 16: 0.06
+     rank 17: 0.02
+     rank 18: 0.02
+     rank 19: 0.02
+  embedding-grads-all-reduce:
+     rank  0: 0.02
+     rank  1: 0.02
+     rank  2: 0.02
+     rank  3: 0.02
+     rank  4: 0.08
+     rank  5: 0.05
+     rank  6: 0.06
+     rank  7: 0.06
+     rank  8: 0.02
+     rank  9: 0.02
+     rank 10: 0.02
+     rank 11: 0.02
+     rank 12: 0.02
+     rank 13: 0.02
+     rank 14: 0.02
+     rank 15: 0.02
+     rank 16: 0.16
+     rank 17: 0.05
+     rank 18: 0.05
+     rank 19: 0.04
+  all-grads-sync:
+     rank  0: 0.29
+     rank  1: 0.39
+     rank  2: 0.24
+     rank  3: 0.31
+     rank  4: 2.50
+     rank  5: 2.37
+     rank  6: 2.40
+     rank  7: 2.43
+     rank  8: 2.19
+     rank  9: 2.22
+     rank 10: 2.18
+     rank 11: 2.19
+     rank 12: 2.16
+     rank 13: 2.20
+     rank 14: 2.17
+     rank 15: 2.23
+     rank 16: 2.93
+     rank 17: 2.37
+     rank 18: 2.37
+     rank 19: 2.33
+  optimizer-copy-to-main-grad:
+     rank  0: 0.02
+     rank  1: 0.02
+     rank  2: 0.02
+     rank  3: 0.03
+     rank  4: 0.06
+     rank  5: 0.05
+     rank  6: 0.05
+     rank  7: 0.04
+     rank  8: 0.05
+     rank  9: 0.05
+     rank 10: 0.04
+     rank 11: 0.05
+     rank 12: 0.05
+     rank 13: 0.05
+     rank 14: 0.05
+     rank 15: 0.05
+     rank 16: 0.13
+     rank 17: 0.09
+     rank 18: 0.06
+     rank 19: 0.04
+  optimizer-clip-main-grad:
+     rank  0: 0.01
+     rank  1: 0.01
+     rank  2: 0.01
+     rank  3: 0.01
+     rank  4: 0.02
+     rank  5: 0.01
+     rank  6: 0.01
+     rank  7: 0.01
+     rank  8: 0.01
+     rank  9: 0.01
+     rank 10: 0.01
+     rank 11: 0.01
+     rank 12: 0.01
+     rank 13: 0.01
+     rank 14: 0.01
+     rank 15: 0.01
+     rank 16: 0.04
+     rank 17: 0.02
+     rank 18: 0.01
+     rank 19: 0.01
+  optimizer-count-zeros:
+     rank  0: 0.01
+     rank  1: 0.01
+     rank  2: 0.01
+     rank  3: 0.01
+     rank  4: 0.02
+     rank  5: 0.01
+     rank  6: 0.01
+     rank  7: 0.01
+     rank  8: 0.01
+     rank  9: 0.01
+     rank 10: 0.01
+     rank 11: 0.01
+     rank 12: 0.01
+     rank 13: 0.01
+     rank 14: 0.01
+     rank 15: 0.01
+     rank 16: 0.04
+     rank 17: 0.01
+     rank 18: 0.01
+     rank 19: 0.01
+  optimizer-inner-step:
+     rank  0: 0.59
+     rank  1: 0.60
+     rank  2: 0.52
+     rank  3: 0.60
+     rank  4: 48.26
+     rank  5: 48.07
+     rank  6: 48.13
+     rank  7: 48.13
+     rank  8: 43.08
+     rank  9: 43.05
+     rank 10: 43.01
+     rank 11: 43.03
+     rank 12: 43.03
+     rank 13: 43.05
+     rank 14: 43.03
+     rank 15: 43.10
+     rank 16: 46.84
+     rank 17: 46.30
+     rank 18: 46.29
+     rank 19: 46.20
+  optimizer:
+     rank  0: 1.84
+     rank  1: 1.86
+     rank  2: 1.78
+     rank  3: 1.85
+     rank  4: 49.52
+     rank  5: 49.34
+     rank  6: 49.40
+     rank  7: 49.39
+     rank  8: 44.34
+     rank  9: 44.31
+     rank 10: 44.27
+     rank 11: 44.29
+     rank 12: 44.29
+     rank 13: 44.31
+     rank 14: 44.29
+     rank 15: 44.36
+     rank 16: 48.07
+     rank 17: 47.56
+     rank 18: 47.57
+     rank 19: 47.46
+ [2024-12-03 23:12:50] iteration        6/      10 | consumed samples:          192 | elapsed time per iteration (ms): 8032.9 | learning rate: 4.500000E-06 | global batch size:    32 | lm loss: 1.566109E+00 | loss scale: 1.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+times across ranks (ms):
+  forward-backward:
+     rank  0: 7950.38
+     rank  1: 7950.38
+     rank  2: 7950.34
+     rank  3: 7950.40
+     rank  4: 7954.92
+     rank  5: 7954.93
+     rank  6: 7954.88
+     rank  7: 7954.92
+     rank  8: 7954.42
+     rank  9: 7954.46
+     rank 10: 7954.38
+     rank 11: 7954.45
+     rank 12: 7954.41
+     rank 13: 7954.45
+     rank 14: 7954.39
+     rank 15: 7954.46
+     rank 16: 7954.81
+     rank 17: 7954.73
+     rank 18: 7954.78
+     rank 19: 7954.72
+  forward-compute:
+     rank  0: 956.62
+     rank  1: 957.65
+     rank  2: 959.58
+     rank  3: 958.05
+     rank  4: 2979.23
+     rank  5: 2983.83
+     rank  6: 2989.01
+     rank  7: 2980.27
+     rank  8: 2794.60
+     rank  9: 2796.01
+     rank 10: 2795.98
+     rank 11: 2798.14
+     rank 12: 2800.53
+     rank 13: 2804.49
+     rank 14: 2802.44
+     rank 15: 2800.07
+     rank 16: 2927.65
+     rank 17: 2933.12
+     rank 18: 2928.32
+     rank 19: 2929.26
+  backward-compute:
+     rank  0: 911.81
+     rank  1: 911.96
+     rank  2: 916.24
+     rank  3: 911.79
+     rank  4: 3361.46
+     rank  5: 3366.02
+     rank  6: 3363.11
+     rank  7: 3362.64
+     rank  8: 3284.08
+     rank  9: 3286.87
+     rank 10: 3285.27
+     rank 11: 3283.65
+     rank 12: 3303.92
+     rank 13: 3306.87
+     rank 14: 3303.48
+     rank 15: 3307.10
+     rank 16: 3507.27
+     rank 17: 3509.88
+     rank 18: 3507.11
+     rank 19: 3511.47
+  pure-backward-compute:
+     rank  0: 911.14
+     rank  1: 911.32
+     rank  2: 915.62
+     rank  3: 911.16
+     rank  4: 3360.14
+     rank  5: 3364.98
+     rank  6: 3362.24
+     rank  7: 3361.53
+     rank  8: 3282.97
+     rank  9: 3285.96
+     rank 10: 3284.33
+     rank 11: 3282.77
+     rank 12: 3302.84
+     rank 13: 3305.80
+     rank 14: 3302.38
+     rank 15: 3305.71
+     rank 16: 3504.92
+     rank 17: 3508.23
+     rank 18: 3505.02
+     rank 19: 3510.12
+  batch-generator:
+     rank  0: 53.69
+     rank  1: 57.03
+     rank  2: 59.43
+     rank  3: 57.55
+     rank  4: 83.13
+     rank  5: 84.84
+     rank  6: 89.33
+     rank  7: 88.83
+     rank  8: 51.08
+     rank  9: 56.42
+     rank 10: 56.24
+     rank 11: 56.07
+     rank 12: 51.62
+     rank 13: 59.99
+     rank 14: 59.14
+     rank 15: 56.24
+     rank 16: 53.55
+     rank 17: 60.27
+     rank 18: 58.05
+     rank 19: 58.00
+  forward-recv:
+     rank  4: 61.07
+     rank  5: 61.18
+     rank  6: 60.02
+     rank  7: 61.41
+     rank  8: 276.84
+     rank  9: 278.77
+     rank 10: 276.45
+     rank 11: 276.46
+     rank 12: 449.25
+     rank 13: 448.46
+     rank 14: 449.27
+     rank 15: 449.26
+     rank 16: 625.87
+     rank 17: 625.34
+     rank 18: 625.63
+     rank 19: 625.84
+  forward-send:
+     rank  0: 389.10
+     rank  1: 387.93
+     rank  2: 386.06
+     rank  3: 387.63
+     rank  4: 31.90
+     rank  5: 31.27
+     rank  6: 30.39
+     rank  7: 31.40
+     rank  8: 21.08
+     rank  9: 19.38
+     rank 10: 20.82
+     rank 11: 20.96
+     rank 12: 10.52
+     rank 13: 9.93
+     rank 14: 10.30
+     rank 15: 10.47
+  backward-recv:
+     rank  0: 1423.68
+     rank  1: 1424.85
+     rank  2: 1424.47
+     rank  3: 1424.34
+     rank  4: 609.20
+     rank  5: 605.56
+     rank  6: 607.42
+     rank  7: 608.29
+     rank  8: 392.62
+     rank  9: 392.63
+     rank 10: 392.87
+     rank 11: 392.60
+     rank 12: 194.33
+     rank 13: 194.49
+     rank 14: 194.45
+     rank 15: 194.33
+  backward-send:
+     rank  4: 3.52
+     rank  5: 4.96
+     rank  6: 4.25
+     rank  7: 4.10
+     rank  8: 31.28
+     rank  9: 30.50
+     rank 10: 30.66
+     rank 11: 31.27
+     rank 12: 20.88
+     rank 13: 19.66
+     rank 14: 20.86
+     rank 15: 20.69
+     rank 16: 10.46
+     rank 17: 9.47
+     rank 18: 10.51
+     rank 19: 10.31
+  forward-send-backward-recv:
+     rank  0: 4254.62
+     rank  1: 4253.84
+     rank  2: 4252.19
+     rank  3: 4256.46
+     rank  4: 816.58
+     rank  5: 813.38
+     rank  6: 816.70
+     rank  7: 816.35
+     rank  8: 725.15
+     rank  9: 725.69
+     rank 10: 724.02
+     rank 11: 726.33
+     rank 12: 520.73
+     rank 13: 519.50
+     rank 14: 521.23
+     rank 15: 517.76
+  backward-send-forward-recv:
+     rank  4: 20.61
+     rank  5: 19.36
+     rank  6: 15.74
+     rank  7: 19.45
+     rank  8: 147.81
+     rank  9: 145.31
+     rank 10: 146.87
+     rank 11: 146.46
+     rank 12: 156.33
+     rank 13: 153.45
+     rank 14: 154.14
+     rank 15: 156.24
+     rank 16: 169.00
+     rank 17: 164.77
+     rank 18: 168.89
+     rank 19: 167.06
+  layernorm-grads-all-reduce:
+     rank  0: 0.02
+     rank  1: 0.02
+     rank  2: 0.02
+     rank  3: 0.02
+     rank  4: 0.02
+     rank  5: 0.02
+     rank  6: 0.02
+     rank  7: 0.02
+     rank  8: 0.02
+     rank  9: 0.02
+     rank 10: 0.02
+     rank 11: 0.02
+     rank 12: 0.02
+     rank 13: 0.02
+     rank 14: 0.02
+     rank 15: 0.02
+     rank 16: 0.02
+     rank 17: 0.01
+     rank 18: 0.02
+     rank 19: 0.02
+  embedding-grads-all-reduce:
+     rank  0: 0.02
+     rank  1: 0.02
+     rank  2: 0.02
+     rank  3: 0.02
+     rank  4: 0.05
+     rank  5: 0.05
+     rank  6: 0.05
+     rank  7: 0.05
+     rank  8: 0.02
+     rank  9: 0.02
+     rank 10: 0.02
+     rank 11: 0.02
+     rank 12: 0.02
+     rank 13: 0.02
+     rank 14: 0.02
+     rank 15: 0.02
+     rank 16: 0.05
+     rank 17: 0.05
+     rank 18: 0.05
+     rank 19: 0.04
+  all-grads-sync:
+     rank  0: 0.24
+     rank  1: 0.24
+     rank  2: 0.24
+     rank  3: 0.31
+     rank  4: 2.40
+     rank  5: 2.39
+     rank  6: 2.43
+     rank  7: 2.40
+     rank  8: 2.15
+     rank  9: 2.19
+     rank 10: 2.15
+     rank 11: 2.21
+     rank 12: 2.17
+     rank 13: 2.17
+     rank 14: 2.15
+     rank 15: 2.22
+     rank 16: 2.41
+     rank 17: 2.35
+     rank 18: 2.36
+     rank 19: 2.31
+  optimizer-copy-to-main-grad:
+     rank  0: 0.02
+     rank  1: 0.02
+     rank  2: 0.02
+     rank  3: 0.03
+     rank  4: 0.04
+     rank  5: 0.04
+     rank  6: 0.05
+     rank  7: 0.04
+     rank  8: 0.04
+     rank  9: 0.05
+     rank 10: 0.04
+     rank 11: 0.05
+     rank 12: 0.04
+     rank 13: 0.04
+     rank 14: 0.05
+     rank 15: 0.05
+     rank 16: 0.12
+     rank 17: 0.04
+     rank 18: 0.06
+     rank 19: 0.04
+  optimizer-clip-main-grad:
+     rank  0: 0.01
+     rank  1: 0.01
+     rank  2: 0.01
+     rank  3: 0.01
+     rank  4: 0.01
+     rank  5: 0.01
+     rank  6: 0.01
+     rank  7: 0.01
+     rank  8: 0.01
+     rank  9: 0.01
+     rank 10: 0.01
+     rank 11: 0.01
+     rank 12: 0.01
+     rank 13: 0.01
+     rank 14: 0.01
+     rank 15: 0.01
+     rank 16: 0.01
+     rank 17: 0.01
+     rank 18: 0.01
+     rank 19: 0.01
+  optimizer-count-zeros:
+     rank  0: 0.01
+     rank  1: 0.01
+     rank  2: 0.01
+     rank  3: 0.01
+     rank  4: 0.01
+     rank  5: 0.01
+     rank  6: 0.01
+     rank  7: 0.01
+     rank  8: 0.01
+     rank  9: 0.01
+     rank 10: 0.01
+     rank 11: 0.01
+     rank 12: 0.01
+     rank 13: 0.01
+     rank 14: 0.01
+     rank 15: 0.01
+     rank 16: 0.01
+     rank 17: 0.01
+     rank 18: 0.01
+     rank 19: 0.01
+  optimizer-inner-step:
+     rank  0: 0.50
+     rank  1: 0.53
+     rank  2: 0.49
+     rank  3: 0.59
+     rank  4: 48.08
+     rank  5: 48.07
+     rank  6: 48.08
+     rank  7: 48.04
+     rank  8: 43.00
+     rank  9: 43.03
+     rank 10: 42.99
+     rank 11: 43.01
+     rank 12: 42.99
+     rank 13: 42.98
+     rank 14: 43.03
+     rank 15: 43.14
+     rank 16: 46.40
+     rank 17: 46.29
+     rank 18: 46.30
+     rank 19: 46.24
+  optimizer:
+     rank  0: 1.03
+     rank  1: 1.07
+     rank  2: 1.03
+     rank  3: 1.13
+     rank  4: 48.62
+     rank  5: 48.61
+     rank  6: 48.62
+     rank  7: 48.58
+     rank  8: 43.55
+     rank  9: 43.56
+     rank 10: 43.52
+     rank 11: 43.55
+     rank 12: 43.53
+     rank 13: 43.52
+     rank 14: 43.57
+     rank 15: 43.68
+     rank 16: 46.93
+     rank 17: 46.85
+     rank 18: 46.84
+     rank 19: 46.78
+ [2024-12-03 23:12:58] iteration        7/      10 | consumed samples:          224 | elapsed time per iteration (ms): 8032.1 | learning rate: 5.250000E-06 | global batch size:    32 | lm loss: 1.188236E+00 | loss scale: 1.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+times across ranks (ms):
+  forward-backward:
+     rank  0: 7953.71
+     rank  1: 7953.64
+     rank  2: 7953.95
+     rank  3: 7953.67
+     rank  4: 7958.22
+     rank  5: 7958.20
+     rank  6: 7958.47
+     rank  7: 7958.19
+     rank  8: 7958.28
+     rank  9: 7957.77
+     rank 10: 7958.00
+     rank 11: 7957.76
+     rank 12: 7957.81
+     rank 13: 7957.76
+     rank 14: 7957.98
+     rank 15: 7957.78
+     rank 16: 7958.08
+     rank 17: 7958.01
+     rank 18: 7958.75
+     rank 19: 7958.01
+  forward-compute:
+     rank  0: 987.93
+     rank  1: 987.47
+     rank  2: 989.25
+     rank  3: 987.51
+     rank  4: 2969.81
+     rank  5: 2972.70
+     rank  6: 2974.20
+     rank  7: 2970.89
+     rank  8: 2795.93
+     rank  9: 2797.33
+     rank 10: 2797.24
+     rank 11: 2797.56
+     rank 12: 2803.79
+     rank 13: 2807.77
+     rank 14: 2806.30
+     rank 15: 2802.46
+     rank 16: 2928.17
+     rank 17: 2931.45
+     rank 18: 2929.01
+     rank 19: 2931.42
+  backward-compute:
+     rank  0: 914.85
+     rank  1: 914.67
+     rank  2: 916.45
+     rank  3: 917.63
+     rank  4: 3375.38
+     rank  5: 3379.30
+     rank  6: 3378.33
+     rank  7: 3374.93
+     rank  8: 3301.28
+     rank  9: 3303.30
+     rank 10: 3302.87
+     rank 11: 3301.38
+     rank 12: 3314.11
+     rank 13: 3315.32
+     rank 14: 3313.16
+     rank 15: 3318.52
+     rank 16: 3507.26
+     rank 17: 3508.87
+     rank 18: 3506.95
+     rank 19: 3510.45
+  pure-backward-compute:
+     rank  0: 914.12
+     rank  1: 914.03
+     rank  2: 915.80
+     rank  3: 916.76
+     rank  4: 3374.21
+     rank  5: 3378.38
+     rank  6: 3377.49
+     rank  7: 3374.16
+     rank  8: 3300.11
+     rank  9: 3302.48
+     rank 10: 3301.87
+     rank 11: 3300.52
+     rank 12: 3313.01
+     rank 13: 3314.25
+     rank 14: 3312.09
+     rank 15: 3316.92
+     rank 16: 3505.01
+     rank 17: 3506.96
+     rank 18: 3504.83
+     rank 19: 3509.07
+  batch-generator:
+     rank  0: 53.79
+     rank  1: 55.63
+     rank  2: 58.09
+     rank  3: 56.41
+     rank  4: 74.09
+     rank  5: 74.74
+     rank  6: 77.22
+     rank  7: 78.22
+     rank  8: 52.84
+     rank  9: 57.97
+     rank 10: 58.10
+     rank 11: 56.14
+     rank 12: 52.02
+     rank 13: 60.55
+     rank 14: 58.55
+     rank 15: 56.46
+     rank 16: 53.37
+     rank 17: 59.59
+     rank 18: 57.62
+     rank 19: 59.14
+  forward-recv:
+     rank  4: 59.77
+     rank  5: 59.78
+     rank  6: 59.12
+     rank  7: 59.88
+     rank  8: 272.54
+     rank  9: 274.31
+     rank 10: 272.74
+     rank 11: 272.54
+     rank 12: 449.01
+     rank 13: 447.55
+     rank 14: 449.20
+     rank 15: 448.78
+     rank 16: 618.89
+     rank 17: 619.03
+     rank 18: 618.58
+     rank 19: 618.90
+  forward-send:
+     rank  0: 413.27
+     rank  1: 413.33
+     rank  2: 411.54
+     rank  3: 413.02
+     rank  4: 31.53
+     rank  5: 31.40
+     rank  6: 30.93
+     rank  7: 31.49
+     rank  8: 20.99
+     rank  9: 19.77
+     rank 10: 20.75
+     rank 11: 20.88
+     rank 12: 10.33
+     rank 13: 10.56
+     rank 14: 9.98
+     rank 15: 10.59
+  backward-recv:
+     rank  0: 1420.52
+     rank  1: 1421.25
+     rank  2: 1420.09
+     rank  3: 1419.96
+     rank  4: 600.84
+     rank  5: 599.82
+     rank  6: 600.42
+     rank  7: 602.68
+     rank  8: 393.45
+     rank  9: 393.72
+     rank 10: 393.14
+     rank 11: 393.50
+     rank 12: 194.72
+     rank 13: 195.62
+     rank 14: 194.92
+     rank 15: 194.75
+  backward-send:
+     rank  4: 4.26
+     rank  5: 4.70
+     rank  6: 4.42
+     rank  7: 3.12
+     rank  8: 31.15
+     rank  9: 30.26
+     rank 10: 30.71
+     rank 11: 31.28
+     rank 12: 20.81
+     rank 13: 19.88
+     rank 14: 20.25
+     rank 15: 20.84
+     rank 16: 10.56
+     rank 17: 10.12
+     rank 18: 10.48
+     rank 19: 10.30
+  forward-send-backward-recv:
+     rank  0: 4200.98
+     rank  1: 4202.12
+     rank  2: 4202.66
+     rank  3: 4202.49
+     rank  4: 818.18
+     rank  5: 815.90
+     rank  6: 817.05
+     rank  7: 819.04
+     rank  8: 702.54
+     rank  9: 702.64
+     rank 10: 700.94
+     rank 11: 703.52
+     rank 12: 503.52
+     rank 13: 504.02
+     rank 14: 505.12
+     rank 15: 500.78
+  backward-send-forward-recv:
+     rank  4: 21.18
+     rank  5: 20.46
+     rank  6: 19.36
+     rank  7: 19.83
+     rank  8: 151.55
+     rank  9: 149.52
+     rank 10: 150.56
+     rank 11: 150.77
+     rank 12: 155.88
+     rank 13: 152.67
+     rank 14: 153.46
+     rank 15: 155.83
+     rank 16: 169.01
+     rank 17: 166.14
+     rank 18: 168.93
+     rank 19: 166.06
+  layernorm-grads-all-reduce:
+     rank  0: 0.02
+     rank  1: 0.02
+     rank  2: 0.02
+     rank  3: 0.02
+     rank  4: 0.02
+     rank  5: 0.02
+     rank  6: 0.02
+     rank  7: 0.02
+     rank  8: 0.07
+     rank  9: 0.02
+     rank 10: 0.02
+     rank 11: 0.03
+     rank 12: 0.02
+     rank 13: 0.02
+     rank 14: 0.02
+     rank 15: 0.02
+     rank 16: 0.02
+     rank 17: 0.02
+     rank 18: 0.06
+     rank 19: 0.02
+  embedding-grads-all-reduce:
+     rank  0: 0.02
+     rank  1: 0.02
+     rank  2: 0.02
+     rank  3: 0.02
+     rank  4: 0.05
+     rank  5: 0.06
+     rank  6: 0.05
+     rank  7: 0.05
+     rank  8: 0.06
+     rank  9: 0.02
+     rank 10: 0.02
+     rank 11: 0.02
+     rank 12: 0.02
+     rank 13: 0.02
+     rank 14: 0.02
+     rank 15: 0.02
+     rank 16: 0.07
+     rank 17: 0.06
+     rank 18: 0.16
+     rank 19: 0.05
+  all-grads-sync:
+     rank  0: 0.24
+     rank  1: 0.25
+     rank  2: 0.24
+     rank  3: 0.31
+     rank  4: 2.37
+     rank  5: 2.42
+     rank  6: 2.38
+     rank  7: 2.38
+     rank  8: 2.90
+     rank  9: 2.26
+     rank 10: 2.15
+     rank 11: 2.25
+     rank 12: 2.17
+     rank 13: 2.20
+     rank 14: 2.16
+     rank 15: 2.34
+     rank 16: 2.40
+     rank 17: 2.36
+     rank 18: 2.97
+     rank 19: 2.34
+  optimizer-copy-to-main-grad:
+     rank  0: 0.02
+     rank  1: 0.02
+     rank  2: 0.02
+     rank  3: 0.03
+     rank  4: 0.04
+     rank  5: 0.05
+     rank  6: 0.05
+     rank  7: 0.04
+     rank  8: 0.14
+     rank  9: 0.06
+     rank 10: 0.04
+     rank 11: 0.06
+     rank 12: 0.05
+     rank 13: 0.05
+     rank 14: 0.05
+     rank 15: 0.07
+     rank 16: 0.07
+     rank 17: 0.04
+     rank 18: 0.14
+     rank 19: 0.05
+  optimizer-clip-main-grad:
+     rank  0: 0.01
+     rank  1: 0.01
+     rank  2: 0.01
+     rank  3: 0.01
+     rank  4: 0.01
+     rank  5: 0.01
+     rank  6: 0.01
+     rank  7: 0.01
+     rank  8: 0.05
+     rank  9: 0.02
+     rank 10: 0.01
+     rank 11: 0.02
+     rank 12: 0.01
+     rank 13: 0.01
+     rank 14: 0.01
+     rank 15: 0.01
+     rank 16: 0.01
+     rank 17: 0.01
+     rank 18: 0.04
+     rank 19: 0.01
+  optimizer-count-zeros:
+     rank  0: 0.01
+     rank  1: 0.01
+     rank  2: 0.01
+     rank  3: 0.01
+     rank  4: 0.01
+     rank  5: 0.01
+     rank  6: 0.01
+     rank  7: 0.01
+     rank  8: 0.04
+     rank  9: 0.01
+     rank 10: 0.01
+     rank 11: 0.01
+     rank 12: 0.01
+     rank 13: 0.01
+     rank 14: 0.01
+     rank 15: 0.01
+     rank 16: 0.01
+     rank 17: 0.01
+     rank 18: 0.03
+     rank 19: 0.01
+  optimizer-inner-step:
+     rank  0: 0.51
+     rank  1: 0.56
+     rank  2: 0.52
+     rank  3: 0.61
+     rank  4: 48.04
+     rank  5: 48.21
+     rank  6: 48.07
+     rank  7: 48.03
+     rank  8: 43.84
+     rank  9: 43.11
+     rank 10: 43.01
+     rank 11: 43.16
+     rank 12: 42.99
+     rank 13: 42.99
+     rank 14: 43.03
+     rank 15: 43.15
+     rank 16: 46.39
+     rank 17: 46.28
+     rank 18: 47.02
+     rank 19: 46.30
+  optimizer:
+     rank  0: 1.93
+     rank  1: 1.98
+     rank  2: 2.10
+     rank  3: 2.03
+     rank  4: 49.47
+     rank  5: 49.64
+     rank  6: 49.49
+     rank  7: 49.45
+     rank  8: 45.27
+     rank  9: 44.53
+     rank 10: 44.44
+     rank 11: 44.59
+     rank 12: 44.42
+     rank 13: 44.42
+     rank 14: 44.46
+     rank 15: 45.45
+     rank 16: 47.81
+     rank 17: 47.70
+     rank 18: 48.39
+     rank 19: 47.72
+ [2024-12-03 23:13:06] iteration        8/      10 | consumed samples:          256 | elapsed time per iteration (ms): 8028.6 | learning rate: 6.000000E-06 | global batch size:    32 | lm loss: 1.399634E+00 | loss scale: 1.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+times across ranks (ms):
+  forward-backward:
+     rank  0: 7946.51
+     rank  1: 7946.46
+     rank  2: 7946.58
+     rank  3: 7946.45
+     rank  4: 7951.02
+     rank  5: 7950.97
+     rank  6: 7951.10
+     rank  7: 7950.99
+     rank  8: 7950.56
+     rank  9: 7950.53
+     rank 10: 7950.61
+     rank 11: 7950.53
+     rank 12: 7950.56
+     rank 13: 7950.54
+     rank 14: 7950.61
+     rank 15: 7950.59
+     rank 16: 7950.87
+     rank 17: 7950.88
+     rank 18: 7950.97
+     rank 19: 7950.82
+  forward-compute:
+     rank  0: 921.87
+     rank  1: 922.36
+     rank  2: 923.72
+     rank  3: 922.25
+     rank  4: 2956.50
+     rank  5: 2957.93
+     rank  6: 2960.16
+     rank  7: 2956.18
+     rank  8: 2796.57
+     rank  9: 2799.61
+     rank 10: 2797.94
+     rank 11: 2797.79
+     rank 12: 2803.44
+     rank 13: 2807.74
+     rank 14: 2806.43
+     rank 15: 2800.70
+     rank 16: 2926.86
+     rank 17: 2934.46
+     rank 18: 2926.88
+     rank 19: 2930.19
+  backward-compute:
+     rank  0: 906.37
+     rank  1: 904.78
+     rank  2: 906.13
+     rank  3: 904.73
+     rank  4: 3372.57
+     rank  5: 3378.37
+     rank  6: 3375.27
+     rank  7: 3372.15
+     rank  8: 3303.51
+     rank  9: 3305.37
+     rank 10: 3304.81
+     rank 11: 3302.24
+     rank 12: 3317.46
+     rank 13: 3322.39
+     rank 14: 3316.78
+     rank 15: 3325.30
+     rank 16: 3505.09
+     rank 17: 3505.90
+     rank 18: 3502.18
+     rank 19: 3507.06
+  pure-backward-compute:
+     rank  0: 905.69
+     rank  1: 904.14
+     rank  2: 905.49
+     rank  3: 904.08
+     rank  4: 3371.71
+     rank  5: 3377.38
+     rank  6: 3374.43
+     rank  7: 3371.21
+     rank  8: 3302.26
+     rank  9: 3304.60
+     rank 10: 3303.84
+     rank 11: 3301.48
+     rank 12: 3316.29
+     rank 13: 3321.27
+     rank 14: 3315.64
+     rank 15: 3320.83
+     rank 16: 3502.60
+     rank 17: 3504.40
+     rank 18: 3499.56
+     rank 19: 3505.60
+  batch-generator:
+     rank  0: 52.14
+     rank  1: 54.93
+     rank  2: 57.06
+     rank  3: 55.83
+     rank  4: 57.23
+     rank  5: 59.12
+     rank  6: 63.10
+     rank  7: 63.47
+     rank  8: 53.07
+     rank  9: 59.78
+     rank 10: 58.29
+     rank 11: 55.50
+     rank 12: 52.65
+     rank 13: 61.44
+     rank 14: 59.71
+     rank 15: 59.38
+     rank 16: 53.02
+     rank 17: 61.60
+     rank 18: 56.43
+     rank 19: 58.84
+  forward-recv:
+     rank  4: 63.37
+     rank  5: 63.21
+     rank  6: 62.54
+     rank  7: 63.47
+     rank  8: 275.81
+     rank  9: 276.64
+     rank 10: 276.07
+     rank 11: 275.34
+     rank 12: 452.12
+     rank 13: 451.11
+     rank 14: 451.89
+     rank 15: 451.87
+     rank 16: 623.81
+     rank 17: 623.90
+     rank 18: 623.46
+     rank 19: 623.93
+  forward-send:
+     rank  0: 412.96
+     rank  1: 412.37
+     rank  2: 410.99
+     rank  3: 412.46
+     rank  4: 31.60
+     rank  5: 31.33
+     rank  6: 30.90
+     rank  7: 31.54
+     rank  8: 20.80
+     rank  9: 20.16
+     rank 10: 20.28
+     rank 11: 20.91
+     rank 12: 10.28
+     rank 13: 10.52
+     rank 14: 10.00
+     rank 15: 10.62
+  backward-recv:
+     rank  0: 1424.83
+     rank  1: 1426.49
+     rank  2: 1426.40
+     rank  3: 1426.26
+     rank  4: 605.88
+     rank  5: 602.86
+     rank  6: 603.92
+     rank  7: 604.91
+     rank  8: 392.00
+     rank  9: 392.35
+     rank 10: 391.99
+     rank 11: 392.03
+     rank 12: 196.07
+     rank 13: 196.03
+     rank 14: 196.19
+     rank 15: 195.91
+  backward-send:
+     rank  4: 3.09
+     rank  5: 4.79
+     rank  6: 4.33
+     rank  7: 4.15
+     rank  8: 31.26
+     rank  9: 30.47
+     rank 10: 30.79
+     rank 11: 31.42
+     rank 12: 20.73
+     rank 13: 19.99
+     rank 14: 20.38
+     rank 15: 20.82
+     rank 16: 10.43
+     rank 17: 9.43
+     rank 18: 10.48
+     rank 19: 10.19
+  forward-send-backward-recv:
+     rank  0: 4265.51
+     rank  1: 4266.05
+     rank  2: 4266.65
+     rank  3: 4268.14
+     rank  4: 826.20
+     rank  5: 822.37
+     rank  6: 825.55
+     rank  7: 826.01
+     rank  8: 701.95
+     rank  9: 702.70
+     rank 10: 700.59
+     rank 11: 705.16
+     rank 12: 498.30
+     rank 13: 495.17
+     rank 14: 499.00
+     rank 15: 494.63
+  backward-send-forward-recv:
+     rank  4: 20.92
+     rank  5: 21.25
+     rank  6: 19.56
+     rank  7: 21.21
+     rank  8: 147.79
+     rank  9: 144.55
+     rank 10: 147.27
+     rank 11: 147.64
+     rank 12: 154.39
+     rank 13: 150.77
+     rank 14: 151.94
+     rank 15: 152.52
+     rank 16: 167.40
+     rank 17: 162.64
+     rank 18: 169.33
+     rank 19: 166.07
+  layernorm-grads-all-reduce:
+     rank  0: 0.02
+     rank  1: 0.02
+     rank  2: 0.02
+     rank  3: 0.02
+     rank  4: 0.02
+     rank  5: 0.02
+     rank  6: 0.02
+     rank  7: 0.02
+     rank  8: 0.02
+     rank  9: 0.02
+     rank 10: 0.02
+     rank 11: 0.02
+     rank 12: 0.02
+     rank 13: 0.02
+     rank 14: 0.02
+     rank 15: 0.02
+     rank 16: 0.02
+     rank 17: 0.02
+     rank 18: 0.04
+     rank 19: 0.02
+  embedding-grads-all-reduce:
+     rank  0: 0.02
+     rank  1: 0.02
+     rank  2: 0.02
+     rank  3: 0.02
+     rank  4: 0.05
+     rank  5: 0.05
+     rank  6: 0.05
+     rank  7: 0.05
+     rank  8: 0.02
+     rank  9: 0.02
+     rank 10: 0.02
+     rank 11: 0.02
+     rank 12: 0.02
+     rank 13: 0.02
+     rank 14: 0.02
+     rank 15: 0.02
+     rank 16: 0.05
+     rank 17: 0.05
+     rank 18: 0.10
+     rank 19: 0.04
+  all-grads-sync:
+     rank  0: 0.24
+     rank  1: 0.24
+     rank  2: 0.28
+     rank  3: 0.30
+     rank  4: 2.38
+     rank  5: 2.39
+     rank  6: 2.39
+     rank  7: 2.38
+     rank  8: 2.20
+     rank  9: 2.21
+     rank 10: 2.14
+     rank 11: 2.20
+     rank 12: 2.18
+     rank 13: 2.23
+     rank 14: 2.15
+     rank 15: 2.30
+     rank 16: 2.39
+     rank 17: 2.40
+     rank 18: 2.67
+     rank 19: 2.31
+  optimizer-copy-to-main-grad:
+     rank  0: 0.03
+     rank  1: 0.02
+     rank  2: 0.02
+     rank  3: 0.03
+     rank  4: 0.04
+     rank  5: 0.05
+     rank  6: 0.05
+     rank  7: 0.04
+     rank  8: 0.05
+     rank  9: 0.05
+     rank 10: 0.04
+     rank 11: 0.05
+     rank 12: 0.05
+     rank 13: 0.05
+     rank 14: 0.05
+     rank 15: 0.11
+     rank 16: 0.07
+     rank 17: 0.08
+     rank 18: 0.11
+     rank 19: 0.04
+  optimizer-clip-main-grad:
+     rank  0: 0.01
+     rank  1: 0.01
+     rank  2: 0.01
+     rank  3: 0.01
+     rank  4: 0.02
+     rank  5: 0.01
+     rank  6: 0.01
+     rank  7: 0.02
+     rank  8: 0.01
+     rank  9: 0.01
+     rank 10: 0.01
+     rank 11: 0.01
+     rank 12: 0.01
+     rank 13: 0.01
+     rank 14: 0.01
+     rank 15: 0.01
+     rank 16: 0.01
+     rank 17: 0.01
+     rank 18: 0.02
+     rank 19: 0.01
+  optimizer-count-zeros:
+     rank  0: 0.01
+     rank  1: 0.01
+     rank  2: 0.01
+     rank  3: 0.01
+     rank  4: 0.01
+     rank  5: 0.01
+     rank  6: 0.01
+     rank  7: 0.01
+     rank  8: 0.01
+     rank  9: 0.01
+     rank 10: 0.01
+     rank 11: 0.01
+     rank 12: 0.01
+     rank 13: 0.01
+     rank 14: 0.01
+     rank 15: 0.01
+     rank 16: 0.01
+     rank 17: 0.01
+     rank 18: 0.01
+     rank 19: 0.01
+  optimizer-inner-step:
+     rank  0: 0.51
+     rank  1: 0.51
+     rank  2: 0.59
+     rank  3: 0.59
+     rank  4: 48.07
+     rank  5: 48.11
+     rank  6: 48.03
+     rank  7: 48.09
+     rank  8: 43.06
+     rank  9: 43.03
+     rank 10: 42.97
+     rank 11: 43.04
+     rank 12: 43.05
+     rank 13: 43.01
+     rank 14: 43.04
+     rank 15: 43.16
+     rank 16: 46.45
+     rank 17: 46.30
+     rank 18: 46.51
+     rank 19: 46.26
+  optimizer:
+     rank  0: 1.07
+     rank  1: 1.10
+     rank  2: 1.17
+     rank  3: 1.18
+     rank  4: 48.67
+     rank  5: 48.70
+     rank  6: 48.63
+     rank  7: 48.69
+     rank  8: 43.66
+     rank  9: 43.62
+     rank 10: 43.56
+     rank 11: 43.63
+     rank 12: 43.64
+     rank 13: 43.60
+     rank 14: 43.64
+     rank 15: 43.81
+     rank 16: 47.05
+     rank 17: 47.02
+     rank 18: 47.11
+     rank 19: 46.86
+ [2024-12-03 23:13:14] iteration        9/      10 | consumed samples:          288 | elapsed time per iteration (ms): 8020.1 | learning rate: 6.750000E-06 | global batch size:    32 | lm loss: 1.217421E+00 | loss scale: 1.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+times across ranks (ms):
+  forward-backward:
+     rank  0: 7941.87
+     rank  1: 7941.87
+     rank  2: 7942.01
+     rank  3: 7941.92
+     rank  4: 7946.41
+     rank  5: 7946.39
+     rank  6: 7946.53
+     rank  7: 7946.42
+     rank  8: 7945.94
+     rank  9: 7945.95
+     rank 10: 7946.06
+     rank 11: 7946.01
+     rank 12: 7945.94
+     rank 13: 7946.01
+     rank 14: 7946.05
+     rank 15: 7945.98
+     rank 16: 7946.27
+     rank 17: 7946.24
+     rank 18: 7946.54
+     rank 19: 7946.23
+  forward-compute:
+     rank  0: 945.36
+     rank  1: 947.63
+     rank  2: 948.95
+     rank  3: 945.60
+     rank  4: 2964.25
+     rank  5: 2966.94
+     rank  6: 2966.56
+     rank  7: 2961.54
+     rank  8: 2799.39
+     rank  9: 2804.01
+     rank 10: 2802.86
+     rank 11: 2800.30
+     rank 12: 2796.05
+     rank 13: 2799.54
+     rank 14: 2797.84
+     rank 15: 2794.03
+     rank 16: 2923.85
+     rank 17: 2929.37
+     rank 18: 2924.27
+     rank 19: 2928.81
+  backward-compute:
+     rank  0: 919.88
+     rank  1: 917.63
+     rank  2: 918.04
+     rank  3: 918.64
+     rank  4: 3369.18
+     rank  5: 3375.98
+     rank  6: 3373.96
+     rank  7: 3369.60
+     rank  8: 3309.71
+     rank  9: 3310.61
+     rank 10: 3309.94
+     rank 11: 3309.57
+     rank 12: 3309.71
+     rank 13: 3313.03
+     rank 14: 3308.67
+     rank 15: 3315.26
+     rank 16: 3501.26
+     rank 17: 3503.33
+     rank 18: 3500.76
+     rank 19: 3503.70
+  pure-backward-compute:
+     rank  0: 919.14
+     rank  1: 916.98
+     rank  2: 917.43
+     rank  3: 917.98
+     rank  4: 3368.39
+     rank  5: 3375.03
+     rank  6: 3373.01
+     rank  7: 3368.70
+     rank  8: 3308.48
+     rank  9: 3309.78
+     rank 10: 3309.00
+     rank 11: 3308.60
+     rank 12: 3308.60
+     rank 13: 3311.92
+     rank 14: 3307.61
+     rank 15: 3313.31
+     rank 16: 3499.02
+     rank 17: 3501.88
+     rank 18: 3498.24
+     rank 19: 3502.34
+  batch-generator:
+     rank  0: 52.78
+     rank  1: 56.07
+     rank  2: 57.93
+     rank  3: 54.76
+     rank  4: 51.08
+     rank  5: 61.83
+     rank  6: 63.25
+     rank  7: 64.31
+     rank  8: 52.91
+     rank  9: 61.95
+     rank 10: 60.96
+     rank 11: 55.95
+     rank 12: 51.63
+     rank 13: 59.52
+     rank 14: 57.52
+     rank 15: 54.67
+     rank 16: 52.18
+     rank 17: 58.23
+     rank 18: 55.55
+     rank 19: 59.06
+  forward-recv:
+     rank  4: 61.25
+     rank  5: 60.13
+     rank  6: 60.44
+     rank  7: 61.27
+     rank  8: 273.55
+     rank  9: 273.56
+     rank 10: 272.36
+     rank 11: 273.38
+     rank 12: 449.32
+     rank 13: 448.56
+     rank 14: 448.78
+     rank 15: 449.45
+     rank 16: 625.61
+     rank 17: 625.50
+     rank 18: 625.39
+     rank 19: 625.63
+  forward-send:
+     rank  0: 417.49
+     rank  1: 415.21
+     rank  2: 413.97
+     rank  3: 417.28
+     rank  4: 32.46
+     rank  5: 30.69
+     rank  6: 29.80
+     rank  7: 32.62
+     rank  8: 22.75
+     rank  9: 22.00
+     rank 10: 21.84
+     rank 11: 22.79
+     rank 12: 10.49
+     rank 13: 10.40
+     rank 14: 10.27
+     rank 15: 10.68
+  backward-recv:
+     rank  0: 1417.15
+     rank  1: 1418.84
+     rank  2: 1418.71
+     rank  3: 1417.89
+     rank  4: 602.25
+     rank  5: 599.70
+     rank  6: 600.30
+     rank  7: 601.95
+     rank  8: 386.22
+     rank  9: 386.49
+     rank 10: 386.66
+     rank 11: 385.85
+     rank 12: 193.35
+     rank 13: 193.83
+     rank 14: 193.46
+     rank 15: 193.19
+  backward-send:
+     rank  4: 3.10
+     rank  5: 4.55
+     rank  6: 4.42
+     rank  7: 4.23
+     rank  8: 31.35
+     rank  9: 30.12
+     rank 10: 30.77
+     rank 11: 31.50
+     rank 12: 20.93
+     rank 13: 20.06
+     rank 14: 20.63
+     rank 15: 20.94
+     rank 16: 10.47
+     rank 17: 9.82
+     rank 18: 10.51
+     rank 19: 10.20
+  forward-send-backward-recv:
+     rank  0: 4226.47
+     rank  1: 4227.93
+     rank  2: 4229.52
+     rank  3: 4229.07
+     rank  4: 823.27
+     rank  5: 818.19
+     rank  6: 821.47
+     rank  7: 824.11
+     rank  8: 694.62
+     rank  9: 697.64
+     rank 10: 695.12
+     rank 11: 698.02
+     rank 12: 511.08
+     rank 13: 509.07
+     rank 14: 512.43
+     rank 15: 506.18
+  backward-send-forward-recv:
+     rank  4: 19.13
+     rank  5: 20.62
+     rank  6: 19.68
+     rank  7: 20.13
+     rank  8: 145.59
+     rank  9: 140.98
+     rank 10: 144.04
+     rank 11: 144.68
+     rank 12: 155.67
+     rank 13: 152.68
+     rank 14: 154.35
+     rank 15: 155.71
+     rank 16: 168.18
+     rank 17: 163.89
+     rank 18: 168.00
+     rank 19: 164.19
+  layernorm-grads-all-reduce:
+     rank  0: 0.02
+     rank  1: 0.02
+     rank  2: 0.02
+     rank  3: 0.02
+     rank  4: 0.02
+     rank  5: 0.02
+     rank  6: 0.02
+     rank  7: 0.02
+     rank  8: 0.02
+     rank  9: 0.02
+     rank 10: 0.02
+     rank 11: 0.03
+     rank 12: 0.02
+     rank 13: 0.03
+     rank 14: 0.02
+     rank 15: 0.02
+     rank 16: 0.02
+     rank 17: 0.02
+     rank 18: 0.04
+     rank 19: 0.02
+  embedding-grads-all-reduce:
+     rank  0: 0.02
+     rank  1: 0.02
+     rank  2: 0.02
+     rank  3: 0.02
+     rank  4: 0.05
+     rank  5: 0.05
+     rank  6: 0.05
+     rank  7: 0.05
+     rank  8: 0.02
+     rank  9: 0.02
+     rank 10: 0.02
+     rank 11: 0.02
+     rank 12: 0.02
+     rank 13: 0.03
+     rank 14: 0.02
+     rank 15: 0.02
+     rank 16: 0.05
+     rank 17: 0.05
+     rank 18: 0.09
+     rank 19: 0.04
+  all-grads-sync:
+     rank  0: 0.24
+     rank  1: 0.24
+     rank  2: 0.25
+     rank  3: 0.29
+     rank  4: 2.38
+     rank  5: 2.39
+     rank  6: 2.38
+     rank  7: 2.40
+     rank  8: 2.19
+     rank  9: 2.23
+     rank 10: 2.14
+     rank 11: 2.31
+     rank 12: 2.18
+     rank 13: 2.32
+     rank 14: 2.18
+     rank 15: 2.27
+     rank 16: 2.38
+     rank 17: 2.36
+     rank 18: 2.72
+     rank 19: 2.30
+  optimizer-copy-to-main-grad:
+     rank  0: 0.02
+     rank  1: 0.02
+     rank  2: 0.02
+     rank  3: 0.03
+     rank  4: 0.04
+     rank  5: 0.05
+     rank  6: 0.05
+     rank  7: 0.04
+     rank  8: 0.05
+     rank  9: 0.05
+     rank 10: 0.04
+     rank 11: 0.06
+     rank 12: 0.06
+     rank 13: 0.07
+     rank 14: 0.06
+     rank 15: 0.06
+     rank 16: 0.06
+     rank 17: 0.04
+     rank 18: 0.11
+     rank 19: 0.04
+  optimizer-clip-main-grad:
+     rank  0: 0.01
+     rank  1: 0.01
+     rank  2: 0.01
+     rank  3: 0.01
+     rank  4: 0.01
+     rank  5: 0.01
+     rank  6: 0.01
+     rank  7: 0.01
+     rank  8: 0.01
+     rank  9: 0.01
+     rank 10: 0.01
+     rank 11: 0.01
+     rank 12: 0.01
+     rank 13: 0.02
+     rank 14: 0.01
+     rank 15: 0.01
+     rank 16: 0.01
+     rank 17: 0.01
+     rank 18: 0.02
+     rank 19: 0.01
+  optimizer-count-zeros:
+     rank  0: 0.01
+     rank  1: 0.01
+     rank  2: 0.01
+     rank  3: 0.01
+     rank  4: 0.01
+     rank  5: 0.01
+     rank  6: 0.01
+     rank  7: 0.01
+     rank  8: 0.01
+     rank  9: 0.01
+     rank 10: 0.01
+     rank 11: 0.01
+     rank 12: 0.01
+     rank 13: 0.01
+     rank 14: 0.01
+     rank 15: 0.01
+     rank 16: 0.01
+     rank 17: 0.01
+     rank 18: 0.01
+     rank 19: 0.01
+  optimizer-inner-step:
+     rank  0: 0.50
+     rank  1: 0.51
+     rank  2: 0.57
+     rank  3: 0.62
+     rank  4: 48.06
+     rank  5: 48.08
+     rank  6: 48.07
+     rank  7: 48.09
+     rank  8: 43.05
+     rank  9: 42.98
+     rank 10: 43.00
+     rank 11: 43.12
+     rank 12: 42.98
+     rank 13: 43.21
+     rank 14: 43.08
+     rank 15: 43.13
+     rank 16: 46.33
+     rank 17: 46.37
+     rank 18: 46.61
+     rank 19: 46.22
+  optimizer:
+     rank  0: 1.23
+     rank  1: 1.28
+     rank  2: 1.29
+     rank  3: 1.34
+     rank  4: 48.79
+     rank  5: 48.83
+     rank  6: 48.81
+     rank  7: 48.82
+     rank  8: 43.78
+     rank  9: 43.71
+     rank 10: 43.73
+     rank 11: 43.86
+     rank 12: 43.71
+     rank 13: 43.94
+     rank 14: 43.81
+     rank 15: 43.86
+     rank 16: 47.06
+     rank 17: 47.10
+     rank 18: 47.33
+     rank 19: 46.95
+ [2024-12-03 23:13:22] iteration       10/      10 | consumed samples:          320 | elapsed time per iteration (ms): 8053.1 | learning rate: 7.500000E-06 | global batch size:    32 | lm loss: 1.284680E+00 | loss scale: 1.0 | number of skipped iterations:   0 | number of nan iterations:   0 |
+times across ranks (ms):
+  forward-backward:
+     rank  0: 7967.95
+     rank  1: 7967.96
+     rank  2: 7968.19
+     rank  3: 7968.02
+     rank  4: 7972.47
+     rank  5: 7972.48
+     rank  6: 7972.72
+     rank  7: 7972.54
+     rank  8: 7972.03
+     rank  9: 7972.00
+     rank 10: 7972.23
+     rank 11: 7972.08
+     rank 12: 7972.03
+     rank 13: 7972.00
+     rank 14: 7972.24
+     rank 15: 7972.12
+     rank 16: 7972.36
+     rank 17: 7972.32
+     rank 18: 7972.94
+     rank 19: 7972.44
+  forward-compute:
+     rank  0: 913.29
+     rank  1: 913.48
+     rank  2: 914.84
+     rank  3: 913.22
+     rank  4: 2969.64
+     rank  5: 2971.26
+     rank  6: 2971.23
+     rank  7: 2965.16
+     rank  8: 2799.46
+     rank  9: 2803.26
+     rank 10: 2800.83
+     rank 11: 2800.42
+     rank 12: 2798.66
+     rank 13: 2802.97
+     rank 14: 2800.74
+     rank 15: 2796.84
+     rank 16: 2946.08
+     rank 17: 2953.34
+     rank 18: 2946.08
+     rank 19: 2945.92
+  backward-compute:
+     rank  0: 913.44
+     rank  1: 912.30
+     rank  2: 913.30
+     rank  3: 911.64
+     rank  4: 3375.86
+     rank  5: 3381.42
+     rank  6: 3378.09
+     rank  7: 3375.83
+     rank  8: 3313.36
+     rank  9: 3314.17
+     rank 10: 3314.53
+     rank 11: 3313.71
+     rank 12: 3314.87
+     rank 13: 3318.53
+     rank 14: 3313.27
+     rank 15: 3316.42
+     rank 16: 3502.41
+     rank 17: 3504.65
+     rank 18: 3502.52
+     rank 19: 3502.90
+  pure-backward-compute:
+     rank  0: 912.79
+     rank  1: 911.64
+     rank  2: 912.69
+     rank  3: 911.04
+     rank  4: 3375.02
+     rank  5: 3380.60
+     rank  6: 3377.15
+     rank  7: 3374.72
+     rank  8: 3312.23
+     rank  9: 3313.36
+     rank 10: 3313.61
+     rank 11: 3312.78
+     rank 12: 3313.74
+     rank 13: 3317.50
+     rank 14: 3312.22
+     rank 15: 3315.09
+     rank 16: 3500.07
+     rank 17: 3502.94
+     rank 18: 3499.57
+     rank 19: 3500.19
+  batch-generator:
+     rank  0: 50.45
+     rank  1: 53.15
+     rank  2: 55.00
+     rank  3: 53.88
+     rank  4: 50.81
+     rank  5: 56.41
+     rank  6: 59.48
+     rank  7: 67.22
+     rank  8: 51.02
+     rank  9: 58.64
+     rank 10: 56.25
+     rank 11: 53.52
+     rank 12: 57.59
+     rank 13: 64.45
+     rank 14: 62.09
+     rank 15: 57.95
+     rank 16: 51.22
+     rank 17: 59.62
+     rank 18: 55.51
+     rank 19: 57.19
+  forward-recv:
+     rank  4: 62.98
+     rank  5: 62.69
+     rank  6: 62.32
+     rank  7: 62.96
+     rank  8: 276.29
+     rank  9: 278.29
+     rank 10: 275.95
+     rank 11: 276.30
+     rank 12: 451.51
+     rank 13: 450.02
+     rank 14: 451.67
+     rank 15: 451.50
+     rank 16: 624.64
+     rank 17: 624.57
+     rank 18: 624.41
+     rank 19: 624.73
+  forward-send:
+     rank  0: 415.26
+     rank  1: 414.80
+     rank  2: 413.51
+     rank  3: 415.08
+     rank  4: 31.52
+     rank  5: 31.20
+     rank  6: 30.75
+     rank  7: 31.59
+     rank  8: 20.84
+     rank  9: 19.21
+     rank 10: 20.78
+     rank 11: 20.62
+     rank 12: 10.54
+     rank 13: 10.45
+     rank 14: 10.35
+     rank 15: 10.58
+  backward-recv:
+     rank  0: 1429.93
+     rank  1: 1430.78
+     rank  2: 1430.58
+     rank  3: 1430.03
+     rank  4: 608.52
+     rank  5: 606.79
+     rank  6: 607.75
+     rank  7: 609.19
+     rank  8: 394.77
+     rank  9: 394.80
+     rank 10: 394.75
+     rank 11: 394.57
+     rank 12: 196.25
+     rank 13: 197.18
+     rank 14: 196.50
+     rank 15: 196.31
+  backward-send:
+     rank  4: 3.59
+     rank  5: 4.62
+     rank  6: 4.37
+     rank  7: 3.91
+     rank  8: 31.33
+     rank  9: 30.02
+     rank 10: 30.75
+     rank 11: 31.33
+     rank 12: 20.92
+     rank 13: 19.96
+     rank 14: 20.24
+     rank 15: 20.76
+     rank 16: 10.63
+     rank 17: 9.98
+     rank 18: 10.54
+     rank 19: 10.33
+  forward-send-backward-recv:
+     rank  0: 4280.52
+     rank  1: 4281.34
+     rank  2: 4282.43
+     rank  3: 4284.37
+     rank  4: 828.21
+     rank  5: 824.15
+     rank  6: 827.90
+     rank  7: 829.52
+     rank  8: 707.21
+     rank  9: 709.04
+     rank 10: 706.07
+     rank 11: 708.99
+     rank 12: 523.01
+     rank 13: 520.30
+     rank 14: 524.79
+     rank 15: 522.61
+  backward-send-forward-recv:
+     rank  4: 18.94
+     rank  5: 19.82
+     rank  6: 19.41
+     rank  7: 21.12
+     rank  8: 145.06
+     rank  9: 140.86
+     rank 10: 144.46
+     rank 11: 144.69
+     rank 12: 155.16
+     rank 13: 152.37
+     rank 14: 153.00
+     rank 15: 155.45
+     rank 16: 168.18
+     rank 17: 162.09
+     rank 18: 167.89
+     rank 19: 167.84
+  layernorm-grads-all-reduce:
+     rank  0: 0.02
+     rank  1: 0.02
+     rank  2: 0.02
+     rank  3: 0.02
+     rank  4: 0.02
+     rank  5: 0.02
+     rank  6: 0.02
+     rank  7: 0.02
+     rank  8: 0.02
+     rank  9: 0.02
+     rank 10: 0.02
+     rank 11: 0.02
+     rank 12: 0.02
+     rank 13: 0.02
+     rank 14: 0.03
+     rank 15: 0.02
+     rank 16: 0.03
+     rank 17: 0.02
+     rank 18: 0.06
+     rank 19: 0.02
+  embedding-grads-all-reduce:
+     rank  0: 0.02
+     rank  1: 0.02
+     rank  2: 0.02
+     rank  3: 0.02
+     rank  4: 0.05
+     rank  5: 0.05
+     rank  6: 0.05
+     rank  7: 0.05
+     rank  8: 0.02
+     rank  9: 0.02
+     rank 10: 0.02
+     rank 11: 0.02
+     rank 12: 0.02
+     rank 13: 0.02
+     rank 14: 0.02
+     rank 15: 0.02
+     rank 16: 0.07
+     rank 17: 0.05
+     rank 18: 0.15
+     rank 19: 0.07
+  all-grads-sync:
+     rank  0: 0.23
+     rank  1: 0.27
+     rank  2: 0.23
+     rank  3: 0.26
+     rank  4: 2.39
+     rank  5: 2.40
+     rank  6: 2.40
+     rank  7: 2.43
+     rank  8: 2.18
+     rank  9: 2.23
+     rank 10: 2.14
+     rank 11: 2.25
+     rank 12: 2.19
+     rank 13: 2.22
+     rank 14: 2.33
+     rank 15: 2.24
+     rank 16: 2.47
+     rank 17: 2.43
+     rank 18: 3.04
+     rank 19: 2.44
+  optimizer-copy-to-main-grad:
+     rank  0: 0.02
+     rank  1: 0.03
+     rank  2: 0.02
+     rank  3: 0.02
+     rank  4: 0.04
+     rank  5: 0.06
+     rank  6: 0.06
+     rank  7: 0.05
+     rank  8: 0.10
+     rank  9: 0.05
+     rank 10: 0.04
+     rank 11: 0.05
+     rank 12: 0.05
+     rank 13: 0.05
+     rank 14: 0.06
+     rank 15: 0.06
+     rank 16: 0.12
+     rank 17: 0.05
+     rank 18: 0.14
+     rank 19: 0.07
+  optimizer-clip-main-grad:
+     rank  0: 0.01
+     rank  1: 0.01
+     rank  2: 0.01
+     rank  3: 0.01
+     rank  4: 0.01
+     rank  5: 0.01
+     rank  6: 0.01
+     rank  7: 0.01
+     rank  8: 0.01
+     rank  9: 0.01
+     rank 10: 0.01
+     rank 11: 0.01
+     rank 12: 0.01
+     rank 13: 0.01
+     rank 14: 0.01
+     rank 15: 0.01
+     rank 16: 0.01
+     rank 17: 0.01
+     rank 18: 0.04
+     rank 19: 0.02
+  optimizer-count-zeros:
+     rank  0: 0.01
+     rank  1: 0.01
+     rank  2: 0.01
+     rank  3: 0.01
+     rank  4: 0.01
+     rank  5: 0.01
+     rank  6: 0.01
+     rank  7: 0.01
+     rank  8: 0.01
+     rank  9: 0.01
+     rank 10: 0.01
+     rank 11: 0.01
+     rank 12: 0.01
+     rank 13: 0.01
+     rank 14: 0.01
+     rank 15: 0.01
+     rank 16: 0.01
+     rank 17: 0.01
+     rank 18: 0.03
+     rank 19: 0.01
+  optimizer-inner-step:
+     rank  0: 0.49
+     rank  1: 0.58
+     rank  2: 0.50
+     rank  3: 0.52
+     rank  4: 48.07
+     rank  5: 48.13
+     rank  6: 48.07
+     rank  7: 48.14
+     rank  8: 43.04
+     rank  9: 43.04
+     rank 10: 43.01
+     rank 11: 43.02
+     rank 12: 42.97
+     rank 13: 43.02
+     rank 14: 43.14
+     rank 15: 43.11
+     rank 16: 46.39
+     rank 17: 46.34
+     rank 18: 46.97
+     rank 19: 46.45
+  optimizer:
+     rank  0: 1.66
+     rank  1: 1.74
+     rank  2: 1.67
+     rank  3: 1.69
+     rank  4: 49.24
+     rank  5: 49.30
+     rank  6: 49.25
+     rank  7: 49.32
+     rank  8: 44.21
+     rank  9: 44.21
+     rank 10: 44.19
+     rank 11: 44.19
+     rank 12: 44.16
+     rank 13: 44.18
+     rank 14: 44.32
+     rank 15: 44.29
+     rank 16: 47.56
+     rank 17: 47.51
+     rank 18: 48.12
+     rank 19: 47.62
