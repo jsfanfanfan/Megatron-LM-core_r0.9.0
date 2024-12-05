@@ -80,9 +80,9 @@ OPTIONS=" \
     --swiglu \
     --attention-dropout 0.0 \
     --hidden-dropout ${HD} \
-    --tensor-model-parallel-size 4 \
+    --tensor-model-parallel-size 2 \
     --pipeline-model-parallel-size 5 \
-    --split-spec "24,4,13,13,4"
+    --split-spec "16,10,5,13,14"
     --num-layers 32 \
     --hidden-size 4096 \
     --num-attention-heads 32 \
@@ -121,13 +121,15 @@ OPTIONS=" \
     --allow-missing-vision-projection-checkpoint \
     --no-load-optim \
     --no-load-rng \
-    --freeze-LM \
     --log-interval ${LI} \
     --eval-iters 10 \
     --eval-interval 1000 \
     --use-flash-attn \
     --transformer-impl transformer_engine \
     --use-te \
+    --timing-log-level 2 \
+    --timing-log-option all \
+    --freeze-LM \
 "
 # --pretrained-checkpoint ${CHECKPOINT_DIR} \
 # --load ${FINETUNE_DIR} \
@@ -140,6 +142,7 @@ OPTIONS=" \
 # --bf16 \
 # --log-params-norm \
 # --log-num-zeros-in-grad \
+# --freeze-LM \
 
 
 export NVTE_APPLY_QK_LAYER_SCALING=0
@@ -157,10 +160,10 @@ case $gn
         2)
         rank=1
         ;;
-        79)
+        3)
         rank=2
         ;;
-        80)
+        49)
         rank=3
         ;;
         *)

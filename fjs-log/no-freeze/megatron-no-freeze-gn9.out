@@ -1,0 +1,495 @@
+examples/multimodal/pretrain-freeze-llm-hete-2080tifirst.sh: line 4: activate: No such file or directory
+4
+[2024-12-05 21:00:16,160] torch.distributed.run: [WARNING] 
+[2024-12-05 21:00:16,160] torch.distributed.run: [WARNING] *****************************************
+[2024-12-05 21:00:16,160] torch.distributed.run: [WARNING] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+[2024-12-05 21:00:16,160] torch.distributed.run: [WARNING] *****************************************
+You set `add_prefix_space`. The tokenizer needs to be converted from the slow tokenizers
+You set `add_prefix_space`. The tokenizer needs to be converted from the slow tokenizers
+You set `add_prefix_space`. The tokenizer needs to be converted from the slow tokenizers
+You set `add_prefix_space`. The tokenizer needs to be converted from the slow tokenizers
+------pipeline_parallel_model_size:5------
+------world_size:20------
+------total_model_size:20------
+------num_pipeline_model_parallel_groups:4------
+------pipeline_parallel_model_size:5------
+------world_size:20------
+------total_model_size:20------
+------num_pipeline_model_parallel_groups:4------
+------pipeline_parallel_model_size:5------
+------world_size:20------
+------total_model_size:20------
+------num_pipeline_model_parallel_groups:4------
+> setting tensorboard ...
+WARNING: one_logger package is required to enable e2e metrics tracking. please go to https://confluence.nvidia.com/display/MLWFO/Package+Repositories for details to install it
+------pipeline_parallel_model_size:5------
+------world_size:20------
+------total_model_size:20------
+------num_pipeline_model_parallel_groups:4------
+---Rank 18---Tensor Parallel Group GPUs: [2, 2, 2, 2]
+---Rank 18---Pipeline Parallel Group GPUs: [4, 4, 4, 4, 4]
+---Rank 17---Tensor Parallel Group GPUs: [1, 1, 1, 1]
+---Rank 17---Pipeline Parallel Group GPUs: [4, 4, 4, 4, 4]
+---Rank 19---Tensor Parallel Group GPUs: [3, 3, 3, 3][rank18]:[W init.cpp:767] Warning: nvfuser is no longer supported in torch script, use _jit_set_nvfuser_enabled is deprecated and a no-op (function operator())
+
+---Rank 19---Pipeline Parallel Group GPUs: [4, 4, 4, 4, 4]
+[rank17]:[W init.cpp:767] Warning: nvfuser is no longer supported in torch script, use _jit_set_nvfuser_enabled is deprecated and a no-op (function operator())
+[rank19]:[W init.cpp:767] Warning: nvfuser is no longer supported in torch script, use _jit_set_nvfuser_enabled is deprecated and a no-op (function operator())
+---Rank 16---Tensor Parallel Group GPUs: [0, 0, 0, 0]
+---Rank 16---Pipeline Parallel Group GPUs: [4, 4, 4, 4, 4]
+[rank16]:[W init.cpp:767] Warning: nvfuser is no longer supported in torch script, use _jit_set_nvfuser_enabled is deprecated and a no-op (function operator())
+WARNING:megatron.core.models.multimodal.llava_model:LLaVA model is under active development. It may be missing features and its methods may change.
+WARNING:megatron.core.models.multimodal.llava_model:LLaVA model is under active development. It may be missing features and its methods may change.
+WARNING:megatron.core.models.multimodal.llava_model:LLaVA model is under active development. It may be missing features and its methods may change.
+WARNING:megatron.core.models.multimodal.llava_model:LLaVA model is under active development. It may be missing features and its methods may change.
+ > number of parameters on (tensor, pipeline) model parallel rank (0, 4): 469831680
+ > number of parameters on (tensor, pipeline) model parallel rank (2, 4): 469831680
+ > number of parameters on (tensor, pipeline) model parallel rank (1, 4): 469831680
+ > number of parameters on (tensor, pipeline) model parallel rank (3, 4): 469831680
+INFO:megatron.core.distributed.param_and_grad_buffer:Number of buckets for gradient all-reduce / reduce-scatter: 1
+Params for bucket 1 (469831680 elements):
+	language_model.decoder.layers.5.self_attention.linear_qkv.layer_norm_weight
+	language_model.decoder.layers.3.self_attention.linear_qkv.weight
+	language_model.decoder.layers.3.self_attention.linear_proj.weight
+	language_model.decoder.layers.2.self_attention.linear_proj.weight
+	language_model.decoder.layers.0.self_attention.linear_qkv.layer_norm_weight
+	language_model.output_layer.weight
+	language_model.decoder.layers.7.mlp.linear_fc2.weight
+	language_model.decoder.layers.6.mlp.linear_fc1.layer_norm_weight
+	language_model.decoder.layers.4.mlp.linear_fc1.weight
+	language_model.decoder.layers.4.mlp.linear_fc1.layer_norm_weight
+	language_model.decoder.layers.3.mlp.linear_fc2.weight
+	language_model.decoder.layers.2.mlp.linear_fc2.weight
+	language_model.decoder.layers.1.mlp.linear_fc2.weight
+	language_model.decoder.layers.7.mlp.linear_fc1.weight
+	language_model.decoder.layers.5.mlp.linear_fc1.layer_norm_weight
+	language_model.decoder.layers.3.mlp.linear_fc1.layer_norm_weight
+	language_model.decoder.layers.2.mlp.linear_fc1.layer_norm_weight
+	language_model.decoder.layers.1.self_attention.linear_qkv.layer_norm_weight
+	language_model.decoder.layers.1.self_attention.linear_proj.weight
+	language_model.decoder.layers.7.self_attention.linear_qkv.weight
+	language_model.decoder.layers.5.mlp.linear_fc1.weight
+	language_model.decoder.layers.5.self_attention.linear_qkv.weight
+	language_model.decoder.layers.5.self_attention.linear_proj.weight
+	language_model.decoder.layers.2.self_attention.linear_qkv.layer_norm_weight
+	language_model.decoder.layers.1.self_attention.linear_qkv.weight
+	language_model.decoder.layers.0.mlp.linear_fc1.weight
+	language_model.decoder.layers.7.mlp.linear_fc1.layer_norm_weight
+	language_model.decoder.layers.7.self_attention.linear_qkv.layer_norm_weight
+	language_model.decoder.layers.6.self_attention.linear_proj.weight
+	language_model.decoder.layers.1.mlp.linear_fc1.weight
+	language_model.decoder.layers.1.mlp.linear_fc1.layer_norm_weight
+	language_model.decoder.layers.0.mlp.linear_fc2.weight
+	language_model.decoder.layers.4.self_attention.linear_qkv.weight
+	language_model.decoder.layers.3.mlp.linear_fc1.weight
+	language_model.decoder.layers.0.mlp.linear_fc1.layer_norm_weight
+	language_model.decoder.final_layernorm.weight
+	language_model.decoder.layers.7.self_attention.linear_proj.weight
+	language_model.decoder.layers.6.mlp.linear_fc2.weight
+	language_model.decoder.layers.6.mlp.linear_fc1.weight
+	language_model.decoder.layers.6.self_attention.linear_qkv.weight
+	language_model.decoder.layers.4.self_attention.linear_qkv.layer_norm_weight
+	language_model.decoder.layers.3.self_attention.linear_qkv.layer_norm_weight
+	language_model.decoder.layers.2.mlp.linear_fc1.weight
+	language_model.decoder.layers.6.self_attention.linear_qkv.layer_norm_weight
+	language_model.decoder.layers.5.mlp.linear_fc2.weight
+	language_model.decoder.layers.4.mlp.linear_fc2.weight
+	language_model.decoder.layers.4.self_attention.linear_proj.weight
+	language_model.decoder.layers.2.self_attention.linear_qkv.weight
+	language_model.decoder.layers.0.self_attention.linear_qkv.weight
+	language_model.decoder.layers.0.self_attention.linear_proj.weight
+name:module.language_model.decoder.layers.0.self_attention.linear_proj.weight param:torch.Size([4096, 1024]) require_grad:True
+name:module.language_model.decoder.layers.0.self_attention.linear_qkv.layer_norm_weight param:torch.Size([4096]) require_grad:True
+name:module.language_model.decoder.layers.0.self_attention.linear_qkv.weight param:torch.Size([1536, 4096]) require_grad:True
+name:module.language_model.decoder.layers.0.mlp.linear_fc1.layer_norm_weight param:torch.Size([4096]) require_grad:True
+name:module.language_model.decoder.layers.0.mlp.linear_fc1.weight param:torch.Size([7168, 4096]) require_grad:True
+name:module.language_model.decoder.layers.0.mlp.linear_fc2.weight param:torch.Size([4096, 3584]) require_grad:True
+name:module.language_model.decoder.layers.1.self_attention.linear_proj.weight param:torch.Size([4096, 1024]) require_grad:True
+name:module.language_model.decoder.layers.1.self_attention.linear_qkv.layer_norm_weight param:torch.Size([4096]) require_grad:True
+name:module.language_model.decoder.layers.1.self_attention.linear_qkv.weight param:torch.Size([1536, 4096]) require_grad:True
+name:module.language_model.decoder.layers.1.mlp.linear_fc1.layer_norm_weight param:torch.Size([4096]) require_grad:True
+name:module.language_model.decoder.layers.1.mlp.linear_fc1.weight param:torch.Size([7168, 4096]) require_grad:True
+name:module.language_model.decoder.layers.1.mlp.linear_fc2.weight param:torch.Size([4096, 3584]) require_grad:True
+name:module.language_model.decoder.layers.2.self_attention.linear_proj.weight param:torch.Size([4096, 1024]) require_grad:True
+name:module.language_model.decoder.layers.0.self_attention.linear_proj.weight param:torch.Size([4096, 1024]) require_grad:Truename:module.language_model.decoder.layers.2.self_attention.linear_qkv.layer_norm_weight param:torch.Size([4096]) require_grad:True
+
+name:module.language_model.decoder.layers.2.self_attention.linear_qkv.weight param:torch.Size([1536, 4096]) require_grad:True
+name:module.language_model.decoder.layers.0.self_attention.linear_qkv.layer_norm_weight param:torch.Size([4096]) require_grad:True
+name:module.language_model.decoder.layers.0.self_attention.linear_qkv.weight param:torch.Size([1536, 4096]) require_grad:True
+name:module.language_model.decoder.layers.2.mlp.linear_fc1.layer_norm_weight param:torch.Size([4096]) require_grad:True
+name:module.language_model.decoder.layers.2.mlp.linear_fc1.weight param:torch.Size([7168, 4096]) require_grad:True
+name:module.language_model.decoder.layers.0.mlp.linear_fc1.layer_norm_weight param:torch.Size([4096]) require_grad:Truename:module.language_model.decoder.layers.2.mlp.linear_fc2.weight param:torch.Size([4096, 3584]) require_grad:True
+
+name:module.language_model.decoder.layers.0.mlp.linear_fc1.weight param:torch.Size([7168, 4096]) require_grad:True
+name:module.language_model.decoder.layers.0.mlp.linear_fc2.weight param:torch.Size([4096, 3584]) require_grad:True
+name:module.language_model.decoder.layers.3.self_attention.linear_proj.weight param:torch.Size([4096, 1024]) require_grad:True
+name:module.language_model.decoder.layers.3.self_attention.linear_qkv.layer_norm_weight param:torch.Size([4096]) require_grad:True
+name:module.language_model.decoder.layers.3.self_attention.linear_qkv.weight param:torch.Size([1536, 4096]) require_grad:Truename:module.language_model.decoder.layers.1.self_attention.linear_proj.weight param:torch.Size([4096, 1024]) require_grad:True
+
+name:module.language_model.decoder.layers.1.self_attention.linear_qkv.layer_norm_weight param:torch.Size([4096]) require_grad:True
+name:module.language_model.decoder.layers.1.self_attention.linear_qkv.weight param:torch.Size([1536, 4096]) require_grad:True
+name:module.language_model.decoder.layers.3.mlp.linear_fc1.layer_norm_weight param:torch.Size([4096]) require_grad:True
+name:module.language_model.decoder.layers.3.mlp.linear_fc1.weight param:torch.Size([7168, 4096]) require_grad:True
+name:module.language_model.decoder.layers.1.mlp.linear_fc1.layer_norm_weight param:torch.Size([4096]) require_grad:Truename:module.language_model.decoder.layers.3.mlp.linear_fc2.weight param:torch.Size([4096, 3584]) require_grad:True
+
+name:module.language_model.decoder.layers.1.mlp.linear_fc1.weight param:torch.Size([7168, 4096]) require_grad:True
+name:module.language_model.decoder.layers.1.mlp.linear_fc2.weight param:torch.Size([4096, 3584]) require_grad:True
+name:module.language_model.decoder.layers.4.self_attention.linear_proj.weight param:torch.Size([4096, 1024]) require_grad:True
+name:module.language_model.decoder.layers.4.self_attention.linear_qkv.layer_norm_weight param:torch.Size([4096]) require_grad:True
+name:module.language_model.decoder.layers.4.self_attention.linear_qkv.weight param:torch.Size([1536, 4096]) require_grad:Truename:module.language_model.decoder.layers.2.self_attention.linear_proj.weight param:torch.Size([4096, 1024]) require_grad:True
+
+name:module.language_model.decoder.layers.2.self_attention.linear_qkv.layer_norm_weight param:torch.Size([4096]) require_grad:True
+name:module.language_model.decoder.layers.2.self_attention.linear_qkv.weight param:torch.Size([1536, 4096]) require_grad:Truename:module.language_model.decoder.layers.4.mlp.linear_fc1.layer_norm_weight param:torch.Size([4096]) require_grad:True
+
+name:module.language_model.decoder.layers.4.mlp.linear_fc1.weight param:torch.Size([7168, 4096]) require_grad:True
+name:module.language_model.decoder.layers.4.mlp.linear_fc2.weight param:torch.Size([4096, 3584]) require_grad:True
+name:module.language_model.decoder.layers.2.mlp.linear_fc1.layer_norm_weight param:torch.Size([4096]) require_grad:True
+name:module.language_model.decoder.layers.2.mlp.linear_fc1.weight param:torch.Size([7168, 4096]) require_grad:True
+name:module.language_model.decoder.layers.5.self_attention.linear_proj.weight param:torch.Size([4096, 1024]) require_grad:Truename:module.language_model.decoder.layers.2.mlp.linear_fc2.weight param:torch.Size([4096, 3584]) require_grad:True
+
+name:module.language_model.decoder.layers.5.self_attention.linear_qkv.layer_norm_weight param:torch.Size([4096]) require_grad:True
+name:module.language_model.decoder.layers.5.self_attention.linear_qkv.weight param:torch.Size([1536, 4096]) require_grad:True
+name:module.language_model.decoder.layers.3.self_attention.linear_proj.weight param:torch.Size([4096, 1024]) require_grad:True
+name:module.language_model.decoder.layers.3.self_attention.linear_qkv.layer_norm_weight param:torch.Size([4096]) require_grad:True
+name:module.language_model.decoder.layers.5.mlp.linear_fc1.layer_norm_weight param:torch.Size([4096]) require_grad:True
+name:module.language_model.decoder.layers.3.self_attention.linear_qkv.weight param:torch.Size([1536, 4096]) require_grad:True
+name:module.language_model.decoder.layers.5.mlp.linear_fc1.weight param:torch.Size([7168, 4096]) require_grad:True
+name:module.language_model.decoder.layers.5.mlp.linear_fc2.weight param:torch.Size([4096, 3584]) require_grad:True
+name:module.language_model.decoder.layers.3.mlp.linear_fc1.layer_norm_weight param:torch.Size([4096]) require_grad:True
+name:module.language_model.decoder.layers.3.mlp.linear_fc1.weight param:torch.Size([7168, 4096]) require_grad:True
+name:module.language_model.decoder.layers.6.self_attention.linear_proj.weight param:torch.Size([4096, 1024]) require_grad:True
+name:module.language_model.decoder.layers.3.mlp.linear_fc2.weight param:torch.Size([4096, 3584]) require_grad:True
+name:module.language_model.decoder.layers.6.self_attention.linear_qkv.layer_norm_weight param:torch.Size([4096]) require_grad:True
+name:module.language_model.decoder.layers.6.self_attention.linear_qkv.weight param:torch.Size([1536, 4096]) require_grad:True
+name:module.language_model.decoder.layers.4.self_attention.linear_proj.weight param:torch.Size([4096, 1024]) require_grad:True
+name:module.language_model.decoder.layers.6.mlp.linear_fc1.layer_norm_weight param:torch.Size([4096]) require_grad:Truename:module.language_model.decoder.layers.4.self_attention.linear_qkv.layer_norm_weight param:torch.Size([4096]) require_grad:True
+
+name:module.language_model.decoder.layers.6.mlp.linear_fc1.weight param:torch.Size([7168, 4096]) require_grad:Truename:module.language_model.decoder.layers.4.self_attention.linear_qkv.weight param:torch.Size([1536, 4096]) require_grad:True
+
+name:module.language_model.decoder.layers.6.mlp.linear_fc2.weight param:torch.Size([4096, 3584]) require_grad:True
+name:module.language_model.decoder.layers.4.mlp.linear_fc1.layer_norm_weight param:torch.Size([4096]) require_grad:True
+name:module.language_model.decoder.layers.4.mlp.linear_fc1.weight param:torch.Size([7168, 4096]) require_grad:Truename:module.language_model.decoder.layers.7.self_attention.linear_proj.weight param:torch.Size([4096, 1024]) require_grad:True
+
+name:module.language_model.decoder.layers.4.mlp.linear_fc2.weight param:torch.Size([4096, 3584]) require_grad:Truename:module.language_model.decoder.layers.7.self_attention.linear_qkv.layer_norm_weight param:torch.Size([4096]) require_grad:True
+
+name:module.language_model.decoder.layers.7.self_attention.linear_qkv.weight param:torch.Size([1536, 4096]) require_grad:True
+name:module.language_model.decoder.layers.5.self_attention.linear_proj.weight param:torch.Size([4096, 1024]) require_grad:Truename:module.language_model.decoder.layers.7.mlp.linear_fc1.layer_norm_weight param:torch.Size([4096]) require_grad:True
+
+name:module.language_model.decoder.layers.7.mlp.linear_fc1.weight param:torch.Size([7168, 4096]) require_grad:Truename:module.language_model.decoder.layers.5.self_attention.linear_qkv.layer_norm_weight param:torch.Size([4096]) require_grad:True
+
+name:module.language_model.decoder.layers.5.self_attention.linear_qkv.weight param:torch.Size([1536, 4096]) require_grad:Truename:module.language_model.decoder.layers.7.mlp.linear_fc2.weight param:torch.Size([4096, 3584]) require_grad:True
+
+name:module.language_model.decoder.final_layernorm.weight param:torch.Size([4096]) require_grad:True
+name:module.language_model.output_layer.weight param:torch.Size([8192, 4096]) require_grad:Truename:module.language_model.decoder.layers.5.mlp.linear_fc1.layer_norm_weight param:torch.Size([4096]) require_grad:True
+
+name:module.language_model.decoder.layers.5.mlp.linear_fc1.weight param:torch.Size([7168, 4096]) require_grad:True
+name:module.language_model.decoder.layers.0.self_attention.linear_proj.weight param:torch.Size([4096, 1024]) require_grad:Truename:module.language_model.decoder.layers.5.mlp.linear_fc2.weight param:torch.Size([4096, 3584]) require_grad:True
+
+name:module.language_model.decoder.layers.0.self_attention.linear_qkv.layer_norm_weight param:torch.Size([4096]) require_grad:True
+name:module.language_model.decoder.layers.0.self_attention.linear_qkv.weight param:torch.Size([1536, 4096]) require_grad:True
+name:module.language_model.decoder.layers.6.self_attention.linear_proj.weight param:torch.Size([4096, 1024]) require_grad:True
+name:module.language_model.decoder.layers.6.self_attention.linear_qkv.layer_norm_weight param:torch.Size([4096]) require_grad:True
+name:module.language_model.decoder.layers.6.self_attention.linear_qkv.weight param:torch.Size([1536, 4096]) require_grad:True
+name:module.language_model.decoder.layers.0.mlp.linear_fc1.layer_norm_weight param:torch.Size([4096]) require_grad:True
+name:module.language_model.decoder.layers.0.mlp.linear_fc1.weight param:torch.Size([7168, 4096]) require_grad:True
+name:module.language_model.decoder.layers.6.mlp.linear_fc1.layer_norm_weight param:torch.Size([4096]) require_grad:Truename:module.language_model.decoder.layers.0.self_attention.linear_proj.weight param:torch.Size([4096, 1024]) require_grad:Truename:module.language_model.decoder.layers.0.mlp.linear_fc2.weight param:torch.Size([4096, 3584]) require_grad:True
+
+
+name:module.language_model.decoder.layers.6.mlp.linear_fc1.weight param:torch.Size([7168, 4096]) require_grad:Truename:module.language_model.decoder.layers.0.self_attention.linear_qkv.layer_norm_weight param:torch.Size([4096]) require_grad:True
+
+name:module.language_model.decoder.layers.6.mlp.linear_fc2.weight param:torch.Size([4096, 3584]) require_grad:Truename:module.language_model.decoder.layers.0.self_attention.linear_qkv.weight param:torch.Size([1536, 4096]) require_grad:Truename:module.language_model.decoder.layers.1.self_attention.linear_proj.weight param:torch.Size([4096, 1024]) require_grad:True
+
+
+name:module.language_model.decoder.layers.1.self_attention.linear_qkv.layer_norm_weight param:torch.Size([4096]) require_grad:True
+name:module.language_model.decoder.layers.1.self_attention.linear_qkv.weight param:torch.Size([1536, 4096]) require_grad:True
+name:module.language_model.decoder.layers.7.self_attention.linear_proj.weight param:torch.Size([4096, 1024]) require_grad:True
+name:module.language_model.decoder.layers.0.mlp.linear_fc1.layer_norm_weight param:torch.Size([4096]) require_grad:True
+name:module.language_model.decoder.layers.7.self_attention.linear_qkv.layer_norm_weight param:torch.Size([4096]) require_grad:True
+name:module.language_model.decoder.layers.0.mlp.linear_fc1.weight param:torch.Size([7168, 4096]) require_grad:Truename:module.language_model.decoder.layers.1.mlp.linear_fc1.layer_norm_weight param:torch.Size([4096]) require_grad:True
+name:module.language_model.decoder.layers.7.self_attention.linear_qkv.weight param:torch.Size([1536, 4096]) require_grad:True
+
+name:module.language_model.decoder.layers.0.mlp.linear_fc2.weight param:torch.Size([4096, 3584]) require_grad:Truename:module.language_model.decoder.layers.1.mlp.linear_fc1.weight param:torch.Size([7168, 4096]) require_grad:True
+
+name:module.language_model.decoder.layers.1.mlp.linear_fc2.weight param:torch.Size([4096, 3584]) require_grad:True
+name:module.language_model.decoder.layers.7.mlp.linear_fc1.layer_norm_weight param:torch.Size([4096]) require_grad:True
+name:module.language_model.decoder.layers.1.self_attention.linear_proj.weight param:torch.Size([4096, 1024]) require_grad:Truename:module.language_model.decoder.layers.7.mlp.linear_fc1.weight param:torch.Size([7168, 4096]) require_grad:True
+
+name:module.language_model.decoder.layers.2.self_attention.linear_proj.weight param:torch.Size([4096, 1024]) require_grad:True
+name:module.language_model.decoder.layers.1.self_attention.linear_qkv.layer_norm_weight param:torch.Size([4096]) require_grad:True
+name:module.language_model.decoder.layers.7.mlp.linear_fc2.weight param:torch.Size([4096, 3584]) require_grad:True
+name:module.language_model.decoder.layers.2.self_attention.linear_qkv.layer_norm_weight param:torch.Size([4096]) require_grad:Truename:module.language_model.decoder.layers.1.self_attention.linear_qkv.weight param:torch.Size([1536, 4096]) require_grad:True
+
+name:module.language_model.decoder.final_layernorm.weight param:torch.Size([4096]) require_grad:Truename:module.language_model.decoder.layers.2.self_attention.linear_qkv.weight param:torch.Size([1536, 4096]) require_grad:True
+
+name:module.language_model.output_layer.weight param:torch.Size([8192, 4096]) require_grad:Truename:module.language_model.decoder.layers.1.mlp.linear_fc1.layer_norm_weight param:torch.Size([4096]) require_grad:True
+
+name:module.language_model.decoder.layers.2.mlp.linear_fc1.layer_norm_weight param:torch.Size([4096]) require_grad:True
+name:module.language_model.decoder.layers.1.mlp.linear_fc1.weight param:torch.Size([7168, 4096]) require_grad:True
+name:module.language_model.decoder.layers.2.mlp.linear_fc1.weight param:torch.Size([7168, 4096]) require_grad:True
+name:module.language_model.decoder.layers.1.mlp.linear_fc2.weight param:torch.Size([4096, 3584]) require_grad:True
+name:module.language_model.decoder.layers.2.mlp.linear_fc2.weight param:torch.Size([4096, 3584]) require_grad:True
+name:module.language_model.decoder.layers.2.self_attention.linear_proj.weight param:torch.Size([4096, 1024]) require_grad:True
+name:module.language_model.decoder.layers.3.self_attention.linear_proj.weight param:torch.Size([4096, 1024]) require_grad:True
+name:module.language_model.decoder.layers.2.self_attention.linear_qkv.layer_norm_weight param:torch.Size([4096]) require_grad:True
+name:module.language_model.decoder.layers.3.self_attention.linear_qkv.layer_norm_weight param:torch.Size([4096]) require_grad:True
+name:module.language_model.decoder.layers.2.self_attention.linear_qkv.weight param:torch.Size([1536, 4096]) require_grad:True
+name:module.language_model.decoder.layers.3.self_attention.linear_qkv.weight param:torch.Size([1536, 4096]) require_grad:True
+name:module.language_model.decoder.layers.2.mlp.linear_fc1.layer_norm_weight param:torch.Size([4096]) require_grad:True
+name:module.language_model.decoder.layers.3.mlp.linear_fc1.layer_norm_weight param:torch.Size([4096]) require_grad:True
+name:module.language_model.decoder.layers.2.mlp.linear_fc1.weight param:torch.Size([7168, 4096]) require_grad:True
+name:module.language_model.decoder.layers.3.mlp.linear_fc1.weight param:torch.Size([7168, 4096]) require_grad:True
+name:module.language_model.decoder.layers.2.mlp.linear_fc2.weight param:torch.Size([4096, 3584]) require_grad:True
+name:module.language_model.decoder.layers.3.mlp.linear_fc2.weight param:torch.Size([4096, 3584]) require_grad:True
+name:module.language_model.decoder.layers.3.self_attention.linear_proj.weight param:torch.Size([4096, 1024]) require_grad:Truename:module.language_model.decoder.layers.4.self_attention.linear_proj.weight param:torch.Size([4096, 1024]) require_grad:True
+
+name:module.language_model.decoder.layers.3.self_attention.linear_qkv.layer_norm_weight param:torch.Size([4096]) require_grad:Truename:module.language_model.decoder.layers.4.self_attention.linear_qkv.layer_norm_weight param:torch.Size([4096]) require_grad:True
+
+name:module.language_model.decoder.layers.3.self_attention.linear_qkv.weight param:torch.Size([1536, 4096]) require_grad:Truename:module.language_model.decoder.layers.4.self_attention.linear_qkv.weight param:torch.Size([1536, 4096]) require_grad:True
+
+name:module.language_model.decoder.layers.4.mlp.linear_fc1.layer_norm_weight param:torch.Size([4096]) require_grad:Truename:module.language_model.decoder.layers.3.mlp.linear_fc1.layer_norm_weight param:torch.Size([4096]) require_grad:True
+
+name:module.language_model.decoder.layers.4.mlp.linear_fc1.weight param:torch.Size([7168, 4096]) require_grad:Truename:module.language_model.decoder.layers.3.mlp.linear_fc1.weight param:torch.Size([7168, 4096]) require_grad:True
+
+name:module.language_model.decoder.layers.4.mlp.linear_fc2.weight param:torch.Size([4096, 3584]) require_grad:Truename:module.language_model.decoder.layers.3.mlp.linear_fc2.weight param:torch.Size([4096, 3584]) require_grad:True
+
+name:module.language_model.decoder.layers.5.self_attention.linear_proj.weight param:torch.Size([4096, 1024]) require_grad:True
+name:module.language_model.decoder.layers.4.self_attention.linear_proj.weight param:torch.Size([4096, 1024]) require_grad:True
+name:module.language_model.decoder.layers.5.self_attention.linear_qkv.layer_norm_weight param:torch.Size([4096]) require_grad:True
+name:module.language_model.decoder.layers.4.self_attention.linear_qkv.layer_norm_weight param:torch.Size([4096]) require_grad:True
+name:module.language_model.decoder.layers.5.self_attention.linear_qkv.weight param:torch.Size([1536, 4096]) require_grad:True
+name:module.language_model.decoder.layers.4.self_attention.linear_qkv.weight param:torch.Size([1536, 4096]) require_grad:True
+name:module.language_model.decoder.layers.5.mlp.linear_fc1.layer_norm_weight param:torch.Size([4096]) require_grad:True
+name:module.language_model.decoder.layers.4.mlp.linear_fc1.layer_norm_weight param:torch.Size([4096]) require_grad:True
+name:module.language_model.decoder.layers.5.mlp.linear_fc1.weight param:torch.Size([7168, 4096]) require_grad:True
+name:module.language_model.decoder.layers.4.mlp.linear_fc1.weight param:torch.Size([7168, 4096]) require_grad:True
+name:module.language_model.decoder.layers.5.mlp.linear_fc2.weight param:torch.Size([4096, 3584]) require_grad:True
+name:module.language_model.decoder.layers.4.mlp.linear_fc2.weight param:torch.Size([4096, 3584]) require_grad:True
+name:module.language_model.decoder.layers.6.self_attention.linear_proj.weight param:torch.Size([4096, 1024]) require_grad:True
+name:module.language_model.decoder.layers.5.self_attention.linear_proj.weight param:torch.Size([4096, 1024]) require_grad:True
+name:module.language_model.decoder.layers.6.self_attention.linear_qkv.layer_norm_weight param:torch.Size([4096]) require_grad:True
+name:module.language_model.decoder.layers.5.self_attention.linear_qkv.layer_norm_weight param:torch.Size([4096]) require_grad:Truename:module.language_model.decoder.layers.6.self_attention.linear_qkv.weight param:torch.Size([1536, 4096]) require_grad:True
+
+name:module.language_model.decoder.layers.5.self_attention.linear_qkv.weight param:torch.Size([1536, 4096]) require_grad:True
+name:module.language_model.decoder.layers.6.mlp.linear_fc1.layer_norm_weight param:torch.Size([4096]) require_grad:True
+name:module.language_model.decoder.layers.5.mlp.linear_fc1.layer_norm_weight param:torch.Size([4096]) require_grad:Truename:module.language_model.decoder.layers.6.mlp.linear_fc1.weight param:torch.Size([7168, 4096]) require_grad:True
+
+name:module.language_model.decoder.layers.5.mlp.linear_fc1.weight param:torch.Size([7168, 4096]) require_grad:True
+name:module.language_model.decoder.layers.6.mlp.linear_fc2.weight param:torch.Size([4096, 3584]) require_grad:Truename:module.language_model.decoder.layers.5.mlp.linear_fc2.weight param:torch.Size([4096, 3584]) require_grad:True
+
+name:module.language_model.decoder.layers.7.self_attention.linear_proj.weight param:torch.Size([4096, 1024]) require_grad:Truename:module.language_model.decoder.layers.6.self_attention.linear_proj.weight param:torch.Size([4096, 1024]) require_grad:True
+
+name:module.language_model.decoder.layers.7.self_attention.linear_qkv.layer_norm_weight param:torch.Size([4096]) require_grad:Truename:module.language_model.decoder.layers.6.self_attention.linear_qkv.layer_norm_weight param:torch.Size([4096]) require_grad:True
+
+name:module.language_model.decoder.layers.7.self_attention.linear_qkv.weight param:torch.Size([1536, 4096]) require_grad:Truename:module.language_model.decoder.layers.6.self_attention.linear_qkv.weight param:torch.Size([1536, 4096]) require_grad:True
+
+name:module.language_model.decoder.layers.7.mlp.linear_fc1.layer_norm_weight param:torch.Size([4096]) require_grad:Truename:module.language_model.decoder.layers.6.mlp.linear_fc1.layer_norm_weight param:torch.Size([4096]) require_grad:True
+
+name:module.language_model.decoder.layers.7.mlp.linear_fc1.weight param:torch.Size([7168, 4096]) require_grad:Truename:module.language_model.decoder.layers.6.mlp.linear_fc1.weight param:torch.Size([7168, 4096]) require_grad:True
+
+name:module.language_model.decoder.layers.7.mlp.linear_fc2.weight param:torch.Size([4096, 3584]) require_grad:Truename:module.language_model.decoder.layers.6.mlp.linear_fc2.weight param:torch.Size([4096, 3584]) require_grad:True
+
+name:module.language_model.decoder.final_layernorm.weight param:torch.Size([4096]) require_grad:True
+name:module.language_model.output_layer.weight param:torch.Size([8192, 4096]) require_grad:True
+name:module.language_model.decoder.layers.7.self_attention.linear_proj.weight param:torch.Size([4096, 1024]) require_grad:True
+name:module.language_model.decoder.layers.7.self_attention.linear_qkv.layer_norm_weight param:torch.Size([4096]) require_grad:True
+name:module.language_model.decoder.layers.7.self_attention.linear_qkv.weight param:torch.Size([1536, 4096]) require_grad:True
+name:module.language_model.decoder.layers.7.mlp.linear_fc1.layer_norm_weight param:torch.Size([4096]) require_grad:True
+name:module.language_model.decoder.layers.7.mlp.linear_fc1.weight param:torch.Size([7168, 4096]) require_grad:True
+name:module.language_model.decoder.layers.7.mlp.linear_fc2.weight param:torch.Size([4096, 3584]) require_grad:True
+name:module.language_model.decoder.final_layernorm.weight param:torch.Size([4096]) require_grad:True
+name:module.language_model.output_layer.weight param:torch.Size([8192, 4096]) require_grad:True
+rank=0, worker=0: shard_range=[pretrain-0.tar[0, 100), pretrain-0.tar[100, 200), pretrain-0.tar[200, 300), ...<2194>, pretrain-28.tar[9700, 9800), pretrain-28.tar[9800, 9900), pretrain-28.tar[9900, 10000)] sum(count)=220000
+rank=0, worker=1: shard_range=[pretrain-29.tar[0, 100), pretrain-29.tar[100, 200), pretrain-29.tar[200, 300), ...<2194>, pretrain-48.tar[9700, 9800), pretrain-48.tar[9800, 9900), pretrain-48.tar[9900, 10000)] sum(count)=220000
+rank=0, worker=0: shard_range=[pretrain-49.tar[0, 10000), pretrain-5.tar[0, 10000), pretrain-50.tar[0, 10000)] sum(count)=30000
+rank=0, worker=1: shard_range=[pretrain-51.tar[0, 10000), pretrain-52.tar[0, 10000), pretrain-53.tar[0, 10000)] sum(count)=30000
+times across ranks (ms):
+  model-and-optimizer-setup:
+     rank  0: 106.21
+     rank  1: 104.97
+     rank  2: 104.31
+     rank  3: 101.51
+     rank  4: 32.93
+     rank  5: 32.97
+     rank  6: 53.92
+     rank  7: 32.80
+     rank  8: 49.58
+     rank  9: 32.12
+     rank 10: 45.96
+     rank 11: 32.18
+     rank 12: 70.72
+     rank 13: 71.31
+     rank 14: 69.01
+     rank 15: 68.53
+     rank 16: 69.48
+     rank 17: 70.06
+     rank 18: 69.63
+     rank 19: 70.01
+  train/valid/test-data-iterators-setup:
+     rank  0: 1302.46
+     rank  1: 1302.71
+     rank  2: 1302.68
+     rank  3: 1302.35
+     rank  4: 1302.43
+     rank  5: 1302.92
+     rank  6: 1302.47
+     rank  7: 1302.47
+     rank  8: 1302.42
+     rank  9: 1302.41
+     rank 10: 1302.47
+     rank 11: 1302.76
+     rank 12: 1302.86
+     rank 13: 1302.97
+     rank 14: 1303.01
+     rank 15: 1303.38
+     rank 16: 1302.59
+     rank 17: 1302.74
+     rank 18: 1302.58
+     rank 19: 1302.58
+Traceback (most recent call last):
+Traceback (most recent call last):
+  File "/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/examples/multimodal/train.py", line 456, in <module>
+Traceback (most recent call last):
+  File "/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/examples/multimodal/train.py", line 456, in <module>
+Traceback (most recent call last):
+  File "/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/examples/multimodal/train.py", line 456, in <module>
+  File "/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/examples/multimodal/train.py", line 456, in <module>
+    pretrain(
+        pretrain(pretrain(  File "/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/megatron/training/training.py", line 369, in pretrain
+
+
+  File "/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/megatron/training/training.py", line 369, in pretrain
+  File "/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/megatron/training/training.py", line 369, in pretrain
+    pretrain(
+  File "/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/megatron/training/training.py", line 369, in pretrain
+    iteration, num_floating_point_operations_so_far = train( # 调用 1172 行进行训练
+  File "/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/megatron/training/training.py", line 1336, in train
+    iteration, num_floating_point_operations_so_far = train( # 调用 1172 行进行训练
+  File "/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/megatron/training/training.py", line 1336, in train
+    iteration, num_floating_point_operations_so_far = train( # 调用 1172 行进行训练
+  File "/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/megatron/training/training.py", line 1336, in train
+    iteration, num_floating_point_operations_so_far = train( # 调用 1172 行进行训练
+  File "/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/megatron/training/training.py", line 1336, in train
+    train_step(forward_step_func, # 调用 805 行
+  File "/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/megatron/training/training.py", line 836, in train_step
+    train_step(forward_step_func, # 调用 805 行
+  File "/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/megatron/training/training.py", line 836, in train_step
+        train_step(forward_step_func, # 调用 805 行train_step(forward_step_func, # 调用 805 行
+
+  File "/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/megatron/training/training.py", line 836, in train_step
+  File "/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/megatron/training/training.py", line 836, in train_step
+    update_successful, grad_norm, num_zeros_in_grad = optimizer.step()
+  File "/gf3/home/fjs/anaconda3/envs/megatron/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 115, in decorate_context
+    update_successful, grad_norm, num_zeros_in_grad = optimizer.step()
+  File "/gf3/home/fjs/anaconda3/envs/megatron/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 115, in decorate_context
+    update_successful, grad_norm, num_zeros_in_grad = optimizer.step()
+  File "/gf3/home/fjs/anaconda3/envs/megatron/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 115, in decorate_context
+    return func(*args, **kwargs)
+  File "/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/megatron/core/optimizer/optimizer.py", line 798, in step
+    return func(*args, **kwargs)
+  File "/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/megatron/core/optimizer/optimizer.py", line 798, in step
+    update_successful, grad_norm, num_zeros_in_grad = optimizer.step()
+  File "/gf3/home/fjs/anaconda3/envs/megatron/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 115, in decorate_context
+    return func(*args, **kwargs)
+  File "/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/megatron/core/optimizer/optimizer.py", line 798, in step
+    return func(*args, **kwargs)
+  File "/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/megatron/core/optimizer/optimizer.py", line 798, in step
+    success = self.step_with_ready_grads()
+  File "/gf3/home/fjs/anaconda3/envs/megatron/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 115, in decorate_context
+    success = self.step_with_ready_grads()
+  File "/gf3/home/fjs/anaconda3/envs/megatron/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 115, in decorate_context
+    success = self.step_with_ready_grads()
+  File "/gf3/home/fjs/anaconda3/envs/megatron/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 115, in decorate_context
+    return func(*args, **kwargs)
+  File "/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/megatron/core/optimizer/optimizer.py", line 762, in step_with_ready_grads
+    return func(*args, **kwargs)
+  File "/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/megatron/core/optimizer/optimizer.py", line 762, in step_with_ready_grads
+    success = self.step_with_ready_grads()
+  File "/gf3/home/fjs/anaconda3/envs/megatron/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 115, in decorate_context
+    return func(*args, **kwargs)
+  File "/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/megatron/core/optimizer/optimizer.py", line 762, in step_with_ready_grads
+    return func(*args, **kwargs)
+  File "/gf3/home/fjs/project/MLLM/Megatron-LM-core_r0.9.0/megatron/core/optimizer/optimizer.py", line 762, in step_with_ready_grads
+    self.optimizer.step()
+  File "/gf3/home/fjs/anaconda3/envs/megatron/lib/python3.10/site-packages/torch/optim/optimizer.py", line 76, in _use_grad
+    self.optimizer.step()
+  File "/gf3/home/fjs/anaconda3/envs/megatron/lib/python3.10/site-packages/torch/optim/optimizer.py", line 76, in _use_grad
+    self.optimizer.step()
+  File "/gf3/home/fjs/anaconda3/envs/megatron/lib/python3.10/site-packages/torch/optim/optimizer.py", line 76, in _use_grad
+    ret = func(self, *args, **kwargs)
+  File "/gf3/home/fjs/anaconda3/envs/megatron/lib/python3.10/site-packages/torch/optim/adamw.py", line 187, in step
+    ret = func(self, *args, **kwargs)
+  File "/gf3/home/fjs/anaconda3/envs/megatron/lib/python3.10/site-packages/torch/optim/adamw.py", line 187, in step
+    ret = func(self, *args, **kwargs)
+  File "/gf3/home/fjs/anaconda3/envs/megatron/lib/python3.10/site-packages/torch/optim/adamw.py", line 187, in step
+    self.optimizer.step()
+  File "/gf3/home/fjs/anaconda3/envs/megatron/lib/python3.10/site-packages/torch/optim/optimizer.py", line 76, in _use_grad
+    adamw(
+  File "/gf3/home/fjs/anaconda3/envs/megatron/lib/python3.10/site-packages/torch/optim/adamw.py", line 339, in adamw
+    adamw(
+  File "/gf3/home/fjs/anaconda3/envs/megatron/lib/python3.10/site-packages/torch/optim/adamw.py", line 339, in adamw
+    ret = func(self, *args, **kwargs)
+  File "/gf3/home/fjs/anaconda3/envs/megatron/lib/python3.10/site-packages/torch/optim/adamw.py", line 187, in step
+    adamw(
+  File "/gf3/home/fjs/anaconda3/envs/megatron/lib/python3.10/site-packages/torch/optim/adamw.py", line 339, in adamw
+    func(
+  File "/gf3/home/fjs/anaconda3/envs/megatron/lib/python3.10/site-packages/torch/optim/adamw.py", line 608, in _multi_tensor_adamw
+    func(
+  File "/gf3/home/fjs/anaconda3/envs/megatron/lib/python3.10/site-packages/torch/optim/adamw.py", line 608, in _multi_tensor_adamw
+    adamw(
+  File "/gf3/home/fjs/anaconda3/envs/megatron/lib/python3.10/site-packages/torch/optim/adamw.py", line 339, in adamw
+    func(
+  File "/gf3/home/fjs/anaconda3/envs/megatron/lib/python3.10/site-packages/torch/optim/adamw.py", line 608, in _multi_tensor_adamw
+    exp_avg_sq_sqrt = torch._foreach_sqrt(device_exp_avg_sqs)
+torch.cuda.OutOfMemoryError: CUDA out of memory. Tried to allocate 112.00 MiB. GPU 2 has a total capacity of 7.78 GiB of which 93.56 MiB is free. Including non-PyTorch memory, this process has 7.69 GiB memory in use. Of the allocated memory 7.33 GiB is allocated by PyTorch, and 64.21 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+    func(
+  File "/gf3/home/fjs/anaconda3/envs/megatron/lib/python3.10/site-packages/torch/optim/adamw.py", line 608, in _multi_tensor_adamw
+    exp_avg_sq_sqrt = torch._foreach_sqrt(device_exp_avg_sqs)
+torch.cuda.OutOfMemoryError: CUDA out of memory. Tried to allocate 112.00 MiB. GPU 0 has a total capacity of 7.78 GiB of which 93.56 MiB is free. Including non-PyTorch memory, this process has 7.69 GiB memory in use. Of the allocated memory 7.33 GiB is allocated by PyTorch, and 64.21 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+    exp_avg_sq_sqrt = torch._foreach_sqrt(device_exp_avg_sqs)
+torch.cuda.OutOfMemoryError: CUDA out of memory. Tried to allocate 112.00 MiB. GPU 1 has a total capacity of 7.78 GiB of which 93.56 MiB is free. Including non-PyTorch memory, this process has 7.69 GiB memory in use. Of the allocated memory 7.33 GiB is allocated by PyTorch, and 64.21 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+    exp_avg_sq_sqrt = torch._foreach_sqrt(device_exp_avg_sqs)
+torch.cuda.OutOfMemoryError: CUDA out of memory. Tried to allocate 112.00 MiB. GPU 3 has a total capacity of 7.78 GiB of which 93.56 MiB is free. Including non-PyTorch memory, this process has 7.69 GiB memory in use. Of the allocated memory 7.33 GiB is allocated by PyTorch, and 64.21 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+[2024-12-05 21:01:07,872] torch.distributed.elastic.multiprocessing.api: [WARNING] Sending process 29547 closing signal SIGTERM
+[2024-12-05 21:01:08,090] torch.distributed.elastic.multiprocessing.api: [ERROR] failed (exitcode: 1) local_rank: 1 (pid: 29548) of binary: /gf3/home/fjs/anaconda3/envs/megatron/bin/python3.10
+Traceback (most recent call last):
+  File "/gf3/home/fjs/anaconda3/envs/megatron/bin/torchrun", line 8, in <module>
+    sys.exit(main())
+  File "/gf3/home/fjs/anaconda3/envs/megatron/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 347, in wrapper
+    return f(*args, **kwargs)
+  File "/gf3/home/fjs/anaconda3/envs/megatron/lib/python3.10/site-packages/torch/distributed/run.py", line 812, in main
+    run(args)
+  File "/gf3/home/fjs/anaconda3/envs/megatron/lib/python3.10/site-packages/torch/distributed/run.py", line 803, in run
+    elastic_launch(
+  File "/gf3/home/fjs/anaconda3/envs/megatron/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 135, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/gf3/home/fjs/anaconda3/envs/megatron/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 268, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+examples/multimodal/train.py FAILED
+------------------------------------------------------------
+Failures:
+[1]:
+  time      : 2024-12-05_21:01:07
+  host      : gn9
+  rank      : 18 (local_rank: 2)
+  exitcode  : 1 (pid: 29549)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+[2]:
+  time      : 2024-12-05_21:01:07
+  host      : gn9
+  rank      : 19 (local_rank: 3)
+  exitcode  : 1 (pid: 29550)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2024-12-05_21:01:07
+  host      : gn9
+  rank      : 17 (local_rank: 1)
+  exitcode  : 1 (pid: 29548)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================

@@ -121,13 +121,14 @@ OPTIONS=" \
     --allow-missing-vision-projection-checkpoint \
     --no-load-optim \
     --no-load-rng \
-    --freeze-LM \
     --log-interval ${LI} \
     --eval-iters 10 \
     --eval-interval 1000 \
     --use-flash-attn \
     --transformer-impl transformer_engine \
     --use-te \
+    --timing-log-level 2 \
+    --timing-log-option all \
 "
 # --pretrained-checkpoint ${CHECKPOINT_DIR} \
 # --load ${FINETUNE_DIR} \
@@ -140,6 +141,9 @@ OPTIONS=" \
 # --bf16 \
 # --log-params-norm \
 # --log-num-zeros-in-grad \
+# --timing-log-level 2 \
+# --timing-log-option all \
+# --freeze-LM \
 
 
 export NVTE_APPLY_QK_LAYER_SCALING=0
@@ -154,13 +158,13 @@ case $gn
         in 2)
         rank=0
         ;;
-        3)
+        49)
         rank=1
         ;;
-        79)
+        50)
         rank=2
         ;;
-        80)
+        3)
         rank=3
         ;;
         *)

@@ -1,0 +1,38 @@
+examples/multimodal/pretrain-freeze-llm-homo.sh: line 4: activate: No such file or directory
+1
+[2024-12-05 20:58:03,597] torch.distributed.run: [WARNING] 
+[2024-12-05 20:58:03,597] torch.distributed.run: [WARNING] *****************************************
+[2024-12-05 20:58:03,597] torch.distributed.run: [WARNING] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+[2024-12-05 20:58:03,597] torch.distributed.run: [WARNING] *****************************************
+You set `add_prefix_space`. The tokenizer needs to be converted from the slow tokenizers
+You set `add_prefix_space`. The tokenizer needs to be converted from the slow tokenizers
+You set `add_prefix_space`. The tokenizer needs to be converted from the slow tokenizers
+You set `add_prefix_space`. The tokenizer needs to be converted from the slow tokenizers
+------pipeline_parallel_model_size:5------
+------world_size:20------
+------total_model_size:20------
+------num_pipeline_model_parallel_groups:4------
+------pipeline_parallel_model_size:5------
+------world_size:20------
+------total_model_size:20------
+------num_pipeline_model_parallel_groups:4------
+------pipeline_parallel_model_size:5------
+------world_size:20------
+------total_model_size:20------
+------num_pipeline_model_parallel_groups:4------
+------pipeline_parallel_model_size:5------
+------world_size:20------
+------total_model_size:20------
+------num_pipeline_model_parallel_groups:4------
+---Rank 4---Tensor Parallel Group GPUs: [0, 0, 0, 0]---Rank 6---Tensor Parallel Group GPUs: [2, 2, 2, 2]
+
+---Rank 4---Pipeline Parallel Group GPUs: [1, 1, 1, 1, 1]
+---Rank 6---Pipeline Parallel Group GPUs: [1, 1, 1, 1, 1]
+---Rank 5---Tensor Parallel Group GPUs: [1, 1, 1, 1]
+[rank4]:[W init.cpp:767] Warning: nvfuser is no longer supported in torch script, use _jit_set_nvfuser_enabled is deprecated and a no-op (function operator())
+---Rank 7---Tensor Parallel Group GPUs: [3, 3, 3, 3][rank6]:[W init.cpp:767] Warning: nvfuser is no longer supported in torch script, use _jit_set_nvfuser_enabled is deprecated and a no-op (function operator())
+
+---Rank 5---Pipeline Parallel Group GPUs: [1, 1, 1, 1, 1]
+---Rank 7---Pipeline Parallel Group GPUs: [1, 1, 1, 1, 1]
+[rank5]:[W init.cpp:767] Warning: nvfuser is no longer supported in torch script, use _jit_set_nvfuser_enabled is deprecated and a no-op (function operator())
+[rank7]:[W init.cpp:767] Warning: nvfuser is no longer supported in torch script, use _jit_set_nvfuser_enabled is deprecated and a no-op (function operator())

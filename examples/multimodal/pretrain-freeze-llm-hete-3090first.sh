@@ -80,9 +80,9 @@ OPTIONS=" \
     --swiglu \
     --attention-dropout 0.0 \
     --hidden-dropout ${HD} \
-    --tensor-model-parallel-size 4 \
+    --tensor-model-parallel-size 2 \
     --pipeline-model-parallel-size 5 \
-    --split-spec "26,8,8,8,8"
+    --split-spec "30,10,6,7,5"
     --num-layers 32 \
     --hidden-size 4096 \
     --num-attention-heads 32 \
@@ -121,13 +121,15 @@ OPTIONS=" \
     --allow-missing-vision-projection-checkpoint \
     --no-load-optim \
     --no-load-rng \
-    --freeze-LM \
     --log-interval ${LI} \
     --eval-iters 10 \
     --eval-interval 1000 \
     --use-flash-attn \
     --transformer-impl transformer_engine \
     --use-te \
+    --timing-log-level 2 \
+    --timing-log-option all \
+    --freeze-LM \
 "
 # --pretrained-checkpoint ${CHECKPOINT_DIR} \
 # --load ${FINETUNE_DIR} \
@@ -151,13 +153,13 @@ GPUS_PER_NODE=4
 gn=`hostname | awk -F "n" '{print int($2)}'`
 # node 71,72,2,3,9 3090 + 3090 + 2080ti + 2080ti + 2080
 case $gn
-        in 79)
+        in 49)
         rank=0
         ;;
-        2)
+        50)
         rank=1
         ;;
-        80)
+        2)
         rank=2
         ;;
         3)

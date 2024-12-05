@@ -82,7 +82,7 @@ OPTIONS=" \
     --hidden-dropout ${HD} \
     --tensor-model-parallel-size 4 \
     --pipeline-model-parallel-size 5 \
-    --split-spec "24,10,8,8,8"
+    --split-spec "26,8,8,8,8"
     --num-layers 32 \
     --hidden-size 4096 \
     --num-attention-heads 32 \
@@ -129,7 +129,6 @@ OPTIONS=" \
     --use-te \
     --timing-log-level 2 \
     --timing-log-option all \
-    --freeze-ViT \
 "
 # --pretrained-checkpoint ${CHECKPOINT_DIR} \
 # --load ${FINETUNE_DIR} \
@@ -144,6 +143,7 @@ OPTIONS=" \
 # --log-params-norm \
 # --log-num-zeros-in-grad \
 # --freeze-ViT \
+# --freeze-LM \
 
 
 export NVTE_APPLY_QK_LAYER_SCALING=0
