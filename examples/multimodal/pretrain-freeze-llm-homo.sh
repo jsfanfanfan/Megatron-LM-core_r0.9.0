@@ -129,6 +129,14 @@ OPTIONS=" \
     --use-te \
     --timing-log-level 2 \
     --timing-log-option all \
+    --profile \
+    --profile-step-start 2 \
+    --profile-step-end 3 \
+    --use-pytorch-profiler \
+    --profile-ranks 0,4,8,12,16 \
+    --log-timers-to-tensorboard \
+    --log-memory-to-tensorboard \
+
 "
 # --pretrained-checkpoint ${CHECKPOINT_DIR} \
 # --load ${FINETUNE_DIR} \

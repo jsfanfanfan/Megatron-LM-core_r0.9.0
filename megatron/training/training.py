@@ -305,8 +305,42 @@ def pretrain(
     model, optimizer, opt_param_scheduler = setup_model_and_optimizer(
         model_provider, model_type, checkpointing_context=checkpointing_context)
     
-    for name,param in model[0].named_parameters():
-        print(f"name:{name} param:{param.size()} require_grad:{param.requires_grad}")
+    # for name,param in model[0].named_parameters():
+    #     print(f"name:{name} param:{param.size()} require_grad:{param.requires_grad}")
+    # 通过钩子函数获取模型每一层前向反向传播的时间
+    def forward_hook(module):
+        torch.cuda.synchronize()
+        start_time = time.perf_counter()
+        module.forward_start_time = start_time
+
+
+    def forward_post_hook(module):
+        torch.cuda.synchronize()
+        end_time = time.perf_counter()
+        elapsed_time = end_time - module.forward_start_time
+        print(f"forward time for {module.__class__.__nname__}: {elapsed_time:.6f} seconds")
+
+
+    def backward_hook(module, grad_output):
+        torch.cuda.synchronize()
+        start_time = time.perf_counter()
+        module.backward_start_time = start_time
+
+    
+    def backward_post_hook(module, grad_input, grad_output):
+        torch.cuda.synchronize()
+        end_time = time.perf_counter()
+        elapsed_time = end_time - module.backward_start_time
+        print(f"backward time for {module.__class__.__nmae__}:{elapsed_time:.6f} seconds")
+
+
+    for name, module in model[0].named_modules():
+        if len(list(module.children())) == 0:
+            module.register_forward_pre_hook(forward_hook)
+            module.register_forward_hook(forward_post_hook)
+            module.register_full_backward_pre_hook(backward_hook)
+            module.register_full_backward_hook(backward_post_hook)
+    
         
     timers('model-and-optimizer-setup').stop()
     print_datetime('after model, optimizer, and learning rate '
