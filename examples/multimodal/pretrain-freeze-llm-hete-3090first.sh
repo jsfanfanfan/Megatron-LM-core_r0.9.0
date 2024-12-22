@@ -13,8 +13,8 @@ export NCCL=$CUDA
 # export NCCL_IB_SL=1
 export CUDA_DEVICE_MAX_CONNECTIONS=1
 
-MODEL_NAME="mcore-llava-mistral-7b-instruct-clip336-pretraining"
-WORKSPACE=/dat/fjs/llama_mistral/combine_mistral_clip-tp4pp5
+MODEL_NAME="llava-mistral-7b-instruct-clip336-pretraining"
+WORKSPACE=/dat/fjs/llama_mistral/hete_mistral_clip_freeze_llm-tp4pp5
 # Check that the user has set an output path for model checkpoints.
 if [[ -z $WORKSPACE ]]; then
     echo "Please set WORKSPACE for storing your model checkpoints."
@@ -28,7 +28,7 @@ OUTPUT="${OUTPUT_BASE}/${MODEL_NAME}"
 LOGS_DIR="${OUTPUT}/logs"
 TENSORBOARD_DIR="${OUTPUT}/tensorboard"
 
-LOAD_NAME="mistral_instruct_clip336_tp4_pp5_combined_mcore_freeze_llm"
+LOAD_NAME="mistral_clip336_tp4_pp5_freeze_llm"
 if [[ -z $LOAD_NAME ]]; then
     echo "Please set LOAD_NAME for input model name."
     exit 1
@@ -80,9 +80,9 @@ OPTIONS=" \
     --swiglu \
     --attention-dropout 0.0 \
     --hidden-dropout ${HD} \
-    --tensor-model-parallel-size 2 \
+    --tensor-model-parallel-size 4 \
     --pipeline-model-parallel-size 5 \
-    --split-spec "30,10,6,7,5"
+    --split-spec "34,10,5,5,4"
     --num-layers 32 \
     --hidden-size 4096 \
     --num-attention-heads 32 \
@@ -126,10 +126,9 @@ OPTIONS=" \
     --eval-interval 1000 \
     --use-flash-attn \
     --transformer-impl transformer_engine \
-    --use-te \
+    --freeze-LM \
     --timing-log-level 2 \
     --timing-log-option all \
-    --freeze-LM \
 "
 # --pretrained-checkpoint ${CHECKPOINT_DIR} \
 # --load ${FINETUNE_DIR} \
@@ -142,6 +141,13 @@ OPTIONS=" \
 # --bf16 \
 # --log-params-norm \
 # --log-num-zeros-in-grad \
+# --profile \
+# --profile-step-start 2 \
+# --profile-step-end 3 \
+# --use-pytorch-profiler \
+# --profile-ranks 0 4 8 12 16 \
+# --log-timers-to-tensorboard \
+# --log-memory-to-tensorboard \
 
 
 export NVTE_APPLY_QK_LAYER_SCALING=0
@@ -153,10 +159,10 @@ GPUS_PER_NODE=4
 gn=`hostname | awk -F "n" '{print int($2)}'`
 # node 71,72,2,3,9 3090 + 3090 + 2080ti + 2080ti + 2080
 case $gn
-        in 49)
+        in 79)
         rank=0
         ;;
-        50)
+        80)
         rank=1
         ;;
         2)

@@ -13,8 +13,8 @@ export NCCL=$CUDA
 # export NCCL_IB_SL=1
 export CUDA_DEVICE_MAX_CONNECTIONS=1
 
-MODEL_NAME="mcore-llava-mistral-7b-instruct-clip336-pretraining"
-WORKSPACE=/dat/fjs/llama_mistral/combine_mistral_clip-tp4pp5
+MODEL_NAME="llava-mistral-7b-instruct-clip336-pretraining"
+WORKSPACE=/dat/fjs/llama_mistral/homo_mistral_clip_freeze_llm-tp4pp5
 # Check that the user has set an output path for model checkpoints.
 if [[ -z $WORKSPACE ]]; then
     echo "Please set WORKSPACE for storing your model checkpoints."
@@ -28,7 +28,7 @@ OUTPUT="${OUTPUT_BASE}/${MODEL_NAME}"
 LOGS_DIR="${OUTPUT}/logs"
 TENSORBOARD_DIR="${OUTPUT}/tensorboard"
 
-LOAD_NAME="mistral_instruct_clip336_tp4_pp5_combined_mcore_freeze_llm"
+LOAD_NAME="mistral_clip336_tp4_pp5_freeze_llm"
 if [[ -z $LOAD_NAME ]]; then
     echo "Please set LOAD_NAME for input model name."
     exit 1
@@ -124,27 +124,16 @@ OPTIONS=" \
     --log-interval ${LI} \
     --eval-iters 10 \
     --eval-interval 1000 \
-    --use-flash-attn \
-    --transformer-impl transformer_engine \
-    --use-te \
+    --transformer-impl local \
+    --freeze-LM \
     --timing-log-level 2 \
     --timing-log-option all \
-    --profile \
-    --profile-step-start 2 \
-    --profile-step-end 3 \
-    --use-pytorch-profiler \
-    --profile-ranks 0,4,8,12,16 \
-    --log-timers-to-tensorboard \
-    --log-memory-to-tensorboard \
-
 "
 # --pretrained-checkpoint ${CHECKPOINT_DIR} \
 # --load ${FINETUNE_DIR} \
 # --use-checkpoint-args \
 # --save ${FINETUNE_DIR} \
 # --dataloader-save ${FINETUNE_DIR}/dataloader \
-# --freeze-ViT \
-# --freeze-ViT \
 # --use-distributed-optimizer \
 # --save-interval 1000 \
 # --bf16 \
@@ -152,6 +141,15 @@ OPTIONS=" \
 # --log-num-zeros-in-grad \
 # --freeze-ViT \
 # --freeze-LM \
+# --use-flash-attn \
+# --use-te \
+# --profile \
+# --profile-step-start 2 \
+# --profile-step-end 3 \
+# --use-pytorch-profiler \
+# --profile-ranks 0 4 8 12 16 \
+# --log-timers-to-tensorboard \
+# --log-memory-to-tensorboard \
 
 
 export NVTE_APPLY_QK_LAYER_SCALING=0

@@ -13,8 +13,8 @@ export NCCL=$CUDA
 # export NCCL_IB_SL=1
 export CUDA_DEVICE_MAX_CONNECTIONS=1
 
-MODEL_NAME="mcore-llava-mistral-7b-instruct-clip336-pretraining"
-WORKSPACE=/dat/fjs/llama_mistral/combine_mistral_clip-tp4pp5
+MODEL_NAME="llava-mistral-7b-clip336-pretraining"
+WORKSPACE=/dat/fjs/llama_mistral/hete_mistral_clip_freeze_vit-tp4pp5
 # Check that the user has set an output path for model checkpoints.
 if [[ -z $WORKSPACE ]]; then
     echo "Please set WORKSPACE for storing your model checkpoints."
@@ -28,7 +28,7 @@ OUTPUT="${OUTPUT_BASE}/${MODEL_NAME}"
 LOGS_DIR="${OUTPUT}/logs"
 TENSORBOARD_DIR="${OUTPUT}/tensorboard"
 
-LOAD_NAME="mistral_instruct_clip336_tp4_pp5_combined_mcore_freeze_llm"
+LOAD_NAME="mistral_clip336_tp4_pp5_freeze_vit"
 if [[ -z $LOAD_NAME ]]; then
     echo "Please set LOAD_NAME for input model name."
     exit 1
@@ -48,7 +48,7 @@ DATA_TRAIN="${SOURCE}/examples/multimodal/pretrain_dataset.yaml"
 
 DEBUG=1
 if [[ $DEBUG -eq 1 ]]; then
-    BZ=32
+    BZ=10
     NW=2
     HD=0.0
     LI=1
@@ -80,9 +80,9 @@ OPTIONS=" \
     --swiglu \
     --attention-dropout 0.0 \
     --hidden-dropout ${HD} \
-    --tensor-model-parallel-size 2 \
+    --tensor-model-parallel-size 4 \
     --pipeline-model-parallel-size 5 \
-    --split-spec "16,10,5,13,14"
+    --split-spec "28,9,11,5,5"
     --num-layers 32 \
     --hidden-size 4096 \
     --num-attention-heads 32 \
@@ -129,7 +129,7 @@ OPTIONS=" \
     --use-te \
     --timing-log-level 2 \
     --timing-log-option all \
-    --freeze-LM \
+    --freeze-ViT \
 "
 # --pretrained-checkpoint ${CHECKPOINT_DIR} \
 # --load ${FINETUNE_DIR} \
@@ -157,13 +157,13 @@ case $gn
         in 9)
         rank=0
         ;;
-        2)
+        49)
         rank=1
         ;;
-        3)
+        50)
         rank=2
         ;;
-        49)
+        2)
         rank=3
         ;;
         *)

@@ -127,6 +127,28 @@ def report_memory(name):
         torch.cuda.memory_reserved() / mega_bytes)
     string += ' | max reserved: {}'.format(
         torch.cuda.max_memory_reserved() / mega_bytes)
+    
+    T = 0.0
+    if torch.distributed.get_rank() == 0:
+        T += 35.58 / 24.0 * (1 - torch.cuda.max_memory_allocated() / mega_bytes / 1024.0 / 24)
+        print(f"stage1 GPU utialization:{torch.cuda.max_memory_allocated() / mega_bytes / 1024.0 / 24 * 100} %")
+    if torch.distributed.get_rank() == 4:
+        T += 35.58 / 24.0 * (1 - torch.cuda.max_memory_allocated() / mega_bytes / 1024.0 / 24)
+        print(f"stage2 GPU utialization:{torch.cuda.max_memory_allocated() / mega_bytes / 1024.0 / 24 * 100} %")
+    if torch.distributed.get_rank() == 8:
+        T += 13.45 / 11.0 * (1 - torch.cuda.max_memory_allocated() / mega_bytes / 1024.0 / 24)
+        print(f"stage3 GPU utialization:{torch.cuda.max_memory_allocated() / mega_bytes / 1024.0 / 11 * 100} %")
+    if torch.distributed.get_rank() == 12:
+        T += 13.45 / 11.0 * (1 - torch.cuda.max_memory_allocated() / mega_bytes / 1024.0 / 24)
+        print(f"stage4 GPU utialization:{torch.cuda.max_memory_allocated() / mega_bytes / 1024.0 / 11 * 100} %")
+    if torch.distributed.get_rank() == 16 :
+        T += 10.07 / 8 * (1 - torch.cuda.max_memory_allocated() / mega_bytes / 1024.0 / 24)
+        print(f"stage5 GPU utialization:{torch.cuda.max_memory_allocated() / mega_bytes / 1024.0 / 8 * 100} %")
+
+    
+    if torch.distributed.get_rank() == 0:
+        print(f"weighting memory waste ratio T= {T}")
+        
     if mpu.get_data_parallel_rank() == 0:
         print("[Rank {}] {}".format(torch.distributed.get_rank(), string),
               flush=True)

@@ -90,7 +90,7 @@ def destroy_global_state():
 
 def print_datetime(string):
     """Note that this call will sync across all ranks."""
-    torch.distributed.barrier()
+    # torch.distributed.barrier()
     time_str = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     print_rank_0('[' + string + '] datetime: {} '.format(time_str))
 
@@ -261,7 +261,6 @@ def pretrain(
 
     # Set pytorch JIT layer fusion options and warmup JIT functions.
     set_jit_fusion_options()
-
     # Adjust the startup time so it reflects the largest value.
     # This will be closer to what scheduler will see (outside of
     # image ... launches.
@@ -269,14 +268,11 @@ def pretrain(
     start_time_tensor = torch.tensor([_TRAIN_START_TIME],
                                      dtype=torch.double,
                                      device='cuda')
-    torch.distributed.all_reduce(start_time_tensor,
-                                 op=torch.distributed.ReduceOp.MIN)
+    # torch.distributed.all_reduce(start_time_tensor, op=torch.distributed.ReduceOp.MIN)
     _TRAIN_START_TIME = start_time_tensor.item()
-
     app_metrics = {}
     app_metrics['app_start_time'] = round(_TRAIN_START_TIME * 1000.0)
     app_metrics['app_model_init_start_time'] = round(_TRAIN_START_TIME * 1000.0)
-
     print_rank_0('time to initialize megatron (seconds): {:.3f}'.format(
         time.time() - _TRAIN_START_TIME))
     print_datetime('after megatron is initialized')
@@ -308,38 +304,47 @@ def pretrain(
     # for name,param in model[0].named_parameters():
     #     print(f"name:{name} param:{param.size()} require_grad:{param.requires_grad}")
     # 通过钩子函数获取模型每一层前向反向传播的时间
-    def forward_hook(module):
+    # 通过钩子函数发现冻结对于反向传播的时间影响巨大
+    
+    '''
+    def forward_hook(module, input):
         torch.cuda.synchronize()
         start_time = time.perf_counter()
-        module.forward_start_time = start_time
+        module.__forward_start_time__ = start_time
 
 
-    def forward_post_hook(module):
+    def forward_post_hook(module, input, output):
         torch.cuda.synchronize()
         end_time = time.perf_counter()
-        elapsed_time = end_time - module.forward_start_time
-        print(f"forward time for {module.__class__.__nname__}: {elapsed_time:.6f} seconds")
+        forward_time = end_time - module.__forward_start_time__
+        if not hasattr(module, "forward_time"):
+            module.forward_time = 0
+        module.forward_time += forward_time
+        print(f"Layer: {module.__class__.__name__}, Forward time: {forward_time * 1000.0:.6f} ms")
 
 
     def backward_hook(module, grad_output):
         torch.cuda.synchronize()
         start_time = time.perf_counter()
-        module.backward_start_time = start_time
+        module.__backward_start_time__ = start_time
 
     
     def backward_post_hook(module, grad_input, grad_output):
         torch.cuda.synchronize()
         end_time = time.perf_counter()
-        elapsed_time = end_time - module.backward_start_time
-        print(f"backward time for {module.__class__.__nmae__}:{elapsed_time:.6f} seconds")
+        backward_time = end_time - module.__backward_start_time__
+        if not hasattr(module, "backward_time"):
+            module.backward_time = 0
+        module.backward_time += backward_time
+        print(f"Layer: {module.__class__.__name__}, Backward time: {backward_time * 1000.0:.6f} ms")
 
-
-    for name, module in model[0].named_modules():
-        if len(list(module.children())) == 0:
-            module.register_forward_pre_hook(forward_hook)
-            module.register_forward_hook(forward_post_hook)
-            module.register_full_backward_pre_hook(backward_hook)
-            module.register_full_backward_hook(backward_post_hook)
+    if torch.distributed.get_rank(group=pipeline_parallel_group) == 3:
+        for layer in model[0].modules():
+            layer.register_forward_pre_hook(forward_hook)
+            layer.register_forward_hook(forward_post_hook)
+            layer.register_full_backward_pre_hook(backward_hook)
+            layer.register_full_backward_hook(backward_post_hook)
+    '''
     
         
     timers('model-and-optimizer-setup').stop()
@@ -1335,6 +1340,7 @@ def train(forward_step_func, model, optimizer, opt_param_scheduler,
             active=args.profile_step_end-args.profile_step_start,
             repeat=1),
         on_trace_ready=torch.profiler.tensorboard_trace_handler(args.tensorboard_dir),
+        activities=[torch.profiler.ProfilerActivity.CPU, torch.profiler.ProfilerActivity.CUDA],
         record_shapes=True,
         with_stack=True)
         prof.start()
