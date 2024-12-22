@@ -1,7 +1,8 @@
-ranks = [0,1,2,3,4]
-split_spec = [20,10,10,10,8]
+from itertools import permutations
 
-for rank in ranks:
-    start_layer = sum(split_spec[:rank]) + 1
-    end_layer = sum(split_spec[:rank + 1])
-    print(f"rank{rank}:---[{start_layer}, {end_layer}]")
+x = [1, 1, 2, 2, 3]
+
+all_ = set(permutations(x))
+
+for i in all_:
+    print(list(i))

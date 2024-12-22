@@ -72,4 +72,48 @@
 
 megatron/core/pipeline_parallel/schedules.py 1193 行
 
-p2p 通信接收 tensor 时有张量 size 参数，由于模型异构，这个p2p通信接收张量的 size 有问题。
+p2p 通信接收 tensor 时有张量 size 参数，由于模型异构，这个p2p通信接收张量的 size 有问题。 
+
+## 方案 1：最小化 weighting memory waste ratio
+
+假设流水级数为 S，一个 iteration 内设备 $GPU_i$ 的峰值显存占用表示为 $MaxAllocated_i$，显存容量表示为 $Capacity_i$，所以该设备的 memory waste ratio 表示为：
+$$
+1 - \frac{MaxAllocated_i}{Capacity_i}
+$$
+
+流水线上所有 GPU 的 memoey waste ratio 表示为：
+$$
+\sum^{S}_{i=1} (1 - \frac{MaxAllocated_i}{Capacity_i})
+$$
+
+但是所有 GPU 的显存宝贵程度不一样，算力越大的 GPU 显存越宝贵，所以算存比越高的 GPU 越不应该被浪费，修改一下目标，记 GPU_i 的算力为 $Compute_i$, 最小化:
+$$
+T = \sum^{S}_{i=1} \frac{Compute_i}{Capacity_i} (1 - \frac{MaxAllocated_i}{Capacity_i})
+$$
+
+### Algorithm:
+
+initial($P_{best}$, $L_{best}$, $T^*=+∞$) \
+for P in Cut{ GPU_Permutation(GPUs) }: \
+&nbsp; &nbsp; &nbsp; &nbsp; for L in Cut{ Partitions(Module Layers) }: \
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Calculate(MaxAllocated) \
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if OOM detected: \
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Continue \
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; else: \
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Calculate(T) \
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if T* < T: \
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; $T^* = T; L_{best}=L; P_{best}=P$ \
+return $P_{best}, L_{best}$
+
+要解决的核心问题：给定 gbs，mbs，tp，L，freeze 怎么计算一个 iteration 中的峰值显存来精准判定 OOM（以 fp32 为例）？ 如何剪枝？
+
+$ Memory(weight)+ Memory(activation) + Memory(optimizer) $
+
+需要 profile 的数据：每一层的参数量计算 Memory(weight)，每一层中间激活大小，非冻结层的 Adam optimizer 大小按照参数量 * 3 计算，冻结层算 0, 实际需求内存估计会偏离估计值，GPU 可用显存也不是标称，所以 OOM detected 要进行松弛。以前的层划分策略不考虑流水级位置对于显存的影响，现在需要更准确的考虑。
+
+
+
+根据层划分获取每一层的参数量，计算 weight 的大小；
+计算中间激活的大小；
+计算 optim 的大小
+
