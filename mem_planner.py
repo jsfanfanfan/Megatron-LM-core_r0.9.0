@@ -79,7 +79,7 @@ for device_topo in all_permutations:
                         T = CalculateWeightingMemoryRatio(device_topo)
                         if T < curr:
                             curr = T
-                            plan = [i,j,k,l]
+                            plan = [i, j, k, l]
 
                     stage_start = []
                     stage_end = []
