@@ -1,0 +1,7 @@
+examples/multimodal/pretrain-freeze-llm-hete-2080first.sh: line 4: activate: No such file or directory
+1
+[2024-12-24 21:33:30,966] torch.distributed.run: [WARNING] 
+[2024-12-24 21:33:30,966] torch.distributed.run: [WARNING] *****************************************
+[2024-12-24 21:33:30,966] torch.distributed.run: [WARNING] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+[2024-12-24 21:33:30,966] torch.distributed.run: [WARNING] *****************************************
+slurmstepd: error: *** STEP 123215.0 ON gn3 CANCELLED AT 2024-12-24T21:33:34 ***

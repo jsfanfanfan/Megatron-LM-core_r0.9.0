@@ -305,7 +305,6 @@ def pretrain(
     #     print(f"name:{name} param:{param.size()} require_grad:{param.requires_grad}")
     # 通过钩子函数获取模型每一层前向反向传播的时间
     # 通过钩子函数发现冻结对于反向传播的时间影响巨大
-    
     '''
     def forward_hook(module, input):
         torch.cuda.synchronize()
@@ -338,7 +337,7 @@ def pretrain(
         module.backward_time += backward_time
         print(f"Layer: {module.__class__.__name__}, Backward time: {backward_time * 1000.0:.6f} ms")
 
-    if torch.distributed.get_rank(group=pipeline_parallel_group) == 3:
+    if torch.distributed.get_rank(group=pipeline_parallel_group) == 2:
         for layer in model[0].modules():
             layer.register_forward_pre_hook(forward_hook)
             layer.register_forward_hook(forward_post_hook)
@@ -486,7 +485,7 @@ def update_train_iters(args):
     print_rank_0('setting training iterations to {}'.format(args.train_iters))
 
 
-def  get_model(model_provider_func, model_type=ModelType.encoder_or_decoder, wrap_with_ddp=True):
+def get_model(model_provider_func, model_type=ModelType.encoder_or_decoder, wrap_with_ddp=True):
     """Build the model. 被 617 行调用"""
     args = get_args()
     args.model_type = model_type

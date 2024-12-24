@@ -257,6 +257,43 @@ class TransformerBlock(MegatronModule):
                 for i, layer_spec in enumerate(self.submodules.layer_specs)
             ]
         )
+        
+        import time
+        # 在 build_layer 时给钩子函数
+        def forward_hook(module, input):
+            torch.cuda.synchronize()
+            start_time = time.perf_counter()
+            module.__forward_start_time__ = start_time
+
+
+        def forward_post_hook(module, input, output):
+            torch.cuda.synchronize()
+            end_time = time.perf_counter()
+            print(f"Layer: {module.__class__.__name__}, Forward time: {(end_time - module.__forward_start_time__) * 1000.0:.6f} ms")
+
+
+        def backward_hook(module, grad_output):
+            torch.cuda.synchronize()
+            start_time = time.perf_counter()
+            module.__backward_start_time__ = start_time
+
+        
+        def backward_post_hook(module, grad_input, grad_output):
+            torch.cuda.synchronize()
+            end_time = time.perf_counter()
+            print(f"Layer: {module.__class__.__name__}, Backward time: {(end_time - module.__backward_start_time__) * 1000.0:.6f} ms")
+
+        from megatron.core import mpu
+        from megatron.core.transformer.transformer_layer import TransformerLayer
+        pipeline_parallel_group = mpu.get_pipeline_model_parallel_group()    
+        if torch.distributed.get_rank(group=pipeline_parallel_group) == 0:
+            for layer in self.layers:
+                if isinstance(layer, TransformerLayer):
+                    layer.register_forward_pre_hook(forward_hook)
+                    layer.register_forward_hook(forward_post_hook)
+                    layer.register_full_backward_pre_hook(backward_hook)
+                    layer.register_full_backward_hook(backward_post_hook)
+        
 
         # @TODO: add back standalone_embedding_stage (see issue #293)
         # In pipeline parallelism, we want to add this LN only to the last stage of the pipeline

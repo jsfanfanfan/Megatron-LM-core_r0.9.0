@@ -48,7 +48,7 @@ DATA_TRAIN="${SOURCE}/examples/multimodal/pretrain_dataset.yaml"
 
 DEBUG=1
 if [[ $DEBUG -eq 1 ]]; then
-    BZ=32
+    BZ=16
     NW=2
     HD=0.0
     LI=1
@@ -80,10 +80,10 @@ OPTIONS=" \
     --swiglu \
     --attention-dropout 0.0 \
     --hidden-dropout ${HD} \
-    --tensor-model-parallel-size 4 \
-    --pipeline-model-parallel-size 5 \
-    --split-spec "26,8,8,8,8"
-    --num-layers 32 \
+    --tensor-model-parallel-size 2 \
+    --pipeline-model-parallel-size 4 \
+    --split-spec "26,4,4,4"
+    --num-layers 12 \
     --hidden-size 4096 \
     --num-attention-heads 32 \
     --seq-length 576 \
@@ -91,7 +91,7 @@ OPTIONS=" \
     --max-position-embeddings 4096 \
     --ffn-hidden-size 14336 \
     --train-iters 10 \
-    --micro-batch-size 2 \
+    --micro-batch-size 1 \
     --global-batch-size ${BZ} \
     --lr-decay-iters 20000 \
     --lr-warmup-fraction .01 \
@@ -125,10 +125,19 @@ OPTIONS=" \
     --eval-iters 10 \
     --eval-interval 1000 \
     --transformer-impl local \
-    --freeze-LM \
     --timing-log-level 2 \
     --timing-log-option all \
 "
+# --profile \
+# --profile-step-start 4 \
+# --profile-step-end 5 \
+# --use-pytorch-profiler \
+# --profile-ranks 0 1 2 3 \
+# --recompute-granularity full \
+# --recompute-method block \
+# --recompute-num-layers 4 \
+# --freeze-LM \
+# --recompute-activations \
 # --pretrained-checkpoint ${CHECKPOINT_DIR} \
 # --load ${FINETUNE_DIR} \
 # --use-checkpoint-args \
@@ -139,8 +148,6 @@ OPTIONS=" \
 # --bf16 \
 # --log-params-norm \
 # --log-num-zeros-in-grad \
-# --freeze-ViT \
-# --freeze-LM \
 # --use-flash-attn \
 # --use-te \
 # --profile \
@@ -180,13 +187,13 @@ GPUS_PER_NODE=4
 # MASTER_ADDR=`scontrol show hostname $SLURM_NODELIST| head -n 3 | tail -n 1`
 MASTER_ADDR=`scontrol show hostname $SLURM_NODELIST| head -n 1`
 MASTER_PORT=2234
-NNODES=5
+NNODES=4
 # NODE_RANK=${rank:-"0"}
 NODE_RANK=$SLURM_PROCID
 WORLD_SIZE=$(($GPUS_PER_NODE*$NNODES))
 
 DISTRIBUTED_ARGS="--nproc_per_node $GPUS_PER_NODE --nnodes $NNODES --node_rank $NODE_RANK --master_addr $MASTER_ADDR --master_port $MASTER_PORT"
 
-echo $NODE_RANK
+# echo $NODE_RANK
 
 torchrun $DISTRIBUTED_ARGS examples/multimodal/train.py ${OPTIONS}

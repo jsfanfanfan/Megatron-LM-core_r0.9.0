@@ -48,7 +48,7 @@ DATA_TRAIN="${SOURCE}/examples/multimodal/pretrain_dataset.yaml"
 
 DEBUG=1
 if [[ $DEBUG -eq 1 ]]; then
-    BZ=10
+    BZ=16
     NW=2
     HD=0.0
     LI=1
@@ -80,10 +80,10 @@ OPTIONS=" \
     --swiglu \
     --attention-dropout 0.0 \
     --hidden-dropout ${HD} \
-    --tensor-model-parallel-size 4 \
-    --pipeline-model-parallel-size 5 \
-    --split-spec "28,9,11,5,5"
-    --num-layers 32 \
+    --tensor-model-parallel-size 2 \
+    --pipeline-model-parallel-size 4 \
+    --split-spec "24,7,5,2"
+    --num-layers 12 \
     --hidden-size 4096 \
     --num-attention-heads 32 \
     --seq-length 576 \
@@ -91,7 +91,7 @@ OPTIONS=" \
     --max-position-embeddings 4096 \
     --ffn-hidden-size 14336 \
     --train-iters 10 \
-    --micro-batch-size 2 \
+    --micro-batch-size 1 \
     --global-batch-size ${BZ} \
     --lr-decay-iters 20000 \
     --lr-warmup-fraction .01 \
@@ -129,8 +129,8 @@ OPTIONS=" \
     --use-te \
     --timing-log-level 2 \
     --timing-log-option all \
-    --freeze-ViT \
 "
+# --freeze-ViT \
 # --pretrained-checkpoint ${CHECKPOINT_DIR} \
 # --load ${FINETUNE_DIR} \
 # --use-checkpoint-args \
@@ -152,28 +152,25 @@ GPUS_PER_NODE=4
 
 # Change for multinode config
 gn=`hostname | awk -F "n" '{print int($2)}'`
-# node 9,2,3,33,34 2080 + 2080ti + 2080ti + 3090 + 3090
+# node 3,9,51,52 2080 + 2080ti + 3090 + 3090
 case $gn
         in 9)
         rank=0
         ;;
-        49)
+        51)
         rank=1
         ;;
-        50)
+        52)
         rank=2
         ;;
-        2)
-        rank=3
-        ;;
         *)
-        rank=4
+        rank=3
 esac
 
-MASTER_ADDR=`scontrol show hostname $SLURM_NODELIST| head -n 3 | tail -n 1`
+MASTER_ADDR=`scontrol show hostname $SLURM_NODELIST| head -n 2 | tail -n 1`
 # MASTER_ADDR=`scontrol show hostname $SLURM_NODELIST| head -n 1`
 MASTER_PORT=2234
-NNODES=5
+NNODES=4
 NODE_RANK=${rank:-"0"}
 # NODE_RANK=$SLURM_PROCID
 WORLD_SIZE=$(($GPUS_PER_NODE*$NNODES))
