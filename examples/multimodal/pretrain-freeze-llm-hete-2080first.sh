@@ -80,9 +80,9 @@ OPTIONS=" \
     --swiglu \
     --attention-dropout 0.0 \
     --hidden-dropout ${HD} \
-    --tensor-model-parallel-size 2 \
+    --tensor-model-parallel-size 1 \
     --pipeline-model-parallel-size 4 \
-    --split-spec "24,7,5,2"
+    --split-spec "10,21,6,1"
     --num-layers 12 \
     --hidden-size 4096 \
     --num-attention-heads 32 \
@@ -129,7 +129,11 @@ OPTIONS=" \
     --use-te \
     --timing-log-level 2 \
     --timing-log-option all \
+    --freeze-LM \
 "
+# --use-flash-attn \
+# --transformer-impl transformer_engine \
+# --use-te \
 # --freeze-ViT \
 # --pretrained-checkpoint ${CHECKPOINT_DIR} \
 # --load ${FINETUNE_DIR} \

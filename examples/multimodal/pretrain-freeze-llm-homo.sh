@@ -80,9 +80,9 @@ OPTIONS=" \
     --swiglu \
     --attention-dropout 0.0 \
     --hidden-dropout ${HD} \
-    --tensor-model-parallel-size 2 \
+    --tensor-model-parallel-size 1 \
     --pipeline-model-parallel-size 4 \
-    --split-spec "26,4,4,4"
+    --split-spec "24,2,6,6"
     --num-layers 12 \
     --hidden-size 4096 \
     --num-attention-heads 32 \
@@ -124,9 +124,12 @@ OPTIONS=" \
     --log-interval ${LI} \
     --eval-iters 10 \
     --eval-interval 1000 \
-    --transformer-impl local \
+    --use-flash-attn \
+    --transformer-impl transformer_engine \
+    --use-te \
     --timing-log-level 2 \
     --timing-log-option all \
+    --freeze-LM \
 "
 # --profile \
 # --profile-step-start 4 \
