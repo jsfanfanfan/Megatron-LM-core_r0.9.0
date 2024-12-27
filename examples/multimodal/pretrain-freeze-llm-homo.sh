@@ -48,7 +48,7 @@ DATA_TRAIN="${SOURCE}/examples/multimodal/pretrain_dataset.yaml"
 
 DEBUG=1
 if [[ $DEBUG -eq 1 ]]; then
-    BZ=16
+    BZ=4
     NW=2
     HD=0.0
     LI=1
@@ -82,8 +82,8 @@ OPTIONS=" \
     --hidden-dropout ${HD} \
     --tensor-model-parallel-size 1 \
     --pipeline-model-parallel-size 4 \
-    --split-spec "24,2,6,6"
-    --num-layers 12 \
+    --split-spec "30,7,7,6"
+    --num-layers 24 \
     --hidden-size 4096 \
     --num-attention-heads 32 \
     --seq-length 576 \
@@ -130,6 +130,7 @@ OPTIONS=" \
     --timing-log-level 2 \
     --timing-log-option all \
     --freeze-LM \
+    --freeze-ViT \
 "
 # --profile \
 # --profile-step-start 4 \
@@ -190,7 +191,7 @@ GPUS_PER_NODE=4
 # MASTER_ADDR=`scontrol show hostname $SLURM_NODELIST| head -n 3 | tail -n 1`
 MASTER_ADDR=`scontrol show hostname $SLURM_NODELIST| head -n 1`
 MASTER_PORT=2234
-NNODES=4
+NNODES=1
 # NODE_RANK=${rank:-"0"}
 NODE_RANK=$SLURM_PROCID
 WORLD_SIZE=$(($GPUS_PER_NODE*$NNODES))
