@@ -48,7 +48,7 @@ DATA_TRAIN="${SOURCE}/examples/multimodal/pretrain_dataset.yaml"
 
 DEBUG=1
 if [[ $DEBUG -eq 1 ]]; then
-    BZ=16
+    BZ=32
     NW=2
     HD=0.0
     LI=1
@@ -81,9 +81,9 @@ OPTIONS=" \
     --attention-dropout 0.0 \
     --hidden-dropout ${HD} \
     --tensor-model-parallel-size 1 \
-    --pipeline-model-parallel-size 4 \
-    --split-spec "28,5,3,2"
-    --num-layers 12 \
+    --pipeline-model-parallel-size 5 \
+    --split-spec "32,11,5,6,4"
+    --num-layers 32 \
     --hidden-size 4096 \
     --num-attention-heads 32 \
     --seq-length 576 \
@@ -126,9 +126,9 @@ OPTIONS=" \
     --eval-interval 1000 \
     --use-flash-attn \
     --transformer-impl transformer_engine \
-    --freeze-LM \
     --timing-log-level 2 \
     --timing-log-option all \
+    --freeze-LM \
 "
 # --pretrained-checkpoint ${CHECKPOINT_DIR} \
 # --load ${FINETUNE_DIR} \
@@ -159,23 +159,26 @@ GPUS_PER_NODE=4
 gn=`hostname | awk -F "n" '{print int($2)}'`
 # node 3,9,51,52 3090 + 2080ti + 2080ti + 2080
 case $gn
-        in 51)
+        in 49)
         rank=0
         ;;
-        52)
+        50)
         rank=1
         ;;
-        3)
+        2)
         rank=2
         ;;
-        *)
+        3)
         rank=3
+        ;;
+        *)
+        rank=4
 esac
 
-MASTER_ADDR=`scontrol show hostname $SLURM_NODELIST| head -n 3 | tail -n 1`
+MASTER_ADDR=`scontrol show hostname $SLURM_NODELIST| head -n 4 | tail -n 1`
 # MASTER_ADDR=`scontrol show hostname $SLURM_NODELIST| head -n 1`
 MASTER_PORT=2234
-NNODES=4
+NNODES=5
 NODE_RANK=${rank:-"0"}
 # NODE_RANK=$SLURM_PROCID
 WORLD_SIZE=$(($GPUS_PER_NODE*$NNODES))

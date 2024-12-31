@@ -48,7 +48,7 @@ DATA_TRAIN="${SOURCE}/examples/multimodal/pretrain_dataset.yaml"
 
 DEBUG=1
 if [[ $DEBUG -eq 1 ]]; then
-    BZ=16
+    BZ=32
     NW=2
     HD=0.0
     LI=1
@@ -82,7 +82,7 @@ OPTIONS=" \
     --hidden-dropout ${HD} \
     --tensor-model-parallel-size 2 \
     --pipeline-model-parallel-size 4 \
-    --split-spec "24,7,6,1"
+    --split-spec "24,8,5,1"
     --num-layers 12 \
     --hidden-size 4096 \
     --num-attention-heads 32 \
@@ -157,10 +157,10 @@ case $gn
         in 3)
         rank=0
         ;;
-        51)
+        49)
         rank=1
         ;;
-        52)
+        50)
         rank=2
         ;;
         *)

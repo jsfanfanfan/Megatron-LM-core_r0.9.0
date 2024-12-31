@@ -1,0 +1,105 @@
+examples/multimodal/pretrain-freeze-llm-homo.sh: line 4: activate: No such file or directory
+[2024-12-31 11:44:26,461] torch.distributed.run: [WARNING] 
+[2024-12-31 11:44:26,461] torch.distributed.run: [WARNING] *****************************************
+[2024-12-31 11:44:26,461] torch.distributed.run: [WARNING] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+[2024-12-31 11:44:26,461] torch.distributed.run: [WARNING] *****************************************
+You set `add_prefix_space`. The tokenizer needs to be converted from the slow tokenizers
+You set `add_prefix_space`. The tokenizer needs to be converted from the slow tokenizers
+You set `add_prefix_space`. The tokenizer needs to be converted from the slow tokenizers
+You set `add_prefix_space`. The tokenizer needs to be converted from the slow tokenizers
+------pipeline_parallel_model_size:5------
+------world_size:20------
+------total_model_size:20------
+------num_pipeline_model_parallel_groups:4------
+------pipeline_parallel_model_size:5------
+------world_size:20------
+------total_model_size:20------
+------num_pipeline_model_parallel_groups:4------
+------pipeline_parallel_model_size:5------
+------world_size:20------
+------total_model_size:20------
+------num_pipeline_model_parallel_groups:4------
+------pipeline_parallel_model_size:5------
+------world_size:20------
+------total_model_size:20------
+------num_pipeline_model_parallel_groups:4------
+---Rank 6---Tensor Parallel Group GPUs: [2, 2, 2, 2]
+---Rank 4---Tensor Parallel Group GPUs: [0, 0, 0, 0]
+---Rank 6---Pipeline Parallel Group GPUs: [1, 1, 1, 1, 1]
+---Rank 4---Pipeline Parallel Group GPUs: [1, 1, 1, 1, 1]
+---Rank 5---Tensor Parallel Group GPUs: [1, 1, 1, 1]
+[rank6]:[W init.cpp:767] Warning: nvfuser is no longer supported in torch script, use _jit_set_nvfuser_enabled is deprecated and a no-op (function operator())
+[rank4]:[W init.cpp:767] Warning: nvfuser is no longer supported in torch script, use _jit_set_nvfuser_enabled is deprecated and a no-op (function operator())
+---Rank 5---Pipeline Parallel Group GPUs: [1, 1, 1, 1, 1]
+---Rank 7---Tensor Parallel Group GPUs: [3, 3, 3, 3]
+---Rank 7---Pipeline Parallel Group GPUs: [1, 1, 1, 1, 1]
+[rank5]:[W init.cpp:767] Warning: nvfuser is no longer supported in torch script, use _jit_set_nvfuser_enabled is deprecated and a no-op (function operator())
+[rank7]:[W init.cpp:767] Warning: nvfuser is no longer supported in torch script, use _jit_set_nvfuser_enabled is deprecated and a no-op (function operator())
+WARNING:megatron.core.models.multimodal.llava_model:LLaVA model is under active development. It may be missing features and its methods may change.
+WARNING:megatron.core.models.multimodal.llava_model:LLaVA model is under active development. It may be missing features and its methods may change.
+WARNING:megatron.core.models.multimodal.llava_model:LLaVA model is under active development. It may be missing features and its methods may change.
+WARNING:megatron.core.models.multimodal.llava_model:LLaVA model is under active development. It may be missing features and its methods may change.
+ > number of parameters on (tensor, pipeline) model parallel rank (0, 1): 469827584
+ > number of parameters on (tensor, pipeline) model parallel rank (1, 1): 469827584
+INFO:megatron.core.distributed.param_and_grad_buffer:Number of buckets for gradient all-reduce / reduce-scatter: 1
+Params for bucket 1 (469827584 elements):
+	language_model.decoder.layers.3.self_attention.linear_qkv.layer_norm_weight
+	language_model.decoder.layers.1.mlp.linear_fc1.weight
+	language_model.decoder.layers.1.self_attention.linear_proj.weight
+	language_model.embedding.word_embeddings.weight
+	language_model.decoder.layers.7.self_attention.linear_qkv.layer_norm_weight
+	language_model.decoder.layers.4.mlp.linear_fc1.layer_norm_weight
+	language_model.decoder.layers.4.self_attention.linear_qkv.layer_norm_weight
+	language_model.decoder.layers.2.mlp.linear_fc1.layer_norm_weight
+	language_model.decoder.layers.1.self_attention.linear_qkv.weight
+	language_model.decoder.layers.0.self_attention.linear_proj.weight
+	language_model.decoder.layers.7.self_attention.linear_qkv.weight
+	language_model.decoder.layers.6.mlp.linear_fc2.weight
+	language_model.decoder.layers.6.self_attention.linear_qkv.layer_norm_weight
+	language_model.decoder.layers.6.self_attention.linear_proj.weight
+	language_model.decoder.layers.3.self_attention.linear_qkv.weight
+	language_model.decoder.layers.2.mlp.linear_fc2.weight
+	language_model.decoder.layers.2.self_attention.linear_qkv.weight
+	language_model.decoder.layers.2.self_attention.linear_proj.weight
+	language_model.decoder.layers.1.self_attention.linear_qkv.layer_norm_weight
+	language_model.decoder.layers.6.mlp.linear_fc1.layer_norm_weight
+	language_model.decoder.layers.6.self_attention.linear_qkv.weight
+	language_model.decoder.layers.5.mlp.linear_fc2.weight
+	language_model.decoder.layers.5.mlp.linear_fc1.weight
+	language_model.decoder.layers.3.mlp.linear_fc1.layer_norm_weight
+	language_model.decoder.layers.0.mlp.linear_fc1.weight
+	language_model.decoder.layers.0.mlp.linear_fc1.layer_norm_weight
+	language_model.decoder.layers.5.mlp.linear_fc1.layer_norm_weight
+	language_model.decoder.layers.5.self_attention.linear_proj.weight
+	language_model.decoder.layers.0.self_attention.linear_qkv.weight
+	language_model.decoder.layers.7.mlp.linear_fc2.weight
+	language_model.decoder.layers.7.mlp.linear_fc1.layer_norm_weight
+	language_model.decoder.layers.6.mlp.linear_fc1.weight
+	language_model.decoder.layers.4.mlp.linear_fc1.weight
+	language_model.decoder.layers.0.mlp.linear_fc2.weight
+	language_model.decoder.layers.0.self_attention.linear_qkv.layer_norm_weight
+	language_model.decoder.layers.7.mlp.linear_fc1.weight
+	language_model.decoder.layers.4.mlp.linear_fc2.weight
+	language_model.decoder.layers.4.self_attention.linear_qkv.weight
+	language_model.decoder.layers.4.self_attention.linear_proj.weight
+	language_model.decoder.layers.3.self_attention.linear_proj.weight
+	language_model.decoder.layers.2.mlp.linear_fc1.weight
+	language_model.decoder.layers.1.mlp.linear_fc2.weight
+	language_model.decoder.layers.1.mlp.linear_fc1.layer_norm_weight
+	language_model.decoder.layers.5.self_attention.linear_qkv.layer_norm_weight
+	language_model.decoder.layers.7.self_attention.linear_proj.weight
+	language_model.decoder.layers.5.self_attention.linear_qkv.weight
+	language_model.decoder.layers.3.mlp.linear_fc2.weight
+	language_model.decoder.layers.3.mlp.linear_fc1.weight
+	language_model.decoder.layers.2.self_attention.linear_qkv.layer_norm_weight
+ > number of parameters on (tensor, pipeline) model parallel rank (2, 1): 469827584
+ > number of parameters on (tensor, pipeline) model parallel rank (3, 1): 469827584
+rank=0, worker=0: shard_range=[pretrain-0.tar[0, 100), pretrain-0.tar[100, 200), pretrain-0.tar[200, 300), ...<2494>, pretrain-30.tar[9700, 9800), pretrain-30.tar[9800, 9900), pretrain-30.tar[9900, 10000)] sum(count)=250000
+rank=0, worker=1: shard_range=[pretrain-31.tar[0, 100), pretrain-31.tar[100, 200), pretrain-31.tar[200, 300), ...<2494>, pretrain-53.tar[9700, 9800), pretrain-53.tar[9800, 9900), pretrain-53.tar[9900, 10000)] sum(count)=250000
+rank=0, worker=0: shard_range=[pretrain-54.tar[0, 10000), pretrain-55.tar[0, 8128), pretrain-6.tar[0, 10000), pretrain-7.tar[0, 936)] sum(count)=29064
+rank=0, worker=1: shard_range=[pretrain-7.tar[936, 10000), pretrain-8.tar[0, 10000), pretrain-9.tar[0, 10000)] sum(count)=29064
+[Rank 5] (after 1 iterations) memory (MB) | allocated: 7209.126953125 | max allocated: 9284.97314453125 | reserved: 13770.0 | max reserved: 13770.0[Rank 6] (after 1 iterations) memory (MB) | allocated: 7210.126953125 | max allocated: 9283.97314453125 | reserved: 13792.0 | max reserved: 13792.0
+
+[Rank 7] (after 1 iterations) memory (MB) | allocated: 7208.251953125 | max allocated: 9284.09814453125 | reserved: 13778.0 | max reserved: 13778.0
+stage2 GPU utialization:37.772514422734574 %
+[Rank 4] (after 1 iterations) memory (MB) | allocated: 7209.126953125 | max allocated: 9282.97314453125 | reserved: 13786.0 | max reserved: 13786.0

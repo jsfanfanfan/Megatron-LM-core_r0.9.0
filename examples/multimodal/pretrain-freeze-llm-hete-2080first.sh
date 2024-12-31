@@ -48,7 +48,7 @@ DATA_TRAIN="${SOURCE}/examples/multimodal/pretrain_dataset.yaml"
 
 DEBUG=1
 if [[ $DEBUG -eq 1 ]]; then
-    BZ=16
+    BZ=32
     NW=2
     HD=0.0
     LI=1
@@ -80,10 +80,10 @@ OPTIONS=" \
     --swiglu \
     --attention-dropout 0.0 \
     --hidden-dropout ${HD} \
-    --tensor-model-parallel-size 1 \
-    --pipeline-model-parallel-size 4 \
-    --split-spec "10,21,6,1"
-    --num-layers 12 \
+    --tensor-model-parallel-size 4 \
+    --pipeline-model-parallel-size 5 \
+    --split-spec "26,5,6,11,10"
+    --num-layers 32 \
     --hidden-size 4096 \
     --num-attention-heads 32 \
     --seq-length 576 \
@@ -129,12 +129,11 @@ OPTIONS=" \
     --use-te \
     --timing-log-level 2 \
     --timing-log-option all \
-    --freeze-LM \
+    --freeze-ViT \
 "
 # --use-flash-attn \
 # --transformer-impl transformer_engine \
 # --use-te \
-# --freeze-ViT \
 # --pretrained-checkpoint ${CHECKPOINT_DIR} \
 # --load ${FINETUNE_DIR} \
 # --use-checkpoint-args \
@@ -161,20 +160,23 @@ case $gn
         in 9)
         rank=0
         ;;
-        33)
+        2)
         rank=1
         ;;
-        34)
+        3)
         rank=2
         ;;
-        *)
+        49)
         rank=3
+        ;;
+        *)
+        rank=4
 esac
 
-MASTER_ADDR=`scontrol show hostname $SLURM_NODELIST| head -n 2 | tail -n 1`
+MASTER_ADDR=`scontrol show hostname $SLURM_NODELIST| head -n 3 | tail -n 1`
 # MASTER_ADDR=`scontrol show hostname $SLURM_NODELIST| head -n 1`
 MASTER_PORT=2234
-NNODES=4
+NNODES=5
 NODE_RANK=${rank:-"0"}
 # NODE_RANK=$SLURM_PROCID
 WORLD_SIZE=$(($GPUS_PER_NODE*$NNODES))

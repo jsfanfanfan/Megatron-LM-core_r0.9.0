@@ -1,0 +1,104 @@
+examples/multimodal/pretrain-freeze-llm-hete-3090first.sh: line 4: activate: No such file or directory
+4
+[2024-12-31 12:43:51,740] torch.distributed.run: [WARNING] 
+[2024-12-31 12:43:51,740] torch.distributed.run: [WARNING] *****************************************
+[2024-12-31 12:43:51,740] torch.distributed.run: [WARNING] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+[2024-12-31 12:43:51,740] torch.distributed.run: [WARNING] *****************************************
+You set `add_prefix_space`. The tokenizer needs to be converted from the slow tokenizers
+You set `add_prefix_space`. The tokenizer needs to be converted from the slow tokenizers
+You set `add_prefix_space`. The tokenizer needs to be converted from the slow tokenizers
+You set `add_prefix_space`. The tokenizer needs to be converted from the slow tokenizers
+------pipeline_parallel_model_size:5------
+------world_size:20------
+------total_model_size:5------
+------num_pipeline_model_parallel_groups:4------
+------pipeline_parallel_model_size:5------
+------world_size:20------
+------total_model_size:5------
+------num_pipeline_model_parallel_groups:4------
+------pipeline_parallel_model_size:5------
+------world_size:20------
+------total_model_size:5------
+------num_pipeline_model_parallel_groups:4------
+> setting tensorboard ...
+WARNING: one_logger package is required to enable e2e metrics tracking. please go to https://confluence.nvidia.com/display/MLWFO/Package+Repositories for details to install it
+------pipeline_parallel_model_size:5------
+------world_size:20------
+------total_model_size:5------
+------num_pipeline_model_parallel_groups:4------
+---Rank 19---Tensor Parallel Group GPUs: [0]
+---Rank 19---Pipeline Parallel Group GPUs: [4, 4, 4, 4, 4]
+---Rank 17---Tensor Parallel Group GPUs: [0]---Rank 18---Tensor Parallel Group GPUs: [0]
+
+---Rank 17---Pipeline Parallel Group GPUs: [4, 4, 4, 4, 4]
+---Rank 18---Pipeline Parallel Group GPUs: [4, 4, 4, 4, 4]
+[rank19]:[W init.cpp:767] Warning: nvfuser is no longer supported in torch script, use _jit_set_nvfuser_enabled is deprecated and a no-op (function operator())
+[rank17]:[W init.cpp:767] Warning: nvfuser is no longer supported in torch script, use _jit_set_nvfuser_enabled is deprecated and a no-op (function operator())
+[rank18]:[W init.cpp:767] Warning: nvfuser is no longer supported in torch script, use _jit_set_nvfuser_enabled is deprecated and a no-op (function operator())
+---Rank 16---Tensor Parallel Group GPUs: [0]
+---Rank 16---Pipeline Parallel Group GPUs: [4, 4, 4, 4, 4]
+[rank16]:[W init.cpp:767] Warning: nvfuser is no longer supported in torch script, use _jit_set_nvfuser_enabled is deprecated and a no-op (function operator())
+WARNING:megatron.core.models.multimodal.llava_model:LLaVA model is under active development. It may be missing features and its methods may change.
+WARNING:megatron.core.models.multimodal.llava_model:LLaVA model is under active development. It may be missing features and its methods may change.
+WARNING:megatron.core.models.multimodal.llava_model:LLaVA model is under active development. It may be missing features and its methods may change.
+WARNING:megatron.core.models.multimodal.llava_model:LLaVA model is under active development. It may be missing features and its methods may change.
+ > number of parameters on (tensor, pipeline) model parallel rank (0, 4): 1006669824
+rank=1, worker=0: shard_range=[pretrain-2.tar[5000, 5100), pretrain-2.tar[5100, 5200), pretrain-2.tar[5200, 5300), ...<619>, pretrain-25.tar[7200, 7300), pretrain-25.tar[7300, 7400), pretrain-25.tar[7400, 7500)] sum(count)=62500
+rank=1, worker=1: shard_range=[pretrain-25.tar[7500, 7600), pretrain-25.tar[7600, 7700), pretrain-25.tar[7700, 7800), ...<619>, pretrain-30.tar[9700, 9800), pretrain-30.tar[9800, 9900), pretrain-30.tar[9900, 10000)] sum(count)=62500
+rank=2, worker=0: shard_range=[pretrain-31.tar[0, 100), pretrain-31.tar[100, 200), pretrain-31.tar[200, 300), ...<619>, pretrain-37.tar[2200, 2300), pretrain-37.tar[2300, 2400), pretrain-37.tar[2400, 2500)] sum(count)=62500
+rank=2, worker=1: shard_range=[pretrain-37.tar[2500, 2600), pretrain-37.tar[2600, 2700), pretrain-37.tar[2700, 2800), ...<619>, pretrain-42.tar[4700, 4800), pretrain-42.tar[4800, 4900), pretrain-42.tar[4900, 5000)] sum(count)=62500
+rank=0, worker=0: shard_range=[pretrain-0.tar[0, 100), pretrain-0.tar[100, 200), pretrain-0.tar[200, 300), ...<619>, pretrain-14.tar[2200, 2300), pretrain-14.tar[2300, 2400), pretrain-14.tar[2400, 2500)] sum(count)=62500
+rank=0, worker=1: shard_range=[pretrain-14.tar[2500, 2600), pretrain-14.tar[2600, 2700), pretrain-14.tar[2700, 2800), ...<619>, pretrain-2.tar[4700, 4800), pretrain-2.tar[4800, 4900), pretrain-2.tar[4900, 5000)] sum(count)=62500
+rank=3, worker=0: shard_range=[pretrain-42.tar[5000, 5100), pretrain-42.tar[5100, 5200), pretrain-42.tar[5200, 5300), ...<619>, pretrain-48.tar[7200, 7300), pretrain-48.tar[7300, 7400), pretrain-48.tar[7400, 7500)] sum(count)=62500
+rank=3, worker=1: shard_range=[pretrain-48.tar[7500, 7600), pretrain-48.tar[7600, 7700), pretrain-48.tar[7700, 7800), ...<619>, pretrain-53.tar[9700, 9800), pretrain-53.tar[9800, 9900), pretrain-53.tar[9900, 10000)] sum(count)=62500
+rank=3, worker=0: shard_range=[pretrain-8.tar[5468, 10000), pretrain-9.tar[0, 2734)] sum(count)=7266
+rank=3, worker=1: shard_range=[pretrain-9.tar[2734, 10000)] sum(count)=7266
+rank=1, worker=0: shard_range=[pretrain-55.tar[4532, 8128), pretrain-6.tar[0, 3670)] sum(count)=7266
+rank=1, worker=1: shard_range=[pretrain-6.tar[3670, 10000), pretrain-7.tar[0, 936)] sum(count)=7266
+rank=2, worker=0: shard_range=[pretrain-7.tar[936, 8202)] sum(count)=7266
+rank=2, worker=1: shard_range=[pretrain-7.tar[8202, 10000), pretrain-8.tar[0, 5468)] sum(count)=7266
+rank=0, worker=0: shard_range=[pretrain-54.tar[0, 7266)] sum(count)=7266
+rank=0, worker=1: shard_range=[pretrain-54.tar[7266, 10000), pretrain-55.tar[0, 4532)] sum(count)=7266
+times across ranks (ms):
+  model-and-optimizer-setup:
+     rank  0: 160.39
+     rank  1: 140.24
+     rank  2: 142.23
+     rank  3: 146.40
+     rank  4: 80.06
+     rank  5: 81.99
+     rank  6: 69.13
+     rank  7: 82.15
+     rank  8: 56.89
+     rank  9: 57.12
+     rank 10: 56.07
+     rank 11: 57.02
+     rank 12: 57.55
+     rank 13: 55.09
+     rank 14: 56.38
+     rank 15: 57.63
+     rank 16: 48.53
+     rank 17: 49.54
+     rank 18: 49.90
+     rank 19: 48.26
+  train/valid/test-data-iterators-setup:
+     rank  0: 1255.33
+     rank  1: 1255.27
+     rank  2: 1255.27
+     rank  3: 1264.09
+     rank  4: 1270.98
+     rank  5: 1271.23
+     rank  6: 1271.25
+     rank  7: 1271.07
+     rank  8: 1271.37
+     rank  9: 1439.33
+     rank 10: 1271.39
+     rank 11: 1439.19
+     rank 12: 1439.22
+     rank 13: 1439.21
+     rank 14: 1439.23
+     rank 15: 1439.24
+     rank 16: 1439.35
+     rank 17: 1439.36
+     rank 18: 1439.49
+     rank 19: 1439.36

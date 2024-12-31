@@ -1,0 +1,159 @@
+examples/multimodal/pretrain-freeze-llm-hete-2080first.sh: line 4: activate: No such file or directory
+4
+[2024-12-31 15:30:48,339] torch.distributed.run: [WARNING] 
+[2024-12-31 15:30:48,339] torch.distributed.run: [WARNING] *****************************************
+[2024-12-31 15:30:48,339] torch.distributed.run: [WARNING] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+[2024-12-31 15:30:48,339] torch.distributed.run: [WARNING] *****************************************
+You set `add_prefix_space`. The tokenizer needs to be converted from the slow tokenizers
+You set `add_prefix_space`. The tokenizer needs to be converted from the slow tokenizers
+You set `add_prefix_space`. The tokenizer needs to be converted from the slow tokenizers
+You set `add_prefix_space`. The tokenizer needs to be converted from the slow tokenizers
+------pipeline_parallel_model_size:5------
+------world_size:20------
+------total_model_size:20------
+------num_pipeline_model_parallel_groups:4------
+------pipeline_parallel_model_size:5------
+------world_size:20------
+------total_model_size:20------
+------num_pipeline_model_parallel_groups:4------
+------pipeline_parallel_model_size:5------
+------world_size:20------
+------total_model_size:20------
+------num_pipeline_model_parallel_groups:4------
+> setting tensorboard ...
+WARNING: one_logger package is required to enable e2e metrics tracking. please go to https://confluence.nvidia.com/display/MLWFO/Package+Repositories for details to install it
+------pipeline_parallel_model_size:5------
+------world_size:20------
+------total_model_size:20------
+------num_pipeline_model_parallel_groups:4------
+---Rank 18---Tensor Parallel Group GPUs: [2, 2, 2, 2]
+---Rank 18---Pipeline Parallel Group GPUs: [4, 4, 4, 4, 4]
+---Rank 16---Tensor Parallel Group GPUs: [0, 0, 0, 0]---Rank 17---Tensor Parallel Group GPUs: [1, 1, 1, 1]
+---Rank 19---Tensor Parallel Group GPUs: [3, 3, 3, 3]
+
+---Rank 16---Pipeline Parallel Group GPUs: [4, 4, 4, 4, 4]
+[rank18]:[W init.cpp:767] Warning: nvfuser is no longer supported in torch script, use _jit_set_nvfuser_enabled is deprecated and a no-op (function operator())
+---Rank 17---Pipeline Parallel Group GPUs: [4, 4, 4, 4, 4]
+---Rank 19---Pipeline Parallel Group GPUs: [4, 4, 4, 4, 4]
+[rank16]:[W init.cpp:767] Warning: nvfuser is no longer supported in torch script, use _jit_set_nvfuser_enabled is deprecated and a no-op (function operator())
+[rank17]:[W init.cpp:767] Warning: nvfuser is no longer supported in torch script, use _jit_set_nvfuser_enabled is deprecated and a no-op (function operator())
+[rank19]:[W init.cpp:767] Warning: nvfuser is no longer supported in torch script, use _jit_set_nvfuser_enabled is deprecated and a no-op (function operator())
+WARNING:megatron.core.models.multimodal.llava_model:LLaVA model is under active development. It may be missing features and its methods may change.
+WARNING:megatron.core.models.multimodal.llava_model:LLaVA model is under active development. It may be missing features and its methods may change.
+WARNING:megatron.core.models.multimodal.llava_model:LLaVA model is under active development. It may be missing features and its methods may change.
+WARNING:megatron.core.models.multimodal.llava_model:LLaVA model is under active development. It may be missing features and its methods may change.
+ > number of parameters on (tensor, pipeline) model parallel rank (0, 4): 578899968
+ > number of parameters on (tensor, pipeline) model parallel rank (2, 4): 578899968
+ > number of parameters on (tensor, pipeline) model parallel rank (3, 4): 578899968
+INFO:megatron.core.distributed.param_and_grad_buffer:Number of buckets for gradient all-reduce / reduce-scatter: 1
+Params for bucket 1 (578899968 elements):
+	language_model.decoder.layers.9.mlp.linear_fc1.weight
+	language_model.decoder.layers.7.mlp.linear_fc2.weight
+	language_model.decoder.layers.7.mlp.linear_fc1.layer_norm_weight
+	language_model.decoder.layers.3.mlp.linear_fc1.weight
+	language_model.decoder.layers.1.self_attention.linear_qkv.weight
+	language_model.decoder.layers.9.self_attention.linear_proj.weight
+	language_model.decoder.layers.8.self_attention.linear_qkv.layer_norm_weight
+	language_model.decoder.layers.7.mlp.linear_fc1.weight
+	language_model.decoder.layers.5.mlp.linear_fc1.layer_norm_weight
+	language_model.decoder.layers.4.self_attention.linear_qkv.layer_norm_weight
+	language_model.decoder.layers.2.mlp.linear_fc1.weight
+	language_model.decoder.layers.1.mlp.linear_fc1.weight
+	language_model.decoder.layers.1.self_attention.linear_qkv.layer_norm_weight
+	language_model.decoder.layers.2.self_attention.linear_qkv.layer_norm_weight
+	language_model.decoder.layers.1.self_attention.linear_proj.weight
+	language_model.decoder.layers.8.self_attention.linear_qkv.weight
+	language_model.decoder.layers.6.mlp.linear_fc1.layer_norm_weight
+	language_model.decoder.layers.5.mlp.linear_fc2.weight
+	language_model.decoder.layers.3.self_attention.linear_proj.weight
+	language_model.decoder.layers.0.self_attention.linear_qkv.layer_norm_weight
+	language_model.output_layer.weight
+	language_model.decoder.layers.9.self_attention.linear_qkv.layer_norm_weight
+	language_model.decoder.layers.6.self_attention.linear_proj.weight
+	language_model.decoder.layers.2.self_attention.linear_qkv.weight
+	language_model.decoder.layers.2.self_attention.linear_proj.weight
+	language_model.decoder.layers.0.mlp.linear_fc1.weight
+	language_model.decoder.layers.9.self_attention.linear_qkv.weight
+	language_model.decoder.layers.7.self_attention.linear_qkv.layer_norm_weight
+	language_model.decoder.layers.4.self_attention.linear_proj.weight
+	language_model.decoder.layers.0.mlp.linear_fc1.layer_norm_weight
+	language_model.decoder.layers.0.self_attention.linear_proj.weight
+	language_model.decoder.final_layernorm.weight
+	language_model.decoder.layers.8.mlp.linear_fc2.weight
+	language_model.decoder.layers.8.mlp.linear_fc1.layer_norm_weight
+	language_model.decoder.layers.7.self_attention.linear_proj.weight
+	language_model.decoder.layers.6.mlp.linear_fc2.weight
+	language_model.decoder.layers.6.mlp.linear_fc1.weight
+	language_model.decoder.layers.6.self_attention.linear_qkv.weight
+	language_model.decoder.layers.5.self_attention.linear_proj.weight
+	language_model.decoder.layers.4.mlp.linear_fc2.weight
+	language_model.decoder.layers.3.mlp.linear_fc2.weight
+	language_model.decoder.layers.8.mlp.linear_fc1.weight
+	language_model.decoder.layers.6.self_attention.linear_qkv.layer_norm_weight
+	language_model.decoder.layers.5.self_attention.linear_qkv.layer_norm_weight
+	language_model.decoder.layers.4.self_attention.linear_qkv.weight
+	language_model.decoder.layers.3.self_attention.linear_qkv.weight
+	language_model.decoder.layers.3.self_attention.linear_qkv.layer_norm_weight
+	language_model.decoder.layers.2.mlp.linear_fc1.layer_norm_weight
+	language_model.decoder.layers.1.mlp.linear_fc1.layer_norm_weight
+	language_model.decoder.layers.0.mlp.linear_fc2.weight
+	language_model.decoder.layers.0.self_attention.linear_qkv.weight
+	language_model.decoder.layers.7.self_attention.linear_qkv.weight
+	language_model.decoder.layers.9.mlp.linear_fc2.weight
+	language_model.decoder.layers.9.mlp.linear_fc1.layer_norm_weight
+	language_model.decoder.layers.8.self_attention.linear_proj.weight
+	language_model.decoder.layers.5.mlp.linear_fc1.weight
+	language_model.decoder.layers.5.self_attention.linear_qkv.weight
+	language_model.decoder.layers.4.mlp.linear_fc1.weight
+	language_model.decoder.layers.4.mlp.linear_fc1.layer_norm_weight
+	language_model.decoder.layers.3.mlp.linear_fc1.layer_norm_weight
+	language_model.decoder.layers.2.mlp.linear_fc2.weight
+	language_model.decoder.layers.1.mlp.linear_fc2.weight
+ > number of parameters on (tensor, pipeline) model parallel rank (1, 4): 578899968
+rank=0, worker=0: shard_range=[pretrain-0.tar[0, 100), pretrain-0.tar[100, 200), pretrain-0.tar[200, 300), ...<2494>, pretrain-30.tar[9700, 9800), pretrain-30.tar[9800, 9900), pretrain-30.tar[9900, 10000)] sum(count)=250000
+rank=0, worker=1: shard_range=[pretrain-31.tar[0, 100), pretrain-31.tar[100, 200), pretrain-31.tar[200, 300), ...<2494>, pretrain-53.tar[9700, 9800), pretrain-53.tar[9800, 9900), pretrain-53.tar[9900, 10000)] sum(count)=250000
+rank=0, worker=0: shard_range=[pretrain-54.tar[0, 10000), pretrain-55.tar[0, 8128), pretrain-6.tar[0, 10000), pretrain-7.tar[0, 936)] sum(count)=29064
+rank=0, worker=1: shard_range=[pretrain-7.tar[936, 10000), pretrain-8.tar[0, 10000), pretrain-9.tar[0, 10000)] sum(count)=29064
+times across ranks (ms):
+  model-and-optimizer-setup:
+     rank  0: 109.86
+     rank  1: 109.12
+     rank  2: 112.21
+     rank  3: 109.22
+     rank  4: 78.48
+     rank  5: 79.91
+     rank  6: 79.43
+     rank  7: 78.44
+     rank  8: 603.07
+     rank  9: 573.01
+     rank 10: 603.35
+     rank 11: 144.28
+     rank 12: 46.31
+     rank 13: 46.50
+     rank 14: 46.37
+     rank 15: 46.30
+     rank 16: 47.17
+     rank 17: 52.55
+     rank 18: 47.36
+     rank 19: 47.23
+  train/valid/test-data-iterators-setup:
+     rank  0: 1051.61
+     rank  1: 1051.59
+     rank  2: 7492.61
+     rank  3: 1051.52
+     rank  4: 1283.65
+     rank  5: 1283.53
+     rank  6: 1051.60
+     rank  7: 1283.51
+     rank  8: 7496.37
+     rank  9: 7501.37
+     rank 10: 1287.98
+     rank 11: 7493.96
+     rank 12: 7492.13
+     rank 13: 7491.93
+     rank 14: 7492.48
+     rank 15: 7492.10
+     rank 16: 7492.11
+     rank 17: 7492.52
+     rank 18: 7492.08
+     rank 19: 7491.95
