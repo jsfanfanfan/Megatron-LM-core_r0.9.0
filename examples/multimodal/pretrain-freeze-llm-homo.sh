@@ -80,10 +80,10 @@ OPTIONS=" \
     --swiglu \
     --attention-dropout 0.0 \
     --hidden-dropout ${HD} \
-    --tensor-model-parallel-size 4 \
-    --pipeline-model-parallel-size 5 \
-    --split-spec "26,8,8,8,8"
-    --num-layers 32 \
+    --tensor-model-parallel-size 2 \
+    --pipeline-model-parallel-size 3 \
+    --split-spec "26,6,6"
+    --num-layers 12 \
     --hidden-size 4096 \
     --num-attention-heads 32 \
     --seq-length 576 \
@@ -129,7 +129,6 @@ OPTIONS=" \
     --use-te \
     --timing-log-level 2 \
     --timing-log-option all \
-    --freeze-ViT \
 "
 # --freeze-LM \
 # --freeze-ViT \
@@ -192,7 +191,7 @@ GPUS_PER_NODE=4
 # MASTER_ADDR=`scontrol show hostname $SLURM_NODELIST| head -n 3 | tail -n 1`
 MASTER_ADDR=`scontrol show hostname $SLURM_NODELIST| head -n 1`
 MASTER_PORT=2234
-NNODES=5
+NNODES=3
 # NODE_RANK=${rank:-"0"}
 NODE_RANK=$SLURM_PROCID
 WORLD_SIZE=$(($GPUS_PER_NODE*$NNODES))
